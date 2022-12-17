@@ -119,6 +119,7 @@ Partial Class F0_Ventas
         Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
+        Me.btnCobrar = New DevComponents.DotNetBar.ButtonX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -179,8 +180,6 @@ Partial Class F0_Ventas
         '
         'PanelSuperior
         '
-        Me.PanelSuperior.Controls.Add(Me.btnActualizar)
-        Me.PanelSuperior.Controls.Add(Me.ButtonX1)
         Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(4)
         Me.PanelSuperior.Size = New System.Drawing.Size(1016, 72)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
@@ -196,12 +195,6 @@ Partial Class F0_Ventas
         Me.PanelSuperior.StyleMouseOver.BackColor1.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.PanelSuperior.StyleMouseOver.BackColor2.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.PanelSuperior.StyleMouseOver.BackgroundImage = CType(resources.GetObject("PanelSuperior.StyleMouseOver.BackgroundImage"), System.Drawing.Image)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar1, 0)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar2, 0)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.MRlAccion, 0)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX1, 0)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.btnActualizar, 0)
-        Me.PanelSuperior.Controls.SetChildIndex(Me.PictureBox1, 0)
         '
         'PanelInferior
         '
@@ -266,8 +259,16 @@ Partial Class F0_Ventas
         '
         'PanelToolBar2
         '
-        Me.PanelToolBar2.Location = New System.Drawing.Point(936, 0)
+        Me.PanelToolBar2.Controls.Add(Me.btnCobrar)
+        Me.PanelToolBar2.Controls.Add(Me.btnActualizar)
+        Me.PanelToolBar2.Controls.Add(Me.ButtonX1)
+        Me.PanelToolBar2.Location = New System.Drawing.Point(696, 0)
         Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4)
+        Me.PanelToolBar2.Size = New System.Drawing.Size(320, 72)
+        Me.PanelToolBar2.Controls.SetChildIndex(Me.ButtonX1, 0)
+        Me.PanelToolBar2.Controls.SetChildIndex(Me.btnImprimir, 0)
+        Me.PanelToolBar2.Controls.SetChildIndex(Me.btnActualizar, 0)
+        Me.PanelToolBar2.Controls.SetChildIndex(Me.btnCobrar, 0)
         '
         'PanelPrincipal
         '
@@ -280,6 +281,8 @@ Partial Class F0_Ventas
         '
         'btnImprimir
         '
+        Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnImprimir.Location = New System.Drawing.Point(160, 0)
         '
         'btnUltimo
         '
@@ -307,7 +310,7 @@ Partial Class F0_Ventas
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4)
-        Me.MRlAccion.Size = New System.Drawing.Size(560, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(320, 72)
         '
         'PanelContent
         '
@@ -352,8 +355,9 @@ Partial Class F0_Ventas
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(583, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(603, 0)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox1.Size = New System.Drawing.Size(93, 72)
         '
         'SuperTabItem1
         '
@@ -973,6 +977,7 @@ Partial Class F0_Ventas
         Me.LabelX5.Size = New System.Drawing.Size(129, 23)
         Me.LabelX5.TabIndex = 232
         Me.LabelX5.Text = "Tipo Venta:"
+        Me.LabelX5.Visible = False
         '
         'LabelX4
         '
@@ -1008,6 +1013,7 @@ Partial Class F0_Ventas
         Me.swTipoVenta.TabIndex = 8
         Me.swTipoVenta.Value = True
         Me.swTipoVenta.ValueObject = "Y"
+        Me.swTipoVenta.Visible = False
         '
         'tbFechaVenta
         '
@@ -1468,6 +1474,7 @@ Partial Class F0_Ventas
         Me.Panel9.Name = "Panel9"
         Me.Panel9.Size = New System.Drawing.Size(243, 90)
         Me.Panel9.TabIndex = 364
+        Me.Panel9.Visible = False
         '
         'GroupBox2
         '
@@ -1561,6 +1568,7 @@ Partial Class F0_Ventas
         Me.Panel8.Name = "Panel8"
         Me.Panel8.Size = New System.Drawing.Size(410, 90)
         Me.Panel8.TabIndex = 363
+        Me.Panel8.Visible = False
         '
         'GroupBox1
         '
@@ -1611,6 +1619,7 @@ Partial Class F0_Ventas
         Me.cbCambioDolar.Name = "cbCambioDolar"
         Me.cbCambioDolar.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.cbCambioDolar.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbCambioDolar.ReadOnly = True
         Me.cbCambioDolar.SelectedIndex = -1
         Me.cbCambioDolar.SelectedItem = Nothing
         Me.cbCambioDolar.Size = New System.Drawing.Size(100, 22)
@@ -1656,6 +1665,7 @@ Partial Class F0_Ventas
         '
         '
         Me.chbTarjeta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.chbTarjeta.Enabled = False
         Me.chbTarjeta.Font = New System.Drawing.Font("Georgia", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chbTarjeta.Location = New System.Drawing.Point(9, 51)
         Me.chbTarjeta.Name = "chbTarjeta"
@@ -2067,7 +2077,7 @@ Partial Class F0_Ventas
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources._14
         Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.ButtonX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.ButtonX1.Location = New System.Drawing.Point(856, 0)
+        Me.ButtonX1.Location = New System.Drawing.Point(240, 0)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(80, 72)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2088,13 +2098,30 @@ Partial Class F0_Ventas
         Me.btnActualizar.Image = Global.DinoM.My.Resources.Resources.reload_5
         Me.btnActualizar.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.btnActualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.btnActualizar.Location = New System.Drawing.Point(776, 0)
+        Me.btnActualizar.Location = New System.Drawing.Point(80, 0)
         Me.btnActualizar.Name = "btnActualizar"
         Me.btnActualizar.Size = New System.Drawing.Size(80, 72)
         Me.btnActualizar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.btnActualizar.TabIndex = 13
-        Me.btnActualizar.Text = "Actualizar"
+        Me.btnActualizar.Text = "ACTUALIZAR"
         Me.btnActualizar.TextColor = System.Drawing.Color.White
+        '
+        'btnCobrar
+        '
+        Me.btnCobrar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnCobrar.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
+        Me.btnCobrar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnCobrar.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCobrar.Image = Global.DinoM.My.Resources.Resources.cobro
+        Me.btnCobrar.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.btnCobrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.btnCobrar.Location = New System.Drawing.Point(0, 0)
+        Me.btnCobrar.Name = "btnCobrar"
+        Me.btnCobrar.Size = New System.Drawing.Size(80, 72)
+        Me.btnCobrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.btnCobrar.TabIndex = 14
+        Me.btnCobrar.Text = "COBRAR"
+        Me.btnCobrar.TextColor = System.Drawing.Color.White
         '
         'F0_Ventas
         '
@@ -2265,4 +2292,5 @@ Partial Class F0_Ventas
     Friend WithEvents cbCambioDolar As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents btAgregarTCambio As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
+    Protected WithEvents btnCobrar As DevComponents.DotNetBar.ButtonX
 End Class

@@ -30,12 +30,12 @@ Partial Class F0_CierreCaja
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.SuperTabControl2 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Dgv_Depositos = New Janus.Windows.GridEX.GridEX()
+        Me.TRANSFERENCIAS = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Dgv_Cortes = New Janus.Windows.GridEX.GridEX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Dgv_Depositos = New Janus.Windows.GridEX.GridEX()
-        Me.DEPÓSITO = New DevComponents.DotNetBar.SuperTabItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
         Me.cbSucursal = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
@@ -63,6 +63,8 @@ Partial Class F0_CierreCaja
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
+        Me.tbTPagosPrestamos = New DevComponents.Editors.DoubleInput()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.tbTIngresos = New DevComponents.Editors.DoubleInput()
@@ -91,8 +93,6 @@ Partial Class F0_CierreCaja
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Dgv_Buscador = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.LabelX21 = New DevComponents.DotNetBar.LabelX()
-        Me.tbTPagosPrestamos = New DevComponents.Editors.DoubleInput()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -113,10 +113,10 @@ Partial Class F0_CierreCaja
         Me.GroupPanel3.SuspendLayout()
         CType(Me.SuperTabControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl2.SuspendLayout()
-        Me.SuperTabControlPanel3.SuspendLayout()
-        CType(Me.Dgv_Cortes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         CType(Me.Dgv_Depositos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        CType(Me.Dgv_Cortes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbTurno, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -130,6 +130,7 @@ Partial Class F0_CierreCaja
         Me.Panel2.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         Me.Panel6.SuspendLayout()
+        CType(Me.tbTPagosPrestamos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbTIngresos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbTEgresos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbMontoI, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -145,7 +146,6 @@ Partial Class F0_CierreCaja
         Me.Panel4.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Dgv_Buscador, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.tbTPagosPrestamos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelSuperior
@@ -381,8 +381,35 @@ Partial Class F0_CierreCaja
         Me.SuperTabControl2.Size = New System.Drawing.Size(925, 222)
         Me.SuperTabControl2.TabFont = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl2.TabIndex = 0
-        Me.SuperTabControl2.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.DEPÓSITO})
+        Me.SuperTabControl2.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.TRANSFERENCIAS})
         Me.SuperTabControl2.Text = "AYUDA"
+        '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Dgv_Depositos)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 26)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(925, 196)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.TRANSFERENCIAS
+        '
+        'Dgv_Depositos
+        '
+        Me.Dgv_Depositos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Dgv_Depositos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Dgv_Depositos.Location = New System.Drawing.Point(0, 0)
+        Me.Dgv_Depositos.Name = "Dgv_Depositos"
+        Me.Dgv_Depositos.Size = New System.Drawing.Size(925, 196)
+        Me.Dgv_Depositos.TabIndex = 0
+        Me.Dgv_Depositos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'TRANSFERENCIAS
+        '
+        Me.TRANSFERENCIAS.AttachedControl = Me.SuperTabControlPanel4
+        Me.TRANSFERENCIAS.GlobalItem = False
+        Me.TRANSFERENCIAS.Name = "TRANSFERENCIAS"
+        Me.TRANSFERENCIAS.Text = "TRANSFERENCIAS"
         '
         'SuperTabControlPanel3
         '
@@ -411,33 +438,6 @@ Partial Class F0_CierreCaja
         Me.SuperTabItem2.GlobalItem = False
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "CORTES"
-        '
-        'SuperTabControlPanel4
-        '
-        Me.SuperTabControlPanel4.Controls.Add(Me.Dgv_Depositos)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 26)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(925, 196)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.DEPÓSITO
-        '
-        'Dgv_Depositos
-        '
-        Me.Dgv_Depositos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Dgv_Depositos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Dgv_Depositos.Location = New System.Drawing.Point(0, 0)
-        Me.Dgv_Depositos.Name = "Dgv_Depositos"
-        Me.Dgv_Depositos.Size = New System.Drawing.Size(925, 196)
-        Me.Dgv_Depositos.TabIndex = 0
-        Me.Dgv_Depositos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
-        '
-        'DEPÓSITO
-        '
-        Me.DEPÓSITO.AttachedControl = Me.SuperTabControlPanel4
-        Me.DEPÓSITO.GlobalItem = False
-        Me.DEPÓSITO.Name = "DEPÓSITO"
-        Me.DEPÓSITO.Text = "DEPOSITO"
         '
         'GroupPanel2
         '
@@ -986,6 +986,37 @@ Partial Class F0_CierreCaja
         Me.Panel6.Size = New System.Drawing.Size(389, 342)
         Me.Panel6.TabIndex = 65
         '
+        'LabelX21
+        '
+        Me.LabelX21.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX21.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX21.Location = New System.Drawing.Point(14, 142)
+        Me.LabelX21.Name = "LabelX21"
+        Me.LabelX21.Size = New System.Drawing.Size(140, 23)
+        Me.LabelX21.TabIndex = 70
+        Me.LabelX21.Text = "T. Pagos Préstamos(-)"
+        '
+        'tbTPagosPrestamos
+        '
+        Me.tbTPagosPrestamos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        '
+        '
+        '
+        Me.tbTPagosPrestamos.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.tbTPagosPrestamos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbTPagosPrestamos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.tbTPagosPrestamos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbTPagosPrestamos.Increment = 1.0R
+        Me.tbTPagosPrestamos.Location = New System.Drawing.Point(161, 142)
+        Me.tbTPagosPrestamos.Name = "tbTPagosPrestamos"
+        Me.tbTPagosPrestamos.Size = New System.Drawing.Size(120, 23)
+        Me.tbTPagosPrestamos.TabIndex = 69
+        '
         'LabelX17
         '
         Me.LabelX17.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -1121,7 +1152,7 @@ Partial Class F0_CierreCaja
         Me.tbTTarjeta.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.tbTTarjeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbTTarjeta.Increment = 1.0R
-        Me.tbTTarjeta.Location = New System.Drawing.Point(161, 258)
+        Me.tbTTarjeta.Location = New System.Drawing.Point(161, 235)
         Me.tbTTarjeta.Name = "tbTTarjeta"
         Me.tbTTarjeta.Size = New System.Drawing.Size(120, 23)
         Me.tbTTarjeta.TabIndex = 57
@@ -1136,11 +1167,12 @@ Partial Class F0_CierreCaja
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX9.ForeColor = System.Drawing.Color.DarkCyan
-        Me.LabelX9.Location = New System.Drawing.Point(13, 232)
+        Me.LabelX9.Location = New System.Drawing.Point(13, 259)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(100, 23)
         Me.LabelX9.TabIndex = 51
         Me.LabelX9.Text = "Total Depósitos"
+        Me.LabelX9.Visible = False
         '
         'LabelX11
         '
@@ -1247,11 +1279,11 @@ Partial Class F0_CierreCaja
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX2.ForeColor = System.Drawing.Color.DarkCyan
-        Me.LabelX2.Location = New System.Drawing.Point(13, 258)
+        Me.LabelX2.Location = New System.Drawing.Point(13, 235)
         Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(120, 23)
+        Me.LabelX2.Size = New System.Drawing.Size(130, 23)
         Me.LabelX2.TabIndex = 58
-        Me.LabelX2.Text = "Total Transferencia"
+        Me.LabelX2.Text = "Total Transferencias"
         '
         'tbTCredito
         '
@@ -1281,10 +1313,11 @@ Partial Class F0_CierreCaja
         Me.tbTDeposito.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.tbTDeposito.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbTDeposito.Increment = 1.0R
-        Me.tbTDeposito.Location = New System.Drawing.Point(161, 232)
+        Me.tbTDeposito.Location = New System.Drawing.Point(161, 259)
         Me.tbTDeposito.Name = "tbTDeposito"
         Me.tbTDeposito.Size = New System.Drawing.Size(120, 23)
         Me.tbTDeposito.TabIndex = 50
+        Me.tbTDeposito.Visible = False
         '
         'tbTContado
         '
@@ -1416,37 +1449,6 @@ Partial Class F0_CierreCaja
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
-        'LabelX21
-        '
-        Me.LabelX21.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.LabelX21.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX21.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX21.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX21.Location = New System.Drawing.Point(14, 142)
-        Me.LabelX21.Name = "LabelX21"
-        Me.LabelX21.Size = New System.Drawing.Size(140, 23)
-        Me.LabelX21.TabIndex = 70
-        Me.LabelX21.Text = "T. Pagos Préstamos(-)"
-        '
-        'tbTPagosPrestamos
-        '
-        Me.tbTPagosPrestamos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        '
-        '
-        '
-        Me.tbTPagosPrestamos.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.tbTPagosPrestamos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.tbTPagosPrestamos.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.tbTPagosPrestamos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbTPagosPrestamos.Increment = 1.0R
-        Me.tbTPagosPrestamos.Location = New System.Drawing.Point(161, 142)
-        Me.tbTPagosPrestamos.Name = "tbTPagosPrestamos"
-        Me.tbTPagosPrestamos.Size = New System.Drawing.Size(120, 23)
-        Me.tbTPagosPrestamos.TabIndex = 69
-        '
         'F0_CierreCaja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1478,10 +1480,10 @@ Partial Class F0_CierreCaja
         Me.GroupPanel3.ResumeLayout(False)
         CType(Me.SuperTabControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl2.ResumeLayout(False)
-        Me.SuperTabControlPanel3.ResumeLayout(False)
-        CType(Me.Dgv_Cortes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         CType(Me.Dgv_Depositos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        CType(Me.Dgv_Cortes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         Me.GroupPanel2.PerformLayout()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1496,6 +1498,7 @@ Partial Class F0_CierreCaja
         Me.Panel2.ResumeLayout(False)
         Me.GroupPanel5.ResumeLayout(False)
         Me.Panel6.ResumeLayout(False)
+        CType(Me.tbTPagosPrestamos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbTIngresos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbTEgresos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbMontoI, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1511,7 +1514,6 @@ Partial Class F0_CierreCaja
         Me.Panel4.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Dgv_Buscador, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.tbTPagosPrestamos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1524,7 +1526,7 @@ Partial Class F0_CierreCaja
     Friend WithEvents SuperTabItem2 As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents SuperTabControlPanel4 As DevComponents.DotNetBar.SuperTabControlPanel
     Friend WithEvents Dgv_Depositos As Janus.Windows.GridEX.GridEX
-    Friend WithEvents DEPÓSITO As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents TRANSFERENCIAS As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents LabelX14 As DevComponents.DotNetBar.LabelX
     Friend WithEvents cbbanco As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents btnCalcular As DevComponents.DotNetBar.ButtonX

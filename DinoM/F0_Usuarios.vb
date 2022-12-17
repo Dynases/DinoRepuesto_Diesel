@@ -160,7 +160,7 @@ Public Class F0_Usuarios
             Tb_Estado.Value = CBool(.GetValue("ydest").ToString)
             tbTodasSucursales.Value = CBool(IIf(.GetValue("ydall") = 1, True, False))
             swDescuento.Value = CBool(IIf(.GetValue("ydDescuentoGeneral") = 1, True, False))
-            Tb_DiasPedidos.Value = CInt(.GetValue("ydcant").ToString)
+            Tb_DiasPedidos.Value = IIf(.GetValue("ydcant") = 1, True, False)
             Tb_fuenteTam.Value = CInt(.GetValue("ydfontsize").ToString)
 
             JMC_Categoria.Value = CInt(.GetValue("ybnumi").ToString)
@@ -465,14 +465,14 @@ Public Class F0_Usuarios
         '    MEP.SetError(tbSuc, String.Empty)
         'End If
 
-        If Tb_DiasPedidos.Text.Trim = String.Empty Then
-            Tb_DiasPedidos.BackColor = Color.Red
-            MEP.SetError(Tb_DiasPedidos, "Ingrese dias vencimiento!".ToUpper)
-            _Error = False
-        Else
-            Tb_DiasPedidos.BackColor = Color.White
-            MEP.SetError(Tb_DiasPedidos, String.Empty)
-        End If
+        'If Tb_DiasPedidos.Text.Trim = String.Empty Then
+        '    Tb_DiasPedidos.BackColor = Color.Red
+        '    MEP.SetError(Tb_DiasPedidos, "Ingrese dias vencimiento!".ToUpper)
+        '    _Error = False
+        'Else
+        '    Tb_DiasPedidos.BackColor = Color.White
+        '    MEP.SetError(Tb_DiasPedidos, String.Empty)
+        'End If
 
         If Tb_fuenteTam.Text.Trim = String.Empty Then
             Tb_fuenteTam.BackColor = Color.Red
@@ -522,7 +522,7 @@ Public Class F0_Usuarios
             End If
 
             If _Nuevo Then
-                L_Usuario_Grabar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, Tb_DiasPedidos.Value, Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
+                L_Usuario_Grabar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
 
                 Tb_Nombre.Focus()
                 ToastNotification.Show(Me, "Codigo Usuario ".ToUpper + Tb_Id.Text + " Grabado con Exito.".ToUpper, My.Resources.GRABACION_EXITOSA, 5000, eToastGlowColor.Green, eToastPosition.TopCenter)
@@ -531,7 +531,7 @@ Public Class F0_Usuarios
                 _PCargarBuscador()
                 _PLimpiar()
             Else
-                L_Usuario_Modificar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, Tb_DiasPedidos.Value, Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
+                L_Usuario_Modificar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
 
                 ToastNotification.Show(Me, "Codigo Usuario ".ToUpper + Tb_Id.Text + " Modificado con Exito.".ToUpper, My.Resources.GRABACION_EXITOSA, 5000, eToastGlowColor.Green, eToastPosition.TopCenter)
 

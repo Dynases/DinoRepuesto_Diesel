@@ -112,6 +112,7 @@ Module P_Global
 #Region "Configuracion del sistema"
     Public gs_llaveDinases As String = "carlosdinases123"
     Public gb_mostrarMapa As Boolean = True
+    Public gi_userCobrar As Integer = 0
     Public gi_userFuente As Integer = 8
     Public gs_user As String = "DEFAULT"
     Public gs_DescuentoProducto As Double = 0

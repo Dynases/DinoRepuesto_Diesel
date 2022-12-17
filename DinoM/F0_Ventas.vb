@@ -38,6 +38,15 @@ Public Class F0_Ventas
     Dim CategoriaPrecioSeleccionada As Integer = 0
 
 
+    ''Modo de Pago
+    Public TotalBs As Double = 0
+    Public TotalSus As Double = 0
+    Public TotalTarjeta As Double = 0
+    Public TipoCambio As Double = 0
+    Public TipoVenta As Integer = 1
+    Public FechaVenc As Date
+    Public Banco As Integer = 0
+    Public Glosa As String
 
 #End Region
 
@@ -69,6 +78,8 @@ Public Class F0_Ventas
 
 
         tbFechaVenta.IsInputReadOnly = True
+
+
     End Sub
     Public Sub _prCargarNameLabel()
         Dim dt As DataTable = L_fnNameLabel()
@@ -263,6 +274,12 @@ Public Class F0_Ventas
         lbPDescuento.Visible = True
         tbMdesc.Visible = True
         tbPdesc.Visible = True
+
+        If btnGrabar.Enabled = True Then
+            btnCobrar.Enabled = False
+        Else
+            btnCobrar.Enabled = True
+        End If
     End Sub
     Private Sub _prhabilitar()
         SwProforma.IsReadOnly = False
@@ -494,6 +511,9 @@ Public Class F0_Ventas
             Else
                 txtCambio1.Text = "0.00"
             End If
+
+            Banco = tMonto.Rows(0).Item("tgBanco")
+            Glosa = tMonto.Rows(0).Item("tgGlosa")
         Else
             tbMontoTarej.Value = 0
             cbCambioDolar.Text = "0.00"
@@ -502,6 +522,20 @@ Public Class F0_Ventas
             txtMontoPagado1.Text = "0.00"
             txtCambio1.Text = "0.00"
         End If
+        If tbMontoTarej.Value = 0 Then
+            chbTarjeta.Checked = False
+        Else
+            chbTarjeta.Checked = True
+        End If
+
+        'If grVentas.GetValue("taEstadoV") = 2 Then
+        '    Panel9.Visible = True
+        '    Panel8.Visible = True
+        'Else
+        '    Panel9.Visible = False
+        '    Panel8.Visible = False
+        'End If
+
 
         LblPaginacion.Text = Str(grVentas.Row + 1) + "/" + grVentas.RowCount.ToString
 
@@ -520,7 +554,6 @@ Public Class F0_Ventas
             .Width = 100
             .Caption = "CODIGO"
             .Visible = False
-
         End With
 
         With grdetalle.RootTable.Columns("tbtv1numi")
@@ -920,6 +953,14 @@ Public Class F0_Ventas
             .Caption = "TOTAL"
             .FormatString = "0.00"
         End With
+        With grVentas.RootTable.Columns("taEstadoV")
+            .Visible = False
+        End With
+        With grVentas.RootTable.Columns("EstadoV")
+            .Width = 110
+            .Visible = True
+            .Caption = "ESTADO VENTA"
+        End With
         With grVentas
             .DefaultFilterRowComparison = FilterConditionOperator.Contains
             .FilterMode = FilterMode.Automatic
@@ -928,6 +969,7 @@ Public Class F0_Ventas
             'diseño de la grilla
 
         End With
+        _prAplicarCondiccionJanusEstadoVenta()
 
         If (dt.Rows.Count <= 0) Then
             _prCargarDetalleVenta(-1)
@@ -1026,6 +1068,7 @@ Public Class F0_Ventas
         frm = New F0_DetalleVenta(dtProductoGoblal, dtVenta, dtname, cbPrecio.Value)
         frm.almacenId = cbSucursal.Value
         frm.precio = cbPrecio.Value
+        frm.cliente = _cliente
         frm.ShowDialog()
         Dim dtProd As DataTable = frm.dtDetalle
         dtProductoGoblal = frm.dtProductoAll
@@ -1085,7 +1128,13 @@ Public Class F0_Ventas
         fr.FormatStyle.ForeColor = Color.BlueViolet
         grProductos.RootTable.FormatConditions.Add(fr)
     End Sub
+    Public Sub _prAplicarCondiccionJanusEstadoVenta()
+        Dim fc As GridEXFormatCondition
+        fc = New GridEXFormatCondition(grVentas.RootTable.Columns("taEstadoV"), ConditionOperator.Equal, 1)
+        fc.FormatStyle.ForeColor = Color.Red
+        grVentas.RootTable.FormatConditions.Add(fc)
 
+    End Sub
 
     Public Sub actualizarSaldo(ByRef dt As DataTable, CodProducto As Integer)
         'b.yfcdprod1 ,a.iclot ,a.icfven  ,a.iccven 
@@ -1420,35 +1469,35 @@ Public Class F0_Ventas
             End If
         End If
 
-        If swTipoVenta.Value = True Then
-            If tbMontoBs.Value = 0 And tbMontoDolar.Value = 0 And tbMontoTarej.Value = 0 Then
-                Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-                ToastNotification.Show(Me, "Debe llenar la forma de pago".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-                Return False
-            End If
-        End If
-        If swTipoVenta.Value = True Then
-            If (chbTarjeta.Checked = True) Then
-                Return True
-            Else
-                If tbMontoBs.Value > 0 Then
-                    If (Convert.ToDecimal(tbMontoBs.Text) < Convert.ToDecimal(tbtotal.Text)) Then
-                        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-                        ToastNotification.Show(Me, "El monto Pagado en Bs. debe ser mayor o igual al Total General".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-                        Return False
-                    End If
-                Else
-                    If tbMontoDolar.Value > 0 Then
-                        If (Convert.ToDecimal(tbMontoDolar.Text) < Convert.ToDecimal(tbtotal.Text)) Then
-                            Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-                            ToastNotification.Show(Me, "El monto Pagado en $ debe ser mayor o igual al Total General".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-                            Return False
-                        End If
-                    End If
-                End If
-            End If
+        'If swTipoVenta.Value = True Then
+        '    If tbMontoBs.Value = 0 And tbMontoDolar.Value = 0 And tbMontoTarej.Value = 0 Then
+        '        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+        '        ToastNotification.Show(Me, "Debe llenar la forma de pago".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+        '        Return False
+        '    End If
+        'End If
+        'If swTipoVenta.Value = True Then
+        '    If (chbTarjeta.Checked = True) Then
+        '        Return True
+        '    Else
+        '        If tbMontoBs.Value > 0 Then
+        '            If (Convert.ToDecimal(tbMontoBs.Text) < Convert.ToDecimal(tbtotal.Text)) Then
+        '                Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+        '                ToastNotification.Show(Me, "El monto Pagado en Bs. debe ser mayor o igual al Total General".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+        '                Return False
+        '            End If
+        '        Else
+        '            If tbMontoDolar.Value > 0 Then
+        '                If (Convert.ToDecimal(tbMontoDolar.Text) < Convert.ToDecimal(tbtotal.Text)) Then
+        '                    Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+        '                    ToastNotification.Show(Me, "El monto Pagado en $ debe ser mayor o igual al Total General".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+        '                    Return False
+        '                End If
+        '            End If
+        '        End If
+        '    End If
 
-        End If
+        'End If
 
         Return True
     End Function
@@ -1496,7 +1545,7 @@ Public Class F0_Ventas
         End If
 
         Dim numi As String = ""
-        Dim tabla As DataTable = L_fnMostrarMontos(0)
+        Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         _prInsertarMontoNuevo(tabla)
 
         Dim res As Boolean = L_fnGrabarVenta(numi, "", tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")), _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value, IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value, tabla)
@@ -1534,6 +1583,9 @@ Public Class F0_Ventas
     End Sub
     Private Sub _prInsertarMontoNuevo(ByRef tabla As DataTable)
         tabla.Rows.Add(0, tbMontoBs.Value, tbMontoDolar.Value, tbMontoTarej.Value, cbCambioDolar.Text, 0)
+    End Sub
+    Private Sub _prModificarMontos(ByRef tabla As DataTable)
+        tabla.Rows.Add(0, TotalBs, TotalSus, TotalTarjeta, TipoCambio, 2)
     End Sub
     Public Sub _prImiprimirNotaVenta(numi As String)
         Dim ef = New Efecto
@@ -1590,6 +1642,34 @@ Public Class F0_Ventas
         Else
             Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
             ToastNotification.Show(Me, "La Venta no pudo ser Modificada".ToUpper, img, 4500, eToastGlowColor.Red, eToastPosition.BottomCenter)
+
+        End If
+    End Sub
+
+    Private Sub _prGuardarCobro()
+        Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
+        _prModificarMontos(tabla)
+
+        Dim res As Boolean = L_fnModificarCobro(tbCodigo.Text, TipoVenta, FechaVenc.ToString("yyyy/MM/dd"), tabla, Banco, Glosa)
+        If res Then
+
+
+
+            Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
+            ToastNotification.Show(Me, "El Cobro de la Venta: ".ToUpper + tbCodigo.Text + " fue grabado con éxito.".ToUpper,
+                                      img, 4500,
+                                      eToastGlowColor.Green,
+                                      eToastPosition.TopCenter
+                                      )
+
+
+            _prCargarVenta()
+            '_prSalir()
+
+
+        Else
+            Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
+            ToastNotification.Show(Me, "LEl Cobro de la Venta no pudo ser grabada".ToUpper, img, 4500, eToastGlowColor.Red, eToastPosition.BottomCenter)
 
         End If
     End Sub
@@ -2253,7 +2333,18 @@ Public Class F0_Ventas
         btnNuevo.PerformClick()
         'Me.ResumeLayout()
 
+        'If btnGrabar.Enabled = True Then
+        '    btnCobrar.Enabled = False
+        'Else
+        '    btnCobrar.Enabled = True
+        'End If
 
+        If gi_userCobrar = 1 Then
+            btnCobrar.Visible = True
+        Else
+            btnCobrar.Visible = False
+
+        End If
     End Sub
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
         _Limpiar()
@@ -2272,6 +2363,15 @@ Public Class F0_Ventas
         '_prhabilitar()
 
         '_Limpiar()
+
+
+        'If btnGrabar.Enabled = True Then
+        '    btnCobrar.Enabled = False
+        'Else
+        '    btnCobrar.Enabled = True
+        'End If
+
+
     End Sub
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
         _prSalir()
@@ -3699,7 +3799,16 @@ salirIf:
     End Sub
 
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
-        SeleccionarCategoria (True)
+        If tbCliente.Text = String.Empty Then
+            Dim img As Bitmap = New Bitmap(My.Resources.WARNING, 50, 50)
+            ToastNotification.Show(Me, "Primero debe seleccionar el cliente ".ToUpper,
+                                      img, 2000,
+                                      eToastGlowColor.Green,
+                                      eToastPosition.TopCenter)
+        Else
+            SeleccionarCategoria(True)
+        End If
+
     End Sub
 
     Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnActualizar.Click
@@ -3707,18 +3816,21 @@ salirIf:
     End Sub
 
     Private Sub tbMontoBs_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoBs.ValueChanged
-        tbMontoDolar.Value = 0
-        tbMontoTarej.Value = 0
+        If btnGrabar.Enabled = True Then
+            tbMontoDolar.Value = 0
+            tbMontoTarej.Value = 0
 
-        If tbMontoBs.Value <> 0 And tbMontoBs.Text <> String.Empty Then
-            txtMontoPagado1.Text = tbMontoBs.Value + (tbMontoDolar.Value * IIf(cbCambioDolar.Text = "", 0, Convert.ToDecimal(cbCambioDolar.Text))) + tbMontoTarej.Value
-            If Convert.ToDecimal(tbtotal.Text) <> 0 And Convert.ToDecimal(txtMontoPagado1.Text) >= Convert.ToDecimal(tbtotal.Text) Then
-                txtCambio1.Text = Convert.ToDecimal(txtMontoPagado1.Text) - Convert.ToDecimal(tbtotal.Text)
-            Else
-                txtCambio1.Text = "0.00"
-                txtMontoPagado1.Text = "0.00"
+            If tbMontoBs.Value <> 0 And tbMontoBs.Text <> String.Empty Then
+                txtMontoPagado1.Text = tbMontoBs.Value + (tbMontoDolar.Value * IIf(cbCambioDolar.Text = "", 0, Convert.ToDecimal(cbCambioDolar.Text))) + tbMontoTarej.Value
+                If Convert.ToDecimal(tbtotal.Text) <> 0 And Convert.ToDecimal(txtMontoPagado1.Text) >= Convert.ToDecimal(tbtotal.Text) Then
+                    txtCambio1.Text = Convert.ToDecimal(txtMontoPagado1.Text) - Convert.ToDecimal(tbtotal.Text)
+                Else
+                    txtCambio1.Text = "0.00"
+                    txtMontoPagado1.Text = "0.00"
+                End If
             End If
         End If
+
     End Sub
 
     Private Sub cbCambioDolar_ValueChanged(sender As Object, e As EventArgs) Handles cbCambioDolar.ValueChanged
@@ -3776,8 +3888,82 @@ salirIf:
         End If
     End Sub
 
+    Private Sub btnCobrar_Click(sender As Object, e As EventArgs) Handles btnCobrar.Click
+        If grVentas.GetValue("taEstadoV") = 1 Then
+            Dim ef As F1_MontoPagar
+            ef = New F1_MontoPagar
+
+            ef.TotalVenta = Math.Round(tbtotal.Value, 2)
+            ef.tipoVenta = IIf(swTipoVenta.Value = True, 1, 0)
+            ef.Cobrado = False
+
+            ef.ShowDialog()
+            Dim bandera As Boolean = False
+            bandera = ef.Bandera
+            If (bandera = True) Then
+
+                TotalBs = ef.TotalBs
+                TotalSus = ef.TotalSus
+                TotalTarjeta = ef.TotalTarjeta
+                TipoCambio = ef.TipoCambio
+                TipoVenta = ef.tipoVenta
+                FechaVenc = ef.tbFechaVenc.Value
+                Banco = ef.cbBanco.Value
+                Glosa = ef.tbGlosa.Text
+
+                _prGuardarCobro()
+            Else
+                ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+            End If
+        Else
+            Dim ef As F1_MontoPagar
+            ef = New F1_MontoPagar
+
+            ef.TotalVenta = Math.Round(tbtotal.Value, 2)
+            ef.Cobrado = True
+
+            ef.swTipoVenta.Value = swTipoVenta.Value
+            ef.tbFechaVenc.Value = tbFechaVenc.Value
+
+            ef.cbCambioDolar.Text = cbCambioDolar.Text
+            ef.tbMontoDolar.Value = tbMontoDolar.Value
+            ef.tbMontoTarej.Value = tbMontoTarej.Value
+            ef.tbMontoBs.Value = tbMontoBs.Value
+            'ef.cbCambioDolar.Value = cbCambioDolar.Value
+
+            If tbMontoTarej.Value = 0 Then
+                ef.chbTarjeta.Checked = False
+            Else
+                ef.chbTarjeta.Checked = True
+            End If
+
+            ef.Banc = Banco
+            ef.tbGlosa.Text = Glosa
+
+            ef.ShowDialog()
+            Dim bandera As Boolean = False
+            bandera = ef.Bandera
+            If (bandera = True) Then
+
+                TotalBs = ef.TotalBs
+                TotalSus = ef.TotalSus
+                TotalTarjeta = ef.TotalTarjeta
+                TipoCambio = ef.TipoCambio
+                TipoVenta = ef.tipoVenta
+                FechaVenc = ef.tbFechaVenc.Value
+                Banco = ef.cbBanco.Value
+                Glosa = ef.tbGlosa.Text
+
+                _prGuardarCobro()
+            Else
+                ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+            End If
+        End If
 
 
+    End Sub
 
 
 

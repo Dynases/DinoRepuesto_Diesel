@@ -83,6 +83,7 @@ Public Class Login
             ToastNotification.Show(Me, "Codigo de Usuario y Password Incorrecto..!!!".ToUpper, My.Resources.WARNING, 1000, eToastGlowColor.Red, eToastPosition.BottomLeft)
         Else
             gs_user = tbUsuario.Text
+            gi_userCobrar = dtUsuario.Rows(0).Item("ydcant")
             gi_userFuente = dtUsuario.Rows(0).Item("ydfontsize")
             gi_userNumi = dtUsuario.Rows(0).Item("ydnumi")
             gi_userRol = dtUsuario.Rows(0).Item("ydrol")

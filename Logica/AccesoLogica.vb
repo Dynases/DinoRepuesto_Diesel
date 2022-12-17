@@ -2014,6 +2014,74 @@ Public Class AccesoLogica
 
         Return _Tabla
     End Function
+    Public Shared Function L_fnVentasGral(_almacen As String, producto As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 23))
+        _listParam.Add(New Datos.DParametro("@almacen", _almacen))
+        _listParam.Add(New Datos.DParametro("@producto", producto))
+        _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
+
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
+
+        Return _Tabla
+
+    End Function
+    Public Shared Function L_fnVentasCliente(_almacen As String, producto As String, cliente As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 24))
+        _listParam.Add(New Datos.DParametro("@almacen", _almacen))
+        _listParam.Add(New Datos.DParametro("@producto", producto))
+        _listParam.Add(New Datos.DParametro("@cliente", cliente))
+        _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
+
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
+
+        Return _Tabla
+
+    End Function
+
+    Public Shared Function L_fnMostrarMontosTV0014(tanumi As Integer) As DataTable
+        Dim _Tabla As DataTable
+        Dim _listParam As New List(Of Datos.DParametro)
+        _listParam.Add(New Datos.DParametro("@tipo", 25))
+        _listParam.Add(New Datos.DParametro("@tanumi", tanumi))
+        _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
+        Return _Tabla
+    End Function
+    Public Shared Function L_fnModificarCobro(_tanumi As String, _tatven As Integer, _tafvcr As String, Monto As DataTable,
+                                              _banco As Integer, _glosa As String) As Boolean
+        Dim _Tabla As DataTable
+        Dim _resultado As Boolean
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 26))
+        _listParam.Add(New Datos.DParametro("@tanumi", _tanumi))
+        _listParam.Add(New Datos.DParametro("@tatven", _tatven))
+        _listParam.Add(New Datos.DParametro("@tafvcr", _tafvcr))
+        _listParam.Add(New Datos.DParametro("@banco", _banco))
+        _listParam.Add(New Datos.DParametro("@glosa", _glosa))
+        _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
+        _listParam.Add(New Datos.DParametro("@TV0014", "", Monto))
+
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
+
+
+        If _Tabla.Rows.Count > 0 Then
+            _tanumi = _Tabla.Rows(0).Item(0)
+            _resultado = True
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
 #End Region
 
 #Region "TC001 Compras"
@@ -6647,5 +6715,100 @@ Public Class AccesoLogica
 
         Return _Tabla
     End Function
+#End Region
+#Region "BANCOS"
+
+    Public Shared Function L_prBancoGeneral() As DataTable
+        Dim _Tabla As DataTable
+        't.canumi , t.canombre, t.cacuenta, t.caobs, t.cafact, t.cahact, t.cauact 
+        Dim _listPalam As New List(Of Datos.DParametro)
+
+        _listPalam.Add(New Datos.DParametro("@tipo", 3))
+        _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
+
+        Return _Tabla
+    End Function
+    Public Shared Function L_prBancoGrabar(ByRef _canumi As String, _canombre As String,
+                                           _cacuenta As String, _caobs As String,
+                                           _img As String, _estado As Integer) As Boolean
+        Dim _resultado As Boolean
+        Dim _Tabla As DataTable
+        Dim _listPalam As New List(Of Datos.DParametro)
+        't.canumi , t.canombre, t.cacuenta, t.caobs, t.cafact, t.cahact, t.cauact 
+        _listPalam.Add(New Datos.DParametro("@tipo", 1))
+        _listPalam.Add(New Datos.DParametro("@canumi", _canumi))
+        _listPalam.Add(New Datos.DParametro("@canombre", _canombre))
+        _listPalam.Add(New Datos.DParametro("@canrocuenta", _cacuenta))
+        _listPalam.Add(New Datos.DParametro("@caobs", _caobs))
+        _listPalam.Add(New Datos.DParametro("@caestado", _estado))
+        _listPalam.Add(New Datos.DParametro("@caimg", _img))
+        _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
+
+        If _Tabla.Rows.Count > 0 Then
+            _canumi = _Tabla.Rows(0).Item(0)
+            _resultado = True
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
+
+    Public Shared Function L_prBancoBorrar(_numi As String, ByRef _mensaje As String) As Boolean
+
+        Dim _resultado As Boolean
+
+        If L_fnbValidarEliminacion(_numi, "BA001", "canumi", _mensaje) = True Then
+            Dim _Tabla As DataTable
+
+            Dim _listPalam As New List(Of Datos.DParametro)
+
+            _listPalam.Add(New Datos.DParametro("@tipo", -1))
+            _listPalam.Add(New Datos.DParametro("@canumi", _numi))
+            _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+            _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
+
+            If _Tabla.Rows.Count > 0 Then
+                _numi = _Tabla.Rows(0).Item(0)
+                _resultado = True
+            Else
+                _resultado = False
+            End If
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
+
+    Public Shared Function L_prBancoModificar(ByRef _canumi As String, _canombre As String,
+                                           _cacuenta As String, _caobs As String,
+                                           _img As String, _estado As Integer) As Boolean
+        Dim _resultado As Boolean
+        Dim _Tabla As DataTable
+        Dim _listPalam As New List(Of Datos.DParametro)
+        't.canumi , t.canombre, t.cacuenta, t.caobs, t.cafact, t.cahact, t.cauact 
+        _listPalam.Add(New Datos.DParametro("@tipo", 2))
+        _listPalam.Add(New Datos.DParametro("@canumi", _canumi))
+        _listPalam.Add(New Datos.DParametro("@canombre", _canombre))
+        _listPalam.Add(New Datos.DParametro("@canrocuenta", _cacuenta))
+        _listPalam.Add(New Datos.DParametro("@caobs", _caobs))
+        _listPalam.Add(New Datos.DParametro("@caestado", _estado))
+        _listPalam.Add(New Datos.DParametro("@caimg", _img))
+        _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
+
+        If _Tabla.Rows.Count > 0 Then
+            _canumi = _Tabla.Rows(0).Item(0)
+            _resultado = True
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
+
 #End Region
 End Class

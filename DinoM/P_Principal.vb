@@ -239,7 +239,7 @@ Public Class P_Principal
         'VentanaVenta.Select()
 
         FVentas = New F0_Ventas With {.TopLevel = False, .AutoSize = True}
-        FVentas._nameButton = btConfCliente.Name
+        FVentas._nameButton = btVentVenta.Name
         FVentas._modulo = FP_INVENTARIO
         FVentas._tab = Nothing
         FVentas.Parent = PanelVentaAtajo
@@ -1195,6 +1195,12 @@ Public Class P_Principal
         Dim frm As New F0_ProformaCompra
         frm._nameButton = btComProforma.Name
         frm._modulo = FP_COMPRAS
+        frm.Show()
+    End Sub
+
+    Private Sub btBancos_Click(sender As Object, e As EventArgs) Handles btBancos.Click
+        Dim frm As New F1_Bancos
+        frm._nameButton = btBancos.Name
         frm.Show()
     End Sub
 

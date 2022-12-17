@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class F0_DetalleVenta
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class F0_DetalleVentaCopia
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class F0_DetalleVenta
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GPanelProductos = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel7 = New System.Windows.Forms.Panel()
@@ -34,13 +34,6 @@ Partial Class F0_DetalleVenta
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.grProductoSeleccionado = New Janus.Windows.GridEX.GridEX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.grVentasCliente = New Janus.Windows.GridEX.GridEX()
-        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.grVentasGral = New Janus.Windows.GridEX.GridEX()
         Me.GPanelProductos.SuspendLayout()
         Me.Panel7.SuspendLayout()
         CType(Me.grProductos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -49,13 +42,6 @@ Partial Class F0_DetalleVenta
         Me.Panel1.SuspendLayout()
         CType(Me.grProductoSeleccionado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.GroupPanel3.SuspendLayout()
-        Me.Panel4.SuspendLayout()
-        CType(Me.grVentasCliente, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupPanel2.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        CType(Me.grVentasGral, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GPanelProductos
@@ -68,7 +54,7 @@ Partial Class F0_DetalleVenta
         Me.GPanelProductos.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GPanelProductos.Location = New System.Drawing.Point(3, 3)
         Me.GPanelProductos.Name = "GPanelProductos"
-        Me.GPanelProductos.Size = New System.Drawing.Size(856, 271)
+        Me.GPanelProductos.Size = New System.Drawing.Size(856, 246)
         '
         '
         '
@@ -108,7 +94,7 @@ Partial Class F0_DetalleVenta
         Me.Panel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel7.Location = New System.Drawing.Point(0, 0)
         Me.Panel7.Name = "Panel7"
-        Me.Panel7.Size = New System.Drawing.Size(850, 248)
+        Me.Panel7.Size = New System.Drawing.Size(850, 223)
         Me.Panel7.TabIndex = 0
         '
         'grProductos
@@ -130,7 +116,7 @@ Partial Class F0_DetalleVenta
         Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
-        Me.grProductos.Size = New System.Drawing.Size(850, 207)
+        Me.grProductos.Size = New System.Drawing.Size(850, 182)
         Me.grProductos.TabIndex = 0
         Me.grProductos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -217,9 +203,9 @@ Partial Class F0_DetalleVenta
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupPanel1.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel1.Location = New System.Drawing.Point(3, 280)
+        Me.GroupPanel1.Location = New System.Drawing.Point(3, 255)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(856, 120)
+        Me.GroupPanel1.Size = New System.Drawing.Size(856, 247)
         '
         '
         '
@@ -258,7 +244,7 @@ Partial Class F0_DetalleVenta
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(850, 97)
+        Me.Panel1.Size = New System.Drawing.Size(850, 224)
         Me.Panel1.TabIndex = 0
         '
         'grProductoSeleccionado
@@ -273,7 +259,7 @@ Partial Class F0_DetalleVenta
         Me.grProductoSeleccionado.Name = "grProductoSeleccionado"
         Me.grProductoSeleccionado.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductoSeleccionado.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grProductoSeleccionado.Size = New System.Drawing.Size(850, 97)
+        Me.grProductoSeleccionado.Size = New System.Drawing.Size(850, 224)
         Me.grProductoSeleccionado.TabIndex = 0
         Me.grProductoSeleccionado.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -283,170 +269,17 @@ Partial Class F0_DetalleVenta
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.GPanelProductos, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.GroupPanel1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 2)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 3
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(862, 505)
-        Me.TableLayoutPanel1.TabIndex = 6
+        Me.TableLayoutPanel1.TabIndex = 1
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.GroupPanel3, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.GroupPanel2, 0, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 406)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(856, 96)
-        Me.TableLayoutPanel2.TabIndex = 6
-        '
-        'GroupPanel3
-        '
-        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
-        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel3.Controls.Add(Me.Panel4)
-        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel3.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel3.Location = New System.Drawing.Point(431, 3)
-        Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(422, 90)
-        '
-        '
-        '
-        Me.GroupPanel3.Style.BackColor = System.Drawing.Color.DodgerBlue
-        Me.GroupPanel3.Style.BackColor2 = System.Drawing.Color.DodgerBlue
-        Me.GroupPanel3.Style.BackColorGradientAngle = 90
-        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderBottomWidth = 1
-        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderLeftWidth = 1
-        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderRightWidth = 1
-        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel3.Style.BorderTopWidth = 1
-        Me.GroupPanel3.Style.CornerDiameter = 4
-        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel3.Style.TextColor = System.Drawing.Color.White
-        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel3.TabIndex = 7
-        Me.GroupPanel3.Text = "Últimas 10 Ventas (Cliente)"
-        '
-        'Panel4
-        '
-        Me.Panel4.BackColor = System.Drawing.Color.White
-        Me.Panel4.Controls.Add(Me.grVentasCliente)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel4.Location = New System.Drawing.Point(0, 0)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(416, 67)
-        Me.Panel4.TabIndex = 0
-        '
-        'grVentasCliente
-        '
-        Me.grVentasCliente.AllowEdit = Janus.Windows.GridEX.InheritableBoolean.[False]
-        Me.grVentasCliente.BackColor = System.Drawing.Color.GhostWhite
-        Me.grVentasCliente.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.grVentasCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grVentasCliente.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grVentasCliente.HeaderFormatStyle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.grVentasCliente.Location = New System.Drawing.Point(0, 0)
-        Me.grVentasCliente.Name = "grVentasCliente"
-        Me.grVentasCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
-        Me.grVentasCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grVentasCliente.Size = New System.Drawing.Size(416, 67)
-        Me.grVentasCliente.TabIndex = 0
-        Me.grVentasCliente.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
-        '
-        'GroupPanel2
-        '
-        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
-        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel2.Controls.Add(Me.Panel2)
-        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel2.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel2.Location = New System.Drawing.Point(3, 3)
-        Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(422, 90)
-        '
-        '
-        '
-        Me.GroupPanel2.Style.BackColor = System.Drawing.Color.DodgerBlue
-        Me.GroupPanel2.Style.BackColor2 = System.Drawing.Color.DodgerBlue
-        Me.GroupPanel2.Style.BackColorGradientAngle = 90
-        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderBottomWidth = 1
-        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderLeftWidth = 1
-        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderRightWidth = 1
-        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel2.Style.BorderTopWidth = 1
-        Me.GroupPanel2.Style.CornerDiameter = 4
-        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel2.Style.TextColor = System.Drawing.Color.White
-        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel2.TabIndex = 6
-        Me.GroupPanel2.Text = "Últimas 10 Ventas (General)"
-        '
-        'Panel2
-        '
-        Me.Panel2.BackColor = System.Drawing.Color.White
-        Me.Panel2.Controls.Add(Me.grVentasGral)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(416, 67)
-        Me.Panel2.TabIndex = 0
-        '
-        'grVentasGral
-        '
-        Me.grVentasGral.AllowEdit = Janus.Windows.GridEX.InheritableBoolean.[False]
-        Me.grVentasGral.BackColor = System.Drawing.Color.GhostWhite
-        Me.grVentasGral.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.grVentasGral.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grVentasGral.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grVentasGral.HeaderFormatStyle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.grVentasGral.Location = New System.Drawing.Point(0, 0)
-        Me.grVentasGral.Name = "grVentasGral"
-        Me.grVentasGral.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
-        Me.grVentasGral.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grVentasGral.Size = New System.Drawing.Size(416, 67)
-        Me.grVentasGral.TabIndex = 0
-        Me.grVentasGral.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
-        '
-        'F0_DetalleVenta
+        'F0_DetalleVentaCopia
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -454,7 +287,7 @@ Partial Class F0_DetalleVenta
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.Name = "F0_DetalleVenta"
+        Me.Name = "F0_DetalleVentaCopia"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Top"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
@@ -466,13 +299,6 @@ Partial Class F0_DetalleVenta
         Me.Panel1.ResumeLayout(False)
         CType(Me.grProductoSeleccionado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.GroupPanel3.ResumeLayout(False)
-        Me.Panel4.ResumeLayout(False)
-        CType(Me.grVentasCliente, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupPanel2.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        CType(Me.grVentasGral, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -489,11 +315,4 @@ Partial Class F0_DetalleVenta
     Friend WithEvents btnAgregar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnActualizar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
-    Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Panel4 As Panel
-    Friend WithEvents grVentasCliente As Janus.Windows.GridEX.GridEX
-    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents grVentasGral As Janus.Windows.GridEX.GridEX
 End Class

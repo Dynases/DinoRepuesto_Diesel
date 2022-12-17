@@ -253,6 +253,12 @@
     <Compile Include="F0_ProformaVenta.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="F1_Bancos.designer.vb">
+      <DependentUpon>F1_Bancos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="F1_Bancos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="F1_Traspaso.Designer.vb">
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
     </Compile>
@@ -978,6 +984,12 @@
     <Compile Include="Utils\F0_DetalleMovimiento.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utils\F0_DetalleVentaCopia.Designer.vb">
+      <DependentUpon>F0_DetalleVentaCopia.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\F0_DetalleVentaCopia.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utils\F0_DetalleVenta.Designer.vb">
       <DependentUpon>F0_DetalleVenta.vb</DependentUpon>
     </Compile>
@@ -988,6 +1000,12 @@
       <DependentUpon>F1_Cantidad.vb</DependentUpon>
     </Compile>
     <Compile Include="Utils\F1_Cantidad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\F1_MontoPagar.designer.vb">
+      <DependentUpon>F1_MontoPagar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\F1_MontoPagar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\F_Inventario.Designer.vb">
@@ -1045,6 +1063,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="F0_ProformaVenta.resx">
       <DependentUpon>F0_ProformaVenta.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="F1_Bancos.resx">
+      <DependentUpon>F1_Bancos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="F1_Traspaso.resx">
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
@@ -1461,11 +1482,17 @@
     <EmbeddedResource Include="Utils\F0_DetalleMovimiento.resx">
       <DependentUpon>F0_DetalleMovimiento.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utils\F0_DetalleVentaCopia.resx">
+      <DependentUpon>F0_DetalleVentaCopia.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utils\F0_DetalleVenta.resx">
       <DependentUpon>F0_DetalleVenta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\F1_Cantidad.resx">
       <DependentUpon>F1_Cantidad.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utils\F1_MontoPagar.resx">
+      <DependentUpon>F1_MontoPagar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\F_Inventario.resx">
       <DependentUpon>F_Inventario.vb</DependentUpon>
@@ -1773,6 +1800,7 @@
     <None Include="Resources\add.png" />
     <Content Include="Resources\atras1.png" />
     <None Include="Resources\buscar.png" />
+    <None Include="Resources\banco.png" />
     <Content Include="Resources\check-mark.png" />
     <None Include="Resources\cobro.png" />
     <None Include="Resources\creditopagos.png" />
@@ -1797,6 +1825,7 @@
     <None Include="Resources\fondoazul.png" />
     <None Include="Resources\fondoazul1.png" />
     <None Include="Resources\Ideteca.PNG" />
+    <Content Include="Resources\imageDefault.jpg" />
     <Content Include="Resources\man.png" />
     <None Include="Resources\pdf.png" />
     <None Include="Resources\txt.png" />

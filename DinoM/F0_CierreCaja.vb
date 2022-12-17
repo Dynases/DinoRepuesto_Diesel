@@ -102,7 +102,7 @@ Public Class F0_CierreCaja
         _prDetalleCortes(-1)
         _prArmarCortes()
         _prDetalleDeposito(-1)
-        _prLlenarDepositos(Dgv_Depositos.DataSource)
+        '_prLlenarDepositos(Dgv_Depositos.DataSource)
     End Sub
 
     Private Sub _prArmarCortes()
@@ -255,7 +255,7 @@ Public Class F0_CierreCaja
                 .Position = 4
             End With
             With Dgv_Depositos.RootTable.Columns("ceNDepos")
-                .Caption = "NRO. DEPOSITO"
+                .Caption = "GLOSA/NRO.DEPÓSITO"
                 .Width = 180
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
                 .Visible = True
@@ -512,7 +512,7 @@ Public Class F0_CierreCaja
                 .DropDownList.Columns("yccod3").Caption = "COD"
                 .DropDownList.Columns.Add("ycdes3").Width = 200
                 .DropDownList.Columns("ycdes3").Caption = "DESCRIPCION"
-                .ValueMember = "ycdes3"
+                .ValueMember = "yccod3"
                 .DisplayMember = "ycdes3"
                 .DataSource = dt
                 .Refresh()
@@ -594,7 +594,7 @@ Public Class F0_CierreCaja
                 credito = credito
             End If
             totalCorteDol = Dgv_Cortes.GetTotal(Dgv_Cortes.RootTable.Columns("cdTotalD"), AggregateFunction.Sum)
-            TotalDeposito = Dgv_Depositos.GetTotal(Dgv_Depositos.RootTable.Columns("ceMonto"), AggregateFunction.Sum)
+            'TotalDeposito = Dgv_Depositos.GetTotal(Dgv_Depositos.RootTable.Columns("ceMonto"), AggregateFunction.Sum)
             'TotalContado = Dgv_VentasPagos.GetTotal(Dgv_VentasPagos.RootTable.Columns("totalbs"), AggregateFunction.Sum) - tbTCredito.Text
 
             tbTEfectivo.Value = totalCorteBol + (totalCorteDol * Tb_TipoCambio.Value)
@@ -1135,6 +1135,17 @@ Public Class F0_CierreCaja
                         tbTEfectivo.Text = 0
                         tbTDiferencia.Text = 0
                         '_LimpiarGrillas()
+                        For i = 0 To Dgv_VentasPagos.RowCount - 1
+                            If (CType(Dgv_VentasPagos.DataSource, DataTable).Rows(i).Item("tarjeta")) > 0 Then
+                                Dim tMonto As DataTable = L_fnMostrarMontos((CType(Dgv_VentasPagos.DataSource, DataTable).Rows(i).Item("tanumi")))
+                                ' _prDetalleDeposito(-1)
+                                Dim aux = tMonto.Rows(0).Item("tgBanco")
+                                cbbanco.Value = aux
+                                Dgv_Depositos.DataSource.Rows.Add(0, 0, 1, cbbanco.Text, "Bs", tMonto.Rows(0).Item("tgGlosa"), DateTime.Today, tMonto.Rows(0).Item("tgMontTare"), 0)
+
+                            End If
+                        Next
+
                     Else
                         Throw New Exception("No existen ventas y/o pagos de esta fecha o Ya existe Cierre de Caja de esta fecha, Verifique")
                     End If
@@ -1305,11 +1316,12 @@ Public Class F0_CierreCaja
     End Sub
 
     Private Sub Dgv_Depositos_EditingCell(sender As Object, e As EditingCellEventArgs) Handles Dgv_Depositos.EditingCell
-        If btnGrabar.Enabled = True Then
-            e.Cancel = False
-        Else
-            e.Cancel = True
-        End If
+        'If btnGrabar.Enabled = True Then
+        '    e.Cancel = False
+        'Else
+        '    e.Cancel = True
+        'End If
+        e.Cancel = True
     End Sub
 
     Private Sub Dgv_Cortes_CellEdited(sender As Object, e As ColumnActionEventArgs) Handles Dgv_Cortes.CellEdited
@@ -1374,36 +1386,36 @@ Public Class F0_CierreCaja
     End Sub
 
     Private Sub Dgv_Depositos_CellValueChanged(sender As Object, e As ColumnActionEventArgs) Handles Dgv_Depositos.CellValueChanged
-        If (e.Column.Key = "ceMonto") Then
-            Dim lin As Integer = Dgv_Depositos.GetValue("cenumi")
-            Dim pos As Integer = -1
-            _fnObtenerFilaDetalleDepositos(pos, lin)
+        'If (e.Column.Key = "ceMonto") Then
+        '    Dim lin As Integer = Dgv_Depositos.GetValue("cenumi")
+        '    Dim pos As Integer = -1
+        '    _fnObtenerFilaDetalleDepositos(pos, lin)
 
-            If (Not IsNumeric(Dgv_Depositos.GetValue("ceMonto")) Or Dgv_Depositos.GetValue("ceMonto").ToString = String.Empty) Then
+        '    If (Not IsNumeric(Dgv_Depositos.GetValue("ceMonto")) Or Dgv_Depositos.GetValue("ceMonto").ToString = String.Empty) Then
 
-                Dgv_Depositos.SetValue("ceMonto", 0)
-                CType(Dgv_Depositos.DataSource, DataTable).Rows(pos).Item("ceMonto") = 0
+        '        Dgv_Depositos.SetValue("ceMonto", 0)
+        '        CType(Dgv_Depositos.DataSource, DataTable).Rows(pos).Item("ceMonto") = 0
 
-                _prCalcular(0, 1)
-            Else
+        '        _prCalcular(0, 1)
+        '    Else
 
-                Dim Monto As Double
+        '        Dim Monto As Double
 
-                Monto = Convert.ToDouble(Dgv_Depositos.GetValue("ceMonto"))
-                'Dgv_Depositos.SetValue("ceMonto", Monto)
-                CType(Dgv_Depositos.DataSource, DataTable).Rows(pos).Item("ceMonto") = Monto
+        '        Monto = Convert.ToDouble(Dgv_Depositos.GetValue("ceMonto"))
+        '        'Dgv_Depositos.SetValue("ceMonto", Monto)
+        '        CType(Dgv_Depositos.DataSource, DataTable).Rows(pos).Item("ceMonto") = Monto
 
-                _prCalcular(0, 1)
-            End If
+        '        _prCalcular(0, 1)
+        '    End If
 
-            'Dgv_Depositos.UpdateData()
-            '_prCalcular(0, 1)
+        '    'Dgv_Depositos.UpdateData()
+        '    '_prCalcular(0, 1)
 
-            If (Dgv_Depositos.GetValue("ceccnumi") <> 0) Then
-                Dgv_Depositos.SetValue("estado", 2)
-            End If
+        '    If (Dgv_Depositos.GetValue("ceccnumi") <> 0) Then
+        '        Dgv_Depositos.SetValue("estado", 2)
+        '    End If
 
-        End If
+        'End If
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -1415,6 +1427,8 @@ Public Class F0_CierreCaja
             Timer1.Enabled = False
         End If
     End Sub
+
+
 
 
 

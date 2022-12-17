@@ -3,14 +3,13 @@ Imports Logica.AccesoLogica
 Imports Janus.Windows.GridEX
 Imports DevComponents.DotNetBar
 Imports DinoM.JanusExtension
-Public Class F0_DetalleVenta
+Public Class F0_DetalleVentaCopia
 
     Public dtProductoAll As DataTable
     Public dtDetalle As DataTable
     Public dtname As DataTable
     Public almacenId As Integer
     Public precio As Decimal
-    Public cliente As Integer
     Public CategoriaPrecio As Integer
 
     Public Bandera As Boolean = False
@@ -95,7 +94,7 @@ Public Class F0_DetalleVenta
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = False
+            .Visible = True
             .AllowSort = False
         End With
         With grProductoSeleccionado.RootTable.Columns("Medida")
@@ -104,7 +103,7 @@ Public Class F0_DetalleVenta
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = False
+            .Visible = gb_CodigoBarra
             .AllowSort = False
         End With
         With grProductoSeleccionado.RootTable.Columns("Marca")
@@ -113,7 +112,7 @@ Public Class F0_DetalleVenta
             .MaxLines = 150
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = False
+            .Visible = True
             .AllowSort = False
         End With
         With grProductoSeleccionado.RootTable.Columns("Categoria")
@@ -126,14 +125,16 @@ Public Class F0_DetalleVenta
             .AllowSort = False
         End With
         With grProductoSeleccionado.RootTable.Columns("yfcdprod1")
-            .Width = 850
+            .Width = 450
             .Visible = True
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Caption = "Descripción"
-            '.AllowSort = False
+            .Caption = "Descripcion"
+            .AllowSort = False
         End With
+
+
 
         With grProductoSeleccionado.RootTable.Columns("yfgr1")
             .Width = 160
@@ -145,14 +146,14 @@ Public Class F0_DetalleVenta
                 .Width = 100
                 .Caption = dtname.Rows(0).Item("Grupo 1").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = False
+                .Visible = True
                 .AllowSort = False
             End With
             With grProductoSeleccionado.RootTable.Columns("grupo2")
                 .Width = 100
                 .Caption = dtname.Rows(0).Item("Grupo 2").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = False
+                .Visible = True
                 .AllowSort = False
             End With
 
@@ -251,9 +252,7 @@ Public Class F0_DetalleVenta
             .AllowSort = False
             .Caption = "Stock"
         End With
-        With grProductoSeleccionado.RootTable.Columns("StockTodos")
-            .Visible = False
-        End With
+
         With grProductoSeleccionado
             '.DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
             '.FilterMode = FilterMode.Automatic
@@ -466,15 +465,7 @@ Public Class F0_DetalleVenta
             .AllowSort = False
             .Caption = "Stock"
         End With
-        With grProductos.RootTable.Columns("StockTodos")
-            .Width = 300
-            .FormatString = "0.00"
-            .Visible = True
-            .Caption = "Stock Todos"
-            .MaxLines = 100
-            .CellStyle.LineAlignment = TextAlignment.Near
-            .WordWrap = True
-        End With
+
         With grProductos
             '.DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
             '.FilterMode = FilterMode.Automatic
@@ -872,176 +863,6 @@ Public Class F0_DetalleVenta
             e.Cancel = False
         Else
             e.Cancel = True
-        End If
-    End Sub
-
-    Private Sub grProductoSeleccionado_Click(sender As Object, e As EventArgs) Handles grProductoSeleccionado.Click
-        CargarUltimasVentasGral(grProductoSeleccionado.GetValue("Item").ToString)
-        CargarUltimasVentasCliente(grProductoSeleccionado.GetValue("Item").ToString)
-    End Sub
-    Public Sub CargarUltimasVentasGral(prod As String)
-        Dim dt As DataTable = L_fnVentasGral(almacenId, prod)
-        If dt.Rows.Count > 0 Then
-            grVentasGral.DataSource = dt
-            grVentasGral.RetrieveStructure()
-            grVentasGral.AlternatingColors = True
-
-
-            With grVentasGral.RootTable.Columns("tanumi")
-                .Width = 100
-                .Caption = "Id Venta"
-                .Visible = True
-            End With
-            With grVentasGral.RootTable.Columns("taalm")
-                .Width = 70
-                .Visible = False
-            End With
-            With grVentasGral.RootTable.Columns("tafdoc")
-                .Width = 100
-                .Caption = "Fecha Venta"
-                .Visible = True
-            End With
-            With grVentasGral.RootTable.Columns("taclpr")
-                .Width = 70
-                .Visible = False
-            End With
-            With grVentasGral.RootTable.Columns("cliente")
-                .Width = 130
-                .Caption = "Cliente"
-                .Visible = True
-            End With
-            With grVentasGral.RootTable.Columns("tbcmin")
-                .Width = 90
-                .Caption = "Cantidad"
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = True
-            End With
-            With grVentasGral.RootTable.Columns("tbpbas")
-                .Width = 100
-                .Caption = "Precio Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = True
-            End With
-            With grVentasGral.RootTable.Columns("tbdesc")
-                .Width = 100
-                .Caption = "Descuento Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = False
-            End With
-
-            With grVentasGral.RootTable.Columns("tbtotdesc")
-                .Width = 100
-                .Caption = "Total Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = False
-            End With
-            With grVentasGral.RootTable.Columns("taCatPrecio")
-                .Width = 70
-                .Visible = False
-            End With
-
-
-            With grVentasGral
-                '.DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
-                '.FilterMode = FilterMode.Automatic
-                '.FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
-                .GroupByBoxVisible = False
-                'diseño de la grilla
-                .VisualStyle = VisualStyle.Office2007
-            End With
-        Else
-            grVentasGral.ClearStructure()
-        End If
-    End Sub
-    Public Sub CargarUltimasVentasCliente(prod As String)
-        Dim dt As DataTable = L_fnVentasCliente(almacenId, prod, cliente)
-
-        If dt.Rows.Count > 0 Then
-            grVentasCliente.DataSource = dt
-            grVentasCliente.RetrieveStructure()
-            grVentasCliente.AlternatingColors = True
-
-
-            With grVentasCliente.RootTable.Columns("tanumi")
-                .Width = 100
-                .Caption = "Id Venta"
-                .Visible = True
-            End With
-            With grVentasCliente.RootTable.Columns("taalm")
-                .Width = 70
-                .Visible = False
-            End With
-            With grVentasCliente.RootTable.Columns("tafdoc")
-                .Width = 100
-                .Caption = "Fecha Venta"
-                .Visible = True
-            End With
-            With grVentasCliente.RootTable.Columns("taclpr")
-                .Width = 70
-                .Visible = False
-            End With
-            With grVentasCliente.RootTable.Columns("cliente")
-                .Width = 130
-                .Caption = "Cliente"
-                .Visible = True
-            End With
-            With grVentasCliente.RootTable.Columns("tbcmin")
-                .Width = 90
-                .Caption = "Cantidad"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .FormatString = "0.00"
-                .Visible = True
-            End With
-            With grVentasCliente.RootTable.Columns("tbpbas")
-                .Width = 100
-                .Caption = "Precio Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = True
-            End With
-            With grVentasCliente.RootTable.Columns("tbdesc")
-                .Width = 100
-                .Caption = "Descuento Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = False
-            End With
-
-            With grVentasCliente.RootTable.Columns("tbtotdesc")
-                .Width = 100
-                .Caption = "Total Un."
-                .FormatString = "0.00"
-                .CellStyle.LineAlignment = TextAlignment.Far
-                .TextAlignment = TextAlignment.Far
-                .Visible = False
-            End With
-            With grVentasCliente.RootTable.Columns("taCatPrecio")
-                .Width = 70
-                .Visible = False
-            End With
-
-
-            With grVentasCliente
-                '.DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
-                '.FilterMode = FilterMode.Automatic
-                '.FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
-                .GroupByBoxVisible = False
-                'diseño de la grilla
-                .VisualStyle = VisualStyle.Office2007
-            End With
-        Else
-            grVentasCliente.ClearStructure()
         End If
     End Sub
 End Class
