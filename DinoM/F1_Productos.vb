@@ -352,19 +352,19 @@ Public Class F1_Productos
         JGrM_Buscador.RootTable.HeaderFormatStyle.FontBold = TriState.True
     End Sub
     Public Sub _prCargarNameLabel()
-        'Dim dt As DataTable = L_fnNameLabel()
-        'If (dt.Rows.Count > 0) Then
-        '    lbgrupo1.Text = dt.Rows(0).Item("Grupo 1").ToString + ":"
-        '    lbgrupo2.Text = dt.Rows(0).Item("Grupo 2").ToString + ":"
-        '    lbgrupo3.Text = dt.Rows(0).Item("Grupo 3").ToString + ":"
-        '    lbgrupo4.Text = dt.Rows(0).Item("Grupo 4").ToString + ":"
+        Dim dt As DataTable = L_fnNameLabel()
+        If (dt.Rows.Count > 0) Then
+            lbgrupo1.Text = dt.Rows(0).Item("Grupo 1").ToString + ":"
+            lbgrupo2.Text = dt.Rows(0).Item("Grupo 2").ToString + ":"
+            lbgrupo3.Text = dt.Rows(0).Item("Grupo 3").ToString + ":"
+            lbgrupo4.Text = dt.Rows(0).Item("Grupo 4").ToString + ":"
 
-        'End If
+        End If
 
-        lbgrupo1.Text = "MARCA :"
-        lbgrupo2.Text = "PROCEDENCIA :"
-        lbgrupo3.Text = "SUBCATEGORIA :"
-        lbgrupo4.Text = "PRESENTACION :"
+        'lbgrupo1.Text = "MARCA :"
+        'lbgrupo2.Text = "PROCEDENCIA :"
+        'lbgrupo3.Text = "SUBCATEGORIA :"
+        'lbgrupo4.Text = "ABREVIATURA :"
     End Sub
     Public Sub _prMaxLength()
         'tbCodProd.MaxLength = 25
@@ -508,6 +508,7 @@ Public Class F1_Productos
         btnDelete.Visible = True
         btnImagen.Visible = True
         tbStockMinimo.IsInputReadOnly = False
+        tbStockMaximo.IsInputReadOnly = False
         btExcel.Visible = False
         btnImprimir.Visible = False
         dgjDetalleProducto.AllowEdit = InheritableBoolean.True
@@ -562,7 +563,7 @@ Public Class F1_Productos
         cbUnidMaxima.ReadOnly = True
         tbConversion.IsInputReadOnly = True
         tbStockMinimo.IsInputReadOnly = True
-
+        tbStockMaximo.IsInputReadOnly = True
 
         tbDesde.IsInputReadOnly = True
         tbHasta.IsInputReadOnly = True
@@ -611,6 +612,7 @@ Public Class F1_Productos
                 tbConversion.Value = 1
 
                 tbStockMinimo.Value = 0
+                tbStockMaximo.Value = 0
             End If
             tbCodProd.Focus()
             TablaImagenes = L_prCargarImagenesProducto(-1)
@@ -652,6 +654,7 @@ Public Class F1_Productos
             tbMontoHasta.Value = 0
             tbPrecioDescuento.Value = 0
             tbStockMinimo.Value = 0
+            tbStockMaximo.Value = 0
             _PCargarGridCategoriasPrecios(-1)
             BanderaClonar = False
         End If
@@ -704,7 +707,10 @@ Public Class F1_Productos
                                                 tbConversion.Text,
                                                 IIf(tbStockMinimo.Text = String.Empty, 0, tbStockMinimo.Text),
                                                 IIf(swEstado.Value = True, 1, 0), nameImg,
-                                                quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")), tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value, tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes)
+                                                quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
+                                                tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
+                                                tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text,
+                                                CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
 
 
         If res Then
@@ -738,9 +744,22 @@ Public Class F1_Productos
 
         Dim nameImage As String = JGrM_Buscador.GetValue("yfimg")
         If (Modificado = False) Then
-            res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value, cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value, tbConversion.Text, IIf(tbStockMinimo.Text = String.Empty, 0, tbStockMinimo.Text), IIf(swEstado.Value = True, 1, 0), nameImage, quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")), tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value, tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes)
+            res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value,
+                                        cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value,
+                                        tbConversion.Text, IIf(tbStockMinimo.Text = String.Empty, 0, tbStockMinimo.Text),
+                                        IIf(swEstado.Value = True, 1, 0), nameImage,
+                                        quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
+                                        tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
+                                        tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
         Else
-            res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value, cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value, tbConversion.Text, tbStockMinimo.Text, IIf(swEstado.Value = True, 1, 0), nameImg, quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")), tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value, tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes)
+            res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value,
+                                        cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value,
+                                        tbConversion.Text, tbStockMinimo.Text, IIf(swEstado.Value = True, 1, 0), nameImg,
+                                        quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
+                                        tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
+                                        tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
         End If
         If res Then
 
@@ -960,6 +979,7 @@ Public Class F1_Productos
         listEstCeldas.Add(New Modelo.Celda("Umedida", False, "UMedida".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("UnidMin", False, "UniVenta".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("Umax", False, "UniCaja".ToUpper, 150))
+        listEstCeldas.Add(New Modelo.Celda("yfsmax", False))
 
         listEstCeldas.Add(New Modelo.Celda("listaAlmacen", True, "Stock".ToUpper, 250))
         Return listEstCeldas
@@ -1015,6 +1035,7 @@ Public Class F1_Productos
             tbConversion.Value = .GetValue("yfvsup")
             tbStockMinimo.Text = .GetValue("yfsmin")
             swEstado.Value = .GetValue("yfap")
+            tbStockMaximo.Text = .GetValue("yfsmax")
             lbFecha.Text = CType(.GetValue("yffact"), Date).ToString("dd/MM/yyyy")
             lbHora.Text = .GetValue("yfhact").ToString
             lbUsuario.Text = .GetValue("yfuact").ToString
@@ -2277,4 +2298,5 @@ Public Class F1_Productos
     Private Sub JG_HistPrecios_EditingCell(sender As Object, e As EditingCellEventArgs) Handles JG_HistPrecios.EditingCell
         e.Cancel = True
     End Sub
+
 End Class

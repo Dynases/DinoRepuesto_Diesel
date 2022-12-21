@@ -47,6 +47,7 @@ Public Class F0_Ventas
     Public FechaVenc As Date
     Public Banco As Integer = 0
     Public Glosa As String
+    Public CostoEnvio As Double = 0
 
 #End Region
 
@@ -514,6 +515,7 @@ Public Class F0_Ventas
 
             Banco = tMonto.Rows(0).Item("tgBanco")
             Glosa = tMonto.Rows(0).Item("tgGlosa")
+            CostoEnvio = tMonto.Rows(0).Item("tgCostoEnvio")
         Else
             tbMontoTarej.Value = 0
             cbCambioDolar.Text = "0.00"
@@ -1650,7 +1652,7 @@ Public Class F0_Ventas
         Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         _prModificarMontos(tabla)
 
-        Dim res As Boolean = L_fnModificarCobro(tbCodigo.Text, TipoVenta, FechaVenc.ToString("yyyy/MM/dd"), tabla, Banco, Glosa)
+        Dim res As Boolean = L_fnModificarCobro(tbCodigo.Text, TipoVenta, FechaVenc.ToString("yyyy/MM/dd"), tabla, Banco, Glosa, CostoEnvio)
         If res Then
 
 
@@ -3515,9 +3517,7 @@ salirIf:
         'Return idCategoria
     End Function
 
-    Private Sub s(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
-    End Sub
 
     Private Sub btnSearchCliente_Click(sender As Object, e As EventArgs) Handles btnSearchCliente.Click
         Dim dt As DataTable
@@ -3851,39 +3851,43 @@ salirIf:
     End Sub
 
     Private Sub chbTarjeta_CheckedChanged(sender As Object, e As EventArgs) Handles chbTarjeta.CheckedChanged
-        If chbTarjeta.Checked Then
+        If btnGrabar.Enabled = True Then
+            If chbTarjeta.Checked Then
+                'tbMontoBs.Value = 0
+                'tbMontoDolar.Value = 0
+                tbMontoTarej.Enabled = True
+                tbMontoTarej.Value = Convert.ToDecimal(tbtotal.Text)
+                If tbMontoTarej.Value <> 0 And tbMontoTarej.Text <> String.Empty Then
+                    txtMontoPagado1.Text = tbMontoBs.Value + (tbMontoDolar.Value * IIf(cbCambioDolar.Text = "", 0, Convert.ToDecimal(cbCambioDolar.Text))) + tbMontoTarej.Value
+                    If Convert.ToDecimal(tbtotal.Text) <> 0 And Convert.ToDecimal(txtMontoPagado1.Text) >= Convert.ToDecimal(tbtotal.Text) Then
+                        txtCambio1.Text = Convert.ToDecimal(txtMontoPagado1.Text) - Convert.ToDecimal(tbtotal.Text)
+                    Else
+                        txtCambio1.Text = "0.00"
+                    End If
+                End If
+                tbMontoBs.Enabled = False
+                tbMontoDolar.Enabled = False
+                tbMontoTarej.IsInputReadOnly = True
+                tbMontoTarej.Focus()
+            Else
+                tbMontoBs.Enabled = True
+                tbMontoDolar.Enabled = True
+                tbMontoTarej.Value = 0
+            End If
+        End If
+    End Sub
+
+    Private Sub tbMontoDolar_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoDolar.ValueChanged
+        If btnGrabar.Enabled = True Then
             tbMontoBs.Value = 0
-            tbMontoDolar.Value = 0
-            tbMontoTarej.Enabled = True
-            tbMontoTarej.Value = Convert.ToDecimal(tbtotal.Text)
-            If tbMontoTarej.Value <> 0 And tbMontoTarej.Text <> String.Empty Then
+            tbMontoTarej.Value = 0
+            If tbMontoDolar.Value <> 0 And tbMontoDolar.Text <> String.Empty Then
                 txtMontoPagado1.Text = tbMontoBs.Value + (tbMontoDolar.Value * IIf(cbCambioDolar.Text = "", 0, Convert.ToDecimal(cbCambioDolar.Text))) + tbMontoTarej.Value
                 If Convert.ToDecimal(tbtotal.Text) <> 0 And Convert.ToDecimal(txtMontoPagado1.Text) >= Convert.ToDecimal(tbtotal.Text) Then
                     txtCambio1.Text = Convert.ToDecimal(txtMontoPagado1.Text) - Convert.ToDecimal(tbtotal.Text)
                 Else
                     txtCambio1.Text = "0.00"
                 End If
-            End If
-            tbMontoBs.Enabled = False
-            tbMontoDolar.Enabled = False
-            tbMontoTarej.IsInputReadOnly = True
-            tbMontoTarej.Focus()
-        Else
-            tbMontoBs.Enabled = True
-            tbMontoDolar.Enabled = True
-            tbMontoTarej.Value = 0
-        End If
-    End Sub
-
-    Private Sub tbMontoDolar_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoDolar.ValueChanged
-        tbMontoBs.Value = 0
-        tbMontoTarej.Value = 0
-        If tbMontoDolar.Value <> 0 And tbMontoDolar.Text <> String.Empty Then
-            txtMontoPagado1.Text = tbMontoBs.Value + (tbMontoDolar.Value * IIf(cbCambioDolar.Text = "", 0, Convert.ToDecimal(cbCambioDolar.Text))) + tbMontoTarej.Value
-            If Convert.ToDecimal(tbtotal.Text) <> 0 And Convert.ToDecimal(txtMontoPagado1.Text) >= Convert.ToDecimal(tbtotal.Text) Then
-                txtCambio1.Text = Convert.ToDecimal(txtMontoPagado1.Text) - Convert.ToDecimal(tbtotal.Text)
-            Else
-                txtCambio1.Text = "0.00"
             End If
         End If
     End Sub
@@ -3910,6 +3914,7 @@ salirIf:
                 FechaVenc = ef.tbFechaVenc.Value
                 Banco = ef.cbBanco.Value
                 Glosa = ef.tbGlosa.Text
+                CostoEnvio = ef.tbCostoEnvio.Value
 
                 _prGuardarCobro()
             Else
@@ -3927,9 +3932,11 @@ salirIf:
             ef.tbFechaVenc.Value = tbFechaVenc.Value
 
             ef.cbCambioDolar.Text = cbCambioDolar.Text
+            ef.tbCostoEnvio.Value = CostoEnvio
             ef.tbMontoDolar.Value = tbMontoDolar.Value
             ef.tbMontoTarej.Value = tbMontoTarej.Value
             ef.tbMontoBs.Value = tbMontoBs.Value
+
             'ef.cbCambioDolar.Value = cbCambioDolar.Value
 
             If tbMontoTarej.Value = 0 Then
@@ -3940,6 +3947,7 @@ salirIf:
 
             ef.Banc = Banco
             ef.tbGlosa.Text = Glosa
+
 
             ef.ShowDialog()
             Dim bandera As Boolean = False
@@ -3954,6 +3962,7 @@ salirIf:
                 FechaVenc = ef.tbFechaVenc.Value
                 Banco = ef.cbBanco.Value
                 Glosa = ef.tbGlosa.Text
+                CostoEnvio = ef.tbCostoEnvio.Value
 
                 _prGuardarCobro()
             Else

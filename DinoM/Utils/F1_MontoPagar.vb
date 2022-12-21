@@ -38,6 +38,7 @@ Public Class F1_MontoPagar
             tbMontoBs.Value = 0
             tbMontoDolar.Value = 0
             tbMontoTarej.Value = 0
+            tbCostoEnvio.Value = 0
             tbMontoTarej.Enabled = False
             tbGlosa.Text = ""
             tbFechaVenc.Value = Now.Date
@@ -103,13 +104,13 @@ Public Class F1_MontoPagar
         tbMontoDolar.Value = 0
         tbMontoTarej.Value = 0
 
-        Dim diferencia As Double = tbMontoBs.Value - TotalVenta
+        Dim diferencia As Double = tbMontoBs.Value - (TotalVenta + tbCostoEnvio.Value)
         If (diferencia >= 0) Then
-            txtMontoPagado1.Text = TotalVenta.ToString
+            'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = Math.Round(diferencia, 2).ToString
 
         Else
-            txtMontoPagado1.Text = "0.00"
+            'txtMontoPagado1.Text = "0.00"
             txtCambio1.Text = "0.00"
         End If
 
@@ -118,24 +119,24 @@ Public Class F1_MontoPagar
     Private Sub tbMontoDolar_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoDolar.ValueChanged
         tbMontoBs.Value = 0
         tbMontoTarej.Value = 0
-        Dim diferencia As Double = (tbMontoDolar.Value * cbCambioDolar.Text) - TotalVenta
+        Dim diferencia As Double = (tbMontoDolar.Value * cbCambioDolar.Text) - (TotalVenta + tbCostoEnvio.Value)
         If (diferencia >= 0) Then
-            txtMontoPagado1.Text = TotalVenta.ToString
+            'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = diferencia.ToString
 
         Else
-            txtMontoPagado1.Text = "0.00"
+            'txtMontoPagado1.Text = "0.00"
             txtCambio1.Text = "0.00"
         End If
     End Sub
 
     Private Sub tbMontoTarej_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoTarej.ValueChanged
-        tbMontoDolar.Value = 0
-        tbMontoBs.Value = 0
+        'tbMontoDolar.Value = 0
+        'tbMontoBs.Value = 0
 
-        Dim diferencia As Double = tbMontoTarej.Value - TotalVenta
+        Dim diferencia As Double = tbMontoTarej.Value - Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
         If (diferencia >= 0) Then
-            txtMontoPagado1.Text = TotalVenta.ToString
+            txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = diferencia.ToString
 
         Else
@@ -266,7 +267,7 @@ Public Class F1_MontoPagar
 
 
         If swTipoVenta.Value = True Then
-            If (tbMontoTarej.Value + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value >= TotalVenta) Then
+            If (tbMontoTarej.Value + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value >= (TotalVenta + tbCostoEnvio.Value)) Then
                 Bandera = True
                 TotalBs = tbMontoBs.Value
                 TotalSus = tbMontoDolar.Value
@@ -277,7 +278,7 @@ Public Class F1_MontoPagar
                 Me.Close()
 
             Else
-                ToastNotification.Show(Me, "Debe Ingresar un Monto a Cobrar Valido igual o mayor A = " + Str(TotalVenta), My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+                ToastNotification.Show(Me, "Debe Ingresar un Monto a Cobrar Valido igual o mayor A = " + Str(TotalVenta + tbCostoEnvio.Value), My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
                 tbMontoBs.Focus()
             End If
         Else
@@ -305,10 +306,10 @@ Public Class F1_MontoPagar
 
     Private Sub chbTarjeta_CheckedChanged(sender As Object, e As EventArgs) Handles chbTarjeta.CheckedChanged
         If chbTarjeta.Checked Then
-            tbMontoBs.Value = 0
-            tbMontoDolar.Value = 0
+            'tbMontoBs.Value = 0
+            'tbMontoDolar.Value = 0
             tbMontoTarej.Enabled = True
-            tbMontoTarej.Value = Convert.ToDecimal(TotalVenta)
+            tbMontoTarej.Value = Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
             tbMontoBs.Enabled = False
             tbMontoDolar.Enabled = False
             tbMontoTarej.IsInputReadOnly = True
@@ -323,6 +324,8 @@ Public Class F1_MontoPagar
             tbMontoBs.Enabled = True
             tbMontoDolar.Enabled = True
             tbMontoTarej.Value = 0
+            cbBanco.Value = 0
+            tbGlosa.Text = ""
             lbBanco.Visible = False
             cbBanco.Visible = False
             lbGlosa.Visible = False
@@ -395,5 +398,9 @@ Public Class F1_MontoPagar
                                4000,
                                eToastGlowColor.Red,
                                eToastPosition.TopCenter)
+    End Sub
+
+    Private Sub tbCostoEnvio_ValueChanged(sender As Object, e As EventArgs) Handles tbCostoEnvio.ValueChanged
+        txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
     End Sub
 End Class
