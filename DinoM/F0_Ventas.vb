@@ -2098,28 +2098,22 @@ Public Class F0_Ventas
             ponerDescripcionProducto(dt)
         End If
         Dim total As Decimal = dt.Compute("SUM(Total)", "")
-        Dim totald As Double = (total / 6.96)
+        Dim _TotalLi As Decimal
+        Dim _Literal, _TotalDecimal, _TotalDecimal2, moneda As String
         Dim fechaven As String = dt.Rows(0).Item("fechaventa")
-        If Not IsNothing(P_Global.Visualizador) Then
-            P_Global.Visualizador.Close()
+
+        _TotalLi = dt.Rows(0).Item("totalven")
+        _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
+        _TotalDecimal2 = CDbl(_TotalDecimal) * 100
+
+        If swMoneda.Value = True Then
+            moneda = "Bolivianos"
+        Else
+            moneda = "Dólares"
         End If
-        Dim ParteEntera As Long
-        Dim ParteDecimal As Decimal
-        Dim pDecimal() As String
-        ParteEntera = Int(total)
-        ParteDecimal = Math.Round(total - ParteEntera, 2)
-        pDecimal = Split(ParteDecimal.ToString, ".")
 
+        _Literal = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(_TotalLi) - CDbl(_TotalDecimal)) + "  " + IIf(_TotalDecimal2.Equals("0"), "00", _TotalDecimal2) + "/100 " + moneda
 
-        Dim li As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera)) + " con " +
-        IIf(pDecimal(1).ToString.Equals("0"), "00", pDecimal(1).ToString) + "/100 Bolivianos"
-
-        ParteEntera = Int(totald)
-        ParteDecimal = Math.Round(totald - ParteEntera, 2)
-        pDecimal = Split(ParteDecimal.ToString, ".")
-
-        Dim lid As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera)) + " con " +
-        IIf(pDecimal(1).ToString.Equals("0"), "00", pDecimal(1).ToString) + "/100 Dolares"
 
         Dim dt2 As DataTable = L_fnNameReporte()
 
@@ -2132,12 +2126,12 @@ Public Class F0_Ventas
         _Fecha = Split(_FechaAct, "-")
         _FechaPar = "Cochabamba, " + _Fecha(0).Trim + " De " + _Meses(_Fecha(1) - 1).Trim + " Del " + _Fecha(2).Trim
         If (G_Lote = False) Then
-            Dim objrep As New R_NotaVenta_7_5X100
+            Dim objrep As New R_NotaVenta_7_21X14
             '' GenerarNro(_dt)
             ''objrep.SetDataSource(Dt1Kardex)
 
             objrep.SetDataSource(dt)
-            objrep.SetParameterValue("Literal1", li)
+            objrep.SetParameterValue("Literal1", _Literal)
             If swTipoVenta.Value = True Then
                 objrep.SetParameterValue("ENombre", "Nota de Entrega Nro. " + numi)
             Else
@@ -2156,9 +2150,9 @@ Public Class F0_Ventas
             'objrep.SetDataSource(Dt1Kardex)
             'totald = Math.Round(totald, 2)
             objrep.SetDataSource(dt)
-            objrep.SetParameterValue("TotalBs", li)
-            objrep.SetParameterValue("TotalDo", lid)
-            objrep.SetParameterValue("TotalDoN", totald)
+            'objrep.SetParameterValue("TotalBs", li)
+            'objrep.SetParameterValue("TotalDo", lid)
+            'objrep.SetParameterValue("TotalDoN", totald)
             'objrep.SetParameterValue("P_Fecha", _FechaPar)
             'objrep.SetParameterValue("P_Empresa", ParEmp1)
             'objrep.SetParameterValue("P_Empresa1", ParEmp2)

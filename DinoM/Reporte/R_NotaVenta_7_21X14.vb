@@ -18,7 +18,7 @@ Imports System
 Imports System.ComponentModel
 
 
-Public Class R_NotaVenta_7_5X100
+Public Class R_NotaVenta_7_21X14
     Inherits ReportClass
     
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class R_NotaVenta_7_5X100
     
     Public Overrides Property ResourceName() As String
         Get
-            Return "R_NotaVenta_7_5X100.rpt"
+            Return "R_NotaVenta_7_21X14.rpt"
         End Get
         Set
             'Do nothing
@@ -45,7 +45,7 @@ Public Class R_NotaVenta_7_5X100
     
     Public Overrides Property FullResourceName() As String
         Get
-            Return "DinoM.R_NotaVenta_7_5X100.rpt"
+            Return "DinoM.R_NotaVenta_7_21X14.rpt"
         End Get
         Set
             'Do nothing
@@ -131,10 +131,18 @@ Public Class R_NotaVenta_7_5X100
             Return Me.DataDefinition.ParameterFields(4)
         End Get
     End Property
+    
+    <Browsable(false),  _
+     DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
+    Public ReadOnly Property Parameter_TC() As CrystalDecisions.[Shared].IParameterField
+        Get
+            Return Me.DataDefinition.ParameterFields(5)
+        End Get
+    End Property
 End Class
 
 <System.Drawing.ToolboxBitmapAttribute(GetType(CrystalDecisions.[Shared].ExportOptions), "report.bmp")>  _
-Public Class CachedR_NotaVenta_7_5X100
+Public Class CachedR_NotaVenta_7_21X14
     Inherits Component
     Implements ICachedReport
     
@@ -176,7 +184,7 @@ Public Class CachedR_NotaVenta_7_5X100
     End Property
     
     Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As R_NotaVenta_7_5X100 = New R_NotaVenta_7_5X100()
+        Dim rpt As R_NotaVenta_7_21X14 = New R_NotaVenta_7_21X14()
         rpt.Site = Me.Site
         Return rpt
     End Function
