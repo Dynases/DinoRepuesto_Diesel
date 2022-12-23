@@ -6429,6 +6429,7 @@ Public Class AccesoLogica
     Public Shared Function L_prIngresoEgresoModificar(ByRef _ienumi As String, _ieFecha As String, _ieTipo As String,
                                            _ieDescripcion As String, _ieConcepto As String, _ieMonto As Decimal,
                                            _ieObs As String, _Sucursal As Integer, _idDevolucion As String) As Boolean
+
         Dim _resultado As Boolean
         Dim _Tabla As DataTable
         Dim _listParam As New List(Of Datos.DParametro)
@@ -6740,7 +6741,7 @@ Public Class AccesoLogica
     End Function
     Public Shared Function L_prBancoGrabar(ByRef _canumi As String, _canombre As String,
                                            _cacuenta As String, _caobs As String,
-                                           _img As String, _estado As Integer) As Boolean
+                                           _img As String, _estado As Integer, _casuc As Integer) As Boolean
         Dim _resultado As Boolean
         Dim _Tabla As DataTable
         Dim _listPalam As New List(Of Datos.DParametro)
@@ -6753,6 +6754,7 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6794,7 +6796,7 @@ Public Class AccesoLogica
 
     Public Shared Function L_prBancoModificar(ByRef _canumi As String, _canombre As String,
                                            _cacuenta As String, _caobs As String,
-                                           _img As String, _estado As Integer) As Boolean
+                                           _img As String, _estado As Integer, _casuc As Integer) As Boolean
         Dim _resultado As Boolean
         Dim _Tabla As DataTable
         Dim _listPalam As New List(Of Datos.DParametro)
@@ -6807,6 +6809,7 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6819,5 +6822,128 @@ Public Class AccesoLogica
         Return _resultado
     End Function
 
+    Public Shared Function L_prListarSucursales() As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+        _listParam.Add(New Datos.DParametro("@tipo", 4))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listParam)
+
+        Return _Tabla
+    End Function
+
+#End Region
+#Region "MOVIMIENTO BANCOS"
+    Public Shared Function L_prMovimientoBancoGeneral() As DataTable
+        Dim _Tabla As DataTable
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 3))
+        _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TMB001", _listParam)
+
+        Return _Tabla
+    End Function
+
+    Public Shared Function L_prMovimientoGrabar(ByRef _manumi As String, _maFecha As String, _maTipo As String,
+                                                      _maSucursal As Integer, _mabanco As Integer, _maNboleta As String, _maDetalle As String,
+                                                      _maMonto As Decimal, _maObs As String) As Boolean
+        Dim _resultado As Boolean
+        Dim _Tabla As DataTable
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 1))
+        _listParam.Add(New Datos.DParametro("@manumi", _manumi))
+        _listParam.Add(New Datos.DParametro("@maFecha", _maFecha))
+        _listParam.Add(New Datos.DParametro("@maTipo", _maTipo))
+        _listParam.Add(New Datos.DParametro("@maSucursal", _maSucursal))
+        _listParam.Add(New Datos.DParametro("@mabanco", _mabanco))
+        _listParam.Add(New Datos.DParametro("@maNboleta", _maNboleta))
+        _listParam.Add(New Datos.DParametro("@maDetalle", _maDetalle))
+        _listParam.Add(New Datos.DParametro("@maMonto", _maMonto))
+        _listParam.Add(New Datos.DParametro("@maObs", _maObs))
+        _listParam.Add(New Datos.DParametro("@maEstado", 1))
+        _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TMB001", _listParam)
+
+        If _Tabla.Rows.Count > 0 Then
+            _manumi = _Tabla.Rows(0).Item(0)
+            _resultado = True
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
+
+    Public Shared Function L_prMovimientoBancoModificar(ByRef _manumi As String, _maFecha As String, _maTipo As String,
+                                                      _maSucursal As Integer, _mabanco As Integer, _maNboleta As String, _maDetalle As String,
+                                                      _maMonto As Decimal, _maObs As String) As Boolean
+
+        Dim _resultado As Boolean
+        Dim _Tabla As DataTable
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 2))
+        _listParam.Add(New Datos.DParametro("@manumi", _manumi))
+        _listParam.Add(New Datos.DParametro("@maFecha", _maFecha))
+        _listParam.Add(New Datos.DParametro("@maTipo", _maTipo))
+        _listParam.Add(New Datos.DParametro("@maSucursal", _maSucursal))
+        _listParam.Add(New Datos.DParametro("@mabanco", _mabanco))
+        _listParam.Add(New Datos.DParametro("@maNboleta", _maNboleta))
+        _listParam.Add(New Datos.DParametro("@maDetalle", _maDetalle))
+        _listParam.Add(New Datos.DParametro("@maMonto", _maMonto))
+        _listParam.Add(New Datos.DParametro("@maObs", _maObs))
+        _listParam.Add(New Datos.DParametro("@maEstado", 2))
+
+        _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TMB001", _listParam)
+
+        If _Tabla.Rows.Count > 0 Then
+            _manumi = _Tabla.Rows(0).Item(0)
+            _resultado = True
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
+
+    Public Shared Function L_fnListarBanco() As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+        _listParam.Add(New Datos.DParametro("@tipo", 4))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TMB001", _listParam)
+
+        Return _Tabla
+    End Function
+
+    Public Shared Function L_prMovimientoBancoBorrar(_numi As String, ByRef _mensaje As String) As Boolean
+
+        Dim _resultado As Boolean
+
+        If L_fnbValidarEliminacion(_numi, "TMB001", "manumi", _mensaje) = True Then
+            Dim _Tabla As DataTable
+
+            Dim _listParam As New List(Of Datos.DParametro)
+
+            _listParam.Add(New Datos.DParametro("@tipo", -1))
+            _listParam.Add(New Datos.DParametro("@manumi", _numi))
+            _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+            _Tabla = D_ProcedimientoConParam("sp_Mam_TMB001", _listParam)
+
+            If _Tabla.Rows.Count > 0 Then
+                _numi = _Tabla.Rows(0).Item(0)
+                _resultado = True
+            Else
+                _resultado = False
+            End If
+        Else
+            _resultado = False
+        End If
+
+        Return _resultado
+    End Function
 #End Region
 End Class

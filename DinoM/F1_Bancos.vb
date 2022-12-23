@@ -105,6 +105,7 @@ Public Class F1_Bancos
     Private Sub _prIniciarTodo()
 
         Me.Text = "B A N C O S"
+        _prCargarComboLibreriaSucursal(cbSucursal)
         _PMIniciarTodo()
         _prAsignarPermisos()
         _prCargarLengthTextBox()
@@ -125,6 +126,7 @@ Public Class F1_Bancos
         tbNombre.MaxLength = 200
         tbnroCuentaBancaria.MaxLength = 60
         tbObservacion.MaxLength = 200
+        cbSucursal.MaxLength = 200
     End Sub
 
 
@@ -155,6 +157,22 @@ Public Class F1_Bancos
 
     End Sub
 
+    Private Sub _prCargarComboLibreriaSucursal(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarSucursales()
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("aanumi").Width = 60
+            .DropDownList.Columns("aanumi").Caption = "COD"
+            .DropDownList.Columns.Add("aabdes").Width = 500
+            .DropDownList.Columns("aabdes").Caption = "SUCURSAL"
+            .ValueMember = "aanumi"
+            .DisplayMember = "aabdes"
+            .DataSource = dt
+            .Refresh()
+        End With
+    End Sub
+
 
 
 #End Region
@@ -168,6 +186,7 @@ Public Class F1_Bancos
         tbnroCuentaBancaria.ReadOnly = False
         swEstado.IsReadOnly = False
         tbObservacion.ReadOnly = False
+        cbSucursal.ReadOnly = False
         _prCrearCarpetaImagenes()
         _prCrearCarpetaTemporal()
 
@@ -180,6 +199,7 @@ Public Class F1_Bancos
         swEstado.IsReadOnly = True
         tbObservacion.ReadOnly = True
         tbcodigo.ReadOnly = True
+        cbSucursal.ReadOnly = True
         btnImg.Visible = False
     End Sub
     Public Overrides Sub _PMOHabilitarFocus()
@@ -188,6 +208,7 @@ Public Class F1_Bancos
             .SetHighlightOnFocus(tbnroCuentaBancaria, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
             .SetHighlightOnFocus(tbObservacion, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
             .SetHighlightOnFocus(tbcodigo, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
+            .SetHighlightOnFocus(cbSucursal, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
 
         End With
     End Sub
@@ -286,6 +307,8 @@ Public Class F1_Bancos
         listEstCeldas.Add(New Modelo.Celda("caimage", False))
         listEstCeldas.Add(New Modelo.Celda("cahact", False))
         listEstCeldas.Add(New Modelo.Celda("cauact", False))
+        listEstCeldas.Add(New Modelo.Celda("caSucursal", False))
+        listEstCeldas.Add(New Modelo.Celda("aabdes", True, "Sucursal", 150))
 
         Return listEstCeldas
 
@@ -312,6 +335,7 @@ Public Class F1_Bancos
             lbHora.Text = .GetValue("cahact").ToString
             lbUsuario.Text = .GetValue("cauact").ToString
             swEstado.Value = .GetValue("caestado")
+            cbSucursal.Value = .GetValue("caSucursal")
         End With
         Dim name As String = JGrM_Buscador.GetValue("caimage")
         If name.Equals("Default.jpg") Or Not File.Exists(RutaGlobal + "\Imagenes\Imagenes Banco" + name) Then
@@ -339,7 +363,7 @@ Public Class F1_Bancos
 
 
         Dim estado As Integer = IIf(swEstado.Value = True, 1, 0)
-        Dim res As Boolean = L_prBancoGrabar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado)
+        Dim res As Boolean = L_prBancoGrabar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado, cbSucursal.Value)
         If res Then
 
             Modificado = False
@@ -359,10 +383,10 @@ Public Class F1_Bancos
 
         Dim estado As Integer = IIf(swEstado.Value = True, 1, 0)
         If (Modificado = False) Then
-            res = L_prBancoModificar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado)
+            res = L_prBancoModificar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado, cbSucursal.Value)
 
         Else
-            res = L_prBancoModificar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado)
+            res = L_prBancoModificar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado, cbSucursal.Value)
         End If
 
 
