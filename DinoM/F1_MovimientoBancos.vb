@@ -1,15 +1,12 @@
-<<<<<<< Updated upstream
-﻿Public Class F1_MovimientoBancos
-=======
 ﻿Imports Logica.AccesoLogica
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 Imports System.IO
 Imports Janus.Windows.GridEX
 Public Class F1_MovimientoBancos
->>>>>>> Stashed changes
 
 #Region "Variable Globales"
+
     Dim _Inter As Integer = 0
     Public _nameButton As String
     Public _tab As SuperTabItem
@@ -20,5 +17,6 @@ Public Class F1_MovimientoBancos
     Dim nameImg As String = "Default.jpg"
     Dim Socio As Boolean = False
     Dim NumiCuentaContable As Integer = 0
+
 #End Region
 End Class
