@@ -189,6 +189,7 @@ Public Class F1_Bancos
             .SetHighlightOnFocus(tbObservacion, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
             .SetHighlightOnFocus(tbcodigo, DevComponents.DotNetBar.Validator.eHighlightColor.Blue)
 
+
         End With
     End Sub
     Public Overrides Sub _PMOLimpiar()
@@ -286,6 +287,8 @@ Public Class F1_Bancos
         listEstCeldas.Add(New Modelo.Celda("caimage", False))
         listEstCeldas.Add(New Modelo.Celda("cahact", False))
         listEstCeldas.Add(New Modelo.Celda("cauact", False))
+        listEstCeldas.Add(New Modelo.Celda("caSucursal", False))
+        listEstCeldas.Add(New Modelo.Celda("aabdes", True, "Sucursal", 150))
 
         Return listEstCeldas
 
@@ -339,7 +342,7 @@ Public Class F1_Bancos
 
 
         Dim estado As Integer = IIf(swEstado.Value = True, 1, 0)
-        Dim res As Boolean = L_prBancoGrabar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, estado)
+        Dim res As Boolean = L_prBancoGrabar(tbcodigo.Text, tbNombre.Text, tbnroCuentaBancaria.Text, tbObservacion.Text, nameImg, cbSucursal.Value)
         If res Then
 
             Modificado = False

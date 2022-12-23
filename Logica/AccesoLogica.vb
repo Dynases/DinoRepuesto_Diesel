@@ -6753,6 +6753,7 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        '_listPalam.Add(New Datos.DParametro("@casucursal", _casuc))
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6807,6 +6808,7 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+        ' _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
