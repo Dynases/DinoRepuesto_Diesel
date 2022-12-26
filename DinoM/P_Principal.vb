@@ -1210,6 +1210,11 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub btVentasContado_Click(sender As Object, e As EventArgs) Handles btVentasContado.Click
+        Dim frm As New Pr_VentasContado
+        frm.Show()
+    End Sub
+
 
 
 

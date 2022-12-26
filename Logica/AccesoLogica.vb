@@ -4709,6 +4709,37 @@ Public Class AccesoLogica
 
         Return _Tabla
     End Function
+
+    Public Shared Function L_prVentasContadoTodosAlmacenes(fechaI As String, fechaF As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 19))
+        _listParam.Add(New Datos.DParametro("@fechaI", fechaI))
+        _listParam.Add(New Datos.DParametro("@fechaF", fechaF))
+        _listParam.Add(New Datos.DParametro("@uact", L_Usuario))
+
+        _Tabla = D_ProcedimientoConParam("Sp_Mam_ReporteVentas", _listParam)
+
+        Return _Tabla
+    End Function
+
+    Public Shared Function L_prVentasContadoUnAlmacen(fechaI As String, fechaF As String, _numiAlmacen As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 20))
+        _listParam.Add(New Datos.DParametro("@fechaI", fechaI))
+        _listParam.Add(New Datos.DParametro("@fechaF", fechaF))
+        _listParam.Add(New Datos.DParametro("@uact", L_Usuario))
+        _listParam.Add(New Datos.DParametro("@almacen", _numiAlmacen))
+        _Tabla = D_ProcedimientoConParam("Sp_Mam_ReporteVentas", _listParam)
+
+        Return _Tabla
+    End Function
+
 #End Region
 #Region "REPORTES VS VENTAS"
 
@@ -6754,7 +6785,11 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+<<<<<<< HEAD
         _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
+=======
+        '_listPalam.Add(New Datos.DParametro("@casucursal", _casuc))
+>>>>>>> main
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6809,7 +6844,11 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
+<<<<<<< HEAD
         _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
+=======
+        ' _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
+>>>>>>> main
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6822,6 +6861,7 @@ Public Class AccesoLogica
         Return _resultado
     End Function
 
+<<<<<<< HEAD
     Public Shared Function L_prListarSucursales() As DataTable
         Dim _Tabla As DataTable
 
@@ -6832,6 +6872,8 @@ Public Class AccesoLogica
         Return _Tabla
     End Function
 
+=======
+>>>>>>> main
 #End Region
 #Region "MOVIMIENTO BANCOS"
     Public Shared Function L_prMovimientoBancoGeneral() As DataTable

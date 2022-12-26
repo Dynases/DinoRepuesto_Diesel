@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Imports Logica.AccesoLogica
+=======
+﻿Imports Logica.AccesoLogica
+>>>>>>> main
 Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 Imports System.IO
@@ -6,6 +10,7 @@ Imports Janus.Windows.GridEX
 Public Class F1_MovimientoBancos
 
 #Region "Variable Globales"
+
     Dim _Inter As Integer = 0
     Public _nameButton As String
     Public _tab As SuperTabItem
@@ -17,6 +22,7 @@ Public Class F1_MovimientoBancos
     Dim Socio As Boolean = False
     Dim NumiCuentaContable As Integer = 0
 
+<<<<<<< HEAD
 
 #End Region
 #Region "METODOS PRIVADOS"
@@ -114,6 +120,8 @@ Public Class F1_MovimientoBancos
                                eToastGlowColor.Red,
                                eToastPosition.TopCenter)
     End Sub
+=======
+>>>>>>> main
 #End Region
 #Region "METODOS SOBREESCRITOS"
     Public Overrides Sub _PMOHabilitar()
