@@ -6785,11 +6785,9 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
-<<<<<<< HEAD
+
         _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
-=======
-        '_listPalam.Add(New Datos.DParametro("@casucursal", _casuc))
->>>>>>> main
+
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6844,11 +6842,9 @@ Public Class AccesoLogica
         _listPalam.Add(New Datos.DParametro("@caestado", _estado))
         _listPalam.Add(New Datos.DParametro("@caimg", _img))
         _listPalam.Add(New Datos.DParametro("@cauact", L_Usuario))
-<<<<<<< HEAD
+
         _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
-=======
-        ' _listPalam.Add(New Datos.DParametro("@casuc", _casuc))
->>>>>>> main
+
         _Tabla = D_ProcedimientoConParam("sp_Mam_BA001", _listPalam)
 
         If _Tabla.Rows.Count > 0 Then
@@ -6861,7 +6857,7 @@ Public Class AccesoLogica
         Return _resultado
     End Function
 
-<<<<<<< HEAD
+
     Public Shared Function L_prListarSucursales() As DataTable
         Dim _Tabla As DataTable
 
@@ -6872,8 +6868,7 @@ Public Class AccesoLogica
         Return _Tabla
     End Function
 
-=======
->>>>>>> main
+
 #End Region
 #Region "MOVIMIENTO BANCOS"
     Public Shared Function L_prMovimientoBancoGeneral() As DataTable
