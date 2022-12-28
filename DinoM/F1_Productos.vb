@@ -493,6 +493,7 @@ Public Class F1_Productos
         cbgrupo5.ReadOnly = False  'a solicitud de rosely se bloquea el campo
         cbUMed.ReadOnly = False
         swEstado.IsReadOnly = False
+        swTipo.IsReadOnly = False
         cbUniVenta.ReadOnly = False
         cbUnidMaxima.ReadOnly = False
         tbConversion.IsInputReadOnly = False
@@ -559,6 +560,7 @@ Public Class F1_Productos
         cbgrupo5.ReadOnly = True
         cbUMed.ReadOnly = True
         swEstado.IsReadOnly = True
+        swTipo.IsReadOnly = True
         cbUniVenta.ReadOnly = True
         cbUnidMaxima.ReadOnly = True
         tbConversion.IsInputReadOnly = True
@@ -628,7 +630,7 @@ Public Class F1_Productos
             tbPrecioDescuento.Value = 0
 
             _PCargarGridCategoriasPrecios(-1)
-
+            _PCargarGridhistoricoPrecios(-1)
 
             lbPorcentajeVentaMecanico.Text = "0 %"
             lbPorcentajeVentaPublico.Text = "0 %"
@@ -656,6 +658,7 @@ Public Class F1_Productos
             tbStockMinimo.Value = 0
             tbStockMaximo.Value = 0
             _PCargarGridCategoriasPrecios(-1)
+            _PCargarGridhistoricoPrecios(-1)
             BanderaClonar = False
         End If
 
@@ -710,7 +713,9 @@ Public Class F1_Productos
                                                 quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
                                                 tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
                                                 tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text,
-                                                CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
+                                                CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes,
+                                                IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text),
+                                                IIf(swTipo.Value = True, 1, 0))
 
 
         If res Then
@@ -751,7 +756,7 @@ Public Class F1_Productos
                                         quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
                                         tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
                                         tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
-                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0))
         Else
             res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value,
                                         cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value,
@@ -759,7 +764,7 @@ Public Class F1_Productos
                                         quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
                                         tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
                                         tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
-                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text))
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0))
         End If
         If res Then
 
@@ -864,7 +869,7 @@ Public Class F1_Productos
             MEP.SetError(tbStockMinimo, "ingrese stock minimo del producto!".ToUpper)
             _ok = False
         Else
-            If (tbStockMinimo.Value <= 0) Then
+            If (tbStockMinimo.Value < 0) Then
                 tbStockMinimo.BackColor = Color.Red
                 AddHandler tbStockMinimo.KeyDown, AddressOf TextBox_KeyDown
                 MEP.SetError(tbStockMinimo, "ingrese stock minimo del producto valido!".ToUpper)
@@ -876,23 +881,23 @@ Public Class F1_Productos
             End If
 
         End If
-        If cbgrupo1.SelectedIndex <= 0 Then
-            cbgrupo1.BackColor = Color.Red
-            MEP.SetError(cbgrupo1, "Seleccione Marca del producto diferente a No Existe!".ToUpper)
-            _ok = False
-        Else
-            cbgrupo1.BackColor = Color.White
-            MEP.SetError(cbgrupo1, "")
-        End If
+        'If cbgrupo1.SelectedIndex <= 0 Then
+        '    cbgrupo1.BackColor = Color.Red
+        '    MEP.SetError(cbgrupo1, "Seleccione Marca del producto diferente a No Existe!".ToUpper)
+        '    _ok = False
+        'Else
+        '    cbgrupo1.BackColor = Color.White
+        '    MEP.SetError(cbgrupo1, "")
+        'End If
 
-        If cbgrupo2.SelectedIndex <= 0 Then
-            cbgrupo2.BackColor = Color.Red
-            MEP.SetError(cbgrupo2, "Seleccione Procedencia del producto diferente a No Existe!".ToUpper)
-            _ok = False
-        Else
-            cbgrupo2.BackColor = Color.White
-            MEP.SetError(cbgrupo2, "")
-        End If
+        'If cbgrupo2.SelectedIndex <= 0 Then
+        '    cbgrupo2.BackColor = Color.Red
+        '    MEP.SetError(cbgrupo2, "Seleccione Procedencia del producto diferente a No Existe!".ToUpper)
+        '    _ok = False
+        'Else
+        '    cbgrupo2.BackColor = Color.White
+        '    MEP.SetError(cbgrupo2, "")
+        'End If
         If cbgrupo3.SelectedIndex < 0 Then
             cbgrupo3.BackColor = Color.Red
             MEP.SetError(cbgrupo3, "Selecciones grupo del producto!".ToUpper)
@@ -980,6 +985,7 @@ Public Class F1_Productos
         listEstCeldas.Add(New Modelo.Celda("UnidMin", False, "UniVenta".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("Umax", False, "UniCaja".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("yfsmax", False))
+        listEstCeldas.Add(New Modelo.Celda("yfTipo", False))
 
         listEstCeldas.Add(New Modelo.Celda("listaAlmacen", True, "Stock".ToUpper, 250))
         Return listEstCeldas
@@ -1035,6 +1041,7 @@ Public Class F1_Productos
             tbConversion.Value = .GetValue("yfvsup")
             tbStockMinimo.Text = .GetValue("yfsmin")
             swEstado.Value = .GetValue("yfap")
+            swTipo.Value = .GetValue("yfTipo")
             tbStockMaximo.Text = .GetValue("yfsmax")
             lbFecha.Text = CType(.GetValue("yffact"), Date).ToString("dd/MM/yyyy")
             lbHora.Text = .GetValue("yfhact").ToString
@@ -1693,11 +1700,6 @@ Public Class F1_Productos
         End If
     End Sub
 
-    Private Sub btNuevoP_Click(sender As Object, e As EventArgs)
-
-
-    End Sub
-
 
     Function validarDescuento(ByRef posicion As Integer) As Boolean
 
@@ -1786,56 +1788,56 @@ Public Class F1_Productos
 
     Private Sub tbPrecioCosto_ValueChanged(sender As Object, e As EventArgs) Handles tbPrecioCosto.ValueChanged
 
-        If (tbCodBarra.ReadOnly = False) Then
-            Dim PrecioCosto As Double = tbPrecioCosto.Value
-            Dim PrecioVentaFactura As Double
+        'If (tbCodBarra.ReadOnly = False) Then
+        '    Dim PrecioCosto As Double = tbPrecioCosto.Value
+        '    Dim PrecioVentaFactura As Double
 
 
-            PrecioVentaFactura = ((PrecioCosto + (PrecioCosto * 0.25) + (PrecioCosto * 0.16)) * 2) * 7
+        '    PrecioVentaFactura = ((PrecioCosto + (PrecioCosto * 0.25) + (PrecioCosto * 0.16)) * 2) * 7
 
-            tbPrecioFacturado.Value = PrecioVentaFactura
-            tbPrecioVentaNormal.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.1)
-            tbPrecioMecanico.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.15)
+        '    tbPrecioFacturado.Value = PrecioVentaFactura
+        '    tbPrecioVentaNormal.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.1)
+        '    tbPrecioMecanico.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.15)
 
-        End If
+        'End If
     End Sub
     Private Sub tbPrecioFacturado_ValueChanged(sender As Object, e As EventArgs) Handles tbPrecioFacturado.ValueChanged
-        If (tbCodBarra.ReadOnly = False) Then
-            If (tbPrecioFacturado.Value > 0) Then
-                Dim PrecioVentaFactura As Double
-                PrecioVentaFactura = tbPrecioFacturado.Value
-                tbPrecioVentaNormal.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.1)
-                tbPrecioMecanico.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.15)
-            End If
-        End If
+        'If (tbCodBarra.ReadOnly = False) Then
+        '    If (tbPrecioFacturado.Value > 0) Then
+        '        Dim PrecioVentaFactura As Double
+        '        PrecioVentaFactura = tbPrecioFacturado.Value
+        '        tbPrecioVentaNormal.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.1)
+        '        tbPrecioMecanico.Value = PrecioVentaFactura - (PrecioVentaFactura * 0.15)
+        '    End If
+        'End If
     End Sub
     Private Sub LabelX17_Click(sender As Object, e As EventArgs) Handles LabelX17.Click
 
     End Sub
 
     Private Sub tbPrecioVentaNormal_ValueChanged(sender As Object, e As EventArgs) Handles tbPrecioVentaNormal.ValueChanged
-        Dim publico As Double = 0
-        If (tbPrecioFacturado.Value > 0) Then
+        'Dim publico As Double = 0
+        'If (tbPrecioFacturado.Value > 0) Then
 
-            publico = 100 - ((tbPrecioVentaNormal.Value * 100) / tbPrecioFacturado.Value)
+        '    publico = 100 - ((tbPrecioVentaNormal.Value * 100) / tbPrecioFacturado.Value)
 
 
-        End If
+        'End If
 
-        lbPorcentajeVentaPublico.Text = publico.ToString("0.00") + " %"
+        'lbPorcentajeVentaPublico.Text = publico.ToString("0.00") + " %"
 
     End Sub
 
     Private Sub tbPrecioMecanico_ValueChanged(sender As Object, e As EventArgs) Handles tbPrecioMecanico.ValueChanged
-        Dim mecanico As Double = 0
-        If (tbPrecioFacturado.Value > 0) Then
+        'Dim mecanico As Double = 0
+        'If (tbPrecioFacturado.Value > 0) Then
 
-            mecanico = 100 - ((tbPrecioMecanico.Value * 100) / tbPrecioFacturado.Value)
+        '    mecanico = 100 - ((tbPrecioMecanico.Value * 100) / tbPrecioFacturado.Value)
 
 
-        End If
+        'End If
 
-        lbPorcentajeVentaMecanico.Text = mecanico.ToString("0.00") + " %"
+        'lbPorcentajeVentaMecanico.Text = mecanico.ToString("0.00") + " %"
     End Sub
 
     Private Sub tbHasta_Click(sender As Object, e As EventArgs) Handles tbHasta.Click
@@ -2298,5 +2300,6 @@ Public Class F1_Productos
     Private Sub JG_HistPrecios_EditingCell(sender As Object, e As EditingCellEventArgs) Handles JG_HistPrecios.EditingCell
         e.Cancel = True
     End Sub
+
 
 End Class
