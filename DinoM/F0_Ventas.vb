@@ -667,7 +667,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbPrecioReferencia")
             .Width = 85
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "Pre. Fact."
             .AllowSort = False
@@ -675,7 +675,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbPorcentajeReferencia")
             .Width = 60
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "% Dif."
             .AllowSort = False
@@ -711,7 +711,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbptot")
             .Width = 90
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .AllowSort = False
             .Caption = "Sub Total"
@@ -719,7 +719,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbporc")
             .Width = 80
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "P.Desc(%)"
             .AllowSort = False
@@ -727,7 +727,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbdesc")
             .Width = 80
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "M.Desc"
             .AllowSort = False

@@ -377,6 +377,10 @@ Public Class F1_MovimientoBancos
 
     End Sub
 
+    Private Sub LabelX3_Click(sender As Object, e As EventArgs) Handles LabelX3.Click
+
+    End Sub
+
 #End Region
 
 End Class

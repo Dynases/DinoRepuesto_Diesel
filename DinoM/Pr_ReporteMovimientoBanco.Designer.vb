@@ -133,6 +133,9 @@ Partial Class Pr_ReporteMovimientoBanco
         Me.BubbleBarUsuario.MouseOverTabColors.BorderColor = System.Drawing.SystemColors.Highlight
         Me.BubbleBarUsuario.SelectedTabColors.BorderColor = System.Drawing.Color.Black
         '
+        'btnSalir
+        '
+        '
         'btnGenerar
         '
         '
