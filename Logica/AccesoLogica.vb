@@ -6982,5 +6982,35 @@ Public Class AccesoLogica
 
         Return _resultado
     End Function
+
+    Public Shared Function L_prReporteUnMovimientoBancos(fechaI As String, fechaF As String, _maBanco As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 5))
+        _listParam.Add(New Datos.DParametro("@fechaI", fechaI))
+        _listParam.Add(New Datos.DParametro("@fechaF", fechaF))
+        _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+        _listParam.Add(New Datos.DParametro("@maBanco", _maBanco))
+        _Tabla = D_ProcedimientoConParam("Sp_Mam_TMB001", _listParam)
+
+        Return _Tabla
+    End Function
+
+    Public Shared Function L_prReporteTodosMovimientoBancos(fechaI As String, fechaF As String) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 6))
+        _listParam.Add(New Datos.DParametro("@fechaI", fechaI))
+        _listParam.Add(New Datos.DParametro("@fechaF", fechaF))
+        _listParam.Add(New Datos.DParametro("@mauact", L_Usuario))
+        '_listParam.Add(New Datos.DParametro("@maBanco", _maBanco))
+        _Tabla = D_ProcedimientoConParam("Sp_Mam_TMB001", _listParam)
+
+        Return _Tabla
+    End Function
 #End Region
 End Class

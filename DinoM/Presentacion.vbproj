@@ -271,11 +271,23 @@
     <Compile Include="F1_Traspaso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Pr_ReporteMovimientoBanco.Designer.vb">
+      <DependentUpon>Pr_ReporteMovimientoBanco.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_ReporteMovimientoBanco.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Pr_VentasContado.Designer.vb">
       <DependentUpon>Pr_VentasContado.vb</DependentUpon>
     </Compile>
     <Compile Include="Pr_VentasContado.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporte\R_MovimientoBancos.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_MovimientoBancos.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporte\R_NotaVenta_7_21X14.vb">
       <AutoGen>True</AutoGen>
@@ -1097,8 +1109,15 @@
     <EmbeddedResource Include="F1_Traspaso.resx">
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pr_ReporteMovimientoBanco.resx">
+      <DependentUpon>Pr_ReporteMovimientoBanco.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pr_VentasContado.resx">
       <DependentUpon>Pr_VentasContado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporte\R_MovimientoBancos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_MovimientoBancos.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporte\R_NotaVenta_7_21X14.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

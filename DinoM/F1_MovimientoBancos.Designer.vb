@@ -457,7 +457,7 @@ Partial Class F1_MovimientoBancos
         Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX2.Size = New System.Drawing.Size(113, 23)
         Me.LabelX2.TabIndex = 23
-        Me.LabelX2.Text = "Descripción:"
+        Me.LabelX2.Text = "Detalle:"
         '
         'tbDescripcion
         '

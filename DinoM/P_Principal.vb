@@ -1215,6 +1215,11 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub btMovimientoBancos_Click(sender As Object, e As EventArgs) Handles btRptMovBancos.Click
+        Dim frm As New Pr_ReporteMovimientoBanco
+        frm.Show()
+    End Sub
+
 
 
 

@@ -97,12 +97,12 @@ Public Class F1_MovimientoBancos
         dt = L_fnListarBanco()
         With mCombo
             .DropDownList.Columns.Clear()
-            .DropDownList.Columns.Add("canumi").Width = 70
+            .DropDownList.Columns.Add("canumi").Width = 60
             .DropDownList.Columns("canumi").Caption = "COD"
-            .DropDownList.Columns.Add("canombre").Width = 200
-            .DropDownList.Columns("canombre").Caption = "BANCO"
+            .DropDownList.Columns.Add("banco").Width = 500
+            .DropDownList.Columns("banco").Caption = "SUCURSAL"
             .ValueMember = "canumi"
-            .DisplayMember = "canombre"
+            .DisplayMember = "banco"
             .DataSource = dt
             .Refresh()
         End With
@@ -228,7 +228,7 @@ Public Class F1_MovimientoBancos
         listEstCeldas.Add(New Modelo.Celda("maBanco", False))
         listEstCeldas.Add(New Modelo.Celda("banco", True, "Banco", 250))
         listEstCeldas.Add(New Modelo.Celda("maNboleta", True, "Nro Boleta", 100))
-        listEstCeldas.Add(New Modelo.Celda("maDetalle", False))
+        listEstCeldas.Add(New Modelo.Celda("maDetalle", True, "Detalle", 100))
         listEstCeldas.Add(New Modelo.Celda("maMonto", True, "Monto Bs.", 150, "0.00"))
         listEstCeldas.Add(New Modelo.Celda("maObs", False))
         listEstCeldas.Add(New Modelo.Celda("maEstado", False))
