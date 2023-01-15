@@ -356,6 +356,7 @@ Public Class F0_Ventas
         tbFechaVenc.Visible = False
         lbCredito.Visible = False
         _prCargarDetalleVenta(-1)
+
         MSuperTabControl.SelectedTabIndex = 0
         tbSubTotal.Value = 0
         tbPdesc.Value = 0
@@ -515,7 +516,7 @@ Public Class F0_Ventas
 
             Banco = tMonto.Rows(0).Item("tgBanco")
             Glosa = tMonto.Rows(0).Item("tgGlosa")
-            CostoEnvio = tMonto.Rows(0).Item("tgCostoEnvio")
+            'CostoEnvio = tMonto.Rows(0).Item("tgCostoEnvio")
         Else
             tbMontoTarej.Value = 0
             cbCambioDolar.Text = "0.00"
@@ -667,7 +668,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbPrecioReferencia")
             .Width = 85
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = False
+            .Visible = True
             .FormatString = "0.00"
             .Caption = "Pre. Fact."
             .AllowSort = False
@@ -675,7 +676,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbPorcentajeReferencia")
             .Width = 60
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = False
+            .Visible = True
             .FormatString = "0.00"
             .Caption = "% Dif."
             .AllowSort = False
@@ -708,6 +709,7 @@ Public Class F0_Ventas
             .Caption = "Precio U."
             .AllowSort = False
         End With
+
         With grdetalle.RootTable.Columns("tbptot")
             .Width = 90
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
@@ -1250,7 +1252,7 @@ Public Class F0_Ventas
         Dim img02 As New Bitmap(My.Resources.add, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
         img02.Save(Bin02, Imaging.ImageFormat.Png)
-        CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, 0, "", "", "", "", "", "", "", "", 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, "", 0, "20500101", CDate("2050/01/01"), 0, Now.Date, "", "", 0, Bin.GetBuffer, Bin02.GetBuffer, 0)
+        CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, 0, "", "", "", "","", "", "", "", 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, "", 0, "20500101", CDate("2050/01/01"), 0, Now.Date, "", "", 0, Bin.GetBuffer, Bin02.GetBuffer, 0)
     End Sub
 
     Public Function _fnSiguienteNumi()
@@ -1618,7 +1620,12 @@ Public Class F0_Ventas
         End If
     End Sub
     Private Sub _prGuardarModificado()
-        Dim res As Boolean = L_fnModificarVenta(tbCodigo.Text, tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")), _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value, IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value)
+        Dim res As Boolean = L_fnModificarVenta(tbCodigo.Text, tbFechaVenta.Value.ToString("yyyy/MM/dd"),
+                             _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True,
+                             Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")),
+                             _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value,
+                             tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value,
+                             IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value)
         If res Then
 
             'If (gb_FacturaEmite) Then
@@ -1638,7 +1645,7 @@ Public Class F0_Ventas
 
             _prCargarVenta()
 
-            _prSalir()
+            ' _prSalir()
 
 
         Else
@@ -1773,7 +1780,8 @@ Public Class F0_Ventas
             If (PrecioReferencia = 0) Then
                 Porcentaje = 0
             Else
-                Porcentaje = 100 - ((monto * 100) / PrecioReferencia)
+                'Porcentaje = 100 - ((monto * 100) / PrecioReferencia) NICO
+                Porcentaje = (PrecioReferencia - monto)
             End If
 
 
@@ -2097,10 +2105,10 @@ Public Class F0_Ventas
         If (gb_DetalleProducto) Then
             ponerDescripcionProducto(dt)
         End If
-        Dim total As Decimal = dt.Compute("SUM(Total)", "")
+        'Dim total As Decimal = dt.Compute("SUM(Total)", "")
         Dim _TotalLi As Decimal
         Dim _Literal, _TotalDecimal, _TotalDecimal2, moneda As String
-        Dim fechaven As String = dt.Rows(0).Item("fechaventa")
+        Dim fechaven As String = dt.Rows(0).Item("Fechaventa")
 
         _TotalLi = dt.Rows(0).Item("totalven")
         _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
@@ -2508,7 +2516,7 @@ Public Class F0_Ventas
             cbCambioDolar.Enabled = True
         End If
     End Sub
-
+    ''VVV PERMITE MODIFICAR EN EL DATAGRIV  NICP
     Private Sub grdetalle_EditingCell(sender As Object, e As EditingCellEventArgs) Handles grdetalle.EditingCell
         If (_fnAccesible()) Then
             'Habilitar solo las columnas de Precio, %, Monto y Observación
@@ -2520,7 +2528,9 @@ Public Class F0_Ventas
                 If (e.Column.Index = grdetalle.RootTable.Columns("tbcmin").Index Or
               e.Column.Index = grdetalle.RootTable.Columns("tbporc").Index Or
               e.Column.Index = grdetalle.RootTable.Columns("tbdesc").Index Or
-              e.Column.Index = grdetalle.RootTable.Columns("yfcbarra").Index) Then
+              e.Column.Index = grdetalle.RootTable.Columns("tbdesc").Index Or
+              e.Column.Index = grdetalle.RootTable.Columns("tbpbas").Index Or
+                    e.Column.Index = grdetalle.RootTable.Columns("yfcbarra").Index) Then
                     e.Cancel = False
                 Else
                     e.Cancel = True
@@ -2730,7 +2740,8 @@ salirIf:
             If (PrecioReferencia = 0) Then
                 Porcentaje = 0
             Else
-                Porcentaje = 100 - ((monto * 100) / PrecioReferencia)
+                'Porcentaje = 100 - ((monto * 100) / PrecioReferencia)  NICO MODF
+                Porcentaje = (PrecioReferencia - monto)
             End If
 
 
@@ -2929,7 +2940,8 @@ salirIf:
                     If (PrecioReferencia = 0) Then
                         Porcentaje = 0
                     Else
-                        Porcentaje = 100 - ((monto * 100) / PrecioReferencia)
+                        'Porcentaje = 100 - ((monto * 100) / PrecioReferencia) NICO
+                        Porcentaje = (PrecioReferencia - monto)
                     End If
 
                     ''tbPorcentajeReferencia
@@ -3183,9 +3195,9 @@ salirIf:
                     _prEliminarFila()
                 End If
             End If
-            If (grdetalle.CurrentColumn.Index = grdetalle.RootTable.Columns("imgAdd").Index) Then
-                SeleccionarCategoria(True)
-            End If
+            ' If (grdetalle.CurrentColumn.Index = grdetalle.RootTable.Columns("imgAdd").Index) Then
+            'SeleccionarCategoria(True)
+            ' End If
         Catch ex As Exception
 
         End Try

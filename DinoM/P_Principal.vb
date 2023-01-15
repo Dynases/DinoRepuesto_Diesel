@@ -1220,6 +1220,11 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub RptVentDesc_Click(sender As Object, e As EventArgs) Handles BtRptVentDesc.Click
+        Dim frm As New Pr_VentasDescuentos
+        frm.Show()
+    End Sub
+
 
 
 
