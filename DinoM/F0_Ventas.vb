@@ -676,7 +676,7 @@ Public Class F0_Ventas
         With grdetalle.RootTable.Columns("tbPorcentajeReferencia")
             .Width = 60
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "% Dif."
             .AllowSort = False
