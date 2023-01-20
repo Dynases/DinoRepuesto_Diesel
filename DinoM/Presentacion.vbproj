@@ -277,6 +277,12 @@
     <Compile Include="Pr_ReporteMovimientoBanco.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Pr_ReposrteVentasFiltrado.Designer.vb">
+      <DependentUpon>Pr_ReposrteVentasFiltrado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_ReposrteVentasFiltrado.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Pr_VentasContado.Designer.vb">
       <DependentUpon>Pr_VentasContado.vb</DependentUpon>
     </Compile>
@@ -317,6 +323,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>R_VentasDescuentos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_VentasFiltradas.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_VentasFiltradas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\F0_DetalleProforma.Designer.vb">
@@ -1124,6 +1136,9 @@
     <EmbeddedResource Include="Pr_ReporteMovimientoBanco.resx">
       <DependentUpon>Pr_ReporteMovimientoBanco.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pr_ReposrteVentasFiltrado.resx">
+      <DependentUpon>Pr_ReposrteVentasFiltrado.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pr_VentasContado.resx">
       <DependentUpon>Pr_VentasContado.vb</DependentUpon>
     </EmbeddedResource>
@@ -1149,6 +1164,10 @@
     <EmbeddedResource Include="Reporte\R_VentasDescuentos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>R_VentasDescuentos.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_VentasFiltradas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_VentasFiltradas.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\F0_DetalleProforma.resx">
       <DependentUpon>F0_DetalleProforma.vb</DependentUpon>

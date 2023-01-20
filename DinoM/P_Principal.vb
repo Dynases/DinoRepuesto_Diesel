@@ -1225,6 +1225,15 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub btReporteVenta2_Click(sender As Object, e As EventArgs) Handles btReporteVenta2.Click
+        Dim frm As New Pr_ReposrteVentasFiltrado
+        frm.Show()
+    End Sub
+
+    Private Sub btAlertas_Click(sender As Object, e As EventArgs) Handles btAlertas.Click
+
+    End Sub
+
 
 
 

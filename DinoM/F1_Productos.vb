@@ -2312,5 +2312,7 @@ Public Class F1_Productos
         e.Cancel = True
     End Sub
 
+    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
 
+    End Sub
 End Class

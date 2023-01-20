@@ -18,8 +18,16 @@ Public Class Pr_KardexProductos
         MReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         _IniciarComponentes()
         _prCargarComboLibreriaDeposito(cbAlmacen)
+        _prCargarComboProveedores(cbProveedor)
+
         If (CType(cbAlmacen.DataSource, DataTable).Rows.Count > 0) Then
             cbAlmacen.SelectedIndex = 0
+        End If
+        If (CType(cbProveedor.DataSource, DataTable).Rows.Count > 0) Then
+            cbProveedor.SelectedIndex = 0
+        End If
+        If (CType(cbMarca.DataSource, DataTable).Rows.Count > 0) Then
+            cbMarca.SelectedIndex = 0
         End If
     End Sub
     Public Sub _prValidarLote()
@@ -51,6 +59,39 @@ Public Class Pr_KardexProductos
             .Refresh()
         End With
     End Sub
+
+    Private Sub _prCargarComboProveedores(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarProveedores()
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("ydcod").Width = 60
+            .DropDownList.Columns("ydcod").Caption = "COD"
+            .DropDownList.Columns.Add("yddesc").Width = 500
+            .DropDownList.Columns("yddesc").Caption = "PROVEEDOR"
+            .ValueMember = "ydcod"
+            .DisplayMember = "yddesc"
+            .DataSource = dt
+            .Refresh()
+        End With
+    End Sub
+
+    Private Sub _prCargarComboMarca(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        Dim codProv As Integer = cbProveedor.Value
+        dt = L_fnListarMarcas(codProv)
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("yccod3").Width = 60
+            .DropDownList.Columns("yccod3").Caption = "COD"
+            .DropDownList.Columns.Add("ycdes3").Width = 500
+            .DropDownList.Columns("ycdes3").Caption = "MARCA"
+            .ValueMember = "yccod3"
+            .DisplayMember = "ycdes3"
+            .DataSource = dt
+            .Refresh()
+        End With
+    End Sub
     Public Sub _IniciarComponentes()
 
         checkDetallado.CheckValue = False
@@ -75,7 +116,7 @@ Public Class Pr_KardexProductos
 
     End Sub
     Public Sub _prObtenerKardexGeneral(ByRef _dt As DataTable)
-        Dim dtaux As DataTable = L_fnObtenerKardexGeneralProductos(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbAlmacen.Value) ''Aqui obtengo todos los productos con movimientos
+        Dim dtaux As DataTable = L_fnObtenerKardexGeneralProductos(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbAlmacen.Value, cbProveedor.Value, cbMarca.Value) ''Aqui obtengo todos los productos con movimientos
 
 
         '' as SaldoAnterior,
@@ -414,6 +455,10 @@ Public Class Pr_KardexProductos
             Me.Opacity = 100
             Timer1.Enabled = False
         End If
+    End Sub
+
+    Private Sub cbProveedor_ValueChanged(sender As Object, e As EventArgs) Handles cbProveedor.ValueChanged
+        _prCargarComboMarca(cbMarca)
     End Sub
 
     'Private Sub CheckTodosVendedor_CheckedChanged(sender As Object, e As EventArgs) Handles checkDetallado.CheckedChanged
