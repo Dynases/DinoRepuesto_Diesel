@@ -1317,9 +1317,14 @@ Public Class F0_MCompras
                 _prMostrarRegistro(0)
             End If
         Else
-            '  Public _modulo As SideNavItem
-            Me.Close()
-            _modulo.Select()
+            If gs_ComVenPro > 0 Then
+                gs_ComVenPro = 0
+                Me.Close()
+            Else
+                '  Public _modulo As SideNavItem
+                Me.Close()
+                _modulo.Select()
+            End If
         End If
     End Sub
     Public Sub _prCargarIconELiminar()
@@ -1393,6 +1398,33 @@ Public Class F0_MCompras
             btnBuscarProforma.Enabled = True
         Else
             btnBuscarProforma.Enabled = False
+        End If
+        If (gs_ComVenPro > 0) Then
+            If btnGrabar.Enabled = True Then
+                Dim bandera As Boolean = True
+                If (bandera = True) Then
+                    _prInhabiliitar()
+                    btnNuevo.Visible = False
+                    btnEliminar.Visible = False
+                    btnModificar.Visible = False
+                    btnGrabar.Visible = False
+                    btnVerPagos.Visible = True
+                    If grCompra.RowCount > 0 Then
+                        Dim pos As Integer
+                        Dim cont As Integer = 0
+                        For Each fila As GridEXRow In grCompra.GetRows()
+                            If (CInt(fila.Cells("canumi").Value.ToString) = gs_ComVenPro) Then
+                                pos = fila.Position
+                            Else
+                                cont += 1
+                            End If
+                        Next
+                        grCompra.Row = pos
+                        _prMostrarRegistro(0)
+
+                    End If
+                End If
+            End If
         End If
     End Sub
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
@@ -2337,6 +2369,15 @@ salirIf:
         End If
 
     End Sub
+
+    Private Sub btnVerPagos_Click(sender As Object, e As EventArgs) Handles btnVerPagos.Click
+        Dim frm As New F0_PagosCreditoCompraUlt
+        frm._nameButton = DinoM.P_Principal.btInvMovimiento.Name
+        'frm._modulo = FP_COMPRAS
+        frm.Show()
+    End Sub
+
+
 
 
 

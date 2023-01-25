@@ -237,7 +237,7 @@ Public Class F0_PagosCreditoNuevo
         ',a.tcty4clie ,cliente,detalle.tdfechaPago, PagoAc, NumeroRecibo, DescBanco, banco, detalle.tdnrocheque 
         cbbanco.SelectedIndex = 0
         CType(grfactura.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, "", 0, 0, 0, 0, 0, 0,
-                                                     Now.Date, 0, 0, 0, "", cbbanco.Text, 0, "", Bin.ToArray, 0)
+                                                     Now.Date, 0, 0, 0, "", Bin.ToArray, 0, 0)
     End Sub
     Public Function _fnSiguienteNumi()
         Dim dt As DataTable = CType(grfactura.DataSource, DataTable)
@@ -332,17 +332,17 @@ Public Class F0_PagosCreditoNuevo
             .HeaderAlignment = TextAlignment.Far
             .Visible = True
         End With
-        With grfactura.RootTable.Columns("DescBanco")
-            .Caption = "Banco"
-            .EditType = EditType.MultiColumnDropDown
-            .DropDown = cbbanco.DropDownList
-            .Width = 160
-            .Visible = False
-        End With
-        With grfactura.RootTable.Columns("banco")
-            .Width = 100
-            .Visible = False
-        End With
+        'With grfactura.RootTable.Columns("DescBanco")
+        '    .Caption = "Banco"
+        '    .EditType = EditType.MultiColumnDropDown
+        '    .DropDown = cbbanco.DropDownList
+        '    .Width = 160
+        '    .Visible = False
+        'End With
+        'With grfactura.RootTable.Columns("banco")
+        '    .Width = 100
+        '    .Visible = False
+        'End With
         With grfactura.RootTable.Columns("estado")
             .Width = 100
             .Visible = False
@@ -640,7 +640,7 @@ Public Class F0_PagosCreditoNuevo
             e.Cancel = True
             Return
         End If
-        If (e.Column.Index = grfactura.RootTable.Columns("PagoAc").Index Or e.Column.Index = grfactura.RootTable.Columns("NumeroRecibo").Index Or e.Column.Index = grfactura.RootTable.Columns("DescBanco").Index Or e.Column.Index = grfactura.RootTable.Columns("tdnrocheque").Index) Then
+        If (e.Column.Index = grfactura.RootTable.Columns("PagoAc").Index Or e.Column.Index = grfactura.RootTable.Columns("NumeroRecibo").Index Or e.Column.Index = grfactura.RootTable.Columns("tdnrocheque").Index) Then
             e.Cancel = False
         Else
             e.Cancel = True
@@ -995,15 +995,20 @@ Public Class F0_PagosCreditoNuevo
 
     End Sub
     Public Function _fnExistePago(idprod As Integer) As Boolean
-        For i As Integer = 0 To CType(grfactura.DataSource, DataTable).Rows.Count - 1 Step 1
-            Dim _idprod As Integer = CType(grfactura.DataSource, DataTable).Rows(i).Item("numiCredito")
-            Dim estado As Integer = CType(grfactura.DataSource, DataTable).Rows(i).Item("estado")
-            If (_idprod = idprod And estado >= 0) Then
+        If CType(grfactura.DataSource, DataTable).Rows.Count = 0 Then
 
-                Return True
-            End If
-        Next
-        Return False
+
+            Return False
+        Else
+            For i As Integer = 0 To CType(grfactura.DataSource, DataTable).Rows.Count - 1 Step 1
+                Dim _idprod As Integer = CType(grfactura.DataSource, DataTable).Rows(i).Item("numiCredito")
+                Dim estado As Integer = CType(grfactura.DataSource, DataTable).Rows(i).Item("estado")
+                If (_idprod = idprod And estado >= 0) Then
+
+                    Return True
+                End If
+            Next
+        End If
     End Function
     Private Sub grPendiente_KeyDown(sender As Object, e As KeyEventArgs) Handles grPendiente.KeyDown
         If (Not _fnAccesible()) Then
@@ -1121,8 +1126,7 @@ Public Class F0_PagosCreditoNuevo
                 'td.tdnrocheque, @newFecha  ,@newHora  ,@teuact
                 If (pago > 0) Then
                     dt.Rows.Add(0, dtcobro.Rows(i).Item("numiCredito"), 0, dtcobro.Rows(i).Item("NroDoc"),
-                                            Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), _fnObtenerNumiBancoLibreria(
-                                                dtcobro.Rows(i).Item("DescBanco")), dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
+                                            Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), 0, dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
                                             "", "", Bin.ToArray, 0)
                 End If
 
@@ -1176,7 +1180,7 @@ Public Class F0_PagosCreditoNuevo
                                       eToastGlowColor.Green,
                                       eToastPosition.TopCenter
                                       )
-            P_GenerarReporteDirecto(numi)
+            'P_GenerarReporteDirecto(numi)
             _prCargarCobranza()
             _Limpiar()
             grPendiente.ClearStructure()

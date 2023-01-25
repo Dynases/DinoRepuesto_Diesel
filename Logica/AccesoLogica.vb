@@ -4228,6 +4228,19 @@ Public Class AccesoLogica
 
         Return _Tabla
     End Function
+
+    Public Shared Function L_fnObtenerCodigoMovimiento(_codMov As Integer) As DataTable
+        Dim _Tabla As DataTable
+
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 47))
+        _listParam.Add(New Datos.DParametro("@ibuact", L_Usuario))
+        _listParam.Add(New Datos.DParametro("@almacen", _codMov))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TI002", _listParam)
+
+        Return _Tabla
+    End Function
     Public Shared Function L_fnObtenerHistorialProductoporLote(_codProducto As Integer, FechaI As String, FechaF As String, _almacen As Integer, _Lote As String, _FechaVenc As String) As DataTable
         Dim _Tabla As DataTable
 
@@ -7199,4 +7212,18 @@ Public Class AccesoLogica
         Return _Tabla
     End Function
 #End Region
+
+
+
+
+    Public Shared Function L_prCargarAlertas() As DataTable
+
+        Dim _Tabla As DataTable
+        Dim _listParam As New List(Of Datos.DParametro)
+
+        _listParam.Add(New Datos.DParametro("@tipo", 5))
+        _Tabla = D_ProcedimientoConParam("sp_Mam_TC00121", _listParam)
+        Return _Tabla
+    End Function
+
 End Class

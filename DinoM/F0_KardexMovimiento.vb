@@ -714,4 +714,42 @@ Public Class F0_KardexMovimiento
         End Try
     End Sub
 
+    Private Sub grDatos_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles grDatos.MouseDoubleClick
+        If (grDatos.RowCount >= 0) Then
+            If (grDatos.CurrentColumn.Index = grDatos.RootTable.Columns("id").Index) Then
+                Dim tipo As String = grDatos.GetValue("descConcep")
+                If tipo = "VENTAS" Then
+                    Dim id As Integer = CInt(grDatos.GetValue("id"))
+                    gs_ComVenPro = id
+                    Dim frm As New F0_Ventas
+                    frm._nameButton = DinoM.P_Principal.btVentVenta.Name
+
+                    'frm._modulo = FP_VENTAS
+                    frm.Show()
+                End If
+                If tipo = "COMPRA" Then
+                    Dim id As Integer = CInt(grDatos.GetValue("id"))
+                    gs_ComVenPro = id
+                    Dim frm As New F0_MCompras
+                    frm._nameButton = DinoM.P_Principal.btComCompra.Name
+
+                    'frm._modulo = FP_VENTAS
+                    frm.Show()
+                End If
+                If tipo <> "VENTAS" And tipo <> "COMPRA" Then
+                    Dim id As Integer = CInt(grDatos.GetValue("id"))
+                    Dim dt As DataTable = L_fnObtenerCodigoMovimiento(id)
+                    For Each fila As DataRow In dt.Rows
+                        id = CInt(fila.Item("codigo").ToString)
+                    Next
+                    gs_ComVenPro = id
+                    Dim frm As New F0_MovimientoNuevo
+                    frm._nameButton = DinoM.P_Principal.btInvMovimiento.Name
+
+                    'frm._modulo = FP_VENTAS
+                    frm.Show()
+                End If
+            End If
+        End If
+    End Sub
 End Class

@@ -253,6 +253,12 @@
     <Compile Include="F0_ProformaVenta.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="F1_Alerta.Designer.vb">
+      <DependentUpon>F1_Alerta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="F1_Alerta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="F1_Bancos.designer.vb">
       <DependentUpon>F1_Bancos.vb</DependentUpon>
     </Compile>
@@ -269,6 +275,12 @@
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
     </Compile>
     <Compile Include="F1_Traspaso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pr_ReporteAlertas.Designer.vb">
+      <DependentUpon>Pr_ReporteAlertas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_ReporteAlertas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Pr_ReporteMovimientoBanco.Designer.vb">
@@ -323,6 +335,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>R_VentasDescuentos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_ReporteAlertas.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_ReporteAlertas.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="R_VentasFiltradas.vb">
@@ -1124,6 +1142,9 @@
     <EmbeddedResource Include="F0_ProformaVenta.resx">
       <DependentUpon>F0_ProformaVenta.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="F1_Alerta.resx">
+      <DependentUpon>F1_Alerta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="F1_Bancos.resx">
       <DependentUpon>F1_Bancos.vb</DependentUpon>
     </EmbeddedResource>
@@ -1132,6 +1153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="F1_Traspaso.resx">
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pr_ReporteAlertas.resx">
+      <DependentUpon>Pr_ReporteAlertas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pr_ReporteMovimientoBanco.resx">
       <DependentUpon>Pr_ReporteMovimientoBanco.vb</DependentUpon>
@@ -1164,6 +1188,10 @@
     <EmbeddedResource Include="Reporte\R_VentasDescuentos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>R_VentasDescuentos.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_ReporteAlertas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_ReporteAlertas.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="R_VentasFiltradas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

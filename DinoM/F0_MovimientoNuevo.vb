@@ -541,8 +541,13 @@ Public Class F0_MovimientoNuevo
                 End If
             End If
         Else
-            _modulo.Select()
-            Me.Close()
+            If gs_ComVenPro > 0 Then
+                gs_ComVenPro = 0
+                Me.Close()
+            Else
+                _modulo.Select()
+                Me.Close()
+            End If
         End If
     End Sub
     Public Sub _prCargarIconELiminar()
@@ -620,6 +625,33 @@ Public Class F0_MovimientoNuevo
     Private Sub F0_Movimiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _IniciarTodo()
         btnNuevo.PerformClick()
+        If (gs_ComVenPro > 0) Then
+            If btnGrabar.Enabled = True Then
+                Dim bandera As Boolean = True
+                If (bandera = True) Then
+                    _prInhabiliitar()
+                    btnNuevo.Visible = False
+                    btnEliminar.Visible = False
+                    btnModificar.Visible = False
+                    btnGrabar.Visible = False
+                    If grmovimiento.RowCount > 0 Then
+                        Dim pos As Integer
+                        Dim cont As Integer = 0
+                        For Each fila As GridEXRow In grmovimiento.GetRows()
+                            If (CInt(fila.Cells("id").Value.ToString) = gs_ComVenPro) Then
+                                pos = fila.Position
+                                Exit For
+                            Else
+                                cont += 1
+                            End If
+                        Next
+                        grmovimiento.Row = pos
+                        _prMostrarRegistro(0)
+
+                    End If
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click

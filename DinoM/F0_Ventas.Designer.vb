@@ -2132,6 +2132,7 @@ Partial Class F0_Ventas
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "F0_Ventas"
+        Me.Opacity = 0.99R
         Me.Text = "F0_Ventas"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.PanelPrincipal, 0)

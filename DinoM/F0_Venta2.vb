@@ -421,7 +421,7 @@ Public Class F0_Venta2
         'End If
 
         With grdetalle.RootTable.Columns("Codigo")
-            .Caption = "Código".ToUpper
+            .Caption = "Codigo".ToUpper
             .Width = 100
             .Visible = False
         End With

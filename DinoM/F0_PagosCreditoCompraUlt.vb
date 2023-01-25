@@ -243,7 +243,7 @@ Public Class F0_PagosCreditoCompraUlt
         ',a.tctc1numi ,a.tcty4prov  ,detalle.tdfechaPago, pendiente,PagoAc,NumeroRecibo, DescBanco, banco, detalle.tdnrocheque, img , estado 
         cbbanco.SelectedIndex = 0
         CType(grfactura.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, "", 0, 0, 0, 0, 0, Now.Date, 0,
-                                                      0, "", cbbanco.Text, 0, "", Bin.ToArray, 0)
+                                                      0, "", "", Bin.ToArray, 0)
     End Sub
     Public Function _fnSiguienteNumi()
         Dim dt As DataTable = CType(grfactura.DataSource, DataTable)
@@ -326,17 +326,17 @@ Public Class F0_PagosCreditoCompraUlt
             .HeaderAlignment = TextAlignment.Far
             .Visible = True
         End With
-        With grfactura.RootTable.Columns("DescBanco")
-            .Caption = "Banco"
-            .EditType = EditType.MultiColumnDropDown
-            .DropDown = cbbanco.DropDownList
-            .Width = 160
-            .Visible = True
-        End With
-        With grfactura.RootTable.Columns("banco")
-            .Width = 100
-            .Visible = False
-        End With
+        'With grfactura.RootTable.Columns("DescBanco")
+        '    .Caption = "Banco"
+        '    .EditType = EditType.MultiColumnDropDown
+        '    .DropDown = cbbanco.DropDownList
+        '    .Width = 160
+        '    .Visible = True
+        'End With
+        'With grfactura.RootTable.Columns("banco")
+        '    .Width = 100
+        '    .Visible = False
+        'End With
         With grfactura.RootTable.Columns("estado")
             .Width = 100
             .Visible = False
@@ -740,8 +740,7 @@ Public Class F0_PagosCreditoCompraUlt
                 'td.tdnrocheque, @newFecha  ,@newHora  ,@teuact
                 If (pago > 0) Then
                     dt.Rows.Add(0, dtcobro.Rows(i).Item("numiCredito"), 0, dtcobro.Rows(i).Item("NroDoc"),
-                                            Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), _fnObtenerNumiBancoLibreria(
-                                                dtcobro.Rows(i).Item("DescBanco")), dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
+                                            Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), 0, dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
                                             "", "", Bin.ToArray, 0)
                 End If
 
@@ -828,16 +827,21 @@ Public Class F0_PagosCreditoCompraUlt
         End If
     End Sub
     Private Sub _prSalir()
-        If btnGrabar.Enabled = True Then
-            _prInhabiliitar()
-            If grcobranza.RowCount > 0 Then
-
-                _prMostrarRegistro(0)
-
-            End If
-        Else
+        If gs_ComVenPro > 0 Then
             Me.Close()
-            _modulo.Select()
+        Else
+            If btnGrabar.Enabled = True Then
+                _prInhabiliitar()
+                If grcobranza.RowCount > 0 Then
+
+                    _prMostrarRegistro(0)
+
+                End If
+            Else
+
+                Me.Close()
+                _modulo.Select()
+            End If
         End If
     End Sub
     Private Sub P_GenerarReporte()
@@ -914,6 +918,46 @@ Public Class F0_PagosCreditoCompraUlt
 
     Private Sub F0_PagosCredito_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _IniciarTodo()
+
+        If (gs_ComVenPro > 0) Then
+            If btnGrabar.Enabled = False Then
+                Dim bandera As Boolean = True
+                If (bandera = True) Then
+                    _prhabilitar()
+                    btnNuevo.Visible = False
+                    btnEliminar.Visible = False
+                    btnModificar.Visible = False
+                    btnGrabar.Visible = False
+                    btnAnterior.Visible = False
+                    btnSiguiente.Visible = False
+                    btnPrimero.Visible = False
+                    btnUltimo.Visible = False
+                    LblPaginacion.Visible = False
+                    SuperTabItem1.Visible = False
+                    'GroupPanel1.Visible = False
+                    Dim dt As DataTable
+                    dt = grfactura.DataSource
+                    dt.Clear()
+                    grfactura.DataSource = dt
+
+                    _prCargarTablaPagos(gs_ComVenPro)
+                    'If grCompra.RowCount > 0 Then
+                    '    Dim pos As Integer
+                    '    Dim cont As Integer = 0
+                    '    For Each fila As GridEXRow In grCompra.GetRows()
+                    '        If (CInt(fila.Cells("canumi").Value.ToString) = gs_ComVenPro) Then
+                    '            pos = fila.Position
+                    '        Else
+                    '            cont += 1
+                    '        End If
+                    '    Next
+                    '    grCompra.Row = pos
+                    '    _prMostrarRegistro(0)
+
+                    'End If
+                End If
+            End If
+        End If
     End Sub
     Private Sub grfactura_EditingCell(sender As Object, e As EditingCellEventArgs) Handles grfactura.EditingCell
 
@@ -922,7 +966,7 @@ Public Class F0_PagosCreditoCompraUlt
             e.Cancel = True
             Return
         End If
-        If (e.Column.Index = grfactura.RootTable.Columns("PagoAc").Index Or e.Column.Index = grfactura.RootTable.Columns("NumeroRecibo").Index Or e.Column.Index = grfactura.RootTable.Columns("DescBanco").Index Or e.Column.Index = grfactura.RootTable.Columns("tdnrocheque").Index) Then
+        If (e.Column.Index = grfactura.RootTable.Columns("PagoAc").Index Or e.Column.Index = grfactura.RootTable.Columns("NumeroRecibo").Index Or e.Column.Index = grfactura.RootTable.Columns("tdnrocheque").Index) Then
             e.Cancel = False
         Else
             e.Cancel = True

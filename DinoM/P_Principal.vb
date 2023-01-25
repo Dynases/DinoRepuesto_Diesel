@@ -1231,6 +1231,11 @@ Public Class P_Principal
     End Sub
 
     Private Sub btAlertas_Click(sender As Object, e As EventArgs) Handles btAlertas.Click
+        Dim frm As New F1_Alerta
+        frm.Show()
+    End Sub
+
+    Private Sub SideNav1_Click(sender As Object, e As EventArgs) Handles SideNav1.Click
 
     End Sub
 

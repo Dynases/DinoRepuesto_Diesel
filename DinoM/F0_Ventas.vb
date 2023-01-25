@@ -67,7 +67,8 @@ Public Class F0_Ventas
         P_prCargarVariablesIndispensables()
         _prCargarVenta()
         _prInhabiliitar()
-        grVentas.Focus()
+
+            grVentas.Focus()
         Me.Text = "DESPACHOS"
         Dim blah As New Bitmap(New Bitmap(My.Resources.compra), 20, 20)
         Dim ico As Icon = Icon.FromHandle(blah.GetHicon())
@@ -79,7 +80,6 @@ Public Class F0_Ventas
 
 
         tbFechaVenta.IsInputReadOnly = True
-
 
     End Sub
     Public Sub _prCargarNameLabel()
@@ -1701,10 +1701,17 @@ Public Class F0_Ventas
                 End If
             End If
         Else
-            _modulo.Select()
-            If (Not IsNothing(_tab)) Then
-                _tab.Close()
+            If gs_ComVenPro! = 0 Then
+                _modulo.Select()
+                If (Not IsNothing(_tab)) Then
+                    _tab.Close()
+                End If
+            Else
+                gs_ComVenPro = 0
+                Me.Close()
             End If
+
+
         End If
 
 
@@ -2348,6 +2355,34 @@ Public Class F0_Ventas
         Else
             btnCobrar.Visible = False
 
+        End If
+        If (gs_ComVenPro > 0) Then
+            If btnGrabar.Enabled = True Then
+                Dim bandera As Boolean = True
+                If (bandera = True) Then
+                    _prInhabiliitar()
+                    btnEliminar.Visible = False
+                    btnNuevo.Visible = False
+                    btnModificar.Visible = False
+                    btnGrabar.Visible = False
+                    btnActualizar.Visible = False
+                    btnCobrar.Visible = False
+                    If grVentas.RowCount > 0 Then
+                        Dim pos As Integer
+                        Dim cont As Integer = 0
+                        For Each fila As GridEXRow In grVentas.GetRows()
+                            If (CInt(fila.Cells("tanumi").Value.ToString) = gs_ComVenPro) Then
+                                pos = fila.Position
+                            Else
+                                cont += 1
+                            End If
+                        Next
+                        grVentas.Row = pos
+                        _prMostrarRegistro(0)
+
+                    End If
+                End If
+            End If
         End If
     End Sub
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click

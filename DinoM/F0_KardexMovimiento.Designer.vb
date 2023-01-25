@@ -45,13 +45,13 @@ Partial Class F0_KardexMovimiento
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.tbproducto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.tbCodigo = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanelKardex = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.grDatos = New Janus.Windows.GridEX.GridEX()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -83,7 +83,7 @@ Partial Class F0_KardexMovimiento
         '
         Me.PanelSuperior.Controls.Add(Me.Panel3)
         Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelSuperior.Size = New System.Drawing.Size(1362, 72)
+        Me.PanelSuperior.Size = New System.Drawing.Size(1354, 72)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelSuperior.Style.BackColor1.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(150, Byte), Integer))
         Me.PanelSuperior.Style.BackColor2.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(150, Byte), Integer))
@@ -105,9 +105,9 @@ Partial Class F0_KardexMovimiento
         '
         'PanelInferior
         '
-        Me.PanelInferior.Location = New System.Drawing.Point(0, 702)
+        Me.PanelInferior.Location = New System.Drawing.Point(0, 694)
         Me.PanelInferior.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelInferior.Size = New System.Drawing.Size(1362, 39)
+        Me.PanelInferior.Size = New System.Drawing.Size(1354, 39)
         Me.PanelInferior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelInferior.Style.BackColor1.Color = System.Drawing.Color.Transparent
         Me.PanelInferior.Style.BackColor2.Color = System.Drawing.Color.Transparent
@@ -152,13 +152,13 @@ Partial Class F0_KardexMovimiento
         '
         'PanelToolBar2
         '
-        Me.PanelToolBar2.Location = New System.Drawing.Point(1282, 0)
+        Me.PanelToolBar2.Location = New System.Drawing.Point(1274, 0)
         Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4)
         '
         'PanelPrincipal
         '
         Me.PanelPrincipal.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelPrincipal.Size = New System.Drawing.Size(1362, 741)
+        Me.PanelPrincipal.Size = New System.Drawing.Size(1354, 733)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.PanelInferior, 0)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.PanelUsuario, 0)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.PanelSuperior, 0)
@@ -170,7 +170,7 @@ Partial Class F0_KardexMovimiento
         '
         'MPanelUserAct
         '
-        Me.MPanelUserAct.Location = New System.Drawing.Point(1162, 0)
+        Me.MPanelUserAct.Location = New System.Drawing.Point(1154, 0)
         Me.MPanelUserAct.Margin = New System.Windows.Forms.Padding(4)
         '
         'MRlAccion
@@ -183,7 +183,7 @@ Partial Class F0_KardexMovimiento
         Me.MRlAccion.ForeColor = System.Drawing.Color.Cyan
         Me.MRlAccion.Location = New System.Drawing.Point(476, 0)
         Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4)
-        Me.MRlAccion.Size = New System.Drawing.Size(613, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(605, 72)
         Me.MRlAccion.Text = "KARDEX DE PRODUCTOS"
         '
         'PanelContent
@@ -191,17 +191,17 @@ Partial Class F0_KardexMovimiento
         Me.PanelContent.Controls.Add(Me.GroupPanelKardex)
         Me.PanelContent.Controls.Add(Me.GroupPanelDatos)
         Me.PanelContent.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelContent.Size = New System.Drawing.Size(1329, 630)
+        Me.PanelContent.Size = New System.Drawing.Size(1321, 622)
         '
         'Panel1
         '
         Me.Panel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.Panel1.Size = New System.Drawing.Size(1362, 630)
+        Me.Panel1.Size = New System.Drawing.Size(1354, 622)
         '
         'MSuperTabControlPanel1
         '
         Me.MSuperTabControlPanel1.Margin = New System.Windows.Forms.Padding(4)
-        Me.MSuperTabControlPanel1.Size = New System.Drawing.Size(1329, 630)
+        Me.MSuperTabControlPanel1.Size = New System.Drawing.Size(1321, 622)
         '
         'MSuperTabItem1
         '
@@ -223,12 +223,12 @@ Partial Class F0_KardexMovimiento
         Me.MSuperTabControl.ControlBox.Name = ""
         Me.MSuperTabControl.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MSuperTabControl.ControlBox.MenuBox, Me.MSuperTabControl.ControlBox.CloseBox})
         Me.MSuperTabControl.Margin = New System.Windows.Forms.Padding(4)
-        Me.MSuperTabControl.Size = New System.Drawing.Size(1362, 630)
+        Me.MSuperTabControl.Size = New System.Drawing.Size(1354, 622)
         Me.MSuperTabControl.Controls.SetChildIndex(Me.MSuperTabControlPanel1, 0)
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(1089, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(1081, 0)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         '
         'GroupPanelDatos
@@ -241,7 +241,7 @@ Partial Class F0_KardexMovimiento
         Me.GroupPanelDatos.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupPanelDatos.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanelDatos.Name = "GroupPanelDatos"
-        Me.GroupPanelDatos.Size = New System.Drawing.Size(1329, 217)
+        Me.GroupPanelDatos.Size = New System.Drawing.Size(1321, 217)
         '
         '
         '
@@ -297,7 +297,7 @@ Partial Class F0_KardexMovimiento
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1323, 194)
+        Me.Panel2.Size = New System.Drawing.Size(1315, 194)
         Me.Panel2.TabIndex = 0
         '
         'btnBuscar
@@ -649,6 +649,23 @@ Partial Class F0_KardexMovimiento
         Me.tbCodigo.Size = New System.Drawing.Size(80, 21)
         Me.tbCodigo.TabIndex = 226
         '
+        'LabelX6
+        '
+        Me.LabelX6.AutoSize = True
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX6.Location = New System.Drawing.Point(18, 52)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX6.Size = New System.Drawing.Size(64, 16)
+        Me.LabelX6.TabIndex = 227
+        Me.LabelX6.Text = "Producto:"
+        '
         'LabelX1
         '
         Me.LabelX1.AutoSize = True
@@ -676,7 +693,7 @@ Partial Class F0_KardexMovimiento
         Me.GroupPanelKardex.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupPanelKardex.Location = New System.Drawing.Point(0, 217)
         Me.GroupPanelKardex.Name = "GroupPanelKardex"
-        Me.GroupPanelKardex.Size = New System.Drawing.Size(1329, 413)
+        Me.GroupPanelKardex.Size = New System.Drawing.Size(1321, 405)
         '
         '
         '
@@ -724,7 +741,7 @@ Partial Class F0_KardexMovimiento
         Me.grDatos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grDatos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grDatos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
-        Me.grDatos.Size = New System.Drawing.Size(1323, 390)
+        Me.grDatos.Size = New System.Drawing.Size(1315, 382)
         Me.grDatos.TabIndex = 0
         Me.grDatos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -754,28 +771,11 @@ Partial Class F0_KardexMovimiento
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
-        'LabelX6
-        '
-        Me.LabelX6.AutoSize = True
-        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX6.Location = New System.Drawing.Point(18, 52)
-        Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX6.Size = New System.Drawing.Size(64, 16)
-        Me.LabelX6.TabIndex = 227
-        Me.LabelX6.Text = "Producto:"
-        '
         'F0_KardexMovimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1362, 741)
+        Me.ClientSize = New System.Drawing.Size(1354, 733)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "F0_KardexMovimiento"

@@ -98,6 +98,7 @@ Partial Class F0_MCompras
         Me.grCompra = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.btnTraspaso = New DevComponents.DotNetBar.ButtonX()
+        Me.btnVerPagos = New DevComponents.DotNetBar.ButtonX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -145,6 +146,7 @@ Partial Class F0_MCompras
         '
         'PanelSuperior
         '
+        Me.PanelSuperior.Controls.Add(Me.btnVerPagos)
         Me.PanelSuperior.Controls.Add(Me.btnTraspaso)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelSuperior.Style.BackColor1.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(150, Byte), Integer))
@@ -162,6 +164,7 @@ Partial Class F0_MCompras
         Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar1, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar2, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.btnTraspaso, 0)
+        Me.PanelSuperior.Controls.SetChildIndex(Me.btnVerPagos, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.MRlAccion, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.PictureBox1, 0)
         '
@@ -257,7 +260,7 @@ Partial Class F0_MCompras
         '
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.MRlAccion.Size = New System.Drawing.Size(814, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(734, 72)
         '
         'PanelContent
         '
@@ -300,7 +303,7 @@ Partial Class F0_MCompras
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(997, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(917, 0)
         '
         'PanelDetalle
         '
@@ -1664,6 +1667,24 @@ Partial Class F0_MCompras
         Me.btnTraspaso.Text = "TRASPASO"
         Me.btnTraspaso.TextColor = System.Drawing.Color.White
         '
+        'btnVerPagos
+        '
+        Me.btnVerPagos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnVerPagos.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
+        Me.btnVerPagos.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnVerPagos.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerPagos.Image = Global.DinoM.My.Resources.Resources.cobro
+        Me.btnVerPagos.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.btnVerPagos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.btnVerPagos.Location = New System.Drawing.Point(1110, 0)
+        Me.btnVerPagos.Name = "btnVerPagos"
+        Me.btnVerPagos.Size = New System.Drawing.Size(80, 72)
+        Me.btnVerPagos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.btnVerPagos.TabIndex = 15
+        Me.btnVerPagos.Text = "PAGOS"
+        Me.btnVerPagos.TextColor = System.Drawing.Color.White
+        Me.btnVerPagos.Visible = False
+        '
         'F0_MCompras
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1796,4 +1817,5 @@ Partial Class F0_MCompras
     Friend WithEvents tbProforma As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents btnBuscarProforma As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnTraspaso As DevComponents.DotNetBar.ButtonX
+    Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
 End Class

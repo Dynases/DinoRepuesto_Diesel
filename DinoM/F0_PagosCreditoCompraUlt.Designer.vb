@@ -24,12 +24,14 @@ Partial Class F0_PagosCreditoCompraUlt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_PagosCreditoCompraUlt))
-        Dim cbbanco_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cbbanco_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.grpagos = New Janus.Windows.GridEX.GridEX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.cbSucursal = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.cbbanco = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.tbObservacion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
@@ -47,8 +49,6 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.grcobranza = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.cbSucursal = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,6 +69,7 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.GroupPanel2.SuspendLayout()
         CType(Me.grpagos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
+        CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbbanco, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbfecha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
@@ -79,7 +80,6 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         CType(Me.grcobranza, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelSuperior
@@ -316,7 +316,8 @@ Partial Class F0_PagosCreditoCompraUlt
         'grpagos
         '
         Me.grpagos.AllowEdit = Janus.Windows.GridEX.InheritableBoolean.[False]
-        Me.grpagos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grpagos.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grpagos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grpagos.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grpagos.Location = New System.Drawing.Point(0, 0)
@@ -378,6 +379,37 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 0
         Me.GroupPanel1.Text = "DATOS GENERALES"
+        '
+        'LabelX17
+        '
+        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX17.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX17.Location = New System.Drawing.Point(25, 81)
+        Me.LabelX17.Name = "LabelX17"
+        Me.LabelX17.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX17.Size = New System.Drawing.Size(100, 23)
+        Me.LabelX17.TabIndex = 242
+        Me.LabelX17.Text = "Sucursal Pago:"
+        '
+        'cbSucursal
+        '
+        cbSucursal_DesignTimeLayout.LayoutString = resources.GetString("cbSucursal_DesignTimeLayout.LayoutString")
+        Me.cbSucursal.DesignTimeLayout = cbSucursal_DesignTimeLayout
+        Me.cbSucursal.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbSucursal.Location = New System.Drawing.Point(141, 82)
+        Me.cbSucursal.Name = "cbSucursal"
+        Me.cbSucursal.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbSucursal.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbSucursal.SelectedIndex = -1
+        Me.cbSucursal.SelectedItem = Nothing
+        Me.cbSucursal.Size = New System.Drawing.Size(225, 22)
+        Me.cbSucursal.TabIndex = 241
+        Me.cbSucursal.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'cbbanco
         '
@@ -669,7 +701,7 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel1.Margin = New System.Windows.Forms.Padding(2)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(1334, 630)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(1329, 550)
         Me.SuperTabControlPanel1.TabIndex = 0
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
@@ -685,7 +717,7 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel5.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(1334, 630)
+        Me.GroupPanel5.Size = New System.Drawing.Size(1329, 550)
         '
         '
         '
@@ -732,7 +764,7 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.grcobranza.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grcobranza.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grcobranza.SelectionMode = Janus.Windows.GridEX.SelectionMode.MultipleSelection
-        Me.grcobranza.Size = New System.Drawing.Size(1328, 603)
+        Me.grcobranza.Size = New System.Drawing.Size(1323, 523)
         Me.grcobranza.TabIndex = 0
         Me.grcobranza.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -740,37 +772,6 @@ Partial Class F0_PagosCreditoCompraUlt
         '
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
-        '
-        'LabelX17
-        '
-        Me.LabelX17.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX17.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX17.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX17.Location = New System.Drawing.Point(25, 81)
-        Me.LabelX17.Name = "LabelX17"
-        Me.LabelX17.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX17.Size = New System.Drawing.Size(100, 23)
-        Me.LabelX17.TabIndex = 242
-        Me.LabelX17.Text = "Sucursal Pago:"
-        '
-        'cbSucursal
-        '
-        cbSucursal_DesignTimeLayout.LayoutString = resources.GetString("cbSucursal_DesignTimeLayout.LayoutString")
-        Me.cbSucursal.DesignTimeLayout = cbSucursal_DesignTimeLayout
-        Me.cbSucursal.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbSucursal.Location = New System.Drawing.Point(141, 82)
-        Me.cbSucursal.Name = "cbSucursal"
-        Me.cbSucursal.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
-        Me.cbSucursal.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.cbSucursal.SelectedIndex = -1
-        Me.cbSucursal.SelectedItem = Nothing
-        Me.cbSucursal.Size = New System.Drawing.Size(225, 22)
-        Me.cbSucursal.TabIndex = 241
-        Me.cbSucursal.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'F0_PagosCreditoCompraUlt
         '
@@ -805,6 +806,7 @@ Partial Class F0_PagosCreditoCompraUlt
         CType(Me.grpagos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         Me.GroupPanel1.PerformLayout()
+        CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbbanco, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbfecha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
@@ -815,7 +817,6 @@ Partial Class F0_PagosCreditoCompraUlt
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.GroupPanel5.ResumeLayout(False)
         CType(Me.grcobranza, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
