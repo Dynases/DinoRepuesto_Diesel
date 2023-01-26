@@ -209,6 +209,7 @@ Public Class F0_ProformaVenta
         tbCliente.ReadOnly = True
         tbVendedor.ReadOnly = True
         tbObservacion.ReadOnly = True
+        tbValidad.ReadOnly = True
         'tbFechaVenta.IsInputReadOnly = True
         tbFechaVenc.IsInputReadOnly = True
         swMoneda.IsReadOnly = True
@@ -251,6 +252,7 @@ Public Class F0_ProformaVenta
         ''  tbCliente.ReadOnly = False  por que solo podra seleccionar Cliente
         ''  tbVendedor.ReadOnly = False
         tbObservacion.ReadOnly = False
+        tbValidad.ReadOnly = False
         'tbFechaVenta.IsInputReadOnly = False
         tbFechaVenc.IsInputReadOnly = False
         'swMoneda.IsReadOnly = False
@@ -299,6 +301,7 @@ Public Class F0_ProformaVenta
         tbCliente.Clear()
         tbVendedor.Clear()
         tbObservacion.Clear()
+        tbValidad.Clear()
         swMoneda.Value = True
         swTipoVenta.Value = True
         _CodCliente = 0
@@ -387,6 +390,7 @@ Public Class F0_ProformaVenta
             tbCliente.Text = .GetValue("cliente")
             swMoneda.Value = .GetValue("pemon")
             tbObservacion.Text = .GetValue("peobs")
+            tbValidad.Text = .GetValue("pevali")
 
 
             tbFechaVenc.Value = .GetValue("pefvcr")
@@ -719,6 +723,13 @@ Public Class F0_ProformaVenta
         With grVentas.RootTable.Columns("peCatPrecio")
             .Width = 90
             .Visible = False
+        End With
+
+        With grVentas.RootTable.Columns("pevali")
+            .Width = 200
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+            .Caption = "Validad"
         End With
 
         With grVentas.RootTable.Columns("pefdoc")
@@ -1352,7 +1363,7 @@ Public Class F0_ProformaVenta
         Dim res As Boolean = L_fnGrabarProformaVenta(numi, "", tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0),
                                                      IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")),
                                                      _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value,
-                                                     CType(grdetalle.DataSource, DataTable), cbSucursal.Value, cbPrecio.Value)
+                                                     CType(grdetalle.DataSource, DataTable), cbSucursal.Value, cbPrecio.Value, tbValidad.Text)
 
         If res Then
 
@@ -1413,7 +1424,7 @@ Public Class F0_ProformaVenta
                                                         IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"),
                                                         tbFechaVenc.Value.ToString("yyyy/MM/dd")), _CodCliente, IIf(swMoneda.Value = True, 1, 0),
                                                         tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable),
-                                                        cbSucursal.Value, cbPrecio.Value)
+                                                        cbSucursal.Value, cbPrecio.Value, tbValidad.Text)
         If res Then
 
             '_prImiprimirNotaVenta(tbCodigo.Text)
@@ -1832,10 +1843,10 @@ Public Class F0_ProformaVenta
 
             objrep.SetDataSource(dt)
             objrep.SetParameterValue("Literal1", li)
-            objrep.SetParameterValue("ENombre", "Proforma Nro. " + numi)
-            objrep.SetParameterValue("ECiudadPais", _FechaPar)
-            objrep.SetParameterValue("Sucursal", cbSucursal.Text)
-            objrep.SetParameterValue("Observacion", tbObservacion.Text)
+            'objrep.SetParameterValue("ENombre", "Proforma Nro. " + numi)
+            'objrep.SetParameterValue("ECiudadPais", _FechaPar)
+            'objrep.SetParameterValue("Sucursal", cbSucursal.Text)
+            ' objrep.SetParameterValue("Observacion", tbObservacion.Text)
             P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
             P_Global.Visualizador.ShowDialog() 'Comentar
             P_Global.Visualizador.BringToFront() 'Comentar

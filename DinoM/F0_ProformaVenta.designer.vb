@@ -81,6 +81,8 @@ Partial Class F0_ProformaVenta
         Me.lbMDescuento = New DevComponents.DotNetBar.LabelX()
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
+        Me.label = New DevComponents.DotNetBar.LabelX()
+        Me.tbValidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -480,6 +482,8 @@ Partial Class F0_ProformaVenta
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.label)
+        Me.Panel2.Controls.Add(Me.tbValidad)
         Me.Panel2.Controls.Add(Me.btnAgregar)
         Me.Panel2.Controls.Add(Me.btnSearchCliente)
         Me.Panel2.Controls.Add(Me.LabelX8)
@@ -1348,6 +1352,38 @@ Partial Class F0_ProformaVenta
         Me.btnActualizar.TextColor = System.Drawing.Color.White
         Me.btnActualizar.Visible = False
         '
+        'label
+        '
+        Me.label.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.label.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.label.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.label.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.label.Location = New System.Drawing.Point(483, 30)
+        Me.label.Name = "label"
+        Me.label.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.label.Size = New System.Drawing.Size(113, 23)
+        Me.label.TabIndex = 373
+        Me.label.Text = "Valido por:"
+        '
+        'tbValidad
+        '
+        Me.tbValidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.tbValidad.Border.Class = "TextBoxBorder"
+        Me.tbValidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbValidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbValidad.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.tbValidad.Location = New System.Drawing.Point(637, 28)
+        Me.tbValidad.Name = "tbValidad"
+        Me.tbValidad.PreventEnterBeep = True
+        Me.tbValidad.Size = New System.Drawing.Size(120, 22)
+        Me.tbValidad.TabIndex = 372
+        '
         'F0_ProformaVenta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1468,4 +1504,6 @@ Partial Class F0_ProformaVenta
     Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
     Friend WithEvents btnAgregar As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnActualizar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents label As DevComponents.DotNetBar.LabelX
+    Friend WithEvents tbValidad As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

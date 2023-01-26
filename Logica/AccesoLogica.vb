@@ -1442,7 +1442,7 @@ Public Class AccesoLogica
     Public Shared Function L_fnGrabarProformaVenta(ByRef _tanumi As String, _taidCorelativo As String, _tafdoc As String, _taven As Integer,
                                                    _tatven As Integer, _tafvcr As String, _taclpr As Integer, _tamon As Integer, _taobs As String,
                                                    _tadesc As Double, _taice As Double, _tatotal As Double, detalle As DataTable, _almacen As Integer,
-                                                   CatPrecio As Integer) As Boolean
+                                                   CatPrecio As Integer, _pevali As String) As Boolean
         Dim _Tabla As DataTable
         Dim _resultado As Boolean
         Dim _listParam As New List(Of Datos.DParametro)
@@ -1464,6 +1464,7 @@ Public Class AccesoLogica
         _listParam.Add(New Datos.DParametro("@petotal", _tatotal))
         _listParam.Add(New Datos.DParametro("@peuact", L_Usuario))
         _listParam.Add(New Datos.DParametro("@CategoriaPrecio", CatPrecio))
+        _listParam.Add(New Datos.DParametro("@pevali", _pevali))
         _listParam.Add(New Datos.DParametro("@TV0011", "", detalle))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TP003", _listParam)
 
@@ -1481,7 +1482,7 @@ Public Class AccesoLogica
     Public Shared Function L_fnModificarProformaVenta(_tanumi As String, _tafdoc As String, _taven As Integer, _tatven As Integer,
                                                       _tafvcr As String, _taclpr As Integer, _tamon As Integer, _taobs As String,
                                                       _tadesc As Double, _taice As Double, _tatotal As Double, detalle As DataTable,
-                                                      _almacen As Integer, CatPrecio As Integer) As Boolean
+                                                      _almacen As Integer, CatPrecio As Integer, _pevali As String) As Boolean
         Dim _Tabla As DataTable
         Dim _resultado As Boolean
         Dim _listParam As New List(Of Datos.DParametro)
@@ -1502,6 +1503,7 @@ Public Class AccesoLogica
         _listParam.Add(New Datos.DParametro("@petotal", _tatotal))
         _listParam.Add(New Datos.DParametro("@peuact", L_Usuario))
         _listParam.Add(New Datos.DParametro("@CategoriaPrecio", CatPrecio))
+        _listParam.Add(New Datos.DParametro("@pevali", _pevali))
         _listParam.Add(New Datos.DParametro("@TV0011", "", detalle))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TP003", _listParam)
 
@@ -1764,7 +1766,7 @@ Public Class AccesoLogica
                                            _tamon As Integer, _taobs As String,
                                            _tadesc As Double, _taice As Double,
                                            _tatotal As Double, detalle As DataTable, _almacen As Integer, _taprforma As Integer,
-                                           CatPrecio As Integer, Monto As DataTable) As Boolean
+                                           CatPrecio As Integer, Monto As DataTable, _taenvio As Double) As Boolean
         Dim _Tabla As DataTable
         Dim _resultado As Boolean
         Dim _listParam As New List(Of Datos.DParametro)
@@ -1788,6 +1790,7 @@ Public Class AccesoLogica
         _listParam.Add(New Datos.DParametro("@tatotal", _tatotal))
         _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
         _listParam.Add(New Datos.DParametro("@CategoriaPrecio", CatPrecio))
+        _listParam.Add(New Datos.DParametro("@taEnvio", _taenvio))
         _listParam.Add(New Datos.DParametro("@TV0011", "", detalle))
         _listParam.Add(New Datos.DParametro("@TV0014", "", Monto))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
@@ -1846,7 +1849,7 @@ Public Class AccesoLogica
     End Function
     Public Shared Function L_fnModificarVenta(_tanumi As String, _tafdoc As String, _taven As Integer, _tatven As Integer, _tafvcr As String, _taclpr As Integer,
                                            _tamon As Integer, _taobs As String,
-                                           _tadesc As Double, _taice As Double, _tatotal As Double, detalle As DataTable, _almacen As Integer, _taprforma As Integer, CatPrecio As Integer) As Boolean
+                                           _tadesc As Double, _taice As Double, _tatotal As Double, detalle As DataTable, _almacen As Integer, _taprforma As Integer, CatPrecio As Integer, _taenvio As Double) As Boolean
         Dim _Tabla As DataTable
         Dim _resultado As Boolean
         Dim _listParam As New List(Of Datos.DParametro)
@@ -1868,6 +1871,7 @@ Public Class AccesoLogica
         _listParam.Add(New Datos.DParametro("@tatotal", _tatotal))
         _listParam.Add(New Datos.DParametro("@tauact", L_Usuario))
         _listParam.Add(New Datos.DParametro("@CategoriaPrecio", CatPrecio))
+        _listParam.Add(New Datos.DParametro("@taEnvio", _taenvio))
         _listParam.Add(New Datos.DParametro("@TV0011", "", detalle))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TV001", _listParam)
 

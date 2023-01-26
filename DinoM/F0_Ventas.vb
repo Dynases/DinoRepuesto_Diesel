@@ -252,6 +252,7 @@ Public Class F0_Ventas
         tbSubTotal.IsInputReadOnly = True
         tbIce.IsInputReadOnly = True
         tbtotal.IsInputReadOnly = True
+        tbEnvio.IsInputReadOnly = True
 
         tbMontoBs.IsInputReadOnly = True
         tbMontoDolar.IsInputReadOnly = True
@@ -304,6 +305,7 @@ Public Class F0_Ventas
         tbNroFactura.ReadOnly = False
         tbCodigoControl.ReadOnly = False
         dtiFechaFactura.IsInputReadOnly = False
+        tbEnvio.IsInputReadOnly = False
 
         tbMontoBs.IsInputReadOnly = False
         tbMontoDolar.IsInputReadOnly = False
@@ -363,7 +365,7 @@ Public Class F0_Ventas
         tbMdesc.Value = 0
         tbIce.Value = 0
         tbtotal.Value = 0
-
+        tbEnvio.Value = 0
         tbMontoBs.Value = 0
         tbMontoDolar.Value = 0
         tbMontoTarej.Value = 0
@@ -449,6 +451,7 @@ Public Class F0_Ventas
             tbCliente.Text = .GetValue("cliente")
             swMoneda.Value = .GetValue("tamon")
             tbObservacion.Text = .GetValue("taobs")
+            tbEnvio.Value = .GetValue("taEnvio")
 
 
             Dim proforma As Integer = IIf(IsDBNull(.GetValue("taproforma")), 0, .GetValue("taproforma"))
@@ -858,6 +861,13 @@ Public Class F0_Ventas
         With grVentas.RootTable.Columns("taCatPrecio")
             .Width = 90
             .Visible = False
+        End With
+        With grVentas.RootTable.Columns("taEnvio")
+            .Width = 150
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = True
+            .Caption = "ENVIO"
+            .FormatString = "0.00"
         End With
         With grVentas.RootTable.Columns("taproforma")
             .Width = 90
@@ -1552,7 +1562,7 @@ Public Class F0_Ventas
         Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         _prInsertarMontoNuevo(tabla)
 
-        Dim res As Boolean = L_fnGrabarVenta(numi, "", tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")), _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value, IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value, tabla)
+        Dim res As Boolean = L_fnGrabarVenta(numi, "", tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodEmpleado, IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")), _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value, tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value, IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value, tabla, tbEnvio.Value)
 
         If res Then
             'res = P_fnGrabarFacturarTFV001(numi)
@@ -1625,7 +1635,7 @@ Public Class F0_Ventas
                              Now.Date.ToString("yyyy/MM/dd"), tbFechaVenc.Value.ToString("yyyy/MM/dd")),
                              _CodCliente, IIf(swMoneda.Value = True, 1, 0), tbObservacion.Text, tbMdesc.Value,
                              tbIce.Value, tbtotal.Value, CType(grdetalle.DataSource, DataTable), cbSucursal.Value,
-                             IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value)
+                             IIf(SwProforma.Value = True, tbProforma.Text, 0), cbPrecio.Value, tbEnvio.Value)
         If res Then
 
             'If (gb_FacturaEmite) Then
@@ -2117,7 +2127,7 @@ Public Class F0_Ventas
         Dim _Literal, _TotalDecimal, _TotalDecimal2, moneda As String
         Dim fechaven As String = dt.Rows(0).Item("Fechaventa")
 
-        _TotalLi = dt.Rows(0).Item("totalven")
+        _TotalLi = dt.Rows(0).Item("totalven") + dt.Rows(0).Item("taEnvio")
         _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
         _TotalDecimal2 = CDbl(_TotalDecimal) * 100
 

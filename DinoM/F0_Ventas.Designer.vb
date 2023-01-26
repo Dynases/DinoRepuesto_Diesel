@@ -120,6 +120,8 @@ Partial Class F0_Ventas
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
         Me.btnCobrar = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
+        Me.tbEnvio = New DevComponents.Editors.DoubleInput()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -176,6 +178,7 @@ Partial Class F0_Ventas
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbtotal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbPdesc, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelSuperior
@@ -536,6 +539,8 @@ Partial Class F0_Ventas
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.tbEnvio)
+        Me.Panel2.Controls.Add(Me.LabelX22)
         Me.Panel2.Controls.Add(Me.btnAgregar)
         Me.Panel2.Controls.Add(Me.btnSearchCliente)
         Me.Panel2.Controls.Add(Me.LabelX8)
@@ -2123,6 +2128,37 @@ Partial Class F0_Ventas
         Me.btnCobrar.Text = "COBRAR"
         Me.btnCobrar.TextColor = System.Drawing.Color.White
         '
+        'LabelX22
+        '
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX22.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX22.Location = New System.Drawing.Point(13, 126)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX22.Size = New System.Drawing.Size(120, 23)
+        Me.LabelX22.TabIndex = 373
+        Me.LabelX22.Text = "Costo de Envio:"
+        '
+        'tbEnvio
+        '
+        '
+        '
+        '
+        Me.tbEnvio.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.tbEnvio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbEnvio.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.tbEnvio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.tbEnvio.Increment = 1.0R
+        Me.tbEnvio.Location = New System.Drawing.Point(134, 127)
+        Me.tbEnvio.Name = "tbEnvio"
+        Me.tbEnvio.Size = New System.Drawing.Size(132, 22)
+        Me.tbEnvio.TabIndex = 675
+        '
         'F0_Ventas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2197,6 +2233,7 @@ Partial Class F0_Ventas
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbtotal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbPdesc, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2294,4 +2331,6 @@ Partial Class F0_Ventas
     Friend WithEvents btAgregarTCambio As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
     Protected WithEvents btnCobrar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents LabelX22 As DevComponents.DotNetBar.LabelX
+    Public WithEvents tbEnvio As DevComponents.Editors.DoubleInput
 End Class
