@@ -629,6 +629,69 @@ Public Class F0_PagosCreditoNuevo
 
     Private Sub F0_PagosCredito_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _IniciarTodo()
+        If (gs_ComVenPro > 0) Then
+            If btnGrabar.Enabled = False Then
+                Dim bandera As Boolean = True
+                If (bandera = True) Then
+                    _prInhabiliitar()
+                    btnNuevo.Visible = False
+                    btnEliminar.Visible = False
+                    btnModificar.Visible = False
+                    btnGrabar.Visible = False
+                    btnAnterior.Visible = False
+                    btnSiguiente.Visible = False
+                    btnPrimero.Visible = False
+                    btnUltimo.Visible = False
+                    LblPaginacion.Visible = False
+                    SuperTabItem1.Visible = False
+                    'GroupPanel1.Visible = False
+
+                    Dim dt As New DataTable
+                    dt = L_fnCobranzasObtenerLasVentasACredito()
+                    _prEliminarExistente(dt)
+
+                    grPendiente.DataSource = dt
+                    If dt.Rows.Count > 0 Then
+                        Dim cont As Integer = 0
+                        For Each fila As DataRow In dt.Rows
+                            If (CInt(fila.Item("NroDoc").ToString) = gs_ComVenPro) Then
+                                Dim pos As Integer
+                                pos = CInt(fila.Item("tcnumi").ToString)
+                                Dim dt2 As DataTable
+                                dt2 = grfactura.DataSource
+                                dt2.Clear()
+                                grfactura.DataSource = dt2
+
+                                tbcobrador.Text = ""
+                                tbnrodoc.Text = ""
+                                tbObservacion.Text = ""
+                                tbcodVendedor.Text = ""
+                                _prCargarTablaPagos(pos)
+                                Exit For
+                            Else
+                                cont += 1
+                            End If
+                        Next
+                    End If
+
+
+                    'If grCompra.RowCount > 0 Then
+                    '    Dim pos As Integer
+                    '    Dim cont As Integer = 0
+                    '    For Each fila As GridEXRow In grCompra.GetRows()
+                    '        If (CInt(fila.Cells("canumi").Value.ToString) = gs_ComVenPro) Then
+                    '            pos = fila.Position
+                    '        Else
+                    '            cont += 1
+                    '        End If
+                    '    Next
+                    '    grCompra.Row = pos
+                    '    _prMostrarRegistro(0)
+
+                    'End If
+                End If
+            End If
+        End If
     End Sub
 
 
@@ -1274,16 +1337,20 @@ Public Class F0_PagosCreditoNuevo
         _prSalir()
     End Sub
     Private Sub _prSalir()
-        If btnGrabar.Enabled = True Then
-            _prInhabiliitar()
-            If grcobranza.RowCount > 0 Then
-
-                _prMostrarRegistro(0)
-
-            End If
-        Else
+        If gs_ComVenPro > 0 Then
             Me.Close()
-            _modulo.Select()
+        Else
+            If btnGrabar.Enabled = True Then
+                _prInhabiliitar()
+                If grcobranza.RowCount > 0 Then
+
+                    _prMostrarRegistro(0)
+
+                End If
+            Else
+                Me.Close()
+                _modulo.Select()
+            End If
         End If
     End Sub
 

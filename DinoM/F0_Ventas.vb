@@ -2377,6 +2377,7 @@ Public Class F0_Ventas
                     btnGrabar.Visible = False
                     btnActualizar.Visible = False
                     btnCobrar.Visible = False
+                    btnVerPagos.Visible = True
                     If grVentas.RowCount > 0 Then
                         Dim pos As Integer
                         Dim cont As Integer = 0
@@ -3265,15 +3266,41 @@ salirIf:
         If _ValidarCampos() = False Then
             Exit Sub
         End If
+        If CDbl(tbPdesc.Text) > 5.0 Then
+            Dim ef = New Efecto
 
-        If (tbCodigo.Text = String.Empty) Then
-            _GuardarNuevo()
-        Else
-            If (tbCodigo.Text <> String.Empty) Then
-                _prGuardarModificado()
-                ''    _prInhabiliitar() RODRIGO RLA
 
+            ef.tipo = 2
+            ef.Context = "MENSAJE PRINCIPAL".ToUpper
+            ef.Header = "¿Esta seguro que desea registrar la venta con un descuento mayor al 5%?".ToUpper
+            ef.ShowDialog()
+            Dim bandera As Boolean = False
+            bandera = ef.band
+            If (bandera = True) Then
+                If (tbCodigo.Text = String.Empty) Then
+                    _GuardarNuevo()
+                Else
+                    If (tbCodigo.Text <> String.Empty) Then
+                        _prGuardarModificado()
+                        ''    _prInhabiliitar() RODRIGO RLA
+
+                    End If
+                End If
+
+            Else
+                Return
             End If
+        Else
+            If (tbCodigo.Text = String.Empty) Then
+                _GuardarNuevo()
+            Else
+                If (tbCodigo.Text <> String.Empty) Then
+                    _prGuardarModificado()
+                    ''    _prInhabiliitar() RODRIGO RLA
+
+                End If
+            End If
+
         End If
 
     End Sub
@@ -4023,6 +4050,11 @@ salirIf:
         End If
 
 
+    End Sub
+
+    Private Sub btnVerPagos_Click(sender As Object, e As EventArgs) Handles btnVerPagos.Click
+        Dim frm As New F0_PagosCreditoNuevo
+        frm.Show()
     End Sub
 
 

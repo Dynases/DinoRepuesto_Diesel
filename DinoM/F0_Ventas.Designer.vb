@@ -120,8 +120,12 @@ Partial Class F0_Ventas
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
         Me.btnCobrar = New DevComponents.DotNetBar.ButtonX()
+        'Updated upstream
         Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
         Me.tbEnvio = New DevComponents.Editors.DoubleInput()
+        '
+        Me.btnVerPagos = New DevComponents.DotNetBar.ButtonX()
+' Stashed changes
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -247,6 +251,7 @@ Partial Class F0_Ventas
         '
         'btnSalir
         '
+        Me.btnSalir.Dock = System.Windows.Forms.DockStyle.Left
         '
         'btnGrabar
         '
@@ -262,16 +267,18 @@ Partial Class F0_Ventas
         '
         'PanelToolBar2
         '
+        Me.PanelToolBar2.Controls.Add(Me.btnVerPagos)
         Me.PanelToolBar2.Controls.Add(Me.btnCobrar)
         Me.PanelToolBar2.Controls.Add(Me.btnActualizar)
         Me.PanelToolBar2.Controls.Add(Me.ButtonX1)
-        Me.PanelToolBar2.Location = New System.Drawing.Point(696, 0)
+        Me.PanelToolBar2.Location = New System.Drawing.Point(616, 0)
         Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4)
-        Me.PanelToolBar2.Size = New System.Drawing.Size(320, 72)
+        Me.PanelToolBar2.Size = New System.Drawing.Size(400, 72)
         Me.PanelToolBar2.Controls.SetChildIndex(Me.ButtonX1, 0)
         Me.PanelToolBar2.Controls.SetChildIndex(Me.btnImprimir, 0)
         Me.PanelToolBar2.Controls.SetChildIndex(Me.btnActualizar, 0)
         Me.PanelToolBar2.Controls.SetChildIndex(Me.btnCobrar, 0)
+        Me.PanelToolBar2.Controls.SetChildIndex(Me.btnVerPagos, 0)
         '
         'PanelPrincipal
         '
@@ -285,7 +292,7 @@ Partial Class F0_Ventas
         'btnImprimir
         '
         Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Right
-        Me.btnImprimir.Location = New System.Drawing.Point(160, 0)
+        Me.btnImprimir.Location = New System.Drawing.Point(240, 0)
         '
         'btnUltimo
         '
@@ -313,7 +320,7 @@ Partial Class F0_Ventas
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4)
-        Me.MRlAccion.Size = New System.Drawing.Size(320, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(240, 72)
         '
         'PanelContent
         '
@@ -358,7 +365,7 @@ Partial Class F0_Ventas
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(603, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(523, 0)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Size = New System.Drawing.Size(93, 72)
         '
@@ -2082,7 +2089,7 @@ Partial Class F0_Ventas
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources._14
         Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.ButtonX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.ButtonX1.Location = New System.Drawing.Point(240, 0)
+        Me.ButtonX1.Location = New System.Drawing.Point(320, 0)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(80, 72)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2103,7 +2110,7 @@ Partial Class F0_Ventas
         Me.btnActualizar.Image = Global.DinoM.My.Resources.Resources.reload_5
         Me.btnActualizar.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.btnActualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.btnActualizar.Location = New System.Drawing.Point(80, 0)
+        Me.btnActualizar.Location = New System.Drawing.Point(160, 0)
         Me.btnActualizar.Name = "btnActualizar"
         Me.btnActualizar.Size = New System.Drawing.Size(80, 72)
         Me.btnActualizar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2120,7 +2127,7 @@ Partial Class F0_Ventas
         Me.btnCobrar.Image = Global.DinoM.My.Resources.Resources.cobro
         Me.btnCobrar.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.btnCobrar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.btnCobrar.Location = New System.Drawing.Point(0, 0)
+        Me.btnCobrar.Location = New System.Drawing.Point(80, 0)
         Me.btnCobrar.Name = "btnCobrar"
         Me.btnCobrar.Size = New System.Drawing.Size(80, 72)
         Me.btnCobrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2128,6 +2135,7 @@ Partial Class F0_Ventas
         Me.btnCobrar.Text = "COBRAR"
         Me.btnCobrar.TextColor = System.Drawing.Color.White
         '
+        ' Updated upstream
         'LabelX22
         '
         Me.LabelX22.BackColor = System.Drawing.Color.Transparent
@@ -2158,6 +2166,25 @@ Partial Class F0_Ventas
         Me.tbEnvio.Name = "tbEnvio"
         Me.tbEnvio.Size = New System.Drawing.Size(132, 22)
         Me.tbEnvio.TabIndex = 675
+        '
+        'btnVerPagos
+        '
+        Me.btnVerPagos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnVerPagos.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
+        Me.btnVerPagos.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnVerPagos.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnVerPagos.Image = Global.DinoM.My.Resources.Resources.cobro
+        Me.btnVerPagos.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.btnVerPagos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.btnVerPagos.Location = New System.Drawing.Point(0, 0)
+        Me.btnVerPagos.Name = "btnVerPagos"
+        Me.btnVerPagos.Size = New System.Drawing.Size(80, 72)
+        Me.btnVerPagos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.btnVerPagos.TabIndex = 15
+        Me.btnVerPagos.Text = "PAGOS"
+        Me.btnVerPagos.TextColor = System.Drawing.Color.White
+        Me.btnVerPagos.Visible = False
+        ' Stashed changes
         '
         'F0_Ventas
         '
@@ -2331,6 +2358,10 @@ Partial Class F0_Ventas
     Friend WithEvents btAgregarTCambio As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
     Protected WithEvents btnCobrar As DevComponents.DotNetBar.ButtonX
+    ' Updated upstream
     Friend WithEvents LabelX22 As DevComponents.DotNetBar.LabelX
     Public WithEvents tbEnvio As DevComponents.Editors.DoubleInput
+    '
+    Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
+' Stashed changes
 End Class

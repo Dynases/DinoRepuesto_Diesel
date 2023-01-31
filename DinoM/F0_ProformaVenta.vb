@@ -714,10 +714,16 @@ Public Class F0_ProformaVenta
             .Visible = True
 
         End With
-
         With grVentas.RootTable.Columns("pealm")
-            .Width = 90
+            .Width = 100
+            .Caption = "CODIGO"
             .Visible = False
+
+        End With
+        With grVentas.RootTable.Columns("abdesc")
+            .Width = 90
+            .Caption = "ALMACEN"
+            .Visible = True
         End With
 
         With grVentas.RootTable.Columns("peCatPrecio")
@@ -1471,7 +1477,10 @@ Public Class F0_ProformaVenta
             _modulo.Select()
             If (Not IsNothing(_tab)) Then
                 _tab.Close()
+            Else
+                Me.Close()
             End If
+
         End If
 
 
