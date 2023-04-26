@@ -235,10 +235,19 @@ Public Class F0_ProformaCompra
             .Width = 90
             .Visible = False
         End With
+        With grdetalle.RootTable.Columns("yfCodAux1")
+            .Width = 120
+            .Caption = "Item Nuevo"
+            .Visible = True
+        End With
+        With grdetalle.RootTable.Columns("yfCodAux2")
+            .Width = 90
+            .Visible = False
+        End With
         With grdetalle.RootTable.Columns("pdty5prod")
             .Width = 90
             .Caption = "Item"
-            .Visible = True
+            .Visible = False
         End With
         With grdetalle.RootTable.Columns("CodigoFabrica")
             .Caption = "Cod.Fabrica"
@@ -299,7 +308,7 @@ Public Class F0_ProformaCompra
             .Width = 110
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0"
             .Caption = "Cantidad"
         End With
         With grdetalle.RootTable.Columns("pdumin")
@@ -318,7 +327,7 @@ Public Class F0_ProformaCompra
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
             .FormatString = "0.00"
-            .Caption = "P.CostoUn.($)"
+            .Caption = "P.CostoUn."
         End With
         If (_estadoPor = 1) Then
             With grdetalle.RootTable.Columns("pdutven")
@@ -405,30 +414,30 @@ Public Class F0_ProformaCompra
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
             .FormatString = "0.00"
-            .Caption = "P.Facturado Bs"
+            .Caption = "P.Publico"
         End With
         With grdetalle.RootTable.Columns("pdpPublico")
             .Width = 140
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
             .FormatString = "0.00"
-            .Caption = "P.Público Bs."
+            .Caption = "P.Taller."
         End With
         With grdetalle.RootTable.Columns("pdpMecanico")
             .Width = 140
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
             .FormatString = "0.00"
-            .Caption = "P.Mecánico Bs."
+            .Caption = "P.GDB."
         End With
         With grdetalle
             .GroupByBoxVisible = False
-            'diseño de la grilla
+            '    'diseño de la grilla
             .VisualStyle = VisualStyle.Office2007
 
-            .DefaultFilterRowComparison = FilterConditionOperator.Contains
-            .FilterMode = FilterMode.Automatic
-            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            '    .DefaultFilterRowComparison = FilterConditionOperator.Contains
+            '    .FilterMode = FilterMode.Automatic
+            '    .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
 
         End With
     End Sub
@@ -511,14 +520,14 @@ Public Class F0_ProformaCompra
             .Visible = False
         End With
 
-        With grProforma
-            .DefaultFilterRowComparison = FilterConditionOperator.Contains
-            .FilterMode = FilterMode.Automatic
-            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
-            .GroupByBoxVisible = False
-            'diseño de la grilla
-            .VisualStyle = VisualStyle.Office2007
-        End With
+        'With grProforma
+        '    .DefaultFilterRowComparison = FilterConditionOperator.Contains
+        '    .FilterMode = FilterMode.Automatic
+        '    .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+        '    .GroupByBoxVisible = False
+        '    'diseño de la grilla
+        '    .VisualStyle = VisualStyle.Office2007
+        'End With
 
         If (dt.Rows.Count <= 0) Then
             _prCargarDetalle(-1)
@@ -547,7 +556,7 @@ Public Class F0_ProformaCompra
         Dim Bin As New MemoryStream
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
-        CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
+        CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
                                                         0, "20500101", CDate("2050/01/01"), 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
 

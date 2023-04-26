@@ -37,6 +37,7 @@ Public Class F0_DetalleCompras
             bandera = True
             grProductoSeleccionado.DataSource = dtProductoAll
         Else
+
             grProductoSeleccionado.DataSource = dtDetalle
         End If
         grProductoSeleccionado.RetrieveStructure()
@@ -84,10 +85,20 @@ Public Class F0_DetalleCompras
             .Width = 90
             .Visible = False
         End With
+        With grProductoSeleccionado.RootTable.Columns("yfCodAux1")
+            .Width = 90
+            .Caption = "Item Nuevo"
+            .Visible = True
+        End With
+        With grProductoSeleccionado.RootTable.Columns("yfCodAux2")
+            .Width = 90
+            .Caption = "Item Antiguo"
+            .Visible = True
+        End With
         With grProductoSeleccionado.RootTable.Columns("cbty5prod")
             .Width = 90
             .Caption = "Item"
-            .Visible = True
+            .Visible = False
         End With
 
         With grProductoSeleccionado.RootTable.Columns("producto")
@@ -150,7 +161,7 @@ Public Class F0_DetalleCompras
             .Width = 100
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0"
             .Caption = "Cantidad".ToUpper
         End With
         With grProductoSeleccionado.RootTable.Columns("cbumin")
@@ -170,6 +181,12 @@ Public Class F0_DetalleCompras
             .Visible = True
             .FormatString = "0.00"
             .Caption = "Precio U.".ToUpper
+        End With
+        With grProductoSeleccionado.RootTable.Columns("PPA")
+            .Width = 120
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = False
+            .FormatString = "0.00"
         End With
         'If (_estadoPor = 1) Then
         '    With grProductoSeleccionado.RootTable.Columns("cbutven")
@@ -273,6 +290,11 @@ Public Class F0_DetalleCompras
             CType(grProductoSeleccionado.DataSource, DataTable).Rows.Clear()
 
         End If
+        If dtDetalle.Rows(0).Item("cbty5prod") <> 0 Then
+            grProductoSeleccionado.DataSource = dtDetalle
+            grProductoSeleccionado.RootTable.ApplyFilter(New Janus.Windows.GridEX.GridEXFilterCondition(grProductoSeleccionado.RootTable.Columns("estado"), Janus.Windows.GridEX.ConditionOperator.GreaterThanOrEqualTo, 0))
+
+        End If
     End Sub
     Public Sub CargarProductos()
         Try
@@ -280,7 +302,9 @@ Public Class F0_DetalleCompras
             ' yfnumi	Categoria	CodigoFabrica	Marca	Medida	yfcdprod1	grupo1	grupo2	yhprecio	venta	stock
 
             ConfigInicialVinculado(grProductos, dtProductoAll, "Productos")
-            ColAL(grProductos, "yfnumi", "Item", 50)
+            ColAL(grProductos, "yfCodAux1", "Item Nuevo", 100)
+            ColAL(grProductos, "yfCodAux2", "Item Antiguo", 100)
+            ColNoVisible(grProductos, "yfnumi")
             ColAL(grProductos, "Categoria", "Categoria", 150)
             ColAL(grProductos, "CodigoFabrica", "Cod. Fabrica", 150)
             ColAL(grProductos, "CodigoMarca", "Cod. Marca", 150)
@@ -358,8 +382,8 @@ Public Class F0_DetalleCompras
         Dim Bin As New MemoryStream
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
-        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
-                                                        0, "20500101", CDate("2050/01/01"), 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add(0, 0, _fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
+                                                        0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
     Public Function _fnSiguienteNumi()
         Dim dt As DataTable = CType(grProductoSeleccionado.DataSource, DataTable)
@@ -395,9 +419,9 @@ Public Class F0_DetalleCompras
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Medida") = grProductos.GetValue("Medida")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Marca") = grProductos.GetValue("grupo1")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Procedencia") = grProductos.GetValue("grupo2")
-
-
-
+                    CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("PPA") = grProductos.GetValue("yhprecio")
+                    CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfCodAux1") = grProductos.GetValue("yfCodAux1")
+                    CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfCodAux2") = grProductos.GetValue("yfCodAux2")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("cbty5prod") = grProductos.GetValue("yfnumi")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("producto") = grProductos.GetValue("yfcdprod1")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("cbumin") = 0
@@ -436,8 +460,25 @@ Public Class F0_DetalleCompras
                 End If
 
             Else
-                Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-                ToastNotification.Show(Me, "El producto ya existe en el detalle".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                Dim cod As Integer = grProductos.GetValue("yfnumi")
+                grProductoSeleccionado.RootTable.RemoveFilter()
+                For i = 0 To grProductoSeleccionado.RowCount - 1 Step 1
+                    If CType(grProductoSeleccionado.DataSource, DataTable).Rows(i).Item("cbty5prod") = cod Then
+                        If CType(grProductoSeleccionado.DataSource, DataTable).Rows(i).Item("estado") = -2 Then
+
+                            CType(grProductoSeleccionado.DataSource, DataTable).Rows(i).Item("estado") = 0
+
+                        Else
+                            Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+                            ToastNotification.Show(Me, "El producto ya existe en el detalle".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                        End If
+                    End If
+                    If CType(grProductoSeleccionado.DataSource, DataTable).Rows(i).Item("cbty5prod") = 0 Then
+                        CType(grProductoSeleccionado.DataSource, DataTable).Rows.RemoveAt(i)
+                    End If
+                Next
+
+                grProductoSeleccionado.RootTable.ApplyFilter(New Janus.Windows.GridEX.GridEXFilterCondition(grProductoSeleccionado.RootTable.Columns("estado"), Janus.Windows.GridEX.ConditionOperator.GreaterThanOrEqualTo, 0))
 
                 tbProducto.Focus()
             End If
@@ -445,20 +486,20 @@ Public Class F0_DetalleCompras
     End Sub
 
     Private Sub tbProducto_TextChanged(sender As Object, e As EventArgs) Handles tbProducto.TextChanged
-        Dim charSequence As String
-        charSequence = tbProducto.Text.ToUpper
-        If (charSequence.Trim = String.Empty) Then
+        'Dim charSequence As String
+        'charSequence = tbProducto.Text.ToUpper
+        'If (charSequence.Trim = String.Empty) Then
 
 
-            grProductos.DataSource = dtProductoAll.Copy
-        Else
-            Dim Len As Integer = tbProducto.Text.Length
-            Dim Ch As String = tbProducto.Text(Len - 1)
-            If (Ch.Trim = String.Empty) Then
-                FiltrarProducto()
-            End If
+        '    grProductos.DataSource = dtProductoAll.Copy
+        'Else
+        '    Dim Len As Integer = tbProducto.Text.Length
+        '    Dim Ch As String = tbProducto.Text(Len - 1)
+        '    If (Ch.Trim = String.Empty) Then
+        '        FiltrarProducto()
+        '    End If
 
-        End If
+        'End If
 
     End Sub
 
@@ -622,8 +663,166 @@ Public Class F0_DetalleCompras
         If e.KeyData = Keys.Down Then
             grProductos.Focus()
         End If
+        If e.KeyData = Keys.Enter Then
+            Dim charSequence As String
+            charSequence = tbProducto.Text.ToUpper
+            If (charSequence.Trim = String.Empty) Then
+
+
+                grProductos.DataSource = dtProductoAll.Copy
+            Else
+                'Dim Len As Integer = tbProducto.Text.Length
+                'Dim Ch As String = tbProducto.Text(Len - 1)
+                If (charSequence.Trim <> "") Then
+                    FiltrarProducto2()
+                End If
+
+            End If
+        End If
     End Sub
 
+    Private Sub FiltrarProducto2()
+        Dim dtProductoCopy As DataTable
+        dtProductoCopy = dtProductoAll.Copy
+        dtProductoCopy.Rows.Clear()
+        Dim dt As DataTable = dtProductoAll.Copy
+
+        Dim charSequence As String
+        charSequence = tbProducto.Text.ToUpper
+        If (charSequence.Trim <> "") Then
+            Dim cantidad As Integer = 12
+            Dim cont As Integer = 12
+
+            'Split con array de delimitadores
+            'Dim delimitadores() As String = {" ", ".", ",", ";"}
+            Dim vectoraux As String
+            vectoraux = charSequence
+
+            'mostrar resultado
+            'For Each item As String In vectoraux
+
+
+            '    Console.WriteLine("'{0}'", item)
+            'Next
+            'Dim cant As Integer = vectoraux.Length
+
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+                Dim nombre As String = dt.Rows(i).Item("yfcdprod1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("CodigoFabrica").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("grupo1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("Medida").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux2").ToString.ToUpper
+                'Select Case cant
+                'Case 1
+
+                If (nombre.Trim.Contains(vectoraux)) Then
+                    dtProductoCopy.ImportRow(dt.Rows(i))
+                    cont += 1
+                End If
+
+                'Case 2
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 3
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 4
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 5
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 6
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+
+                'Case 7
+
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 8
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 9
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 10
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+
+                'Case 11
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+
+                'Case 12
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+
+
+                'Case 13
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 14
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12)) And nombre.Trim.Contains(vectoraux(13))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 15
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12)) And nombre.Trim.Contains(vectoraux(13)) And nombre.Trim.Contains(vectoraux(14))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 16
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12)) And nombre.Trim.Contains(vectoraux(13)) And nombre.Trim.Contains(vectoraux(14)) And nombre.Trim.Contains(vectoraux(15))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 17
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12)) And nombre.Trim.Contains(vectoraux(13)) And nombre.Trim.Contains(vectoraux(14)) And nombre.Trim.Contains(vectoraux(15)) And nombre.Trim.Contains(vectoraux(16))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+                'Case 18
+                '    If (nombre.Trim.Contains(vectoraux(0)) And nombre.Trim.Contains(vectoraux(1)) And nombre.Trim.Contains(vectoraux(2)) And nombre.Trim.Contains(vectoraux(3)) And nombre.Trim.Contains(vectoraux(4)) And nombre.Trim.Contains(vectoraux(5)) And nombre.Trim.Contains(vectoraux(6)) And nombre.Trim.Contains(vectoraux(7)) And nombre.Trim.Contains(vectoraux(8)) And nombre.Trim.Contains(vectoraux(9)) And nombre.Trim.Contains(vectoraux(10)) And nombre.Trim.Contains(vectoraux(11)) And nombre.Trim.Contains(vectoraux(12)) And nombre.Trim.Contains(vectoraux(13)) And nombre.Trim.Contains(vectoraux(14)) And nombre.Trim.Contains(vectoraux(15)) And nombre.Trim.Contains(vectoraux(16)) And nombre.Trim.Contains(vectoraux(17))) Then
+                '        dtProductoCopy.ImportRow(dt.Rows(i))
+                '        cont += 1
+                '    End If
+
+
+
+                'End Select
+
+            Next
+            grProductos.DataSource = dtProductoCopy.Copy
+        Else
+            grProductos.DataSource = dtProductoAll.Copy
+        End If
+    End Sub
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
         Me.Close()
     End Sub

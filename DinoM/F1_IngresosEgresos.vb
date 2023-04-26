@@ -251,6 +251,7 @@ Public Class F1_IngresosEgresos
             cbConcepto.Value = .GetValue("ieConcepto")
             tbMonto.Value = .GetValue("ieMonto")
             tbObservacion.Text = .GetValue("ieObs").ToString
+            tbRecibe.Text = .GetValue("ieRec")
             lbNroCaja.Text = .GetValue("NroCaja")
             cbSucursal.Value = .GetValue("ieSucursal")
             tbIdDevolucion.Text = .GetValue("ieIdDevolucion")
@@ -274,8 +275,9 @@ Public Class F1_IngresosEgresos
     Public Overrides Function _PMOGrabarRegistro() As Boolean
 
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
-        Dim res As Boolean = L_prIngresoEgresoGrabar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text,
+        Dim res As Boolean = L_prIngresoEgresoGrabar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text, tbRecibe.Text,
                                                      gs_NroCaja, cbSucursal.Value, tbIdDevolucion.Text)
+        _prAgregarCobro(tbcodigo.Text, IIf(swTipo.Value = True, 5, 6), cbConcepto.Text, tbMonto.Text, 0, 0, 0, 0, "", gi_userSuc)
         If res Then
             Modificado = False
             _PMOLimpiar()
@@ -289,11 +291,11 @@ Public Class F1_IngresosEgresos
         Dim res As Boolean
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
         If (Modificado = False) Then
-            res = L_prIngresoEgresoModificar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text,
+            res = L_prIngresoEgresoModificar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text, tbRecibe.Text,
                                              cbSucursal.Value, tbIdDevolucion.Text)
 
         Else
-            res = L_prIngresoEgresoModificar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text,
+            res = L_prIngresoEgresoModificar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text, tbRecibe.Text,
                                              cbSucursal.Value, tbIdDevolucion.Text)
         End If
         If res Then
@@ -384,14 +386,16 @@ Public Class F1_IngresosEgresos
         Else
             btConcepto.Visible = False
         End If
-        If cbConcepto.Value = 2 Then 'Devolución
-            lbDevolucion.Visible = True
-            tbIdDevolucion.Visible = True
-            btnBuscarDevolución.Visible = True
-        Else
-            lbDevolucion.Visible = False
-            tbIdDevolucion.Visible = False
-            btnBuscarDevolución.Visible = False
+        If IsNumeric(cbConcepto.Value) Then
+            If cbConcepto.Value = 2 Then 'Devolución
+                lbDevolucion.Visible = True
+                tbIdDevolucion.Visible = True
+                btnBuscarDevolución.Visible = True
+            Else
+                lbDevolucion.Visible = False
+                tbIdDevolucion.Visible = False
+                btnBuscarDevolución.Visible = False
+            End If
         End If
     End Sub
 
@@ -525,6 +529,71 @@ Public Class F1_IngresosEgresos
             SuperTabPrincipal.SelectedTabIndex = 0
             tbIdDevolucion.Text = grDevolucion.GetValue("dbnumi")
         End If
+    End Sub
+
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        P_Global.Visualizador = New Visualizador
+        Dim _TotalLi As Decimal
+        Dim _Literal, _TotalDecimal, _TotalDecimal2 As String
+
+        'Literal 
+        _TotalLi = tbMonto.Text
+        _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
+        _TotalDecimal2 = CDbl(_TotalDecimal) * 100
+
+        _Literal = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(_TotalLi) - CDbl(_TotalDecimal)) + "  " + IIf(_TotalDecimal2.Equals("0"), "00", _TotalDecimal2) + "/100 Bolivianos"
+
+
+        If swTipo.Value = True Then
+            Dim objrep As New R_BoletaIngreso
+
+
+            objrep.SetParameterValue("sucursal", cbSucursal.Text)
+            objrep.SetParameterValue("monto", tbMonto.Text)
+            objrep.SetParameterValue("concepto", cbConcepto.Text)
+            objrep.SetParameterValue("glosa", tbObservacion.Text)
+            objrep.SetParameterValue("descripcion", tbDescripcion.Text)
+            objrep.SetParameterValue("usuario", gs_user)
+            objrep.SetParameterValue("recibo", tbcodigo.Text)
+            objrep.SetParameterValue("recibe", tbRecibe.Text)
+            objrep.SetParameterValue("literal", _Literal)
+            'objrep.SetParameterValue("logo", gb_UbiLogo)
+            objrep.SetParameterValue("usuario", gs_user)
+
+
+            P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+            P_Global.Visualizador.ShowDialog() 'Comentar
+            P_Global.Visualizador.BringToFront()
+        Else
+            Dim objrep As New R_BoletaEgreso1
+
+
+            objrep.SetParameterValue("sucursal", cbSucursal.Text)
+            objrep.SetParameterValue("monto", tbMonto.Text)
+            objrep.SetParameterValue("concepto", cbConcepto.Text)
+            objrep.SetParameterValue("glosa", tbObservacion.Text)
+            objrep.SetParameterValue("descripcion", tbDescripcion.Text)
+            objrep.SetParameterValue("usuario", gs_user)
+            objrep.SetParameterValue("recibo", tbcodigo.Text)
+            objrep.SetParameterValue("recibe", tbRecibe.Text)
+            objrep.SetParameterValue("literal", _Literal)
+            'objrep.SetParameterValue("logo", gb_UbiLogo)
+            objrep.SetParameterValue("usuario", gs_user)
+
+
+            P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+            P_Global.Visualizador.ShowDialog() 'Comentar
+            P_Global.Visualizador.BringToFront()
+        End If
+
+    End Sub
+
+    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
+
+    End Sub
+
+    Private Sub Panel3_Paint(sender As Object, e As PaintEventArgs) Handles Panel3.Paint
+
     End Sub
 
 

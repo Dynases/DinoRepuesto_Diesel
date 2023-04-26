@@ -319,28 +319,28 @@ Public Class F0_PagosCreditoTienda
             .HeaderAlignment = TextAlignment.Far
             .Visible = True
         End With
-        With grfactura.RootTable.Columns("DescBanco")
-            .Caption = "Banco"
-            .EditType = EditType.MultiColumnDropDown
-            .DropDown = cbbanco.DropDownList
-            .Width = 160
-            .Visible = True
-        End With
-        With grfactura.RootTable.Columns("banco")
-            .Width = 100
-            .Visible = False
-        End With
-        With grfactura.RootTable.Columns("estado")
-            .Width = 100
-            .Visible = False
-        End With
-        With grfactura.RootTable.Columns("tdnrocheque")
-            .Caption = "Nro Cheque"
-            .Width = 120
-            .TextAlignment = TextAlignment.Far
-            .HeaderAlignment = TextAlignment.Far
-            .Visible = True
-        End With
+        'With grfactura.RootTable.Columns("DescBanco")
+        '    .Caption = "Banco"
+        '    .EditType = EditType.MultiColumnDropDown
+        '    .DropDown = cbbanco.DropDownList
+        '    .Width = 160
+        '    .Visible = True
+        'End With
+        'With grfactura.RootTable.Columns("banco")
+        '    .Width = 100
+        '    .Visible = False
+        'End With
+        'With grfactura.RootTable.Columns("estado")
+        '    .Width = 100
+        '    .Visible = False
+        'End With
+        'With grfactura.RootTable.Columns("tdnrocheque")
+        '    .Caption = "Nro Cheque"
+        '    .Width = 120
+        '    .TextAlignment = TextAlignment.Far
+        '    .HeaderAlignment = TextAlignment.Far
+        '    .Visible = True
+        'End With
         If (_fnAccesible()) Then
             With grfactura.RootTable.Columns("img")
                 .Width = 80

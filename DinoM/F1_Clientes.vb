@@ -31,7 +31,7 @@ Public Class F1_Clientes
     Public _nameButton As String
     Public _tab As SuperTabItem
     Public _modulo As SideNavItem
-    Public _Tipo As Integer
+    Public _Tipo As Integer = 1
     Dim NumiVendedor As Integer
 #End Region
 #Region "Metodos Privados"
@@ -440,6 +440,12 @@ Public Class F1_Clientes
 
 
         If res Then
+            If (gi_CodCliente = 1) Then
+                gi_CodCliente = 2
+
+                Me.Close()
+                Exit Function
+            End If
             Modificado = False
             _fnMoverImagenRuta(RutaGlobal + "\Imagenes\Imagenes ClienteDino", nameImg)
             nameImg = "Default.jpg"
@@ -763,6 +769,9 @@ Public Class F1_Clientes
     Private Sub F1_Clientes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _prIniciarTodo()
         btnNuevo.PerformClick()
+        If (gi_CodCliente = 1) Then
+            _PMOHabilitar()
+        End If
 
     End Sub
 
@@ -824,15 +833,20 @@ Public Class F1_Clientes
     End Sub
 
     Private Sub btnSalir_Click(sender As Object, e As EventArgs) Handles btnSalir.Click
-        If btnGrabar.Enabled = True Then
-            _PMInhabilitar()
-            _PMPrimerRegistro()
-
-        Else
-            '  Public _modulo As SideNavItem
-            _modulo.Select()
+        If gi_CodCliente <> 0 Then
             Me.Close()
+        Else
+            If btnGrabar.Enabled = True Then
+                _PMInhabilitar()
+                _PMPrimerRegistro()
+
+            Else
+                '  Public _modulo As SideNavItem
+                _modulo.Select()
+                Me.Close()
+            End If
         End If
+
     End Sub
 
 
@@ -984,4 +998,6 @@ Public Class F1_Clientes
             Timer1.Enabled = False
         End If
     End Sub
+
+
 End Class

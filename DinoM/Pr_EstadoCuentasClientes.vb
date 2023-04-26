@@ -128,16 +128,17 @@ Public Class Pr_EstadoCuentasClientes
 
         f = Dt1Estado.NewRow
         f.Item(0) = tbCodigoCliente.Text
-        f.Item(1) = tbCliente.Text
-        f.Item(2) = ""
-        f.Item(3) = 0
-        f.Item(4) = "SALDO ANTERIOR"
-        f.Item(5) = ""
-        f.Item(6) = 0
+        f.Item(1) = Dt1Estado.Rows(Dt1Estado.Rows.Count - 1).Item("yddesc")
+        f.Item(2) = tbCliente.Text
+        f.Item(3) = ""
+        f.Item(4) = 0
+        f.Item(5) = "SALDO ANTERIOR"
+        f.Item(6) = ""
         f.Item(7) = 0
-        f.Item(8) = saldoInicial
-        f.Item(9) = 0
-        f.Item(10) = ""
+        f.Item(8) = 0
+        f.Item(9) = saldoInicial
+        f.Item(10) = 0
+        f.Item(11) = ""
 
 
         Dt1Estado.Rows.InsertAt(f, 0)

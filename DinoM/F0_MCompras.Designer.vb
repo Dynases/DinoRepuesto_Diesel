@@ -99,6 +99,7 @@ Partial Class F0_MCompras
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.btnTraspaso = New DevComponents.DotNetBar.ButtonX()
         Me.btnVerPagos = New DevComponents.DotNetBar.ButtonX()
+        Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -146,6 +147,7 @@ Partial Class F0_MCompras
         '
         'PanelSuperior
         '
+        Me.PanelSuperior.Controls.Add(Me.ButtonX1)
         Me.PanelSuperior.Controls.Add(Me.btnVerPagos)
         Me.PanelSuperior.Controls.Add(Me.btnTraspaso)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
@@ -165,6 +167,7 @@ Partial Class F0_MCompras
         Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar2, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.btnTraspaso, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.btnVerPagos, 0)
+        Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX1, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.MRlAccion, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.PictureBox1, 0)
         '
@@ -260,7 +263,7 @@ Partial Class F0_MCompras
         '
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.MRlAccion.Size = New System.Drawing.Size(734, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(654, 72)
         '
         'PanelContent
         '
@@ -303,7 +306,7 @@ Partial Class F0_MCompras
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(917, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(837, 0)
         '
         'PanelDetalle
         '
@@ -1685,6 +1688,23 @@ Partial Class F0_MCompras
         Me.btnVerPagos.TextColor = System.Drawing.Color.White
         Me.btnVerPagos.Visible = False
         '
+        'ButtonX1
+        '
+        Me.ButtonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
+        Me.ButtonX1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.ButtonX1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources._14
+        Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.ButtonX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.ButtonX1.Location = New System.Drawing.Point(1030, 0)
+        Me.ButtonX1.Name = "ButtonX1"
+        Me.ButtonX1.Size = New System.Drawing.Size(80, 72)
+        Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ButtonX1.TabIndex = 16
+        Me.ButtonX1.Text = "REVISION DE LLEGADA"
+        Me.ButtonX1.TextColor = System.Drawing.Color.White
+        '
         'F0_MCompras
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1818,4 +1838,5 @@ Partial Class F0_MCompras
     Friend WithEvents btnBuscarProforma As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnTraspaso As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
+    Protected WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
 End Class

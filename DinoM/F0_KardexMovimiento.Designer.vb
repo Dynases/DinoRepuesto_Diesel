@@ -52,6 +52,8 @@ Partial Class F0_KardexMovimiento
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.tbCodFab = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -275,6 +277,8 @@ Partial Class F0_KardexMovimiento
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.LabelX7)
+        Me.Panel2.Controls.Add(Me.tbCodFab)
         Me.Panel2.Controls.Add(Me.btnBuscar)
         Me.Panel2.Controls.Add(Me.tbFechaVenc)
         Me.Panel2.Controls.Add(Me.tblote)
@@ -307,7 +311,7 @@ Partial Class F0_KardexMovimiento
         Me.btnBuscar.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBuscar.Image = Global.DinoM.My.Resources.Resources.search
         Me.btnBuscar.ImageFixedSize = New System.Drawing.Size(30, 30)
-        Me.btnBuscar.Location = New System.Drawing.Point(197, 21)
+        Me.btnBuscar.Location = New System.Drawing.Point(214, 22)
         Me.btnBuscar.Margin = New System.Windows.Forms.Padding(2)
         Me.btnBuscar.Name = "btnBuscar"
         Me.btnBuscar.Size = New System.Drawing.Size(110, 31)
@@ -464,7 +468,7 @@ Partial Class F0_KardexMovimiento
         Me.tbsaldo.DisabledBackColor = System.Drawing.Color.White
         Me.tbsaldo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbsaldo.ForeColor = System.Drawing.Color.Black
-        Me.tbsaldo.Location = New System.Drawing.Point(110, 126)
+        Me.tbsaldo.Location = New System.Drawing.Point(111, 153)
         Me.tbsaldo.Name = "tbsaldo"
         Me.tbsaldo.PreventEnterBeep = True
         Me.tbsaldo.Size = New System.Drawing.Size(80, 21)
@@ -480,7 +484,7 @@ Partial Class F0_KardexMovimiento
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX2.Location = New System.Drawing.Point(18, 128)
+        Me.LabelX2.Location = New System.Drawing.Point(19, 155)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX2.Size = New System.Drawing.Size(42, 16)
@@ -624,7 +628,7 @@ Partial Class F0_KardexMovimiento
         Me.tbproducto.DisabledBackColor = System.Drawing.Color.White
         Me.tbproducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbproducto.ForeColor = System.Drawing.Color.Black
-        Me.tbproducto.Location = New System.Drawing.Point(108, 52)
+        Me.tbproducto.Location = New System.Drawing.Point(109, 79)
         Me.tbproducto.MaxLength = 500
         Me.tbproducto.Multiline = True
         Me.tbproducto.Name = "tbproducto"
@@ -659,7 +663,7 @@ Partial Class F0_KardexMovimiento
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX6.Location = New System.Drawing.Point(18, 52)
+        Me.LabelX6.Location = New System.Drawing.Point(19, 79)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX6.Size = New System.Drawing.Size(64, 16)
@@ -771,6 +775,34 @@ Partial Class F0_KardexMovimiento
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
+        'tbCodFab
+        '
+        '
+        '
+        '
+        Me.tbCodFab.Border.Class = "TextBoxBorder"
+        Me.tbCodFab.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbCodFab.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
+        Me.tbCodFab.Location = New System.Drawing.Point(109, 51)
+        Me.tbCodFab.Name = "tbCodFab"
+        Me.tbCodFab.PreventEnterBeep = True
+        Me.tbCodFab.Size = New System.Drawing.Size(100, 21)
+        Me.tbCodFab.TabIndex = 378
+        '
+        'LabelX7
+        '
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX7.Location = New System.Drawing.Point(19, 49)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(85, 23)
+        Me.LabelX7.TabIndex = 379
+        Me.LabelX7.Text = "Cod. Fabrica:"
+        '
         'F0_KardexMovimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -838,4 +870,6 @@ Partial Class F0_KardexMovimiento
     Friend WithEvents Timer1 As Timer
     Friend WithEvents btnBuscar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents tbCodFab As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

@@ -34,7 +34,7 @@ Public Class F0_RotacionProductos
 
     Function _prCargarAnos() As DataTable
         Dim dt As DataTable = New DataTable()
-        Dim ano As Integer = 2020
+        Dim ano As Integer = 2022
         Dim numicol As New DataColumn("numi")
         numicol.DataType = GetType(Integer)
         Dim mescol As New DataColumn("ano")

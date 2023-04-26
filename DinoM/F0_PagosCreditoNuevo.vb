@@ -23,11 +23,24 @@ Public Class F0_PagosCreditoNuevo
     Public _tab As SuperTabItem
     Public _modulo As SideNavItem
     Dim Bin As New MemoryStream
+
+    '-------cobro--------
+    Public TotalBs As Double = 0
+    Public TotalSus As Double = 0
+    Public TotalTarjeta As Double = 0
+    Public TipoCambio As Double = 0
+    Public TipoVenta As Integer = 1
+    Public FechaVenc As Date
+    Public Banco As Integer = 0
+    Public Glosa As String
+    Public CostoEnvio As Double = 0
+    Public cambio As Double = 0
 #End Region
 #Region "METODOS PRIVADOS"
 
     Private Sub _IniciarTodo()
         MSuperTabControl.SelectedTabIndex = 0
+
         'Dim img As New Bitmap(My.Resources.delete, 28, 28)
         'img.Save(Bin, Imaging.ImageFormat.Png)
 
@@ -140,6 +153,15 @@ Public Class F0_PagosCreditoNuevo
             .Visible = True
             .Caption = "Fecha"
             .FormatString = "dd/MM/yyyy"
+        End With
+        With grcobranza.RootTable.Columns("tcty4clie")
+            .Width = 300
+            .Visible = False
+        End With
+        With grcobranza.RootTable.Columns("ydrazonsocial")
+            .Caption = "Cliente"
+            .Width = 300
+            .Visible = True
         End With
         With grcobranza.RootTable.Columns("tety4vend")
 
@@ -483,7 +505,7 @@ Public Class F0_PagosCreditoNuevo
             .Caption = "Nro Factura"
             .Width = 95
             .TextAlignment = TextAlignment.Far
-            .Visible = false
+            .Visible = False
         End With
         With grPendiente.RootTable.Columns("cliente")
             .Caption = "Cliente"
@@ -855,7 +877,7 @@ Public Class F0_PagosCreditoNuevo
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
         _Limpiar()
         _prhabilitar()
-
+        tbcobrador.Text = gs_user
         btnNuevo.Enabled = False
         btnModificar.Enabled = False
         btnEliminar.Enabled = False
@@ -1232,7 +1254,7 @@ Public Class F0_PagosCreditoNuevo
         Dim numi As String = ""
         Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
         _prInterpretarDatosCobranza(dtCobro)
-        Dim res As Boolean = L_fnGrabarCobranzaNueva(numi, tbfecha.Value.ToString("yyyy/MM/dd"), tbcodVendedor.Text, tbObservacion.Text, dtCobro, cbSucursal.Value)
+        Dim res As Boolean = L_fnGrabarCobranzaNueva(numi, tbfecha.Value.ToString("yyyy/MM/dd"), gi_userNumi, tbObservacion.Text, dtCobro, cbSucursal.Value)
 
 
         If res Then
@@ -1256,13 +1278,13 @@ Public Class F0_PagosCreditoNuevo
 
     End Sub
     Public Function _ValidarCampos() As Boolean
-        If (tbcodVendedor.Text.Length <= 0) Then
-            Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-            ToastNotification.Show(Me, "Por Favor Seleccione un Cobrador con Ctrl+Enter".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-            tbcobrador.Focus()
-            Return False
+        'If (tbcodVendedor.Text.Length <= 0) Then
+        '    Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+        '    ToastNotification.Show(Me, "Por Favor Seleccione un Cobrador con Ctrl+Enter".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+        '    tbcobrador.Focus()
+        '    Return False
 
-        End If
+        'End If
 
         If (grfactura.RowCount > 0) Then
             grfactura.Row = grfactura.RowCount - 1
@@ -1466,5 +1488,76 @@ Public Class F0_PagosCreditoNuevo
 
     Private Sub grPendiente_EditingCell(sender As Object, e As EditingCellEventArgs) Handles grPendiente.EditingCell
         e.Cancel = True
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+    End Sub
+
+    Private Sub _prGuardarCobro()
+
+        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 2, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc)
+        If TotalTarjeta > 0 Then
+            L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "CUENTA POR COBRAR", TotalTarjeta, Glosa)
+        End If
+        'Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
+        '_prModificarMontos(tabla)
+        'Dim res As Boolean = L_fnModificarCobro(tbCodigo.Text, TipoVenta, FechaVenc.ToString("yyyy/MM/dd"), tabla, Banco, Glosa, tbEnvio.Text)
+        'If res Then
+
+
+
+        '    Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
+        '    ToastNotification.Show(Me, "El Cobro de la Venta: ".ToUpper + tbCodigo.Text + " fue grabado con éxito.".ToUpper,
+        '                              img, 4500,
+        '                              eToastGlowColor.Green,
+        '                              eToastPosition.TopCenter
+        '                              )
+
+
+        '    _prCargarVenta()
+        '    '_prSalir()
+
+
+        'Else
+        '    Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
+        '    ToastNotification.Show(Me, "LEl Cobro de la Venta no pudo ser grabada".ToUpper, img, 4500, eToastGlowColor.Red, eToastPosition.BottomCenter)
+
+        'End If
+    End Sub
+    Private Sub btnCobrar_Click(sender As Object, e As EventArgs) Handles btnCobrar.Click
+        Dim tbtotal As Decimal = CType(grfactura.DataSource, DataTable).Rows(0).Item("pendiente")
+
+        Dim ef As F1_MontoPagar
+        ef = New F1_MontoPagar
+
+        ef.TotalVenta = tbtotal
+        ef.Cobrado = False
+        ef.swTipoVenta.Value = False
+        ef.ShowDialog()
+        Dim bandera As Boolean = False
+        bandera = ef.Bandera
+        If (bandera = True) Then
+
+            TotalBs = ef.TotalBs
+            TotalSus = ef.TotalSus
+            TotalTarjeta = ef.TotalTarjeta
+            TipoCambio = ef.TipoCambio
+            TipoVenta = ef.tipoVenta
+            FechaVenc = ef.tbFechaVenc.Value
+            Banco = ef.cbBanco.Value
+            Glosa = ef.tbGlosa.Text
+            CostoEnvio = ef.tbCostoEnvio.Value
+            cambio = Convert.ToDouble(ef.txtCambio1.Text)
+            _prGuardarCobro()
+
+            Dim monto As Double = (TotalBs + (TotalSus * TipoCambio) + TotalTarjeta) - cambio
+            CType(grfactura.DataSource, DataTable).Rows(0).Item("PagoAc") = monto
+            btnGrabar.PerformClick()
+
+        Else
+            ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+        End If
     End Sub
 End Class

@@ -35,12 +35,13 @@ Partial Class F1_Cantidad
         '
         'Panel1
         '
-        Me.Panel1.BackgroundImage = Global.DinoM.My.Resources.Resources.fondo1
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
         Me.Panel1.Controls.Add(Me.ReflectionLabel1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(700, 68)
+        Me.Panel1.Size = New System.Drawing.Size(525, 55)
         Me.Panel1.TabIndex = 10
         '
         'ReflectionLabel1
@@ -52,9 +53,10 @@ Partial Class F1_Cantidad
         Me.ReflectionLabel1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ReflectionLabel1.Font = New System.Drawing.Font("Calibri", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ReflectionLabel1.ForeColor = System.Drawing.Color.White
-        Me.ReflectionLabel1.Location = New System.Drawing.Point(12, 12)
+        Me.ReflectionLabel1.Location = New System.Drawing.Point(9, 10)
+        Me.ReflectionLabel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.ReflectionLabel1.Name = "ReflectionLabel1"
-        Me.ReflectionLabel1.Size = New System.Drawing.Size(370, 53)
+        Me.ReflectionLabel1.Size = New System.Drawing.Size(278, 43)
         Me.ReflectionLabel1.TabIndex = 5
         Me.ReflectionLabel1.Text = "Cantidad Del Producto"
         '
@@ -68,9 +70,10 @@ Partial Class F1_Cantidad
         Me.tbCantidad.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.tbCantidad.Font = New System.Drawing.Font("Calibri", 25.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbCantidad.Increment = 1.0R
-        Me.tbCantidad.Location = New System.Drawing.Point(207, 274)
+        Me.tbCantidad.Location = New System.Drawing.Point(155, 223)
+        Me.tbCantidad.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.tbCantidad.Name = "tbCantidad"
-        Me.tbCantidad.Size = New System.Drawing.Size(303, 60)
+        Me.tbCantidad.Size = New System.Drawing.Size(227, 49)
         Me.tbCantidad.TabIndex = 0
         '
         'lbStock
@@ -78,9 +81,10 @@ Partial Class F1_Cantidad
         Me.lbStock.BackColor = System.Drawing.Color.Black
         Me.lbStock.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbStock.ForeColor = System.Drawing.Color.White
-        Me.lbStock.Location = New System.Drawing.Point(129, 223)
+        Me.lbStock.Location = New System.Drawing.Point(97, 181)
+        Me.lbStock.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbStock.Name = "lbStock"
-        Me.lbStock.Size = New System.Drawing.Size(436, 34)
+        Me.lbStock.Size = New System.Drawing.Size(327, 28)
         Me.lbStock.TabIndex = 5
         Me.lbStock.Text = "Stock Disponible = 52.00"
         Me.lbStock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -89,9 +93,10 @@ Partial Class F1_Cantidad
         '
         Me.lbProducto.Font = New System.Drawing.Font("Calibri", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbProducto.ForeColor = System.Drawing.Color.Navy
-        Me.lbProducto.Location = New System.Drawing.Point(34, 81)
+        Me.lbProducto.Location = New System.Drawing.Point(26, 66)
+        Me.lbProducto.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbProducto.Name = "lbProducto"
-        Me.lbProducto.Size = New System.Drawing.Size(604, 133)
+        Me.lbProducto.Size = New System.Drawing.Size(453, 108)
         Me.lbProducto.TabIndex = 4
         Me.lbProducto.Text = "Producto A"
         Me.lbProducto.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -103,9 +108,10 @@ Partial Class F1_Cantidad
         Me.btnAgregar.Font = New System.Drawing.Font("Calibri", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAgregar.Image = Global.DinoM.My.Resources.Resources.checked
         Me.btnAgregar.ImageFixedSize = New System.Drawing.Size(30, 30)
-        Me.btnAgregar.Location = New System.Drawing.Point(382, 358)
+        Me.btnAgregar.Location = New System.Drawing.Point(286, 291)
+        Me.btnAgregar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnAgregar.Name = "btnAgregar"
-        Me.btnAgregar.Size = New System.Drawing.Size(128, 52)
+        Me.btnAgregar.Size = New System.Drawing.Size(96, 42)
         Me.btnAgregar.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeMobile2014
         Me.btnAgregar.TabIndex = 373
         Me.btnAgregar.Text = "Confirmar"
@@ -117,18 +123,19 @@ Partial Class F1_Cantidad
         Me.ButtonX1.Font = New System.Drawing.Font("Calibri", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources.cancel
         Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(30, 30)
-        Me.ButtonX1.Location = New System.Drawing.Point(207, 358)
+        Me.ButtonX1.Location = New System.Drawing.Point(155, 291)
+        Me.ButtonX1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.ButtonX1.Name = "ButtonX1"
-        Me.ButtonX1.Size = New System.Drawing.Size(128, 52)
+        Me.ButtonX1.Size = New System.Drawing.Size(96, 42)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeMobile2014
         Me.ButtonX1.TabIndex = 374
         Me.ButtonX1.Text = "Salir"
         '
         'F1_Cantidad
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(700, 440)
+        Me.ClientSize = New System.Drawing.Size(525, 358)
         Me.Controls.Add(Me.ButtonX1)
         Me.Controls.Add(Me.btnAgregar)
         Me.Controls.Add(Me.tbCantidad)
@@ -136,6 +143,7 @@ Partial Class F1_Cantidad
         Me.Controls.Add(Me.lbStock)
         Me.Controls.Add(Me.lbProducto)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "F1_Cantidad"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "F1_Cantidad"

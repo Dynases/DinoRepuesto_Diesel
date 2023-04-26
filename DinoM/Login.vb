@@ -127,7 +127,7 @@ Public Class Login
     Private Sub Login_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress, tbPassword.KeyPress, tbUsuario.KeyPress
         If (e.KeyChar = ChrW(Keys.Escape)) Then
             _prDesvenecerPantalla()
-            Me.Close()
+            End
         End If
     End Sub
 

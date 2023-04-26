@@ -74,11 +74,14 @@ Public Class Pr_KardexProductos
             .DataSource = dt
             .Refresh()
         End With
+        If (dt.Rows.Count > 0) Then
+            cbAlmacen.SelectedIndex = 1
+        End If
     End Sub
 
     Private Sub _prCargarComboMarca(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
         Dim dt As New DataTable
-        Dim codProv As Integer = cbProveedor.Value
+        Dim codProv As Integer = CInt(cbProveedor.SelectedIndex)
         dt = L_fnListarMarcas(codProv)
         With mCombo
             .DropDownList.Columns.Clear()

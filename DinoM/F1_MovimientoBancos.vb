@@ -380,6 +380,41 @@ Public Class F1_MovimientoBancos
     Private Sub LabelX3_Click(sender As Object, e As EventArgs) Handles LabelX3.Click
 
     End Sub
+    Private Sub P_GenerarReporte(numi As String)
+        P_Global.Visualizador = New Visualizador
+
+        Dim objrep As New R_movimientoBanco
+        Dim _TotalLi As Decimal
+        Dim _Literal, _TotalDecimal, _TotalDecimal2 As String
+        _TotalLi = tbMonto.Value
+        _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
+        _TotalDecimal2 = CDbl(_TotalDecimal) * 100
+
+        _Literal = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(_TotalLi) - CDbl(_TotalDecimal)) + "  " + IIf(_TotalDecimal2.Equals("0"), "00", _TotalDecimal2) + "/100 Bolivianos"
+
+        Dim concep As String
+        If swTipo.Value = 1 Then
+            concep = "INGRESO"
+        Else
+            concep = "EGRESO"
+        End If
+        objrep.SetParameterValue("sucursal", cbSucursal.Text)
+        objrep.SetParameterValue("concepto", concep)
+        objrep.SetParameterValue("usuario", gs_user)
+        objrep.SetParameterValue("glosa", tbObservacion.Text)
+        objrep.SetParameterValue("fecha", dpFecha.Value.ToString("dd/MM/yyyy"))
+        objrep.SetParameterValue("banco", cbBanco.Text)
+        objrep.SetParameterValue("boleta", tbBoleta.Text)
+        objrep.SetParameterValue("detalle", tbDescripcion.Text)
+        objrep.SetParameterValue("monto", tbMonto.Text)
+        objrep.SetParameterValue("literal", _Literal)
+        P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+        P_Global.Visualizador.ShowDialog() 'Comentar
+        P_Global.Visualizador.BringToFront()
+    End Sub
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        P_GenerarReporte(tbcodigo.Text)
+    End Sub
 
 #End Region
 

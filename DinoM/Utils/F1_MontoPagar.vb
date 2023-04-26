@@ -24,6 +24,9 @@ Public Class F1_MontoPagar
     Public tipoVenta As Integer = 1
     Public Cobrado As Boolean
     Public Banc As Integer
+    Public CostoEnvio As Double
+    Public cambio As Double
+    Public tipo As Integer = 0
 
 
 
@@ -31,14 +34,17 @@ Public Class F1_MontoPagar
         _prCargarComboLibreria(cbCambioDolar, 7, 1)
         _prCargarComboBanco(cbBanco)
         cbCambioDolar.SelectedIndex = CType(cbCambioDolar.DataSource, DataTable).Rows.Count - 1
-
+        If tipo = 1 Then
+            txtCambio1.Visible = False
+            lbCambio.Visible = False
+        End If
         If Cobrado = False Then
             txtMontoPagado1.Text = "0.00"
             txtCambio1.Text = "0.00"
             tbMontoBs.Value = 0
             tbMontoDolar.Value = 0
             tbMontoTarej.Value = 0
-            tbCostoEnvio.Value = 0
+            tbCostoEnvio.Value = CostoEnvio
             tbMontoTarej.Enabled = False
             tbGlosa.Text = ""
             tbFechaVenc.Value = Now.Date
@@ -101,10 +107,10 @@ Public Class F1_MontoPagar
 
     End Sub
     Private Sub tbMontoBs_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoBs.ValueChanged
-        tbMontoDolar.Value = 0
-        tbMontoTarej.Value = 0
+        'tbMontoDolar.Value = 0
+        'tbMontoTarej.Value = 0
 
-        Dim diferencia As Double = tbMontoBs.Value - (TotalVenta + tbCostoEnvio.Value)
+        Dim diferencia As Double = (tbMontoBs.Value + (tbMontoDolar.Value * Convert.ToDouble(cbCambioDolar.Text)) + tbMontoTarej.Value) - (TotalVenta + tbCostoEnvio.Value)
         If (diferencia >= 0) Then
             'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = Math.Round(diferencia, 2).ToString
@@ -117,9 +123,9 @@ Public Class F1_MontoPagar
     End Sub
 
     Private Sub tbMontoDolar_ValueChanged(sender As Object, e As EventArgs) Handles tbMontoDolar.ValueChanged
-        tbMontoBs.Value = 0
-        tbMontoTarej.Value = 0
-        Dim diferencia As Double = (tbMontoDolar.Value * cbCambioDolar.Text) - (TotalVenta + tbCostoEnvio.Value)
+        'tbMontoBs.Value = 0
+        'tbMontoTarej.Value = 0
+        Dim diferencia As Double = (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value + tbMontoTarej.Value - (TotalVenta + tbCostoEnvio.Value)
         If (diferencia >= 0) Then
             'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = diferencia.ToString
@@ -136,11 +142,11 @@ Public Class F1_MontoPagar
 
         Dim diferencia As Double = tbMontoTarej.Value - Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
         If (diferencia >= 0) Then
-            txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
+            'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
             txtCambio1.Text = diferencia.ToString
 
         Else
-            txtMontoPagado1.Text = "0.00"
+            'txtMontoPagado1.Text = "0.00"
             txtCambio1.Text = "0.00"
         End If
     End Sub
@@ -288,8 +294,30 @@ Public Class F1_MontoPagar
             TotalTarjeta = tbMontoTarej.Value
             TipoCambio = cbCambioDolar.Text
             tipoVenta = 0
-            Me.Close()
+            If tipo = 1 Then
+                Dim dt As DataTable = revisarMontos(cbBanco.Value)
+                Dim cam As Double = Convert.ToDouble(cbCambioDolar.Text)
+                If (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Bs") * cam)) < (TotalBs + (TotalSus * cam)) Then
+                    ToastNotification.Show(Me, "No hay suficiente dinero en caja: " + (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Bs") * cbCambioDolar.Value)).ToString, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+                Else
+                    If dt.Rows(0).Item("Banco") < TotalTarjeta Then
+                        ToastNotification.Show(Me, "No hay suficiente dinero en la cuenta: " + dt.Rows(0).Item("Banco").ToString, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+                    Else
+                        If (TotalBs + (TotalSus * cam) + TotalTarjeta) > TotalVenta Then
+                            ToastNotification.Show(Me, "Ingrese un monto menor o igual al total ", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+                        Else
+                            Me.Close()
+                        End If
+                    End If
+                End If
+
+            Else
+                Me.Close()
+            End If
+
         End If
+
 
 
     End Sub
@@ -309,10 +337,10 @@ Public Class F1_MontoPagar
             'tbMontoBs.Value = 0
             'tbMontoDolar.Value = 0
             tbMontoTarej.Enabled = True
-            tbMontoTarej.Value = Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
-            tbMontoBs.Enabled = False
-            tbMontoDolar.Enabled = False
-            tbMontoTarej.IsInputReadOnly = True
+            'tbMontoTarej.Value = Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
+            tbMontoBs.Enabled = True
+            tbMontoDolar.Enabled = True
+            tbMontoTarej.IsInputReadOnly = False
             lbBanco.Visible = True
             cbBanco.Visible = True
             lbGlosa.Visible = True
@@ -371,14 +399,14 @@ Public Class F1_MontoPagar
 
     Private Sub swTipoVenta_ValueChanged(sender As Object, e As EventArgs) Handles swTipoVenta.ValueChanged
         If (swTipoVenta.Value = False) Then
-            lbCredito.Visible = True
-            tbFechaVenc.Visible = True
+            lbCredito.Visible = False
+            tbFechaVenc.Visible = False
             tbFechaVenc.Value = Now.Date
             ''Deshabilitar formas de pago
-            tbMontoBs.IsInputReadOnly = True
-            tbMontoDolar.IsInputReadOnly = True
-            tbMontoTarej.IsInputReadOnly = True
-            chbTarjeta.Enabled = False
+            tbMontoBs.IsInputReadOnly = False
+            tbMontoDolar.IsInputReadOnly = False
+            tbMontoTarej.IsInputReadOnly = False
+            chbTarjeta.Enabled = True
             'cbCambioDolar.Enabled = False
         Else
             lbCredito.Visible = False

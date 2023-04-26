@@ -247,6 +247,12 @@
     <Compile Include="F0_Compra.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="F0_MovimientoNuevo.Designer.vb">
+      <DependentUpon>F0_MovimientoNuevo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="F0_MovimientoNuevo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="F0_ProformaVenta.designer.vb">
       <DependentUpon>F0_ProformaVenta.vb</DependentUpon>
     </Compile>
@@ -277,10 +283,28 @@
     <Compile Include="F1_Traspaso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="F1_TraspasoDinero.Designer.vb">
+      <DependentUpon>F1_TraspasoDinero.vb</DependentUpon>
+    </Compile>
+    <Compile Include="F1_TraspasoDinero.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pr_BoletaIngresoEgreso.Designer.vb">
+      <DependentUpon>Pr_BoletaIngresoEgreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_BoletaIngresoEgreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Pr_ReporteAlertas.Designer.vb">
       <DependentUpon>Pr_ReporteAlertas.vb</DependentUpon>
     </Compile>
     <Compile Include="Pr_ReporteAlertas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pr_ReporteIngresoEgreso.Designer.vb">
+      <DependentUpon>Pr_ReporteIngresoEgreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Pr_ReporteIngresoEgreso.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Pr_ReporteMovimientoBanco.Designer.vb">
@@ -343,10 +367,40 @@
       <DependentUpon>R_VentasDescuentos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="R_BoletaEgreso1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_BoletaEgreso1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_BoletaIngreso.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_BoletaIngreso.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_movimientoBanco.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_movimientoBanco.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="R_ReporteAlertas.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>R_ReporteAlertas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_ReporteIngresosEgresos.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_ReporteIngresosEgresos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="R_RevisionLlegada.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R_RevisionLlegada.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="R_VentasFiltradas.vb">
@@ -395,12 +449,6 @@
       <DependentUpon>F0_Movimiento.vb</DependentUpon>
     </Compile>
     <Compile Include="F0_Movimiento.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="F0_MovimientoNuevo.Designer.vb">
-      <DependentUpon>F0_MovimientoNuevo.vb</DependentUpon>
-    </Compile>
-    <Compile Include="F0_MovimientoNuevo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="F0_PagosCreditoNuevo.Designer.vb">
@@ -1145,6 +1193,9 @@
     <EmbeddedResource Include="F0_Compra.resx">
       <DependentUpon>F0_Compra.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="F0_MovimientoNuevo.resx">
+      <DependentUpon>F0_MovimientoNuevo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="F0_ProformaVenta.resx">
       <DependentUpon>F0_ProformaVenta.vb</DependentUpon>
     </EmbeddedResource>
@@ -1160,8 +1211,17 @@
     <EmbeddedResource Include="F1_Traspaso.resx">
       <DependentUpon>F1_Traspaso.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="F1_TraspasoDinero.resx">
+      <DependentUpon>F1_TraspasoDinero.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pr_BoletaIngresoEgreso.resx">
+      <DependentUpon>Pr_BoletaIngresoEgreso.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pr_ReporteAlertas.resx">
       <DependentUpon>Pr_ReporteAlertas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pr_ReporteIngresoEgreso.resx">
+      <DependentUpon>Pr_ReporteIngresoEgreso.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pr_ReporteMovimientoBanco.resx">
       <DependentUpon>Pr_ReporteMovimientoBanco.vb</DependentUpon>
@@ -1199,9 +1259,29 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>R_VentasDescuentos.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="R_BoletaEgreso1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_BoletaEgreso1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_BoletaIngreso.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_BoletaIngreso.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_movimientoBanco.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_movimientoBanco.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="R_ReporteAlertas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>R_ReporteAlertas.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_ReporteIngresosEgresos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_ReporteIngresosEgresos.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="R_RevisionLlegada.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>R_RevisionLlegada.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="R_VentasFiltradas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -1227,9 +1307,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="F0_Movimiento.resx">
       <DependentUpon>F0_Movimiento.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="F0_MovimientoNuevo.resx">
-      <DependentUpon>F0_MovimientoNuevo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="F0_PagosCreditoNuevo.resx">
       <DependentUpon>F0_PagosCreditoNuevo.vb</DependentUpon>
@@ -1959,6 +2036,7 @@
     <None Include="Resources\fondoazul1.png" />
     <None Include="Resources\Ideteca.PNG" />
     <Content Include="Resources\imageDefault.jpg" />
+    <Content Include="Resources\logo.jpg" />
     <Content Include="Resources\man.png" />
     <None Include="Resources\pdf.png" />
     <None Include="Resources\txt.png" />

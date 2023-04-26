@@ -69,7 +69,7 @@ Partial Class Pr_EstadoCuentasClientes
         Me.SuperTabPrincipal.ControlBox.MenuBox.Name = ""
         Me.SuperTabPrincipal.ControlBox.Name = ""
         Me.SuperTabPrincipal.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabPrincipal.ControlBox.MenuBox, Me.SuperTabPrincipal.ControlBox.CloseBox})
-        Me.SuperTabPrincipal.Size = New System.Drawing.Size(1362, 691)
+        Me.SuperTabPrincipal.Size = New System.Drawing.Size(1354, 691)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelBuscador, 0)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelRegistro, 0)
         '
@@ -79,7 +79,7 @@ Partial Class Pr_EstadoCuentasClientes
         '
         'SuperTabControlPanelRegistro
         '
-        Me.SuperTabControlPanelRegistro.Size = New System.Drawing.Size(1330, 691)
+        Me.SuperTabControlPanelRegistro.Size = New System.Drawing.Size(1322, 691)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelInferior, 0)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelIzq, 0)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelPrincipal, 0)
@@ -98,7 +98,7 @@ Partial Class Pr_EstadoCuentasClientes
         'PanelInferior
         '
         Me.PanelInferior.Location = New System.Drawing.Point(0, 655)
-        Me.PanelInferior.Size = New System.Drawing.Size(1330, 36)
+        Me.PanelInferior.Size = New System.Drawing.Size(1322, 36)
         Me.PanelInferior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelInferior.Style.BackColor1.Color = System.Drawing.Color.Gold
         Me.PanelInferior.Style.BackColor2.Color = System.Drawing.Color.Gold
@@ -139,15 +139,15 @@ Partial Class Pr_EstadoCuentasClientes
         '
         'PanelPrincipal
         '
-        Me.PanelPrincipal.Size = New System.Drawing.Size(967, 655)
+        Me.PanelPrincipal.Size = New System.Drawing.Size(959, 655)
         '
         'MPanelUserAct
         '
-        Me.MPanelUserAct.Location = New System.Drawing.Point(1130, 0)
+        Me.MPanelUserAct.Location = New System.Drawing.Point(1122, 0)
         '
         'MReportViewer
         '
-        Me.MReportViewer.Size = New System.Drawing.Size(967, 655)
+        Me.MReportViewer.Size = New System.Drawing.Size(959, 655)
         Me.MReportViewer.ToolPanelWidth = 200
         '
         'MGPFiltros
@@ -403,7 +403,7 @@ Partial Class Pr_EstadoCuentasClientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1362, 691)
+        Me.ClientSize = New System.Drawing.Size(1354, 691)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Name = "Pr_EstadoCuentasClientes"
         Me.Text = "Pr_EstadoCuentasClientes"

@@ -47,12 +47,12 @@ Partial Class F1_MontoPagar
         Me.tbMontoDolar = New DevComponents.Editors.DoubleInput()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.tbCostoEnvio = New DevComponents.Editors.DoubleInput()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.lbCredito = New DevComponents.DotNetBar.LabelX()
         Me.tbFechaVenc = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.swTipoVenta = New DevComponents.DotNetBar.Controls.SwitchButton()
-        Me.tbCostoEnvio = New DevComponents.Editors.DoubleInput()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.cbCambioDolar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,8 +61,8 @@ Partial Class F1_MontoPagar
         CType(Me.tbMontoBs, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbMontoDolar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
-        CType(Me.tbFechaVenc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbCostoEnvio, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbFechaVenc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox2
@@ -442,6 +442,40 @@ Partial Class F1_MontoPagar
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Tipo de Venta/Costos"
         '
+        'tbCostoEnvio
+        '
+        '
+        '
+        '
+        Me.tbCostoEnvio.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.tbCostoEnvio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbCostoEnvio.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.tbCostoEnvio.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbCostoEnvio.ForeColor = System.Drawing.Color.Black
+        Me.tbCostoEnvio.Increment = 1.0R
+        Me.tbCostoEnvio.Location = New System.Drawing.Point(114, 52)
+        Me.tbCostoEnvio.MinValue = 0R
+        Me.tbCostoEnvio.Name = "tbCostoEnvio"
+        Me.tbCostoEnvio.Size = New System.Drawing.Size(120, 26)
+        Me.tbCostoEnvio.TabIndex = 374
+        Me.tbCostoEnvio.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Right
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX2.ForeColor = System.Drawing.Color.White
+        Me.LabelX2.Location = New System.Drawing.Point(10, 57)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX2.Size = New System.Drawing.Size(98, 18)
+        Me.LabelX2.TabIndex = 375
+        Me.LabelX2.Text = "Costo Envío:"
+        '
         'lbCredito
         '
         Me.lbCredito.BackColor = System.Drawing.Color.Transparent
@@ -529,6 +563,7 @@ Partial Class F1_MontoPagar
         '
         Me.swTipoVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.swTipoVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.swTipoVenta.IsReadOnly = True
         Me.swTipoVenta.Location = New System.Drawing.Point(114, 24)
         Me.swTipoVenta.Name = "swTipoVenta"
         Me.swTipoVenta.OffBackColor = System.Drawing.Color.LawnGreen
@@ -540,40 +575,6 @@ Partial Class F1_MontoPagar
         Me.swTipoVenta.TabIndex = 233
         Me.swTipoVenta.Value = True
         Me.swTipoVenta.ValueObject = "Y"
-        '
-        'tbCostoEnvio
-        '
-        '
-        '
-        '
-        Me.tbCostoEnvio.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.tbCostoEnvio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.tbCostoEnvio.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.tbCostoEnvio.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbCostoEnvio.ForeColor = System.Drawing.Color.Black
-        Me.tbCostoEnvio.Increment = 1.0R
-        Me.tbCostoEnvio.Location = New System.Drawing.Point(114, 52)
-        Me.tbCostoEnvio.MinValue = 0R
-        Me.tbCostoEnvio.Name = "tbCostoEnvio"
-        Me.tbCostoEnvio.Size = New System.Drawing.Size(120, 26)
-        Me.tbCostoEnvio.TabIndex = 374
-        Me.tbCostoEnvio.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Right
-        '
-        'LabelX2
-        '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX2.ForeColor = System.Drawing.Color.White
-        Me.LabelX2.Location = New System.Drawing.Point(10, 57)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX2.Size = New System.Drawing.Size(98, 18)
-        Me.LabelX2.TabIndex = 375
-        Me.LabelX2.Text = "Costo Envío:"
         '
         'F1_MontoPagar
         '
@@ -597,8 +598,8 @@ Partial Class F1_MontoPagar
         CType(Me.tbMontoBs, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbMontoDolar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
-        CType(Me.tbFechaVenc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbCostoEnvio, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbFechaVenc, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

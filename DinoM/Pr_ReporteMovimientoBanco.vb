@@ -50,6 +50,8 @@ Public Class Pr_ReporteMovimientoBanco
         _prInterpretarDatos(_dt)
         If (_dt.Rows.Count > 0) Then
 
+
+
             Dim objrep As New R_MovimientoBancos
             objrep.SetDataSource(_dt)
             Dim fechaI As String = tbFechaI.Value.ToString("dd/MM/yyyy")

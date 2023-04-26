@@ -62,6 +62,7 @@ Partial Class F0_DetalleVenta
         '
         Me.GPanelProductos.CanvasColor = System.Drawing.SystemColors.Control
         Me.GPanelProductos.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GPanelProductos.ColorTable = DevComponents.DotNetBar.Controls.ePanelColorTable.Magenta
         Me.GPanelProductos.Controls.Add(Me.Panel7)
         Me.GPanelProductos.DisabledBackColor = System.Drawing.Color.Empty
         Me.GPanelProductos.Dock = System.Windows.Forms.DockStyle.Fill
@@ -127,7 +128,7 @@ Partial Class F0_DetalleVenta
         Me.grProductos.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductos.Office2007CustomColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.RecordNavigator = True
-        Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
+        Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
         Me.grProductos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grProductos.Size = New System.Drawing.Size(850, 207)
@@ -165,6 +166,7 @@ Partial Class F0_DetalleVenta
         'btnAgregar
         '
         Me.btnAgregar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnAgregar.BackColor = System.Drawing.Color.White
         Me.btnAgregar.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
         Me.btnAgregar.Font = New System.Drawing.Font("Calibri", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAgregar.Image = Global.DinoM.My.Resources.Resources.atras1
@@ -211,8 +213,10 @@ Partial Class F0_DetalleVenta
         '
         'GroupPanel1
         '
+        Me.GroupPanel1.BackColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.ColorTable = DevComponents.DotNetBar.Controls.ePanelColorTable.Magenta
         Me.GroupPanel1.Controls.Add(Me.Panel1)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -247,6 +251,9 @@ Partial Class F0_DetalleVenta
         '
         '
         '
+        Me.GroupPanel1.StyleMouseOver.BackColor = System.Drawing.Color.MediumVioletRed
+        Me.GroupPanel1.StyleMouseOver.BackColor2 = System.Drawing.SystemColors.Control
+        Me.GroupPanel1.StyleMouseOver.BackColorGradientAngle = 30
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 5
         Me.GroupPanel1.Text = "PRODUCTOS SELECCIONADOS"
@@ -273,6 +280,8 @@ Partial Class F0_DetalleVenta
         Me.grProductoSeleccionado.Name = "grProductoSeleccionado"
         Me.grProductoSeleccionado.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductoSeleccionado.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.grProductoSeleccionado.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grProductoSeleccionado.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grProductoSeleccionado.Size = New System.Drawing.Size(850, 97)
         Me.grProductoSeleccionado.TabIndex = 0
         Me.grProductoSeleccionado.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
@@ -314,6 +323,7 @@ Partial Class F0_DetalleVenta
         '
         Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.ColorTable = DevComponents.DotNetBar.Controls.ePanelColorTable.Magenta
         Me.GroupPanel3.Controls.Add(Me.Panel4)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -374,6 +384,8 @@ Partial Class F0_DetalleVenta
         Me.grVentasCliente.Name = "grVentasCliente"
         Me.grVentasCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grVentasCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.grVentasCliente.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grVentasCliente.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grVentasCliente.Size = New System.Drawing.Size(416, 67)
         Me.grVentasCliente.TabIndex = 0
         Me.grVentasCliente.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
@@ -382,6 +394,7 @@ Partial Class F0_DetalleVenta
         '
         Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.ColorTable = DevComponents.DotNetBar.Controls.ePanelColorTable.Magenta
         Me.GroupPanel2.Controls.Add(Me.Panel2)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -442,6 +455,8 @@ Partial Class F0_DetalleVenta
         Me.grVentasGral.Name = "grVentasGral"
         Me.grVentasGral.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grVentasGral.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.grVentasGral.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grVentasGral.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grVentasGral.Size = New System.Drawing.Size(416, 67)
         Me.grVentasGral.TabIndex = 0
         Me.grVentasGral.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007

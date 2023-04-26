@@ -19,6 +19,7 @@ Public Class F0_KardexMovimiento
     Dim _DuracionSms As Integer = 5
     Dim Lote As Boolean = False
     Dim dtProductoGoblal As DataTable
+    Dim codFab As String
 
 #End Region
 #Region "Variables Globales"
@@ -137,6 +138,8 @@ Public Class F0_KardexMovimiento
         frm.ShowDialog()
         dtMovimiento.Rows.Clear()
         'Devuelve valores de seleccion
+        tbCodFab.Text = frm.codFab.ToString()
+        codFab = frm.codFab.ToString()
         tbCodigo.Text = frm.pedidoId.ToString()
         tbproducto.Text = frm.producto.ToString()
         tbsaldo.Text = frm.stock.ToString()
@@ -174,11 +177,11 @@ Public Class F0_KardexMovimiento
         Dim ingT As Double = 0
         Dim salT As Double = 0
 
-        If (Not IsDBNull(Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "cprod = " + tbCodigo.Text + " and concep = 1 or concep=3"))) Then
-            ingT = Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "cprod = " + tbCodigo.Text + " and concep = 1 or concep=3")
+        If (Not IsDBNull(Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "yfCodAux1 = " + tbCodigo.Text + " and concep = 1 or concep=3"))) Then
+            ingT = Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "yfCodAux1 = " + tbCodigo.Text + " and concep = 1 or concep=3")
         End If
-        If (Not IsDBNull(Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "cprod = " + tbCodigo.Text + " and concep = 2 or concep=4"))) Then
-            salT = Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "cprod = " + tbCodigo.Text + " and concep = 2 or concep=4")
+        If (Not IsDBNull(Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "yfCodAux1 = " + tbCodigo.Text + " and concep = 2 or concep=4"))) Then
+            salT = Dt2KardexTotal.Compute("Sum(entrada)+Sum(salida)", "yfCodAux1 = " + tbCodigo.Text + " and concep = 2 or concep=4")
         End If
         saldo = ingT + salT
         Dim ing As Double = 0
@@ -564,6 +567,7 @@ Public Class F0_KardexMovimiento
             objrep.SetParameterValue("producto", tbproducto.Text)
             objrep.SetParameterValue("codProducto", tbCodigo.Text)
             objrep.SetParameterValue("deposito", cbAlmacen.Text)
+            objrep.SetParameterValue("codfab", codFab)
             'MReportViewer.ReportSource = objrep
 
             'MReportViewer.Show()

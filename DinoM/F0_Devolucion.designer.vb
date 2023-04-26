@@ -209,7 +209,6 @@ Partial Class F0_Devolucion
         '
         'btnImprimir
         '
-        Me.btnImprimir.Visible = False
         '
         'btnUltimo
         '

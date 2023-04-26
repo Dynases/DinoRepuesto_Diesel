@@ -222,6 +222,14 @@ Public Class F0_MovimientoNuevo
         If (tMovimiento.Rows.Count <= 0) Then
             cargarDetalle(-1)
         End If
+        With grmovimiento
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
+            .FilterMode = FilterMode.Automatic
+            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+
+        End With
     End Sub
     Private Sub cargarDetalle(movimientoId As String)
         Try
@@ -230,12 +238,15 @@ Public Class F0_MovimientoNuevo
             ConfigInicialVinculado(grdetalle, tdetalle, "Movimiento")
             ColNoVisible(grdetalle, "Id")
             ColNoVisible(grdetalle, "movimientoId")
-            ColAL(grdetalle, "ProductoId", "Item", 60)
+            ColNoVisible(grdetalle, "ProductoId")
+            ColAL(grdetalle, "ItemNuevo", "Item Nuevo", 60)
+            ColAL(grdetalle, "ItemAntiguo", "Item Antiguo", 60)
             ColAL(grdetalle, "CodigoFabrica", "Cod. Fabrica", 100)
             ColAL(grdetalle, "CodigoMarca", "Cod. Marca", 100)
-            ColAL(grdetalle, "Medida", "Medida", 90)
-            ColAL(grdetalle, "Marca", "Marca ", 90)
-            ColAL(grdetalle, "Procedencia", "Procedencia ", 100)
+            ColNoVisible(grdetalle, "Medida")
+            ColNoVisible(grdetalle, "Marca")
+            ColNoVisible(grdetalle, "Procedencia")
+            ColAL(grdetalle, "Abreviatura", "Abreviatura", 100)
             ColAL(grdetalle, "producto", "Producto", 200)
             ColArNro(grdetalle, "cantidad", "Cantidad", 100, "0")
             ColCombo(grdetalle, "AlmOrigenId", "Alm. Origen", 140, cbAlmacenOrigen, True)
@@ -334,7 +345,7 @@ Public Class F0_MovimientoNuevo
             ObtenerImagenAddDetalle(Bin, Bin02)
             'Obtiene el Id Mayor
             Dim idMayor As Integer = ObtenerIdMayor(grdetalle, "Id")
-            CType(grdetalle.DataSource, DataTable).Rows.Add(idMayor + 1, 0, 0, "", "", "", "", "", "", 0, gi_userSuc, 2, Bin.GetBuffer(), Bin02.GetBuffer(), 0, 0, 0)
+            CType(grdetalle.DataSource, DataTable).Rows.Add(idMayor + 1, 0, 0, "", "", "", "", "", "", "", "", "", 0, gi_userSuc, 2, Bin.GetBuffer(), Bin02.GetBuffer(), 0, 0, 0)
         Catch ex As Exception
             MostrarMensajeError(ex.Message)
         End Try
@@ -580,6 +591,8 @@ Public Class F0_MovimientoNuevo
             Dim posicionFila As Integer = ObtenerPosicionFila(grdetalle, "Id", grdetalle.GetValue("id"))
 
             If ((posicionFila >= 0) And (Not existe)) Then
+                SetCelValor(grdetalle, posicionFila, "ItemNuevo", dt.Rows(fila).Item("yfCodAux1"))
+                SetCelValor(grdetalle, posicionFila, "ItemAntiguo", dt.Rows(fila).Item("yfCodAux2"))
                 SetCelValor(grdetalle, posicionFila, "ProductoId", dt.Rows(fila).Item("Item"))
                 SetCelValor(grdetalle, posicionFila, "CodigoFabrica", dt.Rows(fila).Item("CodigoFabrica"))
                 SetCelValor(grdetalle, posicionFila, "CodigoMarca", dt.Rows(fila).Item("Marca"))
@@ -612,6 +625,7 @@ Public Class F0_MovimientoNuevo
         Dim objrep As New R_Movimiento
         objrep.SetDataSource(dt)
         objrep.SetParameterValue("usuario", L_Usuario)
+        objrep.SetParameterValue("logo", gb_UbiLogo)
 
         P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
         P_Global.Visualizador.ShowDialog() 'Comentar
@@ -1264,23 +1278,23 @@ Public Class F0_MovimientoNuevo
 
                 Dim cantidad As Integer = grAlmacen.GetValue("Cantidad")
 
-                    If (Not IsNumeric(cantidad) Or
-                    cantidad.ToString = String.Empty Or
-                    cantidad < 0) Then
-                        CType(grAlmacen.DataSource, DataTable).Rows(posicion).Item("Cantidad") = 0
-                        grAlmacen.SetValue("Cantidad", 0)
+                If (Not IsNumeric(cantidad) Or
+                cantidad.ToString = String.Empty Or
+                cantidad < 0) Then
+                    CType(grAlmacen.DataSource, DataTable).Rows(posicion).Item("Cantidad") = 0
+                    grAlmacen.SetValue("Cantidad", 0)
+                Else
+                    If cantidad > 0 Then
+                        Dim stock As Integer = grAlmacen.GetValue("Stock")
+                        ValidarExistenciaStock(grAlmacen, cantidad, stock, posicion, 0, 2)
+
+                        validarExistenciaStockXConceptoTraspaso(grAlmacen, posicion, 0)
                     Else
-                        If cantidad > 0 Then
-                            Dim stock As Integer = grAlmacen.GetValue("Stock")
-                            ValidarExistenciaStock(grAlmacen, cantidad, stock, posicion, 0, 2)
-
-                            validarExistenciaStockXConceptoTraspaso(grAlmacen, posicion, 0)
-                        Else
-                            grAlmacen.SetValue("Cantidad", 0)
-                        End If
+                        grAlmacen.SetValue("Cantidad", 0)
                     End If
-
                 End If
+
+            End If
         Catch ex As Exception
             MostrarMensajeError(ex.Message)
         End Try

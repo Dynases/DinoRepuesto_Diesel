@@ -127,6 +127,7 @@ Module P_Global
     Public gi_Mayusculas As Integer = 0
     Public gi_NumiVenedor As Integer = 0
     Public gi_DescuentoGeneral As Integer = 0
+    Public gi_CodCliente As Integer = 0
     'configuracion del sistema tabla TCG011
     Public gd_notaAproTeo As Double = 0
 

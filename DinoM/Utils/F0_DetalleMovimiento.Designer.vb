@@ -54,7 +54,7 @@ Partial Class F0_DetalleMovimiento
         Me.GPanelProductos.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GPanelProductos.Location = New System.Drawing.Point(0, 0)
         Me.GPanelProductos.Name = "GPanelProductos"
-        Me.GPanelProductos.Size = New System.Drawing.Size(1362, 121)
+        Me.GPanelProductos.Size = New System.Drawing.Size(1354, 121)
         '
         '
         '
@@ -94,7 +94,7 @@ Partial Class F0_DetalleMovimiento
         Me.Panel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel7.Location = New System.Drawing.Point(0, 0)
         Me.Panel7.Name = "Panel7"
-        Me.Panel7.Size = New System.Drawing.Size(1356, 98)
+        Me.Panel7.Size = New System.Drawing.Size(1348, 98)
         Me.Panel7.TabIndex = 0
         '
         'grProductos
@@ -116,7 +116,7 @@ Partial Class F0_DetalleMovimiento
         Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
-        Me.grProductos.Size = New System.Drawing.Size(1356, 57)
+        Me.grProductos.Size = New System.Drawing.Size(1348, 57)
         Me.grProductos.TabIndex = 0
         Me.grProductos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -132,7 +132,7 @@ Partial Class F0_DetalleMovimiento
         Me.Panel3.Location = New System.Drawing.Point(0, 0)
         Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1356, 41)
+        Me.Panel3.Size = New System.Drawing.Size(1348, 41)
         Me.Panel3.TabIndex = 1
         '
         'lbConcepto
@@ -145,7 +145,7 @@ Partial Class F0_DetalleMovimiento
         Me.lbConcepto.Dock = System.Windows.Forms.DockStyle.Right
         Me.lbConcepto.Font = New System.Drawing.Font("Georgia", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbConcepto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.lbConcepto.Location = New System.Drawing.Point(1185, 0)
+        Me.lbConcepto.Location = New System.Drawing.Point(1177, 0)
         Me.lbConcepto.Name = "lbConcepto"
         Me.lbConcepto.SingleLineColor = System.Drawing.SystemColors.Control
         Me.lbConcepto.Size = New System.Drawing.Size(171, 41)
@@ -233,6 +233,7 @@ Partial Class F0_DetalleMovimiento
         '
         'GroupPanel1
         '
+        Me.GroupPanel1.BackColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Panel1)
@@ -241,13 +242,13 @@ Partial Class F0_DetalleMovimiento
         Me.GroupPanel1.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupPanel1.Location = New System.Drawing.Point(0, 121)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1362, 329)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1354, 329)
         '
         '
         '
-        Me.GroupPanel1.Style.BackColor = System.Drawing.Color.DodgerBlue
-        Me.GroupPanel1.Style.BackColor2 = System.Drawing.Color.DodgerBlue
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
         Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
         Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
         Me.GroupPanel1.Style.BorderBottomWidth = 1
         Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
@@ -260,7 +261,7 @@ Partial Class F0_DetalleMovimiento
         Me.GroupPanel1.Style.CornerDiameter = 4
         Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel1.Style.TextColor = System.Drawing.Color.White
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
         Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
@@ -280,7 +281,7 @@ Partial Class F0_DetalleMovimiento
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1356, 306)
+        Me.Panel1.Size = New System.Drawing.Size(1348, 306)
         Me.Panel1.TabIndex = 0
         '
         'grProductoSeleccionado
@@ -295,7 +296,7 @@ Partial Class F0_DetalleMovimiento
         Me.grProductoSeleccionado.Name = "grProductoSeleccionado"
         Me.grProductoSeleccionado.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductoSeleccionado.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grProductoSeleccionado.Size = New System.Drawing.Size(1356, 306)
+        Me.grProductoSeleccionado.Size = New System.Drawing.Size(1348, 306)
         Me.grProductoSeleccionado.TabIndex = 0
         Me.grProductoSeleccionado.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -303,7 +304,7 @@ Partial Class F0_DetalleMovimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1362, 450)
+        Me.ClientSize = New System.Drawing.Size(1354, 450)
         Me.Controls.Add(Me.GPanelProductos)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Name = "F0_DetalleMovimiento"

@@ -726,21 +726,27 @@ Public Class F1_Productos
 
         If res Then
             Modificado = False
+            If tbCodigo.Text <> -1 Then
 
+                _prCrearCarpetaImagenes("ProductosTodos")
+                _prGuardarImagenes(RutaGlobal + "\Imagenes\Imagenes Productos\" + "ProductosTodos" + "\")
 
-            _prCrearCarpetaImagenes("ProductosTodos")
-            _prGuardarImagenes(RutaGlobal + "\Imagenes\Imagenes Productos\" + "ProductosTodos" + "\")
+                Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
+                ToastNotification.Show(Me, "Código de Producto ".ToUpper + tbCodigo.Text + " Grabado con Exito.".ToUpper,
+                                          img, 2000,
+                                          eToastGlowColor.Green,
+                                          eToastPosition.TopCenter
+                                          )
+                tbCodigo.Focus()
+                Limpiar = True
+                dtPrecioAll = L_fnGeneralProductosDescuentosAll()
+                dtImagenesAll = L_prCargarImagenesProductoAll()
+            Else
+                Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
+                ToastNotification.Show(Me, "El producto con el item nuevo o antiguo ingresado ya se encuentra registrado".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                res = False
+            End If
 
-            Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
-            ToastNotification.Show(Me, "Código de Producto ".ToUpper + tbCodigo.Text + " Grabado con Exito.".ToUpper,
-                                      img, 2000,
-                                      eToastGlowColor.Green,
-                                      eToastPosition.TopCenter
-                                      )
-            tbCodigo.Focus()
-            Limpiar = True
-            dtPrecioAll = L_fnGeneralProductosDescuentosAll()
-            dtImagenesAll = L_prCargarImagenesProductoAll()
         Else
             Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
             ToastNotification.Show(Me, "El producto no pudo ser insertado".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
@@ -953,7 +959,9 @@ Public Class F1_Productos
         Dim listEstCeldas As New List(Of Modelo.Celda)
         'a.yfnumi, a.yfcprod, a.yfcbarra, a.yfcdprod1, a.yfcdprod2, a.yfgr1, a.yfgr2, a.yfgr3, a.yfgr4,
         'a.yfMed, a.yfumin, a.yfusup, a.yfmstk, a.yfclot, a.yfsmin, a.yfap, a.yfimg, a.yffact, a.yfhact, a.yfuact
-        listEstCeldas.Add(New Modelo.Celda("yfnumi", True, "ITem".ToUpper, 50))
+        listEstCeldas.Add(New Modelo.Celda("yfCodAux1", True, "Item Nuevo", 90))
+        listEstCeldas.Add(New Modelo.Celda("yfCodAux2", False))
+        listEstCeldas.Add(New Modelo.Celda("yfnumi", False))
         listEstCeldas.Add(New Modelo.Celda("grupo5", True, "CATEGORÍA".ToUpper, 90))
         listEstCeldas.Add(New Modelo.Celda("yfCodigoMarca", True, "CodigoMarca", 90))
 
@@ -978,9 +986,9 @@ Public Class F1_Productos
         listEstCeldas.Add(New Modelo.Celda("yffact", False))
         listEstCeldas.Add(New Modelo.Celda("yfhact", False))
         listEstCeldas.Add(New Modelo.Celda("yfuact", False))
-        listEstCeldas.Add(New Modelo.Celda("VentaFacturado", True, "V. Facturado", 80, "0.00"))
-        listEstCeldas.Add(New Modelo.Celda("VentaNormal", True, "V. Publico", 80, "0.00"))
-        listEstCeldas.Add(New Modelo.Celda("VentaMecanico", True, "V. Mecanico", 80, "0.00"))
+        listEstCeldas.Add(New Modelo.Celda("VentaFacturado", True, "V. Publico", 80, "0.00"))
+        listEstCeldas.Add(New Modelo.Celda("VentaNormal", True, "V. Taller", 80, "0.00"))
+        listEstCeldas.Add(New Modelo.Celda("VentaMecanico", True, "V. GDB", 80, "0.00"))
 
         listEstCeldas.Add(New Modelo.Celda("PrecioCosto", False))
         listEstCeldas.Add(New Modelo.Celda("yfcdprod1", False, "Descripcion".ToUpper, 150))
@@ -993,8 +1001,6 @@ Public Class F1_Productos
         listEstCeldas.Add(New Modelo.Celda("Umax", False, "UniCaja".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("yfsmax", False))
         listEstCeldas.Add(New Modelo.Celda("yfTipo", False))
-        listEstCeldas.Add(New Modelo.Celda("yfCodAux1", True, "Codigo Aux1", 90))
-        listEstCeldas.Add(New Modelo.Celda("yfCodAux2", True, "Codigo Aux2", 90))
 
         listEstCeldas.Add(New Modelo.Celda("listaAlmacen", True, "Stock".ToUpper, 250))
         Return listEstCeldas
@@ -1568,28 +1574,28 @@ Public Class F1_Productos
             .Visible = True
         End With
         With JG_HistPrecios.RootTable.Columns("haPCosto")
-            .Caption = "P. Costo ($us)"
+            .Caption = "P. Costo"
             .Width = 100
             .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
             .TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .FormatString = "0.00"
         End With
         With JG_HistPrecios.RootTable.Columns("haPVentaFact")
-            .Caption = "P. VentaFact. Bs."
+            .Caption = "P. Publico"
             .Width = 130
             .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
             .TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .FormatString = "0.00"
         End With
         With JG_HistPrecios.RootTable.Columns("haPVentaPublico")
-            .Caption = "P. Venta Público Bs."
+            .Caption = "P. Taller"
             .Width = 150
             .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
             .TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .FormatString = "0.00"
         End With
         With JG_HistPrecios.RootTable.Columns("haPMecanico")
-            .Caption = "P. Mecánico Bs."
+            .Caption = "P. GDB"
             .Width = 130
             .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
             .TextAlignment = Janus.Windows.GridEX.TextAlignment.Far

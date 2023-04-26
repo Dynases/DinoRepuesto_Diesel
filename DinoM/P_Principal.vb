@@ -1239,6 +1239,16 @@ Public Class P_Principal
 
     End Sub
 
+    Private Sub btReporteIngresoEgreso_Click(sender As Object, e As EventArgs) Handles btReporteIngresoEgreso.Click
+        Dim frm As New Pr_ReporteIngresoEgreso
+        frm.Show()
+    End Sub
+
+    Private Sub btTraspasoDinero_Click(sender As Object, e As EventArgs) Handles btTraspasoDinero.Click
+        Dim frm As New F1_TraspasoDinero
+        frm.Show()
+    End Sub
+
 
 
 
