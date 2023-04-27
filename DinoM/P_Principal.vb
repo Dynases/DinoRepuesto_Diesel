@@ -1249,6 +1249,11 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub btReporteIngresoEgreso2_Click(sender As Object, e As EventArgs) Handles btReporteIngresoEgreso2.Click
+        Dim frm As New Pr_ReporteIngresoEgreso2
+        frm.Show()
+    End Sub
+
 
 
 
