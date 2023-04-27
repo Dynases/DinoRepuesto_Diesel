@@ -35,12 +35,22 @@ Public Class Pr_ReporteIngresoEgreso2
 
     End Sub
     Private Sub _prCargarReporte()
+        Dim saldoBs, SaldoSus As Decimal
         'Dim _dt As New DataTable
         '_prInterpretarDatos(_dt)
 
         Dim dt2 As DataTable = L_prIngresoEgresoSaldo2(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
         If dt2.Rows.Count > 0 Then
 
+
+            Dim dt As DataTable = L_prIngresoEgresoSaldo(tbFechaI.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
+            If dt2.Rows.Count > 0 Then
+                saldoBs = dt.Rows(0).Item("ccTotalBs")
+                SaldoSus = dt.Rows(0).Item("ccTotalSus")
+            Else
+                saldoBs = 0
+                SaldoSus = 0
+            End If
             Dim objrep As New R_ReporteIngresosEgresos2
             objrep.SetDataSource(dt2)
 
@@ -49,6 +59,8 @@ Public Class Pr_ReporteIngresoEgreso2
             objrep.SetParameterValue("sucursal", cbSucursal.Text)
             objrep.SetParameterValue("fechaI", fechaI)
             objrep.SetParameterValue("fechaF", fechaF)
+            objrep.SetParameterValue("saldoBs", saldoBs)
+            objrep.SetParameterValue("saldoSus", SaldoSus)
 
             MReportViewer.ReportSource = objrep
             MReportViewer.Show()
