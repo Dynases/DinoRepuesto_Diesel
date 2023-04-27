@@ -17,7 +17,7 @@ Public Class Pr_ReporteIngresoEgreso2
             .DropDownList.Columns.Clear()
             .DropDownList.Columns.Add("aanumi").Width = 60
             .DropDownList.Columns("aanumi").Caption = "COD"
-            .DropDownList.Columns.Add("aabdes").Width = 300
+            .DropDownList.Columns.Add("aabdes").Width = 280
             .DropDownList.Columns("aabdes").Caption = "SUCURSAL"
             .ValueMember = "aanumi"
             .DisplayMember = "aabdes"
