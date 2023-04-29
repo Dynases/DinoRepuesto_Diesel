@@ -43,13 +43,14 @@ Public Class Pr_ReporteIngresoEgreso2
         If dt2.Rows.Count > 0 Then
 
 
-            Dim dt As DataTable = L_prIngresoEgresoSaldo(tbFechaI.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
-            If dt2.Rows.Count > 0 Then
-                saldoBs = dt.Rows(0).Item("ccTotalBs")
-                SaldoSus = dt.Rows(0).Item("ccTotalSus")
+            'Dim dt As DataTable = L_prIngresoEgresoSaldo(tbFechaI.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
+            Dim dt As DataTable = L_prIngresoEgresoSaldoAnterior(tbFechaI.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
+
+            If dt.Rows.Count > 0 Then
+                saldoBs = dt.Rows(0).Item("Ingreso") - dt.Rows(0).Item("Egreso")
             Else
                 saldoBs = 0
-                SaldoSus = 0
+
             End If
             Dim objrep As New R_ReporteIngresosEgresos2
             objrep.SetDataSource(dt2)
@@ -60,7 +61,6 @@ Public Class Pr_ReporteIngresoEgreso2
             objrep.SetParameterValue("fechaI", fechaI)
             objrep.SetParameterValue("fechaF", fechaF)
             objrep.SetParameterValue("saldoBs", saldoBs)
-            objrep.SetParameterValue("saldoSus", SaldoSus)
 
             MReportViewer.ReportSource = objrep
             MReportViewer.Show()
