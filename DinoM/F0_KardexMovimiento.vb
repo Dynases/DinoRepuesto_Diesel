@@ -116,14 +116,14 @@ Public Class F0_KardexMovimiento
     Private Sub _prCargarProductos()
         Dim dtname As DataTable = L_fnNameLabel()
         'Obtiene la lista de productos
-        If dtProductoGoblal Is Nothing Then
-            If (Lote = True) Then
-                dtProductoGoblal = L_prMovimientoListarProductosConLote(cbAlmacen.Value)
-                ' actualizarSaldoSinLote(dtProductoGoblal)
-            Else
-                dtProductoGoblal = L_prMovimientoListarProductos(cbAlmacen.Value)
-            End If
+        'If dtProductoGoblal Is Nothing Then
+        If (Lote = True) Then
+            dtProductoGoblal = L_prMovimientoListarProductosConLote(cbAlmacen.Value)
+            ' actualizarSaldoSinLote(dtProductoGoblal)
+        Else
+            dtProductoGoblal = L_prMovimientoListarProductos(cbAlmacen.Value)
         End If
+        'End If
         Dim dtMovimiento As DataTable = dtProductoGoblal.Copy
         dtMovimiento.Rows.Clear()
         'Intancia vista 

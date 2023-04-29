@@ -224,10 +224,8 @@ Public Class F0_Movimiento
         With grdetalle.RootTable.Columns("icid")
             .Width = 100
             .Caption = "ITEM".ToUpper
-            .Visible = True
-
+            .Visible = False
         End With
-
         With grdetalle.RootTable.Columns("icibid")
             .Width = 90
             .Visible = False
@@ -235,6 +233,22 @@ Public Class F0_Movimiento
         With grdetalle.RootTable.Columns("iccprod")
             .Width = 90
             .Visible = False
+        End With
+        With grdetalle.RootTable.Columns("yfCodAux1")
+            .Caption = "Item Nuevo".ToUpper
+            .Width = 120
+            .MaxLines = 100
+            .CellStyle.LineAlignment = TextAlignment.Near
+            .WordWrap = True
+            .Visible = True
+        End With
+        With grdetalle.RootTable.Columns("yfCodAux2")
+            .Caption = "Item Antiguo".ToUpper
+            .Width = 120
+            .MaxLines = 100
+            .CellStyle.LineAlignment = TextAlignment.Near
+            .WordWrap = True
+            .Visible = True
         End With
         With grdetalle.RootTable.Columns("CodigoFabrica")
             .Caption = "Cod.Fabrica".ToUpper
@@ -646,7 +660,7 @@ Public Class F0_Movimiento
             ''Dim a As ImageConverter = New ImageConverter()
             'Bin.Write(imagena, 0, imagena.Length)
 
-            CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", 0, "20500101", CDate("2050/01/01"), Bin.GetBuffer(), Bin02.GetBuffer(), 0, 0)
+            CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", "", "", 0, "20500101", CDate("2050/01/01"), Bin.GetBuffer(), Bin02.GetBuffer(), 0, 0)
             'CType(grdetalle.DataSource, DataTable).Rows("Eliminar")
             'CType(grdetalle.DataSource, DataTable).Rows(0).Add("Eliminar", Type.GetType("System.Iamge"))
             'CType(grdetalle.DataSource, DataTable).Columns.Add("Nuevo", Type.GetType("System.Iamge"))
@@ -949,6 +963,8 @@ Public Class F0_Movimiento
         Dim existe As Boolean = _fnExisteProducto(dt.Rows(fila).Item("Item"))
         If ((pos >= 0) And (Not existe)) Then
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("iccprod") = dt.Rows(fila).Item("Item")
+            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("yfCodAux1") = dt.Rows(fila).Item("yfCodAux1")
+            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("yfCodAux2") = dt.Rows(fila).Item("yfCodAux2")
 
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("CodigoFabrica") = dt.Rows(fila).Item("CodigoFabrica")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("CodigoMarca") = dt.Rows(fila).Item("Marca")
@@ -1842,8 +1858,6 @@ salirIf:
             FilaSelectLote = Nothing
         End If
     End Sub
-    Private Sub SeleccionarProductosEvento()
 
-    End Sub
 #End Region
 End Class

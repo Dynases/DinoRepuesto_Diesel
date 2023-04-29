@@ -323,6 +323,7 @@ Partial Class F0_Ventas
         Me.MPanelUserAct.Location = New System.Drawing.Point(861, 0)
         Me.MPanelUserAct.Margin = New System.Windows.Forms.Padding(4)
         Me.MPanelUserAct.Size = New System.Drawing.Size(155, 39)
+        Me.MPanelUserAct.Visible = False
         '
         'MRlAccion
         '
