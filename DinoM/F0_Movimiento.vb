@@ -830,6 +830,17 @@ Public Class F0_Movimiento
                 Return False
             End If
         End If
+        For i = 0 To grdetalle.RowCount - 1
+            If (CType(grdetalle.DataSource, DataTable).Rows(i).Item("iccant") = 0 And CType(grdetalle.DataSource, DataTable).Rows(i).Item("estado") > 0) Then
+                Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+                ToastNotification.Show(Me, "No puede grabar productos con cantidades en 0, revise por favor".ToUpper,
+                                       img, 3500, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                grdetalle.Focus()
+
+                Return False
+            End If
+        Next
+
         Return True
     End Function
 
