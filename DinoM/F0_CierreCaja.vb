@@ -712,7 +712,7 @@ Public Class F0_CierreCaja
     Private Sub _prCargarCierreCaja()
         Try
             Dim dt As New DataTable
-            dt = L_prCajaGeneral()
+            dt = L_prCajaGeneral(gi_userSuc)
             Dgv_Buscador.DataSource = dt
             Dgv_Buscador.RetrieveStructure()
             Dgv_Buscador.AlternatingColors = True

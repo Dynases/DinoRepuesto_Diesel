@@ -128,7 +128,7 @@ Partial Class F0_DetalleVenta
         Me.grProductos.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductos.Office2007CustomColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.RecordNavigator = True
-        Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grProductos.Size = New System.Drawing.Size(850, 207)
@@ -280,7 +280,7 @@ Partial Class F0_DetalleVenta
         Me.grProductoSeleccionado.Name = "grProductoSeleccionado"
         Me.grProductoSeleccionado.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductoSeleccionado.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grProductoSeleccionado.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grProductoSeleccionado.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grProductoSeleccionado.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grProductoSeleccionado.Size = New System.Drawing.Size(850, 97)
         Me.grProductoSeleccionado.TabIndex = 0
@@ -384,7 +384,7 @@ Partial Class F0_DetalleVenta
         Me.grVentasCliente.Name = "grVentasCliente"
         Me.grVentasCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grVentasCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grVentasCliente.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grVentasCliente.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grVentasCliente.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grVentasCliente.Size = New System.Drawing.Size(416, 67)
         Me.grVentasCliente.TabIndex = 0
@@ -455,7 +455,7 @@ Partial Class F0_DetalleVenta
         Me.grVentasGral.Name = "grVentasGral"
         Me.grVentasGral.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grVentasGral.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grVentasGral.SelectedFormatStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(136, Byte), Integer), CType(CType(49, Byte), Integer), CType(CType(84, Byte), Integer))
+        Me.grVentasGral.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grVentasGral.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
         Me.grVentasGral.Size = New System.Drawing.Size(416, 67)
         Me.grVentasGral.TabIndex = 0

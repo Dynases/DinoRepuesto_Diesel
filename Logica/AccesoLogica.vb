@@ -3420,7 +3420,7 @@ Public Class AccesoLogica
         Return _resultado
     End Function
 
-    Public Shared Function L_fnGrabarCobranza(_tenumi As String, _tefdoc As String, _tety4vend As Integer, _teobs As String,
+    Public Shared Function L_fnGrabarCobranza(_tenumi As String, _tefdoc As String, _tety4vend As Integer, _teobs As String, sucursal As Integer,
                                               detalle As DataTable) As Boolean
         Dim _Tabla As DataTable
         Dim _resultado As Boolean
@@ -3432,6 +3432,7 @@ Public Class AccesoLogica
         _listParam.Add(New Datos.DParametro("@tefdoc", _tefdoc))
         _listParam.Add(New Datos.DParametro("@tety4vend", _tety4vend))
         _listParam.Add(New Datos.DParametro("@teobs", _teobs))
+        _listParam.Add(New Datos.DParametro("@teSucursal", sucursal))
         _listParam.Add(New Datos.DParametro("@teuact", L_Usuario))
         _listParam.Add(New Datos.DParametro("@TV00121", "", detalle))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TV00121Cheque", _listParam)
@@ -6568,10 +6569,11 @@ Public Class AccesoLogica
         Return _resultado
     End Function
 
-    Public Shared Function L_prCajaGeneral() As DataTable
+    Public Shared Function L_prCajaGeneral(sucursal As Integer) As DataTable
         Dim _Tabla As DataTable
         Dim _listParam As New List(Of Datos.DParametro)
         _listParam.Add(New Datos.DParametro("@tipo", 3))
+        _listParam.Add(New Datos.DParametro("@Sucursal", sucursal))
         _listParam.Add(New Datos.DParametro("@ccuact", L_Usuario))
         _Tabla = D_ProcedimientoConParam("sp_Mam_TCC001", _listParam)
         Return _Tabla

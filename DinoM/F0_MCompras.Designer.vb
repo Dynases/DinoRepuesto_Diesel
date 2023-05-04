@@ -820,6 +820,7 @@ Partial Class F0_MCompras
         Me.tbTipoCambio.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.tbTipoCambio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.tbTipoCambio.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.tbTipoCambio.Enabled = False
         Me.tbTipoCambio.Increment = 1.0R
         Me.tbTipoCambio.Location = New System.Drawing.Point(592, 83)
         Me.tbTipoCambio.Name = "tbTipoCambio"

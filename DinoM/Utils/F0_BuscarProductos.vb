@@ -43,6 +43,20 @@ Public Class F0_BuscarProductos
             .Width = 50
             .CellStyle.LineAlignment = TextAlignment.Near
             .Caption = "Item"
+            .Visible = False
+
+        End With
+        With grProductos.RootTable.Columns("yfCodAux1")
+            .Width = 50
+            .CellStyle.LineAlignment = TextAlignment.Near
+            .Caption = "Item Nuevo"
+            .Visible = True
+
+        End With
+        With grProductos.RootTable.Columns("yfCodAux2")
+            .Width = 50
+            .CellStyle.LineAlignment = TextAlignment.Near
+            .Caption = "Item Antiguo"
             .Visible = True
 
         End With
@@ -302,6 +316,8 @@ Public Class F0_BuscarProductos
 
             For i As Integer = 0 To dt.Rows.Count - 1 Step 1
                 Dim nombre As String = dt.Rows(i).Item("yfcdprod1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux2").ToString.ToUpper +
                     " " + dt.Rows(i).Item("CodigoFabrica").ToString.ToUpper +
                     " " + dt.Rows(i).Item("Marca").ToString.ToUpper +
                     " " + dt.Rows(i).Item("grupo1").ToString.ToUpper +
@@ -489,6 +505,8 @@ Public Class F0_BuscarProductos
 
             For i As Integer = 0 To dt.Rows.Count - 1 Step 1
                 Dim nombre As String = dt.Rows(i).Item("yfcdprod1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("yfCodAux2").ToString.ToUpper +
                     " " + dt.Rows(i).Item("CodigoFabrica").ToString.ToUpper +
                     " " + dt.Rows(i).Item("categoria").ToString.ToUpper +
                     " " + dt.Rows(i).Item("Marca").ToString.ToUpper +

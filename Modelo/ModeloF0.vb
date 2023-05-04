@@ -41,5 +41,6 @@ Public Class ModeloF0
         'Me.WindowState = FormWindowState.Maximized
         TxtNombreUsu.Text = MGlobal.gs_usuario
         TxtNombreUsu.ReadOnly = True
+        MPanelUserAct.Visible = False
     End Sub
 End Class

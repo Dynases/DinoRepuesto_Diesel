@@ -68,7 +68,7 @@ Public Class F0_Ventas
         _prCargarVenta()
         _prInhabiliitar()
 
-            grVentas.Focus()
+        grVentas.Focus()
         Me.Text = "DESPACHOS"
         Dim blah As New Bitmap(New Bitmap(My.Resources.compra), 20, 20)
         Dim ico As Icon = Icon.FromHandle(blah.GetHicon())
@@ -2315,40 +2315,40 @@ Public Class F0_Ventas
                 'If (lote <> String.Empty) Then
                 If (cant <= iccven) Then
 
-                        grdetalle.SetValue("tbptot", dt.Rows(i).Item("pfptot"))
-                        grdetalle.SetValue("tbtotdesc", dt.Rows(i).Item("pftotdesc"))
-                        grdetalle.SetValue("tbdesc", dt.Rows(i).Item("pfdesc"))
-                        grdetalle.SetValue("tbcmin", cant)
-                        grdetalle.SetValue("tbptot2", dt.Rows(i).Item("pcosto") * cant)
+                    grdetalle.SetValue("tbptot", dt.Rows(i).Item("pfptot"))
+                    grdetalle.SetValue("tbtotdesc", dt.Rows(i).Item("pftotdesc"))
+                    grdetalle.SetValue("tbdesc", dt.Rows(i).Item("pfdesc"))
+                    grdetalle.SetValue("tbcmin", cant)
+                    grdetalle.SetValue("tbptot2", dt.Rows(i).Item("pcosto") * cant)
 
-                    Else
-                        Dim tot As Double = dt.Rows(i).Item("pfpbas") * iccven
-                        grdetalle.SetValue("tbptot", tot)
-                        grdetalle.SetValue("tbtotdesc", tot)
-                        grdetalle.SetValue("tbdesc", 0)
-                        grdetalle.SetValue("tbcmin", iccven)
-                        grdetalle.SetValue("tbptot2", dt.Rows(i).Item("pcosto") * iccven)
-                    End If
-                    grdetalle.SetValue("ItemNuevo", dt.Rows(i).Item("yfCodAux1"))
-                    grdetalle.SetValue("CodigoFabrica", dt.Rows(i).Item("yfcprod"))
-                    grdetalle.SetValue("CodigoMarca", dt.Rows(i).Item("yfCodigoMarca"))
-                    grdetalle.SetValue("tbty5prod", numiproducto)
-                    grdetalle.SetValue("producto", nameproducto)
-                    grdetalle.SetValue("tbumin", dt.Rows(i).Item("pfumin"))
-                    grdetalle.SetValue("unidad", dt.Rows(i).Item("unidad"))
-                    grdetalle.SetValue("tbpbas", dt.Rows(i).Item("pfpbas"))
+                Else
+                    Dim tot As Double = dt.Rows(i).Item("pfpbas") * iccven
+                    grdetalle.SetValue("tbptot", tot)
+                    grdetalle.SetValue("tbtotdesc", tot)
+                    grdetalle.SetValue("tbdesc", 0)
+                    grdetalle.SetValue("tbcmin", iccven)
+                    grdetalle.SetValue("tbptot2", dt.Rows(i).Item("pcosto") * iccven)
+                End If
+                grdetalle.SetValue("ItemNuevo", dt.Rows(i).Item("yfCodAux1"))
+                grdetalle.SetValue("CodigoFabrica", dt.Rows(i).Item("yfcprod"))
+                grdetalle.SetValue("CodigoMarca", dt.Rows(i).Item("yfCodigoMarca"))
+                grdetalle.SetValue("tbty5prod", numiproducto)
+                grdetalle.SetValue("producto", nameproducto)
+                grdetalle.SetValue("tbumin", dt.Rows(i).Item("pfumin"))
+                grdetalle.SetValue("unidad", dt.Rows(i).Item("unidad"))
+                grdetalle.SetValue("tbpbas", dt.Rows(i).Item("pfpbas"))
 
 
-                    If (gb_FacturaIncluirICE) Then
-                        grdetalle.SetValue("tbpcos", dt.Rows(i).Item("pcosto"))
+                If (gb_FacturaIncluirICE) Then
+                    grdetalle.SetValue("tbpcos", dt.Rows(i).Item("pcosto"))
 
-                    Else
-                        grdetalle.SetValue("tbpcos", 0)
-                    End If
+                Else
+                    grdetalle.SetValue("tbpcos", 0)
+                End If
 
-                    grdetalle.SetValue("tblote", lote)
-                    grdetalle.SetValue("tbfechaVenc", FechaVenc)
-                    grdetalle.SetValue("stock", iccven)
+                grdetalle.SetValue("tblote", lote)
+                grdetalle.SetValue("tbfechaVenc", FechaVenc)
+                grdetalle.SetValue("stock", iccven)
 
                 'End If
 
@@ -2366,31 +2366,31 @@ Public Class F0_Ventas
         Dim dt As New DataTable
         dt = L_fnListarLotesPorProductoVenta(cbSucursal.Value, CodProducto)  ''1=Almacen
         'b.yfcdprod1 ,a.iclot ,a.icfven  ,a.iccven 
-        Dim listEstCeldas As New List(Of Modelo.Celda)
-        listEstCeldas.Add(New Modelo.Celda("yfcdprod1,", False, "", 150))
-        listEstCeldas.Add(New Modelo.Celda("iclot", True, "LOTE", 150))
-        listEstCeldas.Add(New Modelo.Celda("icfven", True, "FECHA VENCIMIENTO", 180, "dd/MM/yyyy"))
-        listEstCeldas.Add(New Modelo.Celda("iccven", True, "Stock".ToUpper, 150, "0.00"))
-        listEstCeldas.Add(New Modelo.Celda("stockMinimo", False, "Stock Min.".ToUpper, 150, "0.00"))
-        listEstCeldas.Add(New Modelo.Celda("fechaVencimiento", False, "Fecha Ven.".ToUpper, 150, "0.00"))
-        Dim ef = New Efecto
-        ef.tipo = 3
-        ef.dt = dt
-        ef.SeleclCol = 2
-        ef.listEstCeldas = listEstCeldas
-        ef.alto = 50
-        ef.ancho = 350
-        ef.Context = "Producto ".ToUpper + nameProducto + "  cantidad=" + Str(cant)
-        ef.ShowDialog()
-        Dim bandera As Boolean = False
-        bandera = ef.band
-        'b.yfcdprod1 ,a.iclot ,a.icfven  ,a.iccven 
-        If (bandera = True) Then
-            Dim Row As Janus.Windows.GridEX.GridEXRow = ef.Row
-            lote = Row.Cells("iclot").Value
-            FechaVenc = Row.Cells("icfven").Value
-            iccven = Row.Cells("iccven").Value
-        End If
+        'Dim listEstCeldas As New List(Of Modelo.Celda)
+        'listEstCeldas.Add(New Modelo.Celda("yfcdprod1,", False, "", 150))
+        'listEstCeldas.Add(New Modelo.Celda("iclot", True, "LOTE", 150))
+        'listEstCeldas.Add(New Modelo.Celda("icfven", True, "FECHA VENCIMIENTO", 180, "dd/MM/yyyy"))
+        'listEstCeldas.Add(New Modelo.Celda("iccven", True, "Stock".ToUpper, 150, "0.00"))
+        'listEstCeldas.Add(New Modelo.Celda("stockMinimo", False, "Stock Min.".ToUpper, 150, "0.00"))
+        'listEstCeldas.Add(New Modelo.Celda("fechaVencimiento", False, "Fecha Ven.".ToUpper, 150, "0.00"))
+        'Dim ef = New Efecto
+        'ef.tipo = 3
+        'ef.dt = dt
+        'ef.SeleclCol = 2
+        'ef.listEstCeldas = listEstCeldas
+        'ef.alto = 50
+        'ef.ancho = 350
+        'ef.Context = "Producto ".ToUpper + nameProducto + "  cantidad=" + Str(cant)
+        'ef.ShowDialog()
+        'Dim bandera As Boolean = False
+        'bandera = ef.band
+        ''b.yfcdprod1 ,a.iclot ,a.icfven  ,a.iccven 
+        'If (bandera = True) Then
+
+        lote = dt.Rows(0).Item("iclot")
+        FechaVenc = dt.Rows(0).Item("icfven")
+        iccven = dt.Rows(0).Item("iccven")
+        'End If
 
 
     End Sub
@@ -2637,7 +2637,7 @@ Public Class F0_Ventas
             End If
 
         Else
-                e.Cancel = True
+            e.Cancel = True
         End If
 
     End Sub
@@ -2972,10 +2972,10 @@ salirIf:
                         CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbcmin") = 1
                         'If (gb_FacturaIncluirICE) Then
                         CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbpcos") = FilaSelectLote.Item("pcos")
-                            'Else
-                            '    CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbpcos") = 0
-                            'End If
-                            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbptot2") = FilaSelectLote.Item("pcos")
+                        'Else
+                        '    CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbpcos") = 0
+                        'End If
+                        CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbptot2") = FilaSelectLote.Item("pcos")
 
                         CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tblote") = grProductos.GetValue("iclot")
                         CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbfechaVenc") = grProductos.GetValue("icfven")

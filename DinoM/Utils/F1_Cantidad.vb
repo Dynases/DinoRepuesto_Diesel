@@ -11,6 +11,8 @@ Public Class F1_Cantidad
     Public idProducto As Integer = 0
     Public Precio As Integer = 0
 
+    Public tipo As Integer = 0
+
     Private Sub F_Cantidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         tbCantidad.Value = 0
@@ -18,6 +20,12 @@ Public Class F1_Cantidad
         lbStock.Text = "Stock Disponible = " + Str(Stock)
         lbProducto.Text = Producto
         tbCantidad.Focus()
+        If tipo = 1 Then
+            ReflectionLabel1.Text = "Tipo de Cambio"
+            Stock = 1000
+            lbProducto.Visible = False
+            lbStock.Visible = False
+        End If
     End Sub
 
     Private Sub tbCantidad_Enter(sender As Object, e As EventArgs) Handles tbCantidad.Enter
@@ -139,5 +147,9 @@ Public Class F1_Cantidad
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
         bandera = False
         Me.Close()
+    End Sub
+
+    Private Sub ReflectionLabel1_Click(sender As Object, e As EventArgs) Handles ReflectionLabel1.Click
+
     End Sub
 End Class

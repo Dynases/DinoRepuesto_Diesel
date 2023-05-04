@@ -20,6 +20,7 @@ Public Class Efecto
     Public CategoriaPrecio As Integer = 0
     Public IdProducto As Integer
     Public Precio As Double
+    Public tipo1 As Integer
 
     Private Sub Efecto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Maximized
@@ -48,7 +49,11 @@ Public Class Efecto
         frmAyuda.Producto = NameProducto
         frmAyuda.CategoriaPrecio = CategoriaPrecio
         frmAyuda.idProducto = IdProducto
+        If tipo1 = 1 Then
+            frmAyuda.tipo = 1
+        End If
         frmAyuda.ShowDialog()
+
         If frmAyuda.Bandera = True Then
 
             Cantidad = frmAyuda.Cantidad

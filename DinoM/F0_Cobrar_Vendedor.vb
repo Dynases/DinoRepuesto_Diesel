@@ -37,6 +37,7 @@ Public Class F0_Cobrar_Vendedor
     Dim _CodCliente As Integer = 0
 
     Dim Saldo As Double = 0
+    Dim Total As Double = 0
 
 #End Region
 #Region "METODOS PRIVADOS"
@@ -267,6 +268,7 @@ Public Class F0_Cobrar_Vendedor
             .Width = 120
             .TextAlignment = TextAlignment.Center
             .Visible = True
+            .FormatString = "dd/MM/yyyy"
         End With
 
         With gr_detalle.RootTable.Columns("tcfvencre")
@@ -274,6 +276,7 @@ Public Class F0_Cobrar_Vendedor
             .TextAlignment = TextAlignment.Center
             .Width = 160
             .Visible = True
+
         End With
         With gr_detalle.RootTable.Columns("totalfactura")
             .Caption = "Monto Total"
@@ -424,8 +427,8 @@ Public Class F0_Cobrar_Vendedor
             Dim ob As Boolean = gr_detalle.GetValue("Pagar")
 
             If (ob = True) Then
-                If Saldo > 0 Then
-                    If gr_detalle.GetValue("pendiente") < Saldo Then
+                If Saldo > 0 And Total > 0 Then
+                    If gr_detalle.GetValue("pendiente") < Saldo And gr_detalle.GetValue("pendiente") < Total Then
                         'pendiente, PagoAc, Pagar
                         tbTotalCobrado.Value = tbTotalCobrado.Value + gr_detalle.GetValue("pendiente")
                         tbSaldo.Value = tbSaldo.Value - gr_detalle.GetValue("pendiente")
@@ -433,13 +436,15 @@ Public Class F0_Cobrar_Vendedor
                         gr_detalle.SetValue("PagoAc", gr_detalle.GetValue("pendiente"))
                         gr_detalle.SetValue("pendiente", 0)
                         Saldo = Saldo - gr_detalle.GetValue("PagoAc")
+                        Total = Total - gr_detalle.GetValue("PagoAc")
 
                     Else
-                        tbTotalCobrado.Value = tbTotalCobrado.Value + Saldo
+                        tbTotalCobrado.Value = tbTotalCobrado.Value + Total
                         tbSaldo.Value = tbSaldo.Value - Saldo
-                        gr_detalle.SetValue("PagoAc", Saldo)
-                        gr_detalle.SetValue("pendiente", gr_detalle.GetValue("pendiente") - Saldo)
+                        gr_detalle.SetValue("PagoAc", Total)
+                        gr_detalle.SetValue("pendiente", gr_detalle.GetValue("pendiente") - Total)
                         Saldo = 0
+                        Total = 0
                     End If
                 Else
                     gr_detalle.SetValue("Pagar", False)
@@ -450,6 +455,7 @@ Public Class F0_Cobrar_Vendedor
                 tbTotalCobrado.Value = tbTotalCobrado.Value - gr_detalle.GetValue("PagoAc")
                 tbSaldo.Value = tbSaldo.Value + gr_detalle.GetValue("PagoAc")
                 Saldo = Saldo + gr_detalle.GetValue("PagoAc")
+                Total = Total + gr_detalle.GetValue("PagoAc")
                 gr_detalle.SetValue("pendiente", gr_detalle.GetValue("pendiente") + gr_detalle.GetValue("PagoAc"))
                     gr_detalle.SetValue("PagoAc", 0)
 
@@ -575,11 +581,11 @@ Public Class F0_Cobrar_Vendedor
             Return
         End If
 
-        Dim res As Boolean = L_fnGrabarCobranza(numi, tbFechaVenta.Value.ToString("yyyy/MM/dd"), tbCodigo.Text, "", dtCobro)
+        Dim res As Boolean = L_fnGrabarCobranza(numi, tbFechaVenta.Value.ToString("yyyy/MM/dd"), tbCodigo.Text, "", gi_userSuc, dtCobro)
 
 
 
-        _prGuardarCobro(dtCobro)
+
         If res Then
 
             Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
@@ -589,7 +595,7 @@ Public Class F0_Cobrar_Vendedor
                                       eToastPosition.TopCenter
                                       )
 
-
+            _prGuardarCobro(dtCobro)
             _Limpiar()
 
         Else
@@ -615,30 +621,32 @@ Public Class F0_Cobrar_Vendedor
 
     Private Sub ButtonX3_Click(sender As Object, e As EventArgs) Handles ButtonX3.Click
         Dim Saldo As Double = 0
-        Dim Total As Double = CDbl(tbMonto.Text)
+
         Dim dt As DataTable = CType(gr_detalle.DataSource, DataTable)
         If (dt.Rows.Count > 0) Then
             For i As Integer = 0 To dt.Rows.Count - 1 Step 1
                 If (CType(gr_detalle.DataSource, DataTable).Rows(i).Item("Pagar") = False) Then
-                    If CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") < Total And Total > 0 Then
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("Pagar") = True
-                        Total = Total - CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc") = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") = 0
-                        tbTotalCobrado.Value = tbTotalCobrado.Value + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc")
-                        tbSaldo.Value = 0
-                    Else
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("Pagar") = True
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc") = Total
-                        CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") - Total
-                        tbTotalCobrado.Value = tbTotalCobrado.Value + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc")
-                        Total = 0
-                        Saldo = Saldo = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
+                    If Total > 0 Then
+                        If CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") < Total Then
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("Pagar") = True
+                            Total = Total - CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc") = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") = 0
+                            tbTotalCobrado.Value = tbTotalCobrado.Value + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc")
+                            tbSaldo.Value = 0
+                        Else
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("Pagar") = True
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc") = Total
+                            CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente") - Total
+                            tbTotalCobrado.Value = tbTotalCobrado.Value + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("PagoAc")
+                            Total = 0
+                            Saldo = Saldo = CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
+                        End If
                     End If
                     If Total = 0 Then
                         Saldo = Saldo + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
                     End If
-                End If
+                    End If
             Next
         End If
         tbSaldo.Value = Saldo
@@ -692,7 +700,7 @@ Public Class F0_Cobrar_Vendedor
         Dim Notas As String = ""
         For i As Integer = 0 To dtCobro.Rows.Count - 1 Step 1
             Dim x As Integer = InStr(1, dtCobro.Rows(i).Item("tdnrodoc"), "-")
-            Notas = Notas + dtCobro.Rows(i).Item("NroDoc").ToString.Substring(0, x)
+            Notas = Notas + dtCobro.Rows(i).Item("tdnrodoc").ToString.Substring(0, x)
         Next
         _prAgregarCobro(0, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc)
         If TotalTarjeta > 0 Then
@@ -726,6 +734,7 @@ Public Class F0_Cobrar_Vendedor
 
             tbMonto.Text = CStr(CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio)))
             Saldo = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
+            Total = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
 
         Else
             ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)

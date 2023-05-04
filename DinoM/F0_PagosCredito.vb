@@ -1100,7 +1100,7 @@ Public Class F0_PagosCredito
         Dim numi As String = ""
         Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
         _prInterpretarDatosCobranza(dtCobro)
-        Dim res As Boolean = L_fnGrabarCobranza(numi, tbfecha.Value.ToString("yyyy/MM/dd"), tbcodVendedor.Text, tbObservacion.Text, dtCobro)
+        Dim res As Boolean = L_fnGrabarCobranza(numi, tbfecha.Value.ToString("yyyy/MM/dd"), tbcodVendedor.Text, tbObservacion.Text, gi_userSuc, dtCobro)
 
 
         If res Then
