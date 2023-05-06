@@ -48,7 +48,7 @@ Partial Class F1_MontoPagar
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.tbCostoEnvio = New DevComponents.Editors.DoubleInput()
-        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.lbCostoEnvio = New DevComponents.DotNetBar.LabelX()
         Me.lbCredito = New DevComponents.DotNetBar.LabelX()
         Me.tbFechaVenc = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
@@ -427,7 +427,7 @@ Partial Class F1_MontoPagar
         Me.GroupBox3.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox3.BackgroundImage = Global.DinoM.My.Resources.Resources.fondo1
         Me.GroupBox3.Controls.Add(Me.tbCostoEnvio)
-        Me.GroupBox3.Controls.Add(Me.LabelX2)
+        Me.GroupBox3.Controls.Add(Me.lbCostoEnvio)
         Me.GroupBox3.Controls.Add(Me.lbCredito)
         Me.GroupBox3.Controls.Add(Me.tbFechaVenc)
         Me.GroupBox3.Controls.Add(Me.LabelX1)
@@ -460,21 +460,21 @@ Partial Class F1_MontoPagar
         Me.tbCostoEnvio.TabIndex = 374
         Me.tbCostoEnvio.WatermarkAlignment = DevComponents.Editors.eTextAlignment.Right
         '
-        'LabelX2
+        'lbCostoEnvio
         '
-        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        Me.lbCostoEnvio.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX2.ForeColor = System.Drawing.Color.White
-        Me.LabelX2.Location = New System.Drawing.Point(10, 57)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX2.Size = New System.Drawing.Size(98, 18)
-        Me.LabelX2.TabIndex = 375
-        Me.LabelX2.Text = "Costo Envío:"
+        Me.lbCostoEnvio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.lbCostoEnvio.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbCostoEnvio.ForeColor = System.Drawing.Color.White
+        Me.lbCostoEnvio.Location = New System.Drawing.Point(10, 57)
+        Me.lbCostoEnvio.Name = "lbCostoEnvio"
+        Me.lbCostoEnvio.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.lbCostoEnvio.Size = New System.Drawing.Size(98, 18)
+        Me.lbCostoEnvio.TabIndex = 375
+        Me.lbCostoEnvio.Text = "Costo Envío:"
         '
         'lbCredito
         '
@@ -631,5 +631,5 @@ Partial Class F1_MontoPagar
     Friend WithEvents cbBanco As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents cbCambioDolar As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents tbCostoEnvio As DevComponents.Editors.DoubleInput
-    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents lbCostoEnvio As DevComponents.DotNetBar.LabelX
 End Class

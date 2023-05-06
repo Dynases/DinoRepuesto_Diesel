@@ -260,7 +260,7 @@ Public Class F0_Cobrar_Vendedor
         With gr_detalle.RootTable.Columns("cliente")
             .Width = 200
             .Visible = True
-            .Caption = "Cliente"
+            .Caption = "Razón Social"
         End With
 
         With gr_detalle.RootTable.Columns("tcfdoc")
@@ -310,7 +310,10 @@ Public Class F0_Cobrar_Vendedor
             .Caption = "Pagar!"
         End With
 
-
+        With gr_detalle.RootTable.Columns("pendiente2")
+            .Width = 100
+            .Visible = False
+        End With
 
         With gr_detalle
             .GroupByBoxVisible = False
@@ -355,8 +358,8 @@ Public Class F0_Cobrar_Vendedor
             listEstCeldas.Add(New Modelo.Celda("ydnumi,", False, "ID", 50))
             listEstCeldas.Add(New Modelo.Celda("codigo,", False, "ID", 50))
             listEstCeldas.Add(New Modelo.Celda("ydcod", True, "CODIGO", 80))
-            listEstCeldas.Add(New Modelo.Celda("ydrazonsocial", False, "RAZON SOCIAL", 180))
-            listEstCeldas.Add(New Modelo.Celda("yddesc", True, "NOMBRE", 350))
+            listEstCeldas.Add(New Modelo.Celda("ydrazonsocial", True, "RAZON SOCIAL", 200))
+            listEstCeldas.Add(New Modelo.Celda("yddesc", True, "NOMBRE CLIENTE", 200))
             listEstCeldas.Add(New Modelo.Celda("yddctnum", True, "N. Documento".ToUpper, 150))
             listEstCeldas.Add(New Modelo.Celda("yddirec", True, "DIRECCION", 220))
             listEstCeldas.Add(New Modelo.Celda("ydtelf1", True, "Telefono".ToUpper, 200))
@@ -600,7 +603,7 @@ Public Class F0_Cobrar_Vendedor
 
         Else
             Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
-            ToastNotification.Show(Me, "La Compra no pudo ser insertado".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+            ToastNotification.Show(Me, "Los Pagos no pudieron ser insertados".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
 
         End If
     End Sub
@@ -716,9 +719,17 @@ Public Class F0_Cobrar_Vendedor
         'ef.tipoVenta = IIf(swTipoVenta.Value = True, 1, 0)
         'ef.Cobrado = False
         'ef.CostoEnvio = tbEnvio.Text
+
+        ef.lbCostoEnvio.Visible = False
+        ef.tbCostoEnvio.Visible = False
+
+        ef.TotalVenta = Math.Round(tbTotalCobrar.Value, 2)
+
+
         ef.ShowDialog()
         Dim bandera As Boolean = False
         bandera = ef.Bandera
+
         If (bandera = True) Then
 
             TotalBs = ef.TotalBs
@@ -730,11 +741,14 @@ Public Class F0_Cobrar_Vendedor
             Banco = ef.cbBanco.Value
             Glosa = ef.tbGlosa.Text
             CostoEnvio = ef.tbCostoEnvio.Value
-            cambio = Convert.ToDouble(ef.txtCambio1.Text)
+
 
             tbMonto.Text = CStr(CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio)))
             Saldo = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
             Total = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
+
+            btnAutoChekear.PerformClick()
+            cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrar.Text)
 
         Else
             ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
