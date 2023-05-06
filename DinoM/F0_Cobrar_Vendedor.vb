@@ -479,7 +479,7 @@ Public Class F0_Cobrar_Vendedor
 
     Private Sub ButtonX2_Click(sender As Object, e As EventArgs) Handles ButtonX2.Click
         _modulo.Select()
-        _tab.Close()
+        Close()
     End Sub
 
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs)
@@ -619,7 +619,7 @@ Public Class F0_Cobrar_Vendedor
         Return True
     End Function
 
-    Private Sub ButtonX3_Click(sender As Object, e As EventArgs) Handles ButtonX3.Click
+    Private Sub btnAutoChekear_Click(sender As Object, e As EventArgs) Handles btnAutoChekear.Click
         Dim Saldo As Double = 0
 
         Dim dt As DataTable = CType(gr_detalle.DataSource, DataTable)
@@ -646,7 +646,7 @@ Public Class F0_Cobrar_Vendedor
                     If Total = 0 Then
                         Saldo = Saldo + CType(gr_detalle.DataSource, DataTable).Rows(i).Item("pendiente")
                     End If
-                    End If
+                End If
             Next
         End If
         tbSaldo.Value = Saldo

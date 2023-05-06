@@ -43,12 +43,13 @@ Partial Class F0_Cobrar_Vendedor
         Me.ButtonX2 = New DevComponents.DotNetBar.ButtonX()
         Me.tbFechaFactura = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.ButtonX3 = New DevComponents.DotNetBar.ButtonX()
+        Me.btnAutoChekear = New DevComponents.DotNetBar.ButtonX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
         Me.btnCobrar = New DevComponents.DotNetBar.ButtonX()
         Me.tbMonto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -91,7 +92,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.SuperTabPrincipal.ControlBox.Name = ""
         Me.SuperTabPrincipal.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabPrincipal.ControlBox.MenuBox, Me.SuperTabPrincipal.ControlBox.CloseBox})
         Me.SuperTabPrincipal.Margin = New System.Windows.Forms.Padding(2)
-        Me.SuperTabPrincipal.Size = New System.Drawing.Size(1028, 507)
+        Me.SuperTabPrincipal.Size = New System.Drawing.Size(1284, 691)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelBuscador, 0)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelRegistro, 0)
         '
@@ -103,7 +104,7 @@ Partial Class F0_Cobrar_Vendedor
         'SuperTabControlPanelRegistro
         '
         Me.SuperTabControlPanelRegistro.Margin = New System.Windows.Forms.Padding(2)
-        Me.SuperTabControlPanelRegistro.Size = New System.Drawing.Size(996, 507)
+        Me.SuperTabControlPanelRegistro.Size = New System.Drawing.Size(1252, 691)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelSuperior, 0)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelInferior, 0)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelPrincipal, 0)
@@ -113,7 +114,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.PanelSuperior.Controls.Add(Me.ButtonX2)
         Me.PanelSuperior.Controls.Add(Me.ButtonX1)
         Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(2)
-        Me.PanelSuperior.Size = New System.Drawing.Size(996, 72)
+        Me.PanelSuperior.Size = New System.Drawing.Size(1252, 72)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelSuperior.Style.BackColor1.Color = System.Drawing.Color.DarkSlateGray
         Me.PanelSuperior.Style.BackColor2.Color = System.Drawing.Color.DarkSlateGray
@@ -129,9 +130,9 @@ Partial Class F0_Cobrar_Vendedor
         '
         'PanelInferior
         '
-        Me.PanelInferior.Location = New System.Drawing.Point(0, 471)
+        Me.PanelInferior.Location = New System.Drawing.Point(0, 655)
         Me.PanelInferior.Margin = New System.Windows.Forms.Padding(2)
-        Me.PanelInferior.Size = New System.Drawing.Size(996, 36)
+        Me.PanelInferior.Size = New System.Drawing.Size(1252, 36)
         Me.PanelInferior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelInferior.Style.BackColor1.Color = System.Drawing.Color.DarkSlateGray
         Me.PanelInferior.Style.BackColor2.Color = System.Drawing.Color.DarkSlateGray
@@ -199,7 +200,7 @@ Partial Class F0_Cobrar_Vendedor
         'PanelToolBar2
         '
         Me.PanelToolBar2.Controls.Add(Me.btnCobrar)
-        Me.PanelToolBar2.Location = New System.Drawing.Point(572, 0)
+        Me.PanelToolBar2.Location = New System.Drawing.Point(828, 0)
         Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(2)
         Me.PanelToolBar2.Size = New System.Drawing.Size(160, 72)
         Me.PanelToolBar2.Controls.SetChildIndex(Me.btnImprimir, 0)
@@ -207,9 +208,10 @@ Partial Class F0_Cobrar_Vendedor
         '
         'MPanelSup
         '
+        Me.MPanelSup.Controls.Add(Me.LabelX5)
         Me.MPanelSup.Controls.Add(Me.tbMonto)
         Me.MPanelSup.Controls.Add(Me.LabelX3)
-        Me.MPanelSup.Controls.Add(Me.ButtonX3)
+        Me.MPanelSup.Controls.Add(Me.btnAutoChekear)
         Me.MPanelSup.Controls.Add(Me.tbFechaFactura)
         Me.MPanelSup.Controls.Add(Me.LabelX1)
         Me.MPanelSup.Controls.Add(Me.tbFechaVenta)
@@ -219,7 +221,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.MPanelSup.Controls.Add(Me.tbNombre)
         Me.MPanelSup.Controls.Add(Me.LabelX2)
         Me.MPanelSup.Margin = New System.Windows.Forms.Padding(2)
-        Me.MPanelSup.Size = New System.Drawing.Size(996, 184)
+        Me.MPanelSup.Size = New System.Drawing.Size(1252, 184)
         Me.MPanelSup.Controls.SetChildIndex(Me.PanelUsuario, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX2, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbNombre, 0)
@@ -229,15 +231,16 @@ Partial Class F0_Cobrar_Vendedor
         Me.MPanelSup.Controls.SetChildIndex(Me.tbFechaVenta, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX1, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbFechaFactura, 0)
-        Me.MPanelSup.Controls.SetChildIndex(Me.ButtonX3, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.btnAutoChekear, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX3, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbMonto, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.LabelX5, 0)
         '
         'PanelPrincipal
         '
         Me.PanelPrincipal.Controls.Add(Me.Panel1)
         Me.PanelPrincipal.Margin = New System.Windows.Forms.Padding(2)
-        Me.PanelPrincipal.Size = New System.Drawing.Size(996, 399)
+        Me.PanelPrincipal.Size = New System.Drawing.Size(1252, 583)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.MPanelSup, 0)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.Panel1, 0)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.GroupPanelBuscador, 0)
@@ -246,7 +249,7 @@ Partial Class F0_Cobrar_Vendedor
         '
         Me.GroupPanelBuscador.Controls.Add(Me.gr_detalle)
         Me.GroupPanelBuscador.Margin = New System.Windows.Forms.Padding(2)
-        Me.GroupPanelBuscador.Size = New System.Drawing.Size(996, 101)
+        Me.GroupPanelBuscador.Size = New System.Drawing.Size(1252, 285)
         '
         '
         '
@@ -287,7 +290,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.JGrM_Buscador.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.JGrM_Buscador.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.JGrM_Buscador.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
-        Me.JGrM_Buscador.Size = New System.Drawing.Size(990, 78)
+        Me.JGrM_Buscador.Size = New System.Drawing.Size(1246, 262)
         Me.JGrM_Buscador.Visible = False
         '
         'btnImprimir
@@ -310,10 +313,10 @@ Partial Class F0_Cobrar_Vendedor
         Me.Panel1.BackgroundImage = Global.DinoM.My.Resources.Resources.fondo1
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 285)
+        Me.Panel1.Location = New System.Drawing.Point(0, 469)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(996, 114)
+        Me.Panel1.Size = New System.Drawing.Size(1252, 114)
         Me.Panel1.TabIndex = 21
         '
         'Panel2
@@ -326,7 +329,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.Panel2.Controls.Add(Me.Label2)
         Me.Panel2.Controls.Add(Me.Label3)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(521, 0)
+        Me.Panel2.Location = New System.Drawing.Point(777, 0)
         Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(475, 114)
@@ -436,7 +439,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbFechaVenta.ButtonDropDown.Visible = True
         Me.tbFechaVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbFechaVenta.IsPopupCalendarOpen = False
-        Me.tbFechaVenta.Location = New System.Drawing.Point(200, 93)
+        Me.tbFechaVenta.Location = New System.Drawing.Point(200, 60)
         '
         '
         '
@@ -495,7 +498,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX4.Location = New System.Drawing.Point(100, 93)
+        Me.LabelX4.Location = New System.Drawing.Point(100, 60)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX4.Size = New System.Drawing.Size(95, 16)
@@ -515,7 +518,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbCodigo.Location = New System.Drawing.Point(200, 27)
         Me.tbCodigo.Name = "tbCodigo"
         Me.tbCodigo.PreventEnterBeep = True
-        Me.tbCodigo.Size = New System.Drawing.Size(43, 22)
+        Me.tbCodigo.Size = New System.Drawing.Size(53, 22)
         Me.tbCodigo.TabIndex = 238
         Me.tbCodigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -570,7 +573,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.gr_detalle.SelectedFormatStyle.BackColor = System.Drawing.Color.Transparent
         Me.gr_detalle.SelectedFormatStyle.ForeColor = System.Drawing.Color.Black
         Me.gr_detalle.SelectedInactiveFormatStyle.BackColor = System.Drawing.Color.Transparent
-        Me.gr_detalle.Size = New System.Drawing.Size(990, 78)
+        Me.gr_detalle.Size = New System.Drawing.Size(1246, 262)
         Me.gr_detalle.TabIndex = 2
         Me.gr_detalle.TableHeaderFormatStyle.FontBold = Janus.Windows.GridEX.TriState.[True]
         Me.gr_detalle.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
@@ -604,7 +607,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbFechaFactura.ButtonDropDown.Visible = True
         Me.tbFechaFactura.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbFechaFactura.IsPopupCalendarOpen = False
-        Me.tbFechaFactura.Location = New System.Drawing.Point(200, 59)
+        Me.tbFechaFactura.Location = New System.Drawing.Point(448, 61)
         '
         '
         '
@@ -638,6 +641,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbFechaFactura.Size = New System.Drawing.Size(120, 22)
         Me.tbFechaFactura.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.tbFechaFactura.TabIndex = 243
+        Me.tbFechaFactura.Visible = False
         '
         'LabelX1
         '
@@ -649,26 +653,27 @@ Partial Class F0_Cobrar_Vendedor
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(100, 59)
+        Me.LabelX1.Location = New System.Drawing.Point(348, 61)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX1.Size = New System.Drawing.Size(94, 16)
         Me.LabelX1.TabIndex = 242
         Me.LabelX1.Text = "Fecha Factura:"
+        Me.LabelX1.Visible = False
         '
-        'ButtonX3
+        'btnAutoChekear
         '
-        Me.ButtonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.ButtonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
-        Me.ButtonX3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonX3.Image = Global.DinoM.My.Resources.Resources.GRABACION_EXITOSA
-        Me.ButtonX3.ImageFixedSize = New System.Drawing.Size(40, 40)
-        Me.ButtonX3.Location = New System.Drawing.Point(575, 105)
-        Me.ButtonX3.Name = "ButtonX3"
-        Me.ButtonX3.Size = New System.Drawing.Size(150, 50)
-        Me.ButtonX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX3.TabIndex = 244
-        Me.ButtonX3.Text = "Auto Checkear"
+        Me.btnAutoChekear.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnAutoChekear.ColorTable = DevComponents.DotNetBar.eButtonColor.Office2007WithBackground
+        Me.btnAutoChekear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAutoChekear.Image = Global.DinoM.My.Resources.Resources.GRABACION_EXITOSA
+        Me.btnAutoChekear.ImageFixedSize = New System.Drawing.Size(40, 40)
+        Me.btnAutoChekear.Location = New System.Drawing.Point(575, 105)
+        Me.btnAutoChekear.Name = "btnAutoChekear"
+        Me.btnAutoChekear.Size = New System.Drawing.Size(150, 50)
+        Me.btnAutoChekear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.btnAutoChekear.TabIndex = 244
+        Me.btnAutoChekear.Text = "Auto Checkear"
         '
         'Timer1
         '
@@ -720,9 +725,10 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbMonto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.tbMonto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbMonto.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.tbMonto.Location = New System.Drawing.Point(200, 128)
+        Me.tbMonto.Location = New System.Drawing.Point(200, 94)
         Me.tbMonto.Name = "tbMonto"
         Me.tbMonto.PreventEnterBeep = True
+        Me.tbMonto.ReadOnly = True
         Me.tbMonto.Size = New System.Drawing.Size(120, 22)
         Me.tbMonto.TabIndex = 246
         Me.tbMonto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -737,24 +743,41 @@ Partial Class F0_Cobrar_Vendedor
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX3.Location = New System.Drawing.Point(143, 130)
+        Me.LabelX3.Location = New System.Drawing.Point(143, 96)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX3.Size = New System.Drawing.Size(47, 16)
         Me.LabelX3.TabIndex = 245
         Me.LabelX3.Text = "Monto:"
         '
+        'LabelX5
+        '
+        Me.LabelX5.AutoSize = True
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.Font = New System.Drawing.Font("Georgia", 7.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX5.Location = New System.Drawing.Point(198, 12)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX5.Size = New System.Drawing.Size(55, 13)
+        Me.LabelX5.TabIndex = 247
+        Me.LabelX5.Text = "Ctrl+Enter"
+        '
         'F0_Cobrar_Vendedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1028, 507)
+        Me.ClientSize = New System.Drawing.Size(1284, 691)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "F0_Cobrar_Vendedor"
         Me.Opacity = 0.99R
         Me.Text = "F0_Cobrar_Vendedor"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.WindowState = System.Windows.Forms.FormWindowState.Normal
         Me.Controls.SetChildIndex(Me.SuperTabPrincipal, 0)
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabPrincipal.ResumeLayout(False)
@@ -806,10 +829,11 @@ Partial Class F0_Cobrar_Vendedor
     Friend WithEvents ButtonX2 As DevComponents.DotNetBar.ButtonX
     Friend WithEvents tbFechaFactura As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents ButtonX3 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents btnAutoChekear As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Timer1 As Timer
     Friend WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnCobrar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents tbMonto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
 End Class

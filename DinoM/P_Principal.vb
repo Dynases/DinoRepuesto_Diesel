@@ -1021,24 +1021,28 @@ Public Class P_Principal
     End Sub
 
     Private Sub btnCredPagoClienteVendedor_Click(sender As Object, e As EventArgs) Handles btnCredPagoClienteVendedor.Click
-        SideNav1.IsMenuExpanded = False
-        Ventana.Select()
+        'SideNav1.IsMenuExpanded = False
+        'Ventana.Select()
+        'Dim frm As New F0_Cobrar_Vendedor
+        'frm._nameButton = btInvMovimiento.Name
+        'frm._modulo = FP_CREDITOS
+        'Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
+        'frm._tab = tab3
+        'Dim panel As Panel = P_Global._fnCrearPanelVentanas(frm)
+        'superTabControl3.SelectedTabIndex = superTabControl3.Tabs.Count - 1
+        'tab3.AttachedControl.Controls.Add(panel)
+        'frm.Show()
+        'tab3.Text = frm.Text
+        'tab3.Icon = frm.Icon
+
+
         Dim frm As New F0_Cobrar_Vendedor
         frm._nameButton = btInvMovimiento.Name
         frm._modulo = FP_CREDITOS
-        Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
-        frm._tab = tab3
-        Dim panel As Panel = P_Global._fnCrearPanelVentanas(frm)
-        superTabControl3.SelectedTabIndex = superTabControl3.Tabs.Count - 1
-        tab3.AttachedControl.Controls.Add(panel)
         frm.Show()
-        tab3.Text = frm.Text
-        tab3.Icon = frm.Icon
-    End Sub
-
-    Private Sub FP_VENTAS_Click(sender As Object, e As EventArgs) Handles FP_VENTAS.Click
 
     End Sub
+
 
     Private Sub btnCodControl_Click(sender As Object, e As EventArgs) Handles btnCodControl.Click
         'SideNav1.IsMenuExpanded = False
