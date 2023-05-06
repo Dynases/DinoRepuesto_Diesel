@@ -9,6 +9,8 @@ Imports System.Threading
 Imports System.Drawing.Text
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Data.OleDb
+Imports System.Data
 Public Class F0_MCompras
     Dim _Inter As Integer = 0
 
@@ -24,6 +26,7 @@ Public Class F0_MCompras
     Dim Lote As Boolean = False
     Public _detalleCompras As DataTable 'Almacena el detalle para insertar a la tabla TPA001 del BDDiconDinoEco
     Dim dtProductoGoblal As DataTable = Nothing
+    Public ProductosImport As New DataTable
 #End Region
 
 #Region "Metodos Privados"
@@ -41,6 +44,7 @@ Public Class F0_MCompras
         Me.Text = "COMPRAS"
         PanelDetalle.Height = 250
         MSuperTabControl.SelectedTabIndex = 0
+        btnImportar.Visible = False
     End Sub
     Public Sub _prValidarLote()
         Dim dt As DataTable = L_fnPorcUtilidad()
@@ -142,6 +146,7 @@ Public Class F0_MCompras
             _DesHabilitarProductos()
         End If
         btnAgregar.Visible = False
+        btnImportar.Visible = False
     End Sub
     Private Sub _prhabilitar()
         grCompra.Enabled = False
@@ -1267,6 +1272,7 @@ Public Class F0_MCompras
 
                 _prCargarCompra()
                 _Limpiar()
+                btnImportar.Visible = False
             Else
                 Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
                 ToastNotification.Show(Me, "La Compra no pudo ser insertado".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
@@ -1460,6 +1466,32 @@ Public Class F0_MCompras
         'P_Global.Visualizador.Show()
         'P_Global.Visualizador.BringToFront()
     End Sub
+    Private Sub ImportarExcel()
+        Try
+            Dim folder As String = ""
+            Dim doc As String = "Hoja1"
+            Dim openfile1 As OpenFileDialog = New OpenFileDialog()
+
+            If openfile1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+                folder = openfile1.FileName
+            End If
+
+            If True Then
+                Dim pathconn As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & folder & ";Extended Properties='Excel 12.0 Xml;HDR=Yes'"
+
+                Dim con As OleDbConnection = New OleDbConnection(pathconn)
+                Dim MyDataAdapter As OleDbDataAdapter = New OleDbDataAdapter("Select * from [" & doc & "$]", con)
+                con.Open()
+
+                MyDataAdapter.Fill(ProductosImport)
+                con.Close()
+
+            End If
+
+        Catch ex As Exception
+            MostrarMensajeError(ex.Message)
+        End Try
+    End Sub
 #End Region
 
 
@@ -1510,6 +1542,7 @@ Public Class F0_MCompras
         btnEliminar.Enabled = False
         btnGrabar.Enabled = True
         PanelNavegacion.Enabled = False
+        btnImportar.Visible = True
 
 
 
@@ -2547,6 +2580,14 @@ salirIf:
     Private Sub ButtonX1_Click(sender As Object, e As EventArgs) Handles ButtonX1.Click
         P_GenerarReporteCompra2()
     End Sub
+
+    Private Sub btnImportar_Click(sender As Object, e As EventArgs) Handles btnImportar.Click
+        ProductosImport.Clear()
+        ImportarExcel()
+
+    End Sub
+
+
 
 
 

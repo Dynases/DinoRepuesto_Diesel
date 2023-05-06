@@ -100,6 +100,7 @@ Partial Class F0_MCompras
         Me.btnTraspaso = New DevComponents.DotNetBar.ButtonX()
         Me.btnVerPagos = New DevComponents.DotNetBar.ButtonX()
         Me.ButtonX1 = New DevComponents.DotNetBar.ButtonX()
+        Me.btnImportar = New DevComponents.DotNetBar.ButtonX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -147,6 +148,7 @@ Partial Class F0_MCompras
         '
         'PanelSuperior
         '
+        Me.PanelSuperior.Controls.Add(Me.btnImportar)
         Me.PanelSuperior.Controls.Add(Me.ButtonX1)
         Me.PanelSuperior.Controls.Add(Me.btnVerPagos)
         Me.PanelSuperior.Controls.Add(Me.btnTraspaso)
@@ -169,6 +171,7 @@ Partial Class F0_MCompras
         Me.PanelSuperior.Controls.SetChildIndex(Me.btnVerPagos, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX1, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.MRlAccion, 0)
+        Me.PanelSuperior.Controls.SetChildIndex(Me.btnImportar, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.PictureBox1, 0)
         '
         'PanelInferior
@@ -306,7 +309,8 @@ Partial Class F0_MCompras
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(837, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(760, 0)
+        Me.PictureBox1.Size = New System.Drawing.Size(190, 72)
         '
         'PanelDetalle
         '
@@ -1696,7 +1700,7 @@ Partial Class F0_MCompras
         Me.ButtonX1.Dock = System.Windows.Forms.DockStyle.Right
         Me.ButtonX1.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources._14
-        Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(40, 40)
         Me.ButtonX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.ButtonX1.Location = New System.Drawing.Point(1030, 0)
         Me.ButtonX1.Name = "ButtonX1"
@@ -1705,6 +1709,24 @@ Partial Class F0_MCompras
         Me.ButtonX1.TabIndex = 16
         Me.ButtonX1.Text = "REVISION DE LLEGADA"
         Me.ButtonX1.TextColor = System.Drawing.Color.White
+        '
+        'btnImportar
+        '
+        Me.btnImportar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnImportar.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
+        Me.btnImportar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnImportar.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnImportar.Image = Global.DinoM.My.Resources.Resources.importar
+        Me.btnImportar.ImageFixedSize = New System.Drawing.Size(42, 42)
+        Me.btnImportar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.btnImportar.Location = New System.Drawing.Point(950, 0)
+        Me.btnImportar.Name = "btnImportar"
+        Me.btnImportar.Size = New System.Drawing.Size(80, 72)
+        Me.btnImportar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.btnImportar.TabIndex = 17
+        Me.btnImportar.Text = "IMPORTAR DATOS"
+        Me.btnImportar.TextColor = System.Drawing.Color.White
+        Me.btnImportar.Visible = False
         '
         'F0_MCompras
         '
@@ -1840,4 +1862,5 @@ Partial Class F0_MCompras
     Protected WithEvents btnTraspaso As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
     Protected WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
+    Protected WithEvents btnImportar As DevComponents.DotNetBar.ButtonX
 End Class

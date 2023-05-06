@@ -2055,6 +2055,7 @@
     <None Include="Resources\fondoazul1.png" />
     <None Include="Resources\Ideteca.PNG" />
     <Content Include="Resources\imageDefault.jpg" />
+    <None Include="Resources\importar.png" />
     <Content Include="Resources\logo.jpg" />
     <Content Include="Resources\man.png" />
     <None Include="Resources\pdf.png" />
