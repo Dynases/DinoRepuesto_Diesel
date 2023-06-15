@@ -2317,7 +2317,9 @@ salirIf:
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") * tbTipoCambio.Value
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") * tbTipoCambio.Value
             Next
-
+            tbSubtotalC.Value = tbSubtotalC.Value * tbTipoCambio.Value
+            tbMdesc.Value = 0
+            tbtotal.Value = tbSubtotalC.Value
         End If
     End Sub
     Private Sub ConvertirSus()
@@ -2328,6 +2330,9 @@ salirIf:
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") / tbTipoCambio.Value
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") / tbTipoCambio.Value
             Next
+            tbSubtotalC.Value = tbSubtotalC.Value / tbTipoCambio.Value
+            tbMdesc.Value = 0
+            tbtotal.Value = tbSubtotalC.Value
         End If
     End Sub
     Private Sub swMoneda_ValueChanged(sender As Object, e As EventArgs) Handles swMoneda.ValueChanged

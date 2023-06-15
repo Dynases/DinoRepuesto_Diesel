@@ -33,21 +33,34 @@ Public Class Pr_VentasDescuentos
 
     Public Sub _prInterpretarDatos(ByRef _dt As DataTable)
 
-        If (CheckTodosAlmacen.Checked) Then
-            _dt = L_prVentasDescuentosTodosAlmacenes(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"))
-        End If
+        'If (CheckTodosAlmacen.Checked) Then
+        _dt = L_prVentasDescuentosTodosAlmacenes(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), IIf(CheckUnAlmacen.Checked, tbAlmacen.Value, -1))
+        'End If
 
 
-        If (CheckUnAlmacen.Checked) Then
-            If (tbAlmacen.SelectedIndex >= 0) Then
-                _dt = L_prVentasDescuentosUnAlmacen(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), tbAlmacen.Value)
-            End If
-        End If
+        'If (CheckUnAlmacen.Checked) Then
+        '    If (tbAlmacen.SelectedIndex >= 0) Then
+        '        _dt = L_prVentasDescuentosUnAlmacen(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), tbAlmacen.Value)
+        '    End If
+        'End If
 
 
     End Sub
 
     Private Sub _prCargarReporte()
+        Dim usuario As String
+        If (gi_NumiVenedor > 0) Then
+
+            Dim dt As DataTable
+            dt = L_fnListarEmpleado()
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+                If (dt.Rows(i).Item("ydnumi") = gi_NumiVenedor) Then
+                    usuario = dt.Rows(i).Item("yddesc")
+                End If
+
+            Next
+
+        End If
         Dim _dt As New DataTable
         _prInterpretarDatos(_dt)
         If (_dt.Rows.Count > 0) Then
@@ -56,7 +69,7 @@ Public Class Pr_VentasDescuentos
             objrep.SetDataSource(_dt)
             Dim fechaI As String = tbFechaI.Value.ToString("dd/MM/yyyy")
             Dim fechaF As String = tbFechaF.Value.ToString("dd/MM/yyyy")
-            objrep.SetParameterValue("usuario", L_Usuario)
+            objrep.SetParameterValue("usuario", IIf(usuario = String.Empty, L_Usuario, usuario))
             objrep.SetParameterValue("fechaI", fechaI)
             objrep.SetParameterValue("fechaF", fechaF)
             MReportViewer.ReportSource = objrep

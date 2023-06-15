@@ -1267,6 +1267,14 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
+    Private Sub btnVentasMaestra_Click(sender As Object, e As EventArgs) Handles btVentasMaestra.Click
+        Dim frm As New F0_VentasMaestra
+        frm._nameButton = btVentasMaestra.Name
+        frm._modulo = FP_VENTAS
+
+        frm.Show()
+    End Sub
+
 
 
 

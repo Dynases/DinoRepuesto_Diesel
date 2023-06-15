@@ -1310,7 +1310,7 @@ Public Class F0_PagosCreditoCompraUlt
 
     Private Sub _prGuardarCobro()
 
-        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 4, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc)
+        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 4, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
         If TotalTarjeta > 0 Then
             L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 0, gi_userSuc, Banco, "", "CUENTA POR PAGAR", TotalTarjeta, Glosa)
         End If

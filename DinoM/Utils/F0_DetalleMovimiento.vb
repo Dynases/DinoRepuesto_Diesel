@@ -15,6 +15,8 @@ Public Class F0_DetalleMovimiento
     Public producto As String
     Public stock As Decimal
     Public codFab As String
+
+    Public TipoMovimiento As Integer = -1
     Public Sub IniciarTodod()
         CargarProductos()
         CargarProductosVentas()
@@ -239,12 +241,62 @@ Public Class F0_DetalleMovimiento
         If (f >= 0) Then
 
             If (Not ExisteProducto(grProductos.GetValue("Item"))) Then
-                Dim cantidad As Double = 0
-                Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
-                row.Item("Cantidad") = cantidad
-                'row.Item("AlmacenId") = gi_userSuc
-                CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
-                tbProducto.Focus()
+                'Dim cantidad As Double = 0
+                'Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
+                'row.Item("Cantidad") = cantidad
+                ''row.Item("AlmacenId") = gi_userSuc
+                'CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
+                'tbProducto.Focus()
+                Dim cantidad As Double
+                'cantidad = InputBox("Seleccione Cantidad del Producto " + grProductos.GetValue("yfcdprod1") + "  " + "   Stock = " + Str(grProductos.GetValue("Stock")))
+
+                'If (cantidad <= grProductos.GetValue("Stock")) Then
+
+                '    Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
+
+                '    row.Item("Cantidad") = cantidad
+                '    CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
+                '    tbProducto.Focus()
+                'Else
+                '    Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+                '    ToastNotification.Show(Me, "La cantidad es mayor al Stock".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                '    tbProducto.Focus()
+
+                'End If
+
+                Dim ef = New Efecto
+                ef.tipo = 7
+                ef.Stock = grProductos.GetValue("Stock")
+                ef.Cantidad = 0
+                ef.CategoriaPrecio = CategoriaPrecio
+                ef.IdProducto = grProductos.GetValue("Item")
+                ef.NameProducto = grProductos.GetValue("yfcdprod1")
+                ef.TipoMovimiento = TipoMovimiento
+                ef.ShowDialog()
+                Dim bandera As Boolean = False
+                bandera = ef.band
+                If (bandera = True) Then
+
+                    cantidad = ef.Cantidad
+                    If (cantidad > 0) Then
+                        Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
+
+                        row.Item("Cantidad") = cantidad
+                        If (CategoriaPrecio = 50) Then
+                            row.Item("yhprecio") = ef.Precio
+                        End If
+
+                        CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
+                        tbProducto.Focus()
+
+                    End If
+
+                Else
+                    ToastNotification.Show(Me, "Debe ingresar una cantidad Valida para insertar al detalle", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+
+
+                End If
             Else
                 Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
                 ToastNotification.Show(Me, "El producto ya existe en el detalle".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)

@@ -27,9 +27,13 @@ Public Class Pr_ReporteIngresoEgreso2
     End Sub
 
     Public Sub _prInterpretarDatos(ByRef _dt As DataTable)
+        If swCambios.Value = False Then
+            _dt = L_prIngresoEgresoSaldo21(tbFechaI.Value.ToString("dd/MM/yyyy"), tbFechaF.Value.ToString("dd/MM/yyyy"), cbSucursal.Value)
+        Else
+            _dt = L_prIngresoEgresoEntreFecha(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), 1, cbSucursal.Value)
 
+        End If
 
-        _dt = L_prIngresoEgresoEntreFecha(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), 1, cbSucursal.Value)
 
 
 

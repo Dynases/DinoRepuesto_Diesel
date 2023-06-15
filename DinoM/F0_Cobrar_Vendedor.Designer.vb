@@ -50,8 +50,14 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbMonto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.ButtonX3 = New DevComponents.DotNetBar.ButtonX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.tbGlosa = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.JGrM_Pagos = New Janus.Windows.GridEX.GridEX()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
+        Me.SuperTabControlPanelBuscador.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
@@ -74,6 +80,8 @@ Partial Class F0_Cobrar_Vendedor
         CType(Me.tbFechaVenta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gr_detalle, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbFechaFactura, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel1.SuspendLayout()
+        CType(Me.JGrM_Pagos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SuperTabPrincipal
@@ -93,13 +101,15 @@ Partial Class F0_Cobrar_Vendedor
         Me.SuperTabPrincipal.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabPrincipal.ControlBox.MenuBox, Me.SuperTabPrincipal.ControlBox.CloseBox})
         Me.SuperTabPrincipal.Margin = New System.Windows.Forms.Padding(2)
         Me.SuperTabPrincipal.Size = New System.Drawing.Size(1334, 691)
+        Me.SuperTabPrincipal.TabIndex = 1
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelBuscador, 0)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelRegistro, 0)
         '
         'SuperTabControlPanelBuscador
         '
+        Me.SuperTabControlPanelBuscador.Controls.Add(Me.GroupPanel1)
         Me.SuperTabControlPanelBuscador.Margin = New System.Windows.Forms.Padding(2)
-        Me.SuperTabControlPanelBuscador.Size = New System.Drawing.Size(826, 507)
+        Me.SuperTabControlPanelBuscador.Size = New System.Drawing.Size(1302, 691)
         '
         'SuperTabControlPanelRegistro
         '
@@ -113,6 +123,7 @@ Partial Class F0_Cobrar_Vendedor
         '
         Me.PanelSuperior.Controls.Add(Me.ButtonX2)
         Me.PanelSuperior.Controls.Add(Me.ButtonX1)
+        Me.PanelSuperior.Controls.Add(Me.ButtonX3)
         Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(2)
         Me.PanelSuperior.Size = New System.Drawing.Size(1302, 72)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
@@ -123,6 +134,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.PanelSuperior.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
         Me.PanelSuperior.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
         Me.PanelSuperior.Style.GradientAngle = 90
+        Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX3, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX1, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.ButtonX2, 0)
         Me.PanelSuperior.Controls.SetChildIndex(Me.PanelToolBar1, 0)
@@ -171,7 +183,7 @@ Partial Class F0_Cobrar_Vendedor
         '
         'PanelToolBar1
         '
-        Me.PanelToolBar1.Location = New System.Drawing.Point(160, 0)
+        Me.PanelToolBar1.Location = New System.Drawing.Point(240, 0)
         Me.PanelToolBar1.Margin = New System.Windows.Forms.Padding(2)
         Me.PanelToolBar1.Size = New System.Drawing.Size(196, 72)
         '
@@ -208,14 +220,14 @@ Partial Class F0_Cobrar_Vendedor
         '
         'MPanelSup
         '
+        Me.MPanelSup.Controls.Add(Me.tbGlosa)
+        Me.MPanelSup.Controls.Add(Me.LabelX6)
         Me.MPanelSup.Controls.Add(Me.LabelX5)
         Me.MPanelSup.Controls.Add(Me.tbMonto)
         Me.MPanelSup.Controls.Add(Me.LabelX3)
-        Me.MPanelSup.Controls.Add(Me.btnAutoChekear)
         Me.MPanelSup.Controls.Add(Me.tbFechaFactura)
         Me.MPanelSup.Controls.Add(Me.LabelX1)
         Me.MPanelSup.Controls.Add(Me.tbFechaVenta)
-        Me.MPanelSup.Controls.Add(Me.Bt1Generar)
         Me.MPanelSup.Controls.Add(Me.LabelX4)
         Me.MPanelSup.Controls.Add(Me.tbCodigo)
         Me.MPanelSup.Controls.Add(Me.tbNombre)
@@ -227,14 +239,14 @@ Partial Class F0_Cobrar_Vendedor
         Me.MPanelSup.Controls.SetChildIndex(Me.tbNombre, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbCodigo, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX4, 0)
-        Me.MPanelSup.Controls.SetChildIndex(Me.Bt1Generar, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbFechaVenta, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX1, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbFechaFactura, 0)
-        Me.MPanelSup.Controls.SetChildIndex(Me.btnAutoChekear, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX3, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbMonto, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX5, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.LabelX6, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.tbGlosa, 0)
         '
         'PanelPrincipal
         '
@@ -279,8 +291,8 @@ Partial Class F0_Cobrar_Vendedor
         '
         '
         Me.GroupPanelBuscador.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanelBuscador.Controls.SetChildIndex(Me.JGrM_Buscador, 0)
         Me.GroupPanelBuscador.Controls.SetChildIndex(Me.gr_detalle, 0)
+        Me.GroupPanelBuscador.Controls.SetChildIndex(Me.JGrM_Buscador, 0)
         '
         'JGrM_Buscador
         '
@@ -293,6 +305,19 @@ Partial Class F0_Cobrar_Vendedor
         Me.JGrM_Buscador.Size = New System.Drawing.Size(1296, 262)
         Me.JGrM_Buscador.Visible = False
         '
+        'PanelUsuario
+        '
+        Me.PanelUsuario.Controls.Add(Me.btnAutoChekear)
+        Me.PanelUsuario.Controls.Add(Me.Bt1Generar)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.Bt1Generar, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lblUsuario, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lblFecha, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lblHora, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.btnAutoChekear, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lbUsuario, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lbFecha, 0)
+        Me.PanelUsuario.Controls.SetChildIndex(Me.lbHora, 0)
+        '
         'btnImprimir
         '
         Me.btnImprimir.Dock = System.Windows.Forms.DockStyle.Right
@@ -301,6 +326,15 @@ Partial Class F0_Cobrar_Vendedor
         'btnUltimo
         '
         Me.btnUltimo.Margin = New System.Windows.Forms.Padding(2)
+        '
+        'btnSiguiente
+        '
+        '
+        'btnAnterior
+        '
+        '
+        'btnPrimero
+        '
         '
         'MPanelUserAct
         '
@@ -481,7 +515,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.Bt1Generar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Bt1Generar.Image = Global.DinoM.My.Resources.Resources.list
         Me.Bt1Generar.ImageFixedSize = New System.Drawing.Size(40, 40)
-        Me.Bt1Generar.Location = New System.Drawing.Point(405, 105)
+        Me.Bt1Generar.Location = New System.Drawing.Point(-73, 86)
         Me.Bt1Generar.Name = "Bt1Generar"
         Me.Bt1Generar.Size = New System.Drawing.Size(150, 50)
         Me.Bt1Generar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -519,6 +553,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbCodigo.Location = New System.Drawing.Point(200, 27)
         Me.tbCodigo.Name = "tbCodigo"
         Me.tbCodigo.PreventEnterBeep = True
+        Me.tbCodigo.ReadOnly = True
         Me.tbCodigo.Size = New System.Drawing.Size(53, 22)
         Me.tbCodigo.TabIndex = 238
         Me.tbCodigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -536,6 +571,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.tbNombre.Location = New System.Drawing.Point(259, 27)
         Me.tbNombre.Name = "tbNombre"
         Me.tbNombre.PreventEnterBeep = True
+        Me.tbNombre.ReadOnly = True
         Me.tbNombre.Size = New System.Drawing.Size(249, 22)
         Me.tbNombre.TabIndex = 236
         '
@@ -588,7 +624,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.ButtonX2.Image = Global.DinoM.My.Resources.Resources.atras1
         Me.ButtonX2.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.ButtonX2.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.ButtonX2.Location = New System.Drawing.Point(80, 0)
+        Me.ButtonX2.Location = New System.Drawing.Point(160, 0)
         Me.ButtonX2.Margin = New System.Windows.Forms.Padding(2)
         Me.ButtonX2.Name = "ButtonX2"
         Me.ButtonX2.Size = New System.Drawing.Size(80, 72)
@@ -669,7 +705,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.btnAutoChekear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAutoChekear.Image = Global.DinoM.My.Resources.Resources.GRABACION_EXITOSA
         Me.btnAutoChekear.ImageFixedSize = New System.Drawing.Size(40, 40)
-        Me.btnAutoChekear.Location = New System.Drawing.Point(575, 105)
+        Me.btnAutoChekear.Location = New System.Drawing.Point(97, 86)
         Me.btnAutoChekear.Name = "btnAutoChekear"
         Me.btnAutoChekear.Size = New System.Drawing.Size(150, 50)
         Me.btnAutoChekear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -691,7 +727,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources.save
         Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.ButtonX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.ButtonX1.Location = New System.Drawing.Point(0, 0)
+        Me.ButtonX1.Location = New System.Drawing.Point(80, 0)
         Me.ButtonX1.Margin = New System.Windows.Forms.Padding(2)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(80, 72)
@@ -769,6 +805,101 @@ Partial Class F0_Cobrar_Vendedor
         Me.LabelX5.TabIndex = 247
         Me.LabelX5.Text = "Ctrl+Enter"
         '
+        'ButtonX3
+        '
+        Me.ButtonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.ButtonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.Flat
+        Me.ButtonX3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.ButtonX3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonX3.Image = Global.DinoM.My.Resources.Resources.add2
+        Me.ButtonX3.ImageFixedSize = New System.Drawing.Size(48, 48)
+        Me.ButtonX3.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.ButtonX3.Location = New System.Drawing.Point(0, 0)
+        Me.ButtonX3.Margin = New System.Windows.Forms.Padding(2)
+        Me.ButtonX3.Name = "ButtonX3"
+        Me.ButtonX3.Size = New System.Drawing.Size(80, 72)
+        Me.ButtonX3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ButtonX3.TabIndex = 12
+        Me.ButtonX3.Text = "NUEVO"
+        Me.ButtonX3.TextColor = System.Drawing.Color.White
+        '
+        'LabelX6
+        '
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX6.Location = New System.Drawing.Point(115, 131)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX6.TabIndex = 248
+        Me.LabelX6.Text = "Glosa:"
+        Me.LabelX6.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'tbGlosa
+        '
+        '
+        '
+        '
+        Me.tbGlosa.Border.Class = "TextBoxBorder"
+        Me.tbGlosa.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbGlosa.Location = New System.Drawing.Point(200, 134)
+        Me.tbGlosa.Name = "tbGlosa"
+        Me.tbGlosa.PreventEnterBeep = True
+        Me.tbGlosa.Size = New System.Drawing.Size(250, 20)
+        Me.tbGlosa.TabIndex = 249
+        '
+        'GroupPanel1
+        '
+        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.JGrM_Pagos)
+        Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupPanel1.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel1.Name = "GroupPanel1"
+        Me.GroupPanel1.Size = New System.Drawing.Size(1302, 691)
+        '
+        '
+        '
+        Me.GroupPanel1.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel1.Style.BackColorGradientAngle = 90
+        Me.GroupPanel1.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel1.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderBottomWidth = 1
+        Me.GroupPanel1.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel1.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderLeftWidth = 1
+        Me.GroupPanel1.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderRightWidth = 1
+        Me.GroupPanel1.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel1.Style.BorderTopWidth = 1
+        Me.GroupPanel1.Style.CornerDiameter = 4
+        Me.GroupPanel1.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel1.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel1.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel1.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel1.TabIndex = 0
+        Me.GroupPanel1.Text = "B U S C A D O R"
+        '
+        'JGrM_Pagos
+        '
+        Me.JGrM_Pagos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.JGrM_Pagos.Location = New System.Drawing.Point(0, 0)
+        Me.JGrM_Pagos.Name = "JGrM_Pagos"
+        Me.JGrM_Pagos.Size = New System.Drawing.Size(1296, 670)
+        Me.JGrM_Pagos.TabIndex = 0
+        '
         'F0_Cobrar_Vendedor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -783,6 +914,7 @@ Partial Class F0_Cobrar_Vendedor
         Me.Controls.SetChildIndex(Me.SuperTabPrincipal, 0)
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabPrincipal.ResumeLayout(False)
+        Me.SuperTabControlPanelBuscador.ResumeLayout(False)
         Me.SuperTabControlPanelRegistro.ResumeLayout(False)
         Me.PanelSuperior.ResumeLayout(False)
         Me.PanelInferior.ResumeLayout(False)
@@ -809,6 +941,8 @@ Partial Class F0_Cobrar_Vendedor
         CType(Me.tbFechaVenta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gr_detalle, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbFechaFactura, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel1.ResumeLayout(False)
+        CType(Me.JGrM_Pagos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -838,4 +972,9 @@ Partial Class F0_Cobrar_Vendedor
     Friend WithEvents tbMonto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents ButtonX3 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents tbGlosa As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents JGrM_Pagos As Janus.Windows.GridEX.GridEX
 End Class

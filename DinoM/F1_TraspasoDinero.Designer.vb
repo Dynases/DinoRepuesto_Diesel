@@ -25,6 +25,7 @@ Partial Class F1_TraspasoDinero
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F1_TraspasoDinero))
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cbOrigen_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
@@ -37,6 +38,9 @@ Partial Class F1_TraspasoDinero
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.tbObservacion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.tbFecha = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.tbObservacion1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.cbOrigen = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -55,6 +59,7 @@ Partial Class F1_TraspasoDinero
         CType(Me.MEP, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbFecha, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cbOrigen, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SuperTabPrincipal
@@ -135,7 +140,13 @@ Partial Class F1_TraspasoDinero
         Me.BubbleBarUsuario.MouseOverTabColors.BorderColor = System.Drawing.SystemColors.Highlight
         Me.BubbleBarUsuario.SelectedTabColors.BorderColor = System.Drawing.Color.Black
         '
+        'btnSalir
+        '
+        '
         'btnGrabar
+        '
+        '
+        'btnNuevo
         '
         '
         'PanelToolBar2
@@ -144,6 +155,9 @@ Partial Class F1_TraspasoDinero
         '
         'MPanelSup
         '
+        Me.MPanelSup.Controls.Add(Me.cbOrigen)
+        Me.MPanelSup.Controls.Add(Me.LabelX7)
+        Me.MPanelSup.Controls.Add(Me.tbObservacion1)
         Me.MPanelSup.Controls.Add(Me.tbFecha)
         Me.MPanelSup.Controls.Add(Me.LabelX6)
         Me.MPanelSup.Controls.Add(Me.LabelX5)
@@ -168,6 +182,9 @@ Partial Class F1_TraspasoDinero
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX5, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.LabelX6, 0)
         Me.MPanelSup.Controls.SetChildIndex(Me.tbFecha, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.tbObservacion1, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.LabelX7, 0)
+        Me.MPanelSup.Controls.SetChildIndex(Me.cbOrigen, 0)
         '
         'PanelPrincipal
         '
@@ -218,6 +235,7 @@ Partial Class F1_TraspasoDinero
         'PanelUsuario
         '
         Me.PanelUsuario.Controls.Add(Me.tbObservacion)
+        Me.PanelUsuario.Location = New System.Drawing.Point(655, 28)
         Me.PanelUsuario.Controls.SetChildIndex(Me.lblUsuario, 0)
         Me.PanelUsuario.Controls.SetChildIndex(Me.lblFecha, 0)
         Me.PanelUsuario.Controls.SetChildIndex(Me.lblHora, 0)
@@ -225,6 +243,10 @@ Partial Class F1_TraspasoDinero
         Me.PanelUsuario.Controls.SetChildIndex(Me.lbFecha, 0)
         Me.PanelUsuario.Controls.SetChildIndex(Me.lbHora, 0)
         Me.PanelUsuario.Controls.SetChildIndex(Me.tbObservacion, 0)
+        '
+        'btnImprimir
+        '
+        Me.btnImprimir.Visible = False
         '
         'MPanelUserAct
         '
@@ -263,11 +285,11 @@ Partial Class F1_TraspasoDinero
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.LabelX3.Location = New System.Drawing.Point(11, 89)
+        Me.LabelX3.Location = New System.Drawing.Point(11, 77)
         Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(90, 23)
+        Me.LabelX3.Size = New System.Drawing.Size(90, 46)
         Me.LabelX3.TabIndex = 22
-        Me.LabelX3.Text = "SUCURSAL:"
+        Me.LabelX3.Text = "SUCURSAL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORIGEN:"
         '
         'LabelX4
         '
@@ -275,6 +297,7 @@ Partial Class F1_TraspasoDinero
         '
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
         Me.LabelX4.Location = New System.Drawing.Point(457, 48)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 23)
@@ -314,7 +337,7 @@ Partial Class F1_TraspasoDinero
         cbSucursal_DesignTimeLayout.LayoutString = resources.GetString("cbSucursal_DesignTimeLayout.LayoutString")
         Me.cbSucursal.DesignTimeLayout = cbSucursal_DesignTimeLayout
         Me.cbSucursal.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.cbSucursal.Location = New System.Drawing.Point(111, 90)
+        Me.cbSucursal.Location = New System.Drawing.Point(111, 137)
         Me.cbSucursal.Name = "cbSucursal"
         Me.cbSucursal.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.cbSucursal.Office2007CustomColor = System.Drawing.Color.DodgerBlue
@@ -332,7 +355,7 @@ Partial Class F1_TraspasoDinero
         Me.tbMonto.Border.Class = "TextBoxBorder"
         Me.tbMonto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.tbMonto.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.tbMonto.Location = New System.Drawing.Point(568, 51)
+        Me.tbMonto.Location = New System.Drawing.Point(571, 50)
         Me.tbMonto.Name = "tbMonto"
         Me.tbMonto.PreventEnterBeep = True
         Me.tbMonto.Size = New System.Drawing.Size(100, 21)
@@ -344,6 +367,7 @@ Partial Class F1_TraspasoDinero
         '
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
         Me.LabelX5.Location = New System.Drawing.Point(457, 19)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(75, 23)
@@ -356,9 +380,10 @@ Partial Class F1_TraspasoDinero
         '
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
         Me.LabelX6.Location = New System.Drawing.Point(457, 89)
         Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.Size = New System.Drawing.Size(100, 23)
+        Me.LabelX6.Size = New System.Drawing.Size(110, 23)
         Me.LabelX6.TabIndex = 389
         Me.LabelX6.Text = "OBSERVACION:"
         '
@@ -388,7 +413,7 @@ Partial Class F1_TraspasoDinero
         Me.tbFecha.ButtonDropDown.Visible = True
         Me.tbFecha.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
         Me.tbFecha.IsPopupCalendarOpen = False
-        Me.tbFecha.Location = New System.Drawing.Point(565, 20)
+        Me.tbFecha.Location = New System.Drawing.Point(571, 19)
         '
         '
         '
@@ -423,6 +448,47 @@ Partial Class F1_TraspasoDinero
         Me.tbFecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.tbFecha.TabIndex = 390
         '
+        'tbObservacion1
+        '
+        '
+        '
+        '
+        Me.tbObservacion1.Border.Class = "TextBoxBorder"
+        Me.tbObservacion1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbObservacion1.Location = New System.Drawing.Point(571, 91)
+        Me.tbObservacion1.Name = "tbObservacion1"
+        Me.tbObservacion1.PreventEnterBeep = True
+        Me.tbObservacion1.Size = New System.Drawing.Size(200, 20)
+        Me.tbObservacion1.TabIndex = 391
+        '
+        'cbOrigen
+        '
+        cbOrigen_DesignTimeLayout.LayoutString = resources.GetString("cbOrigen_DesignTimeLayout.LayoutString")
+        Me.cbOrigen.DesignTimeLayout = cbOrigen_DesignTimeLayout
+        Me.cbOrigen.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.cbOrigen.Location = New System.Drawing.Point(111, 88)
+        Me.cbOrigen.Name = "cbOrigen"
+        Me.cbOrigen.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbOrigen.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbOrigen.SelectedIndex = -1
+        Me.cbOrigen.SelectedItem = Nothing
+        Me.cbOrigen.Size = New System.Drawing.Size(300, 21)
+        Me.cbOrigen.TabIndex = 393
+        Me.cbOrigen.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'LabelX7
+        '
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX7.Location = New System.Drawing.Point(11, 126)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(90, 46)
+        Me.LabelX7.TabIndex = 392
+        Me.LabelX7.Text = "SUCURSAL" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "DESTINO:"
+        '
         'F1_TraspasoDinero
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -430,7 +496,9 @@ Partial Class F1_TraspasoDinero
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Name = "F1_TraspasoDinero"
+        Me.Opacity = 0.99R
         Me.Text = "F1_TraspasoDinero"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Controls.SetChildIndex(Me.SuperTabPrincipal, 0)
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabPrincipal.ResumeLayout(False)
@@ -453,6 +521,7 @@ Partial Class F1_TraspasoDinero
         CType(Me.MEP, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbFecha, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cbOrigen, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -469,4 +538,7 @@ Partial Class F1_TraspasoDinero
     Friend WithEvents cbSucursal As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents tbFecha As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents tbObservacion As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents tbObservacion1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents cbOrigen As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
 End Class

@@ -209,12 +209,12 @@ Public Class F0_KardexMovimiento
         f.Item(9) = 1
         f.Item(10) = 0
         f.Item(11) = tbCodigo.Text
-        f.Item(12) = tbproducto.Text
-        f.Item(13) = ""
-        f.Item(14) = 0
+        f.Item(13) = tbproducto.Text
+        f.Item(14) = ""
         f.Item(15) = 0
-        f.Item(16) = saldoInicial
-        f.Item(17) = ""
+        f.Item(16) = 0
+        f.Item(17) = saldoInicial
+        f.Item(18) = ""
 
         Dt1Kardex.Rows.InsertAt(f, 0)
 
@@ -426,6 +426,18 @@ Public Class F0_KardexMovimiento
             '.CellStyle.BackColor = Color.AliceBlue
         End With
         With grDatos.RootTable.Columns(13)
+            .Caption = "Producto"
+            .Key = "descProd"
+            .Width = 200
+            .WordWrap = True
+            .MaxLines = 3
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+            .CellStyle.FontSize = 9
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+            '.CellStyle.BackColor = Color.AliceBlue
+        End With
+        With grDatos.RootTable.Columns(14)
             .Caption = ""
             .Key = "desc2Prod"
             .Width = 0
@@ -435,7 +447,7 @@ Public Class F0_KardexMovimiento
             .Visible = False
             '.CellStyle.BackColor = Color.AliceBlue
         End With
-        With grDatos.RootTable.Columns(14)
+        With grDatos.RootTable.Columns(15)
             .Caption = "ENTRADA"
             .Key = "entrada"
             .Width = 80
@@ -446,7 +458,7 @@ Public Class F0_KardexMovimiento
             '.CellStyle.BackColor = Color.AliceBlue
             .FormatString = "0.00"
         End With
-        With grDatos.RootTable.Columns(15)
+        With grDatos.RootTable.Columns(16)
             .Caption = "SALIDA"
             .Key = "salida"
             .Width = 80
@@ -457,7 +469,7 @@ Public Class F0_KardexMovimiento
             '.CellStyle.BackColor = Color.AliceBlue
             .FormatString = "0.00"
         End With
-        With grDatos.RootTable.Columns(16)
+        With grDatos.RootTable.Columns(17)
             .Caption = "Saldo"
             .Key = "saldo"
             .Width = 80
@@ -468,7 +480,7 @@ Public Class F0_KardexMovimiento
             '.CellStyle.BackColor = Color.AliceBlue
             .FormatString = "0.00"
         End With
-        With grDatos.RootTable.Columns(17)
+        With grDatos.RootTable.Columns(18)
             .Caption = "Cliente"
             .Key = "cliente"
             .Width = 300
@@ -478,7 +490,7 @@ Public Class F0_KardexMovimiento
             .Visible = False
             .Position = 2
         End With
-        With grDatos.RootTable.Columns(18)
+        With grDatos.RootTable.Columns(19)
             .Caption = "Cliente"
             .Key = "cliente"
             .Width = 300

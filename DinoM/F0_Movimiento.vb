@@ -524,7 +524,7 @@ Public Class F0_Movimiento
 
         frm = New F0_DetalleMovimiento(dtProductoGoblal, dtMovimiento, dtname)
         frm.lbConcepto.Text = cbConcepto.Text
-
+        frm.TipoMovimiento = cbConcepto.Value
         frm.ShowDialog()
         Dim dtProd As DataTable = frm.dtDetalle
 
@@ -1868,6 +1868,10 @@ salirIf:
             _DesHabilitarProductos()
             FilaSelectLote = Nothing
         End If
+    End Sub
+
+    Private Sub grdetalle_FormattingRow(sender As Object, e As RowLoadEventArgs) Handles grdetalle.FormattingRow
+
     End Sub
 
 #End Region

@@ -68,7 +68,7 @@ Public Class F1_MontoPagar
             End If
 
         End If
-
+        swTipoVenta.Value = IIf(tipoVenta = 1, True, False)
     End Sub
     Private Sub _prCargarComboLibreria(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo, cod1 As String, cod2 As String)
         Dim dt As New DataTable

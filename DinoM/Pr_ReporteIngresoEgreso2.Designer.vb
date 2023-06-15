@@ -32,6 +32,9 @@ Partial Class Pr_ReporteIngresoEgreso2
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.swCambios = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.CLIENTESS1 = New DinoM.CLIENTESS()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -144,12 +147,16 @@ Partial Class Pr_ReporteIngresoEgreso2
         '
         'MReportViewer
         '
+        Me.MReportViewer.ActiveViewIndex = 0
+        Me.MReportViewer.ReportSource = Me.CLIENTESS1
         Me.MReportViewer.Size = New System.Drawing.Size(889, 625)
         Me.MReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         Me.MReportViewer.ToolPanelWidth = 200
         '
         'MGPFiltros
         '
+        Me.MGPFiltros.Controls.Add(Me.LabelX5)
+        Me.MGPFiltros.Controls.Add(Me.swCambios)
         Me.MGPFiltros.Controls.Add(Me.LabelX4)
         Me.MGPFiltros.Controls.Add(Me.LabelX3)
         Me.MGPFiltros.Controls.Add(Me.LabelX2)
@@ -350,6 +357,35 @@ Partial Class Pr_ReporteIngresoEgreso2
         Me.LabelX4.TabIndex = 390
         Me.LabelX4.Text = "Al:"
         '
+        'swCambios
+        '
+        '
+        '
+        '
+        Me.swCambios.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.swCambios.Location = New System.Drawing.Point(90, 259)
+        Me.swCambios.Name = "swCambios"
+        Me.swCambios.OffBackColor = System.Drawing.Color.Lime
+        Me.swCambios.OffText = "NO MOSTRAR"
+        Me.swCambios.OnBackColor = System.Drawing.Color.Gold
+        Me.swCambios.OnText = "MOSTRAR"
+        Me.swCambios.Size = New System.Drawing.Size(150, 22)
+        Me.swCambios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.swCambios.TabIndex = 391
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.Location = New System.Drawing.Point(18, 216)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(75, 23)
+        Me.LabelX5.TabIndex = 392
+        Me.LabelX5.Text = "Cambios:"
+        '
         'Pr_ReporteIngresoEgreso2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -391,4 +427,7 @@ Partial Class Pr_ReporteIngresoEgreso2
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents swCambios As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents CLIENTESS1 As CLIENTESS
 End Class

@@ -30,6 +30,8 @@ Partial Class F1_IngresosEgresos
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.tbRecibe = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.btnBuscarDevolución = New DevComponents.DotNetBar.ButtonX()
         Me.lbDevolucion = New DevComponents.DotNetBar.LabelX()
         Me.tbIdDevolucion = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -58,8 +60,6 @@ Partial Class F1_IngresosEgresos
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel10 = New System.Windows.Forms.Panel()
         Me.grDevolucion = New Janus.Windows.GridEX.GridEX()
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
-        Me.tbRecibe = New DevComponents.DotNetBar.Controls.TextBoxX()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelBuscador.SuspendLayout()
@@ -169,9 +169,6 @@ Partial Class F1_IngresosEgresos
         Me.BubbleBarUsuario.SelectedTabColors.BorderColor = System.Drawing.Color.Black
         '
         'btnSalir
-        '
-        '
-        'btnGrabar
         '
         '
         'btnModificar
@@ -346,6 +343,40 @@ Partial Class F1_IngresosEgresos
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(1310, 191)
         Me.Panel3.TabIndex = 227
+        '
+        'LabelX7
+        '
+        Me.LabelX7.AutoSize = True
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX7.Location = New System.Drawing.Point(550, 165)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX7.Size = New System.Drawing.Size(49, 16)
+        Me.LabelX7.TabIndex = 391
+        Me.LabelX7.Text = "Recibe:"
+        '
+        'tbRecibe
+        '
+        '
+        '
+        '
+        Me.tbRecibe.Border.Class = "TextBoxBorder"
+        Me.tbRecibe.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbRecibe.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbRecibe.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.tbRecibe.Location = New System.Drawing.Point(708, 163)
+        Me.tbRecibe.Name = "tbRecibe"
+        Me.tbRecibe.PreventEnterBeep = True
+        Me.tbRecibe.ReadOnly = True
+        Me.tbRecibe.Size = New System.Drawing.Size(200, 22)
+        Me.tbRecibe.TabIndex = 390
+        Me.tbRecibe.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'btnBuscarDevolución
         '
@@ -804,40 +835,6 @@ Partial Class F1_IngresosEgresos
         Me.grDevolucion.Size = New System.Drawing.Size(1316, 676)
         Me.grDevolucion.TabIndex = 0
         Me.grDevolucion.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
-        '
-        'LabelX7
-        '
-        Me.LabelX7.AutoSize = True
-        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX7.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX7.Location = New System.Drawing.Point(550, 165)
-        Me.LabelX7.Name = "LabelX7"
-        Me.LabelX7.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX7.Size = New System.Drawing.Size(49, 16)
-        Me.LabelX7.TabIndex = 391
-        Me.LabelX7.Text = "Recibe:"
-        '
-        'tbRecibe
-        '
-        '
-        '
-        '
-        Me.tbRecibe.Border.Class = "TextBoxBorder"
-        Me.tbRecibe.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.tbRecibe.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbRecibe.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.tbRecibe.Location = New System.Drawing.Point(708, 163)
-        Me.tbRecibe.Name = "tbRecibe"
-        Me.tbRecibe.PreventEnterBeep = True
-        Me.tbRecibe.ReadOnly = True
-        Me.tbRecibe.Size = New System.Drawing.Size(200, 22)
-        Me.tbRecibe.TabIndex = 390
-        Me.tbRecibe.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'F1_IngresosEgresos
         '

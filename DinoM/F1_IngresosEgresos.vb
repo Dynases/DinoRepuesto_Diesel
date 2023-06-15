@@ -261,9 +261,9 @@ Public Class F1_IngresosEgresos
             lbUsuario.Text = .GetValue("ieuact").ToString
 
             'diseño de la grilla para el Total
-            .TotalRow = InheritableBoolean.True
-            .TotalRowFormatStyle.BackColor = Color.Gold
-            .TotalRowPosition = TotalRowPosition.BottomFixed
+            '.TotalRow = InheritableBoolean.True
+            '.TotalRowFormatStyle.BackColor = Color.Gold
+            '.TotalRowPosition = TotalRowPosition.BottomFixed
         End With
         With JGrM_Buscador.RootTable.Columns("ieMonto")
             .AggregateFunction = AggregateFunction.Sum
@@ -277,7 +277,7 @@ Public Class F1_IngresosEgresos
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
         Dim res As Boolean = L_prIngresoEgresoGrabar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text, tbRecibe.Text,
                                                      gs_NroCaja, cbSucursal.Value, tbIdDevolucion.Text)
-        _prAgregarCobro(tbcodigo.Text, IIf(swTipo.Value = True, 5, 6), cbConcepto.Text, tbMonto.Text, 0, 0, 0, 0, "", gi_userSuc)
+        _prAgregarCobro(tbcodigo.Text, IIf(swTipo.Value = True, 5, 6), cbConcepto.Text, tbMonto.Text, 0, 0, 0, 0, "", gi_userSuc, 1)
         If res Then
             Modificado = False
             _PMOLimpiar()
@@ -542,7 +542,20 @@ Public Class F1_IngresosEgresos
         _TotalDecimal2 = CDbl(_TotalDecimal) * 100
 
         _Literal = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(_TotalLi) - CDbl(_TotalDecimal)) + "  " + IIf(_TotalDecimal2.Equals("0"), "00", _TotalDecimal2) + "/100 Bolivianos"
+        Dim Vendedor As String
+        If (gi_NumiVenedor > 0) Then
 
+            Dim dt As DataTable
+            dt = L_fnListarEmpleado()
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+                If (dt.Rows(i).Item("ydnumi") = gi_NumiVenedor) Then
+
+                    Vendedor = dt.Rows(i).Item("yddesc")
+                End If
+
+            Next
+
+        End If
 
         If swTipo.Value = True Then
             Dim objrep As New R_BoletaIngreso
@@ -552,13 +565,13 @@ Public Class F1_IngresosEgresos
             objrep.SetParameterValue("monto", tbMonto.Text)
             objrep.SetParameterValue("concepto", cbConcepto.Text)
             objrep.SetParameterValue("glosa", tbObservacion.Text)
-            objrep.SetParameterValue("descripcion", tbDescripcion.Text)
-            objrep.SetParameterValue("usuario", gs_user)
+            'objrep.SetParameterValue("descripcion", tbDescripcion.Text)
+            'objrep.SetParameterValue("usuario", gs_user)
             objrep.SetParameterValue("recibo", tbcodigo.Text)
             objrep.SetParameterValue("recibe", tbRecibe.Text)
             objrep.SetParameterValue("literal", _Literal)
             'objrep.SetParameterValue("logo", gb_UbiLogo)
-            objrep.SetParameterValue("usuario", gs_user)
+            objrep.SetParameterValue("usuario", IIf(Vendedor = String.Empty, gs_user, Vendedor))
 
 
             P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
@@ -573,12 +586,12 @@ Public Class F1_IngresosEgresos
             objrep.SetParameterValue("concepto", cbConcepto.Text)
             objrep.SetParameterValue("glosa", tbObservacion.Text)
             objrep.SetParameterValue("descripcion", tbDescripcion.Text)
-            objrep.SetParameterValue("usuario", gs_user)
+            'objrep.SetParameterValue("usuario", gs_user)
             objrep.SetParameterValue("recibo", tbcodigo.Text)
             objrep.SetParameterValue("recibe", tbRecibe.Text)
             objrep.SetParameterValue("literal", _Literal)
             'objrep.SetParameterValue("logo", gb_UbiLogo)
-            objrep.SetParameterValue("usuario", gs_user)
+            objrep.SetParameterValue("usuario", IIf(Vendedor = String.Empty, gs_user, Vendedor))
 
 
             P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
@@ -588,13 +601,6 @@ Public Class F1_IngresosEgresos
 
     End Sub
 
-    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
-
-    End Sub
-
-    Private Sub Panel3_Paint(sender As Object, e As PaintEventArgs) Handles Panel3.Paint
-
-    End Sub
 
 
 

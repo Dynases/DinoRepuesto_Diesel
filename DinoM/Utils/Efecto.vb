@@ -21,7 +21,7 @@ Public Class Efecto
     Public IdProducto As Integer
     Public Precio As Double
     Public tipo1 As Integer
-
+    Public TipoMovimiento As Integer = -1
     Private Sub Efecto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Maximized
 
@@ -36,6 +36,8 @@ Public Class Efecto
                 _prLogin()
             Case 7
                 _prMostrarAyudaVentaCantidad()
+                'Case 8
+                '    _ConfirmacionVenta()
         End Select
     End Sub
 
@@ -49,12 +51,13 @@ Public Class Efecto
         frmAyuda.Producto = NameProducto
         frmAyuda.CategoriaPrecio = CategoriaPrecio
         frmAyuda.idProducto = IdProducto
+        frmAyuda.TipoMovimiento = TipoMovimiento
         If tipo1 = 1 Then
             frmAyuda.tipo = 1
         End If
         frmAyuda.ShowDialog()
 
-        If frmAyuda.Bandera = True Then
+        If frmAyuda.bandera = True Then
 
             Cantidad = frmAyuda.Cantidad
             Precio = frmAyuda.Precio
@@ -72,6 +75,14 @@ Public Class Efecto
         Frm.ShowDialog()
         'Me.Close()
     End Sub
+
+    'Public Sub _ConfirmacionVenta()
+    '    Dim Frm As New ConfirmacionVenta
+    '    Me.Close()
+    '    Frm.ShowDialog()
+    '    band = Frm.bandera
+    '    'Me.Close()
+    'End Sub
     Sub _prMostrarFormAyuda()
 
         Dim frmAyuda As Modelo.ModeloAyuda
@@ -90,7 +101,7 @@ Public Class Efecto
             band = False
             Me.Close()
         End If
-       
+
     End Sub
     Sub _prMostrarMensaje()
         Dim blah As Bitmap = My.Resources.cuestion

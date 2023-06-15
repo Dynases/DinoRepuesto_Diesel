@@ -18,6 +18,10 @@ Imports System.Drawing.Printing
 Imports CrystalDecisions.Shared
 Imports Facturacion
 
+Imports Newtonsoft.Json
+Imports DinoM.DBApi
+
+
 Public Class F0_Ventas
 
 #Region "Variables Globales"
@@ -447,6 +451,7 @@ Public Class F0_Ventas
             _CodEmpleado = .GetValue("taven")
             tbVendedor.Text = .GetValue("vendedor")
             swTipoVenta.Value = .GetValue("tatven")
+
             _CodCliente = .GetValue("taclpr")
             tbCliente.Text = .GetValue("cliente")
             swMoneda.Value = .GetValue("tamon")
@@ -456,6 +461,9 @@ Public Class F0_Ventas
                 btnCobrar.Enabled = False
             Else
                 btnCobrar.Enabled = True
+            End If
+            If swTipoVenta.Value = False Then
+                btnCobrar.Enabled = False
             End If
             Dim proforma As Integer = IIf(IsDBNull(.GetValue("taproforma")), 0, .GetValue("taproforma"))
             If (proforma = 0) Then
@@ -1292,7 +1300,11 @@ Public Class F0_Ventas
         Return 1
     End Function
     Public Function _fnAccesible()
-        Return tbObservacion.ReadOnly = False
+        If btnNuevo.Enabled = False Then
+            Return True
+        Else
+            Return False
+        End If
     End Function
     Private Sub _HabilitarProductos(idCategoria As Integer)
         'GPanelProductos.Visible = True
@@ -1415,12 +1427,12 @@ Public Class F0_Ventas
         Dim montodesc As Double = tbMdesc.Value
         Dim pordesc As Double = ((montodesc * 100) / grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum))
         tbPdesc.Value = pordesc
-        tbSubTotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum)
+        tbSubTotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum) + tbEnvio.Value
         tbIce.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbptot2"), AggregateFunction.Sum) * (gi_ICE / 100)
         If (gb_FacturaIncluirICE = True) Then
-            tbtotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum) - montodesc + tbIce.Value
+            tbtotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum) - montodesc + tbIce.Value + tbEnvio.Value
         Else
-            tbtotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum) - montodesc
+            tbtotal.Value = grdetalle.GetTotal(grdetalle.RootTable.Columns("tbtotdesc"), AggregateFunction.Sum) - montodesc + tbEnvio.Value
         End If
 
 
@@ -1585,8 +1597,28 @@ Public Class F0_Ventas
 
 
     End Function
+
+    Private Function verificarPrecioCosto() As Boolean
+        For i = 0 To grdetalle.RowCount - 1 Step 1
+            If CType(grdetalle.DataSource, DataTable).Rows(i).Item("tbpcos") > CType(grdetalle.DataSource, DataTable).Rows(i).Item("tbpbas") Then
+
+                Dim img As Bitmap = New Bitmap(My.Resources.WARNING, 50, 50)
+                ToastNotification.Show(Me, "Existen productos con precio unitario por debajo del precio de costo".ToUpper,
+                                      img, 4500,
+                                      eToastGlowColor.Green,
+                                      eToastPosition.TopCenter
+                                      )
+                Return False
+            End If
+        Next
+        Return True
+    End Function
     Public Sub _GuardarNuevo()
 
+        If verificarPrecioCosto() Then
+        Else
+            Exit Sub
+        End If
         Dim mensaje As String = ""
         If (Not ValidarStock(mensaje)) Then
             Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
@@ -1708,7 +1740,8 @@ Public Class F0_Ventas
     Private Sub _prGuardarCobro()
         Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         _prModificarMontos(tabla)
-        _prAgregarCobro(tbCodigo.Text, 1, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc)
+        _prAgregarCobro(tbCodigo.Text, 1, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+
         If TotalTarjeta > 0 Then
             L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "VENTA", TotalTarjeta, Glosa)
         End If
@@ -4147,20 +4180,50 @@ salirIf:
         Else
             cbPrecio.SelectedIndex = 0
         End If
-        If verificarCredito(_CodCliente) Then
-            swTipoVenta.Value = False
-        Else
-            swTipoVenta.Value = True
-            swTipoVenta.IsReadOnly = True
+        If _fnAccesible() Then
+            If verificarCredito(_CodCliente) Then
+                swTipoVenta.Value = False
+                swTipoVenta.IsReadOnly = False
+            Else
+                swTipoVenta.Value = True
+                swTipoVenta.IsReadOnly = True
+            End If
         End If
 
     End Sub
 
-    Private Sub Panel4_Paint(sender As Object, e As PaintEventArgs) Handles Panel4.Paint
-
-    End Sub
+#End Region
 
 
 
+#Region "Facturacion"
+
+    'Public Shared Function ObtToken()
+    '    Dim api = New DBApi()
+
+    '    Dim Lenvio = New LoginEnvio()
+    '    Lenvio.email = "natuderm.srl@gmail.com"
+    '    Lenvio.password = "123456Veliz*"
+
+    '    Dim url = "https://di.sifac.nwc.com.bo/api/v2/login"
+
+    '    Dim headers = New List(Of Parametro) From {
+    '        New Parametro("Authorization", "bearer "),
+    '        New Parametro("Content-Type", "Accept:application/json; charset=utf-8")
+    '    }
+
+    '    Dim parametros = New List(Of Parametro)
+
+    '    Dim response = api.Post(url, headers, parametros, Lenvio)
+    '    Dim json = JsonConvert.SerializeObject(Lenvio)
+    '    ''MsgBox(json)
+
+    '    Dim result = JsonConvert.DeserializeObject(Of RespuestLogin)(response)
+    '    Dim Token As String
+    '    Dim json1 = JsonConvert.SerializeObject(response)
+    '    '' MsgBox(json1)
+    '    Token = result.data.access_token.ToString
+    '    Return Token
+    'End Function
 #End Region
 End Class

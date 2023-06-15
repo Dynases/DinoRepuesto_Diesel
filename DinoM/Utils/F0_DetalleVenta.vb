@@ -301,19 +301,19 @@ Public Class F0_DetalleVenta
 
         End With
         With grProductos.RootTable.Columns("Item")
-            .Width = 70
+            .Width = 120
             .Caption = "Item"
             .Visible = False
 
         End With
         With grProductos.RootTable.Columns("ItemNuevo")
-            .Width = 70
+            .Width = 110
             .Caption = "Item Nuevo"
             .Visible = True
 
         End With
         With grProductos.RootTable.Columns("ItemAntiguo")
-            .Width = 70
+            .Width = 110
             .Caption = "Item Antiguo"
             .Visible = True
 
@@ -331,9 +331,9 @@ Public Class F0_DetalleVenta
 
         End With
         With grProductos.RootTable.Columns("CodigoFabrica")
-            .Width = 100
+            .Width = 150
             .Caption = "CodigoFabrica"
-            .MaxLines = 100
+            .MaxLines = 2
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
@@ -342,16 +342,16 @@ Public Class F0_DetalleVenta
         With grProductos.RootTable.Columns("Medida")
             .Width = 90
             .Caption = "Medida"
-            .MaxLines = 100
+            .MaxLines = 2
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
             .AllowSort = False
         End With
         With grProductos.RootTable.Columns("Marca")
-            .Width = 90
+            .Width = 150
             .Caption = "Cod.Marca"
-            .MaxLines = 150
+            .MaxLines = 2
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
@@ -360,7 +360,7 @@ Public Class F0_DetalleVenta
         With grProductos.RootTable.Columns("Categoria")
             .Width = 100
             .Caption = "Categoria"
-            .MaxLines = 100
+            .MaxLines = 2
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = False
@@ -388,7 +388,7 @@ Public Class F0_DetalleVenta
                 .Width = 120
                 .Caption = dtname.Rows(0).Item("Grupo 1").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = True
+                .Visible = False
                 .AllowSort = False
             End With
             With grProductos.RootTable.Columns("grupo2")
@@ -410,7 +410,7 @@ Public Class F0_DetalleVenta
                 .Width = 120
                 .Caption = dtname.Rows(0).Item("Grupo 4").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = False
+                .Visible = True
                 .AllowSort = False
             End With
         Else
@@ -469,7 +469,7 @@ Public Class F0_DetalleVenta
         With grProductos.RootTable.Columns("UnidMin")
             .Width = 120
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-            .Visible = True
+            .Visible = False
             .Caption = "Unidad Min."
         End With
         With grProductos.RootTable.Columns("yhprecio")
@@ -495,7 +495,7 @@ Public Class F0_DetalleVenta
             .Caption = "Stock"
         End With
         With grProductos.RootTable.Columns("StockTodos")
-            .Width = 300
+            .Width = 150
             .FormatString = "0.00"
             .Visible = True
             .Caption = "Stock Todos"
@@ -529,6 +529,7 @@ Public Class F0_DetalleVenta
     Private Sub F0_DetalleVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         IniciarTodod()
+        btnActualizar.PerformClick()
         tbProducto.Focus()
     End Sub
 
@@ -1231,5 +1232,9 @@ Public Class F0_DetalleVenta
         Else
             grVentasCliente.ClearStructure()
         End If
+    End Sub
+
+    Private Sub GPanelProductos_Click(sender As Object, e As EventArgs) Handles GPanelProductos.Click
+
     End Sub
 End Class

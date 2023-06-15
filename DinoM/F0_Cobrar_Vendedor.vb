@@ -35,6 +35,7 @@ Public Class F0_Cobrar_Vendedor
     Public CostoEnvio As Double = 0
     Public cambio As Double = 0
     Dim _CodCliente As Integer = 0
+    Dim idPago As Integer = 0
 
     Dim Saldo As Double = 0
     Dim Total As Double = 0
@@ -52,13 +53,215 @@ Public Class F0_Cobrar_Vendedor
         Dim blah As New Bitmap(New Bitmap(My.Resources.cobro), 20, 20)
         Dim ico As Icon = Icon.FromHandle(blah.GetHicon())
         Me.Icon = ico
-        _prCargarTablaPagos2(-1)
+        '_prCargarTablaPagos2(-1)
         tbCodigo.ReadOnly = True
         tbNombre.ReadOnly = True
         tbFechaVenta.Value = Now.Date
         tbFechaFactura.Value = Now.Date
         tbCodigo.Focus()
+        InHabilitar()
+        _prCargarPagos()
+    End Sub
 
+    Private Sub Habilitar()
+        ButtonX3.Enabled = False
+        ButtonX1.Enabled = True
+        'tbCodigo.ReadOnly = False
+        tbFechaVenta.Enabled = True
+        'tbMonto.ReadOnly = True
+        'tbNombre.ReadOnly = False
+        tbGlosa.ReadOnly = False
+        btnAnterior.Enabled = False
+        btnPrimero.Enabled = False
+        btnSiguiente.Enabled = False
+        btnUltimo.Enabled = False
+    End Sub
+    Private Sub InHabilitar()
+        ButtonX3.Enabled = True
+        ButtonX1.Enabled = False
+        'tbCodigo.ReadOnly = True
+        tbFechaVenta.Enabled = False
+        'tbMonto.ReadOnly = True
+        'tbNombre.ReadOnly = True
+        tbGlosa.ReadOnly = True
+        btnAnterior.Enabled = True
+        btnPrimero.Enabled = True
+        btnSiguiente.Enabled = True
+        btnUltimo.Enabled = True
+    End Sub
+
+    Private Sub _prCargarPagos()
+        Dim dt As DataTable = TraerPagosTodos()
+
+        '_prCargarIconDelete(dt)
+        JGrM_Pagos.DataSource = dt
+        JGrM_Pagos.RetrieveStructure()
+        JGrM_Pagos.AlternatingColors = True
+
+        With JGrM_Pagos.RootTable.Columns("Id")
+            .Width = 100
+            .Visible = True
+            .Caption = "ID"
+        End With
+        With JGrM_Pagos.RootTable.Columns("pccli")
+            .Width = 100
+            .Visible = False
+        End With
+        With JGrM_Pagos.RootTable.Columns("ydcod")
+            .Width = 150
+            .Visible = True
+            .Caption = "COD. CLIENTE"
+        End With
+        With JGrM_Pagos.RootTable.Columns("yddesc")
+            .Width = 250
+            .Visible = True
+            .Caption = "CLIENTE"
+        End With
+        With JGrM_Pagos.RootTable.Columns("pcglo")
+            .Width = 250
+            .Visible = True
+            .Caption = "GLOSA"
+        End With
+        With JGrM_Pagos.RootTable.Columns("pcmon")
+            .Width = 250
+            .Visible = False
+        End With
+        With JGrM_Pagos.RootTable.Columns("pcfec")
+            .Width = 100
+            .Visible = True
+            .Caption = "FECHA"
+            .FormatString = "dd/MM/yyyy"
+        End With
+        With JGrM_Pagos.RootTable.Columns("pccob")
+            .Width = 250
+            .Visible = False
+        End With
+        With JGrM_Pagos.RootTable.Columns("pccdo")
+            .Width = 250
+            .Visible = False
+        End With
+        With JGrM_Pagos.RootTable.Columns("pcsal")
+            .Width = 250
+            .Visible = False
+        End With
+        With JGrM_Pagos
+            .ColumnAutoResize = True
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+            .VisualStyle = VisualStyle.Office2007
+
+
+            .VisualStyle = VisualStyle.Office2007
+
+
+            '.RowHeaders = InheritableBoolean.True
+            '.TotalRow = InheritableBoolean.True
+            '.TotalRowFormatStyle.BackColor = Color.Gold
+            '.TotalRowPosition = TotalRowPosition.BottomFixed
+        End With
+    End Sub
+
+    Private Sub cargarDetallePagos(numi As Integer)
+        Dim dt As DataTable = TraerPagos(numi)
+
+        '_prCargarIconDelete(dt)
+        gr_detalle.DataSource = dt
+        gr_detalle.RetrieveStructure()
+        gr_detalle.AlternatingColors = True
+
+        With gr_detalle.RootTable.Columns("tcnumi")
+            .Width = 100
+            .Visible = False
+            .Caption = "ID"
+        End With
+        With gr_detalle.RootTable.Columns("NroDoc")
+            .Width = 150
+            .Visible = True
+            .Caption = "NRO. DOC."
+        End With
+        With gr_detalle.RootTable.Columns("factura")
+            .Width = 150
+            .Visible = True
+            .Caption = "FACTURA"
+        End With
+        With gr_detalle.RootTable.Columns("tctv1numi")
+            .Width = 250
+            .Visible = False
+        End With
+        With gr_detalle.RootTable.Columns("tcty4clie")
+            .Width = 250
+            .Visible = False
+        End With
+        With gr_detalle.RootTable.Columns("cliente")
+            .Width = 250
+            .Visible = True
+            .Caption = "CLIENTE"
+        End With
+        With gr_detalle.RootTable.Columns("tcty4vend")
+            .Width = 100
+            .Visible = False
+        End With
+        With gr_detalle.RootTable.Columns("vendedor")
+            .Width = 250
+            .Visible = True
+            .Caption = "VENDEDOR"
+        End With
+        With gr_detalle.RootTable.Columns("tcfdoc")
+            .Width = 100
+            .Visible = True
+            .Caption = "FECHA"
+            .FormatString = "dd/MM/yyyy"
+        End With
+        With gr_detalle.RootTable.Columns("tcfvencre")
+            .Width = 100
+            .Visible = True
+            .Caption = "VENCIMIENTO"
+            .FormatString = "dd/MM/yyyy"
+        End With
+        With gr_detalle.RootTable.Columns("totalfactura")
+            .Width = 100
+            .Visible = True
+            .Caption = "TOTAL"
+            .FormatString = "0.00"
+        End With
+        With gr_detalle.RootTable.Columns("pendiente")
+            .Width = 100
+            .Visible = True
+            .Caption = "PENDIENETE"
+            .FormatString = "0.00"
+        End With
+        With gr_detalle.RootTable.Columns("pagoAc")
+            .Width = 100
+            .Visible = True
+            .Caption = "PAGO AC."
+            .FormatString = "0.00"
+        End With
+        With gr_detalle.RootTable.Columns("Pagar")
+            .Width = 100
+            .Visible = True
+            .Caption = "Pagar"
+        End With
+        With gr_detalle.RootTable.Columns("pendiente2")
+            .Width = 100
+            .Visible = False
+            .Caption = "PAGO AC."
+            .FormatString = "0.00"
+        End With
+        With gr_detalle
+            .ColumnAutoResize = True
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+            .VisualStyle = VisualStyle.Office2007
+
+
+            .VisualStyle = VisualStyle.Office2007
+
+
+            '.RowHeaders = InheritableBoolean.True
+            '.TotalRow = InheritableBoolean.True
+            '.TotalRowFormatStyle.BackColor = Color.Gold
+            '.TotalRowPosition = TotalRowPosition.BottomFixed
+        End With
     End Sub
     Private Sub _prCargarTablaPagos2(_numi As Integer)
 
@@ -402,6 +605,21 @@ Public Class F0_Cobrar_Vendedor
         'End If
     End Sub
 
+    Private Sub _prMostrarRegistro(N As Integer)
+        With JGrM_Pagos
+            idPago = .GetValue("Id")
+            tbCodigo.Text = .GetValue("ydcod")
+            tbNombre.Text = .GetValue("yddesc")
+            tbMonto.Text = .GetValue("pcmon")
+            tbGlosa.Text = .GetValue("pcglo")
+            tbTotalCobrado.Text = .GetValue("pccdo")
+            tbTotalCobrar.Text = .GetValue("pccob")
+            tbSaldo.Text = .GetValue("pcsal")
+        End With
+        cargarDetallePagos(idPago)
+        LblPaginacion.Text = Str(JGrM_Pagos.Row + 1) + "/" + JGrM_Pagos.RowCount.ToString
+    End Sub
+
     Private Sub Bt1Generar_Click(sender As Object, e As EventArgs) Handles Bt1Generar.Click
         If (tbCodigo.Text <> String.Empty) Then
             tbSaldo.Value = 0
@@ -410,10 +628,20 @@ Public Class F0_Cobrar_Vendedor
             _prCargarTablaPagos(tbCodigo.Text)
         End If
     End Sub
-
+    Private Function Accesible() As Boolean
+        If ButtonX3.Enabled = False Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
     Private Sub gr_detalle_EditingCell(sender As Object, e As EditingCellEventArgs) Handles gr_detalle.EditingCell
-        If (e.Column.Index = gr_detalle.RootTable.Columns("Pagar").Index) Then
-            e.Cancel = False
+        If Accesible() Then
+            If (e.Column.Index = gr_detalle.RootTable.Columns("Pagar").Index) Then
+                e.Cancel = False
+            Else
+                e.Cancel = True
+            End If
         Else
             e.Cancel = True
         End If
@@ -600,6 +828,8 @@ Public Class F0_Cobrar_Vendedor
 
             _prGuardarCobro(dtCobro)
             _Limpiar()
+            _prCargarPagos()
+            InHabilitar()
 
         Else
             Dim img As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
@@ -705,7 +935,10 @@ Public Class F0_Cobrar_Vendedor
             Dim x As Integer = InStr(1, dtCobro.Rows(i).Item("tdnrodoc"), "-")
             Notas = Notas + dtCobro.Rows(i).Item("tdnrodoc").ToString.Substring(0, x)
         Next
-        _prAgregarCobro(0, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc)
+        Dim id As DataTable = _GuadarCobroCliente(_CodCliente, tbGlosa.Text, CDbl(tbMonto.Text), tbFechaVenta.Value.ToString("dd/MM/yyyy"), CDbl(tbTotalCobrar.Text), CDbl(tbTotalCobrado.Text), CDbl(tbSaldo.Text), CType(gr_detalle.DataSource, DataTable))
+        Dim numi As Integer = id.Rows(0).Item("numi")
+        _prAgregarCobro(numi, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+
         If TotalTarjeta > 0 Then
             L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "CUENTA POR COBRAR", TotalTarjeta, Glosa)
         End If
@@ -724,7 +957,7 @@ Public Class F0_Cobrar_Vendedor
         ef.tbCostoEnvio.Visible = False
 
         ef.TotalVenta = Math.Round(tbTotalCobrar.Value, 2)
-
+        ef.tipoVenta = 0
 
         ef.ShowDialog()
         Dim bandera As Boolean = False
@@ -748,7 +981,7 @@ Public Class F0_Cobrar_Vendedor
             Total = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
 
             btnAutoChekear.PerformClick()
-            cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrar.Text)
+            cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrado.Text)
 
         Else
             ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
@@ -756,6 +989,118 @@ Public Class F0_Cobrar_Vendedor
         End If
 
     End Sub
+
+    Private Sub ButtonX3_Click(sender As Object, e As EventArgs) Handles ButtonX3.Click
+        _Limpiar()
+        Habilitar()
+    End Sub
+
+    Private Sub tbGlosa_TextChanged(sender As Object, e As EventArgs) Handles tbGlosa.TextChanged
+
+    End Sub
+
+    Private Sub JGrM_Pagos_SelectionChanged(sender As Object, e As EventArgs) Handles JGrM_Pagos.SelectionChanged
+        If (JGrM_Pagos.RowCount >= 0 And JGrM_Pagos.Row >= 0) Then
+
+            _prMostrarRegistro(JGrM_Pagos.Row)
+        End If
+    End Sub
+
+    Private Sub btnUltimo_Click(sender As Object, e As EventArgs) Handles btnUltimo.Click
+        Dim _pos As Integer = JGrM_Pagos.Row
+        If JGrM_Pagos.RowCount > 0 Then
+            _pos = JGrM_Pagos.RowCount - 1
+            ''  _prMostrarRegistro(_pos)
+            JGrM_Pagos.Row = _pos
+        End If
+    End Sub
+
+    Private Sub btnSiguiente_Click(sender As Object, e As EventArgs) Handles btnSiguiente.Click
+        Dim _pos As Integer = JGrM_Pagos.Row
+        If _pos < JGrM_Pagos.RowCount - 1 And _pos >= 0 Then
+            _pos = JGrM_Pagos.Row + 1
+            '' _prMostrarRegistro(_pos)
+            JGrM_Pagos.Row = _pos
+        End If
+    End Sub
+
+    Private Sub btnAnterior_Click(sender As Object, e As EventArgs) Handles btnAnterior.Click
+        Dim _MPos As Integer = JGrM_Pagos.Row
+        If _MPos > 0 And JGrM_Pagos.RowCount > 0 Then
+            _MPos = _MPos - 1
+            ''  _prMostrarRegistro(_MPos)
+            JGrM_Pagos.Row = _MPos
+        End If
+    End Sub
+
+    Private Sub btnPrimero_Click(sender As Object, e As EventArgs) Handles btnPrimero.Click
+        Dim _MPos As Integer
+        If JGrM_Pagos.RowCount > 0 Then
+            _MPos = 0
+            ''   _prMostrarRegistro(_MPos)
+            JGrM_Pagos.Row = _MPos
+        End If
+    End Sub
+
+    Private Sub GenerarReporte()
+        Dim dt As DataTable = CType(gr_detalle.DataSource, DataTable)
+        Dim _TotalLi As Decimal
+        Dim _Literal, _TotalDecimal, _TotalDecimal2 As String
+
+        _TotalLi = CDbl(tbMonto.Text)
+        _TotalDecimal = _TotalLi - Math.Truncate(_TotalLi)
+        _TotalDecimal2 = CDbl(_TotalDecimal) * 100
+
+
+        _Literal = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(_TotalLi) - CDbl(_TotalDecimal)) + "  " + IIf(_TotalDecimal2.Equals("0"), "00", _TotalDecimal2) + "/100 Bolivianos"
+
+        Dim usuario As String
+
+        If (gi_NumiVenedor > 0) Then
+
+            Dim dt2 As DataTable
+            dt2 = L_fnListarEmpleado()
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+                If (dt2.Rows(i).Item("ydnumi") = gi_NumiVenedor) Then
+
+                    usuario = dt2.Rows(i).Item("yddesc")
+                End If
+
+            Next
+
+        End If
+        P_Global.Visualizador = New Visualizador
+
+        Dim objrep As New R_NotaPagoCredito
+        '' GenerarNro(_dt)
+        ''objrep.SetDataSource(Dt1Kardex)
+
+        objrep.SetDataSource(dt)
+        objrep.SetParameterValue("literal", _Literal)
+
+        objrep.SetParameterValue("glosa", tbGlosa.Text)
+        objrep.SetParameterValue("fecha", tbFechaVenta.Value.ToString("dd/MM/yyyy"))
+        objrep.SetParameterValue("numi", idPago)
+        objrep.SetParameterValue("usuario", IIf(usuario = String.Empty, gs_user, usuario))
+        P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+        P_Global.Visualizador.ShowDialog() 'Comentar
+        P_Global.Visualizador.BringToFront() 'Comentar
+
+    End Sub
+
+    Private Sub JGrM_Pagos_EditingCell(sender As Object, e As EditingCellEventArgs) Handles JGrM_Pagos.EditingCell
+        e.Cancel = True
+    End Sub
+
+    Private Sub JGrM_Pagos_DoubleClick(sender As Object, e As EventArgs) Handles JGrM_Pagos.DoubleClick
+        SuperTabPrincipal.SelectedTabIndex = 0
+    End Sub
+
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        GenerarReporte()
+    End Sub
+
+
 
 
 

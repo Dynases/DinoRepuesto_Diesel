@@ -166,7 +166,7 @@ Partial Class F0_DetalleMovimiento
         Me.LabelX1.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX1.Size = New System.Drawing.Size(440, 23)
         Me.LabelX1.TabIndex = 374
-        Me.LabelX1.Text = "Para actualizar el Stock debe precionar el boton Actualizar"
+        Me.LabelX1.Text = "Para actualizar el Stock debe presionar el boton Actualizar"
         Me.LabelX1.Visible = False
         '
         'ButtonX1

@@ -21,39 +21,39 @@ Public Class Pr_ReposrteVentasFiltrado
     End Sub
 
     Private Function _prInterpretarDatos() As DataTable
-        Dim dt As DataTable
-        If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = True And cbProvTodos.Checked = True Then
-            dt = L_prVentasTodos(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"))
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = True And cbProvTodos.Checked = True Then
-            dt = L_prVentasAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbPrograma.Value)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = False And cbProvTodos.Checked = True Then
-            dt = L_prVentasMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), marca)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = False And cbProvTodos.Checked = True Then
-            dt = L_prVentasAlmacenMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbPrograma.Value, marca)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = True And cbProvTodos.Checked = False Then
-            dt = L_prVentasProveedor(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = True And cbProvTodos.Checked = False Then
-            dt = L_prVentasProveedorAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value, cbPrograma.Value)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = False And cbProvTodos.Checked = False Then
-            dt = L_prVentasProveedorMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value, marca)
-            Return dt
-        End If
-        If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = False And cbProvTodos.Checked = False Then
-            dt = L_prVentasProveedorMarcaAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value, marca, cbPrograma.Value)
-            Return dt
-        End If
+        'Dim dt As DataTable
+        'If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = True And cbProvTodos.Checked = True Then
+        '    dt = L_prVentasTodos(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"))
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = True And cbProvTodos.Checked = True Then
+        '    dt = L_prVentasAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbPrograma.Value)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = False And cbProvTodos.Checked = True Then
+        '    dt = L_prVentasMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), marca)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = False And cbProvTodos.Checked = True Then
+        '    dt = L_prVentasAlmacenMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbPrograma.Value, marca)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = True And cbProvTodos.Checked = False Then
+        '    dt = L_prVentasProveedor(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = True And cbProvTodos.Checked = False Then
+        '    dt = L_prVentasProveedorAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value, cbPrograma.Value)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = True And cbMarcaTodos.Checked = False And cbProvTodos.Checked = False Then
+        '    dt = L_prVentasProveedorMarca(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), cbProv.Value, marca)
+        '    Return dt
+        'End If
+        'If cbAlmacenTodos.Checked = False And cbMarcaTodos.Checked = False And cbProvTodos.Checked = False Then
+        Dim dt As DataTable = L_prVentasProveedorMarcaAlmacen(tbFechaI.Value.ToString("yyyy-MM-dd"), tbFechaF.Value.ToString("yyyy-MM-dd"), IIf(cbProvUno.Checked, cbProv.Value, -1), IIf(cbMarcaUno.Checked, marca, -1), IIf(cbAlmacenUno.Checked, cbPrograma.Value, -1))
+        Return dt
+        'End If
     End Function
     Private Sub _prCargarComboProveedores(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
         Dim dt As New DataTable
@@ -64,7 +64,7 @@ Public Class Pr_ReposrteVentasFiltrado
             .DropDownList.Columns("ydcod").Caption = "COD"
             .DropDownList.Columns.Add("yddesc").Width = 500
             .DropDownList.Columns("yddesc").Caption = "PROVEEDOR"
-            .ValueMember = "ydcod"
+            .ValueMember = "ydnumi"
             .DisplayMember = "yddesc"
             .DataSource = dt
             .Refresh()

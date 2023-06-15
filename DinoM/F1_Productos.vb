@@ -394,8 +394,8 @@ Public Class F1_Productos
         dt = L_prLibreriaClienteLGeneral(cod1, cod2)
         With mCombo
             .DropDownList.Columns.Clear()
-            .DropDownList.Columns.Add("yccod3").Width = 70
-            .DropDownList.Columns("yccod3").Caption = "COD"
+            '.DropDownList.Columns.Add("yccod3").Width = 70
+            '.DropDownList.Columns("yccod3").Caption = "COD"
             .DropDownList.Columns.Add("ycdes3").Width = 200
             .DropDownList.Columns("ycdes3").Caption = "DESCRIPCION"
             .ValueMember = "yccod3"
@@ -1970,22 +1970,22 @@ Public Class F1_Productos
     End Sub
     Public Sub CargarDatasourceProducto(CategoriaId As Integer)
 
-        If (CategoriaId >= 0) Then
-            Dim dt As DataTable = L_fnGeneralProductos(CategoriaId)
+        'If (CategoriaId >= 0) Then
+        Dim dt As DataTable = L_fnGeneralProductos(CategoriaId)
             JGrM_Buscador.DataSource = dt
             dtProductoAll = dt
-            'If (Not IsNothing(dt.Select("yfgr5=" + Str(CategoriaId)).CopyToDataTable)) Then
-            '    JGrM_Buscador.DataSource = dt.Select("yfgr5=" + Str(CategoriaId)).CopyToDataTable
-            'Else
-            '    dt.Rows.Clear()
+        'If (Not IsNothing(dt.Select("yfgr5=" + Str(CategoriaId)).CopyToDataTable)) Then
+        '    JGrM_Buscador.DataSource = dt.Select("yfgr5=" + Str(CategoriaId)).CopyToDataTable
+        'Else
+        '    dt.Rows.Clear()
 
-            '    JGrM_Buscador.DataSource = dt
+        '    JGrM_Buscador.DataSource = dt
 
-            'End If
+        'End If
 
 
 
-        End If
+        'End If
 
     End Sub
 
@@ -2318,7 +2318,5 @@ Public Class F1_Productos
         e.Cancel = True
     End Sub
 
-    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
 
-    End Sub
 End Class
