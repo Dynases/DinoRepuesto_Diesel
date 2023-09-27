@@ -1353,7 +1353,7 @@ Public Class F0_PagosCreditoCompraUlt
 
         ef.TotalVenta = tbtotal
         ef.Cobrado = False
-        ef.swTipoVenta.Value = False
+        ef.swTipoVenta.Value = True
         ef.tipo = 1
         ef.ShowDialog()
         Dim bandera As Boolean = False

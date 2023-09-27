@@ -31,6 +31,7 @@ Partial Class F0_VentasMaestra
         Dim SuperTabColorStates2 As DevComponents.DotNetBar.Rendering.SuperTabColorStates = New DevComponents.DotNetBar.Rendering.SuperTabColorStates()
         Dim SuperTabItemStateColorTable2 As DevComponents.DotNetBar.Rendering.SuperTabItemStateColorTable = New DevComponents.DotNetBar.Rendering.SuperTabItemStateColorTable()
         Dim SuperTabLinearGradientColorTable2 As DevComponents.DotNetBar.Rendering.SuperTabLinearGradientColorTable = New DevComponents.DotNetBar.Rendering.SuperTabLinearGradientColorTable()
+        Dim cbCliente_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbPrecio_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbCambioDolar_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
@@ -44,6 +45,7 @@ Partial Class F0_VentasMaestra
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cbCliente = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.btnAdicionarCliente = New DevComponents.DotNetBar.ButtonX()
         Me.tbEnvio = New DevComponents.Editors.DoubleInput()
         Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
@@ -158,6 +160,7 @@ Partial Class F0_VentasMaestra
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -573,6 +576,7 @@ Partial Class F0_VentasMaestra
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbCliente)
         Me.Panel2.Controls.Add(Me.btnAdicionarCliente)
         Me.Panel2.Controls.Add(Me.tbEnvio)
         Me.Panel2.Controls.Add(Me.LabelX22)
@@ -607,6 +611,21 @@ Partial Class F0_VentasMaestra
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(977, 177)
         Me.Panel2.TabIndex = 234
+        '
+        'cbCliente
+        '
+        cbCliente_DesignTimeLayout.LayoutString = resources.GetString("cbCliente_DesignTimeLayout.LayoutString")
+        Me.cbCliente.DesignTimeLayout = cbCliente_DesignTimeLayout
+        Me.cbCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbCliente.Location = New System.Drawing.Point(134, 29)
+        Me.cbCliente.Name = "cbCliente"
+        Me.cbCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbCliente.SelectedIndex = -1
+        Me.cbCliente.SelectedItem = Nothing
+        Me.cbCliente.Size = New System.Drawing.Size(290, 22)
+        Me.cbCliente.TabIndex = 677
+        Me.cbCliente.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'btnAdicionarCliente
         '
@@ -2269,6 +2288,7 @@ Partial Class F0_VentasMaestra
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2407,5 +2427,6 @@ Partial Class F0_VentasMaestra
     Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnAdicionarCliente As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents cbCliente As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     ' Stashed changes
 End Class

@@ -31,9 +31,11 @@ Partial Class F0_Ventas
         Dim SuperTabColorStates2 As DevComponents.DotNetBar.Rendering.SuperTabColorStates = New DevComponents.DotNetBar.Rendering.SuperTabColorStates()
         Dim SuperTabItemStateColorTable2 As DevComponents.DotNetBar.Rendering.SuperTabItemStateColorTable = New DevComponents.DotNetBar.Rendering.SuperTabItemStateColorTable()
         Dim SuperTabLinearGradientColorTable2 As DevComponents.DotNetBar.Rendering.SuperTabLinearGradientColorTable = New DevComponents.DotNetBar.Rendering.SuperTabLinearGradientColorTable()
+        Dim cbCliente_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbPrecio_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbCambioDolar_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim CbTipoDoc_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -44,6 +46,8 @@ Partial Class F0_Ventas
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cbCliente = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.btnAdicionarCliente = New DevComponents.DotNetBar.ButtonX()
         Me.tbEnvio = New DevComponents.Editors.DoubleInput()
         Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
@@ -117,6 +121,17 @@ Partial Class F0_Ventas
         Me.TbNombre1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.TbEmail = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX27 = New DevComponents.DotNetBar.LabelX()
+        Me.CbTipoDoc = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.LabelX25 = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.QrCodeImgControl1 = New Gma.QrCodeNet.Encoding.Windows.Forms.QrCodeImgControl()
+        Me.tbnit1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.TextBoxX2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
+        Me.nombre1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
         Me.tbSubTotal = New DevComponents.Editors.DoubleInput()
         Me.tbIce = New DevComponents.Editors.DoubleInput()
@@ -158,6 +173,7 @@ Partial Class F0_Ventas
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -185,6 +201,9 @@ Partial Class F0_Ventas
         Me.GroupPanelFactura.SuspendLayout()
         CType(Me.QrFactura, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel4.SuspendLayout()
+        CType(Me.CbTipoDoc, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel3.SuspendLayout()
+        CType(Me.QrCodeImgControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbSubTotal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbIce, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -573,6 +592,8 @@ Partial Class F0_Ventas
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.Button1)
+        Me.Panel2.Controls.Add(Me.cbCliente)
         Me.Panel2.Controls.Add(Me.btnAdicionarCliente)
         Me.Panel2.Controls.Add(Me.tbEnvio)
         Me.Panel2.Controls.Add(Me.LabelX22)
@@ -607,6 +628,30 @@ Partial Class F0_Ventas
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(977, 177)
         Me.Panel2.TabIndex = 234
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(377, 127)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 678
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'cbCliente
+        '
+        cbCliente_DesignTimeLayout.LayoutString = resources.GetString("cbCliente_DesignTimeLayout.LayoutString")
+        Me.cbCliente.DesignTimeLayout = cbCliente_DesignTimeLayout
+        Me.cbCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbCliente.Location = New System.Drawing.Point(134, 30)
+        Me.cbCliente.Name = "cbCliente"
+        Me.cbCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbCliente.SelectedIndex = -1
+        Me.cbCliente.SelectedItem = Nothing
+        Me.cbCliente.Size = New System.Drawing.Size(290, 22)
+        Me.cbCliente.TabIndex = 677
+        Me.cbCliente.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'btnAdicionarCliente
         '
@@ -679,7 +724,6 @@ Partial Class F0_Ventas
         Me.btnSearchCliente.Size = New System.Drawing.Size(28, 23)
         Me.btnSearchCliente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.btnSearchCliente.TabIndex = 244
-        Me.btnSearchCliente.Visible = False
         '
         'LabelX8
         '
@@ -1307,6 +1351,7 @@ Partial Class F0_Ventas
         Me.tbCliente.PreventEnterBeep = True
         Me.tbCliente.Size = New System.Drawing.Size(290, 22)
         Me.tbCliente.TabIndex = 1
+        Me.tbCliente.Visible = False
         '
         'LabelX2
         '
@@ -1348,7 +1393,7 @@ Partial Class F0_Ventas
         Me.PanelDetalle.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelDetalle.Location = New System.Drawing.Point(0, 200)
         Me.PanelDetalle.Name = "PanelDetalle"
-        Me.PanelDetalle.Size = New System.Drawing.Size(983, 299)
+        Me.PanelDetalle.Size = New System.Drawing.Size(983, 251)
         Me.PanelDetalle.TabIndex = 1
         '
         'GroupPanel4
@@ -1361,7 +1406,7 @@ Partial Class F0_Ventas
         Me.GroupPanel4.Font = New System.Drawing.Font("Georgia", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupPanel4.Location = New System.Drawing.Point(0, 0)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(983, 88)
+        Me.GroupPanel4.Size = New System.Drawing.Size(983, 40)
         '
         '
         '
@@ -1401,7 +1446,7 @@ Partial Class F0_Ventas
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel5.Location = New System.Drawing.Point(0, 0)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(977, 65)
+        Me.Panel5.Size = New System.Drawing.Size(977, 17)
         Me.Panel5.TabIndex = 0
         '
         'grdetalle
@@ -1415,7 +1460,7 @@ Partial Class F0_Ventas
         Me.grdetalle.Name = "grdetalle"
         Me.grdetalle.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grdetalle.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grdetalle.Size = New System.Drawing.Size(977, 65)
+        Me.grdetalle.Size = New System.Drawing.Size(977, 17)
         Me.grdetalle.TabIndex = 0
         Me.grdetalle.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -1427,7 +1472,7 @@ Partial Class F0_Ventas
         Me.GPanelProductos.DisabledBackColor = System.Drawing.Color.Empty
         Me.GPanelProductos.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.GPanelProductos.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GPanelProductos.Location = New System.Drawing.Point(0, 88)
+        Me.GPanelProductos.Location = New System.Drawing.Point(0, 40)
         Me.GPanelProductos.Name = "GPanelProductos"
         Me.GPanelProductos.Size = New System.Drawing.Size(983, 211)
         '
@@ -1542,9 +1587,9 @@ Partial Class F0_Ventas
         Me.PanelTotal.Controls.Add(Me.GroupPanelFactura)
         Me.PanelTotal.Controls.Add(Me.Panel4)
         Me.PanelTotal.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelTotal.Location = New System.Drawing.Point(0, 499)
+        Me.PanelTotal.Location = New System.Drawing.Point(0, 451)
         Me.PanelTotal.Name = "PanelTotal"
-        Me.PanelTotal.Size = New System.Drawing.Size(983, 90)
+        Me.PanelTotal.Size = New System.Drawing.Size(983, 138)
         Me.PanelTotal.TabIndex = 1
         '
         'Panel9
@@ -1552,9 +1597,9 @@ Partial Class F0_Ventas
         Me.Panel9.BackColor = System.Drawing.Color.Transparent
         Me.Panel9.Controls.Add(Me.GroupBox2)
         Me.Panel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel9.Location = New System.Drawing.Point(410, 0)
+        Me.Panel9.Location = New System.Drawing.Point(15, 0)
         Me.Panel9.Name = "Panel9"
-        Me.Panel9.Size = New System.Drawing.Size(243, 90)
+        Me.Panel9.Size = New System.Drawing.Size(365, 121)
         Me.Panel9.TabIndex = 364
         Me.Panel9.Visible = False
         '
@@ -1565,7 +1610,6 @@ Partial Class F0_Ventas
         Me.GroupBox2.Controls.Add(Me.txtCambio1)
         Me.GroupBox2.Controls.Add(Me.lbCambio)
         Me.GroupBox2.Controls.Add(Me.lbMontoPagado)
-        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox2.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox2.ForeColor = System.Drawing.Color.Gold
         Me.GroupBox2.Location = New System.Drawing.Point(0, 0)
@@ -1574,6 +1618,7 @@ Partial Class F0_Ventas
         Me.GroupBox2.TabIndex = 364
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Monto Pagado/Cambio (Bs.):"
+        Me.GroupBox2.Visible = False
         '
         'txtMontoPagado1
         '
@@ -1648,7 +1693,7 @@ Partial Class F0_Ventas
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel8.Location = New System.Drawing.Point(0, 0)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(410, 90)
+        Me.Panel8.Size = New System.Drawing.Size(15, 121)
         Me.Panel8.TabIndex = 363
         Me.Panel8.Visible = False
         '
@@ -1664,12 +1709,12 @@ Partial Class F0_Ventas
         Me.GroupBox1.Controls.Add(Me.LabelX19)
         Me.GroupBox1.Controls.Add(Me.tbMontoDolar)
         Me.GroupBox1.Controls.Add(Me.LabelX20)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Left
         Me.GroupBox1.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.Gold
         Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(410, 90)
+        Me.GroupBox1.Size = New System.Drawing.Size(410, 121)
         Me.GroupBox1.TabIndex = 362
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Formas de Pago:"
@@ -1965,6 +2010,11 @@ Partial Class F0_Ventas
         'Panel4
         '
         Me.Panel4.BackColor = System.Drawing.Color.Transparent
+        Me.Panel4.Controls.Add(Me.TbEmail)
+        Me.Panel4.Controls.Add(Me.LabelX27)
+        Me.Panel4.Controls.Add(Me.CbTipoDoc)
+        Me.Panel4.Controls.Add(Me.LabelX25)
+        Me.Panel4.Controls.Add(Me.GroupPanel3)
         Me.Panel4.Controls.Add(Me.LabelX13)
         Me.Panel4.Controls.Add(Me.tbSubTotal)
         Me.Panel4.Controls.Add(Me.tbIce)
@@ -1976,10 +2026,210 @@ Partial Class F0_Ventas
         Me.Panel4.Controls.Add(Me.tbPdesc)
         Me.Panel4.Controls.Add(Me.lbMDescuento)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel4.Location = New System.Drawing.Point(653, 0)
+        Me.Panel4.Location = New System.Drawing.Point(380, 0)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(330, 90)
+        Me.Panel4.Size = New System.Drawing.Size(1600, 121)
         Me.Panel4.TabIndex = 39
+        '
+        'TbEmail
+        '
+        Me.TbEmail.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.TbEmail.Border.Class = "TextBoxBorder"
+        Me.TbEmail.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TbEmail.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.TbEmail.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.TbEmail.Location = New System.Drawing.Point(510, 94)
+        Me.TbEmail.Name = "TbEmail"
+        Me.TbEmail.PreventEnterBeep = True
+        Me.TbEmail.Size = New System.Drawing.Size(278, 21)
+        Me.TbEmail.TabIndex = 430
+        '
+        'LabelX27
+        '
+        Me.LabelX27.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX27.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX27.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX27.ForeColor = System.Drawing.Color.White
+        Me.LabelX27.Location = New System.Drawing.Point(510, 66)
+        Me.LabelX27.Name = "LabelX27"
+        Me.LabelX27.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX27.Size = New System.Drawing.Size(70, 23)
+        Me.LabelX27.TabIndex = 431
+        Me.LabelX27.Text = "Email:"
+        '
+        'CbTipoDoc
+        '
+        Me.CbTipoDoc.BorderStyle = Janus.Windows.GridEX.BorderStyle.Flat
+        Me.CbTipoDoc.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        CbTipoDoc_DesignTimeLayout.LayoutString = resources.GetString("CbTipoDoc_DesignTimeLayout.LayoutString")
+        Me.CbTipoDoc.DesignTimeLayout = CbTipoDoc_DesignTimeLayout
+        Me.CbTipoDoc.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CbTipoDoc.Location = New System.Drawing.Point(510, 40)
+        Me.CbTipoDoc.Name = "CbTipoDoc"
+        Me.CbTipoDoc.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.CbTipoDoc.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.CbTipoDoc.SelectedIndex = -1
+        Me.CbTipoDoc.SelectedItem = Nothing
+        Me.CbTipoDoc.Size = New System.Drawing.Size(278, 22)
+        Me.CbTipoDoc.TabIndex = 428
+        Me.CbTipoDoc.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'LabelX25
+        '
+        Me.LabelX25.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX25.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX25.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX25.ForeColor = System.Drawing.Color.White
+        Me.LabelX25.Location = New System.Drawing.Point(510, 6)
+        Me.LabelX25.Name = "LabelX25"
+        Me.LabelX25.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX25.Size = New System.Drawing.Size(112, 23)
+        Me.LabelX25.TabIndex = 429
+        Me.LabelX25.Text = "Tipo Documento:"
+        '
+        'GroupPanel3
+        '
+        Me.GroupPanel3.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.QrCodeImgControl1)
+        Me.GroupPanel3.Controls.Add(Me.tbnit1)
+        Me.GroupPanel3.Controls.Add(Me.TextBoxX2)
+        Me.GroupPanel3.Controls.Add(Me.LabelX23)
+        Me.GroupPanel3.Controls.Add(Me.nombre1)
+        Me.GroupPanel3.Controls.Add(Me.LabelX24)
+        Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel3.Location = New System.Drawing.Point(1, -1)
+        Me.GroupPanel3.Name = "GroupPanel3"
+        Me.GroupPanel3.Size = New System.Drawing.Size(487, 138)
+        '
+        '
+        '
+        Me.GroupPanel3.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel3.Style.BackColorGradientAngle = 90
+        Me.GroupPanel3.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel3.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderBottomWidth = 1
+        Me.GroupPanel3.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel3.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderLeftWidth = 1
+        Me.GroupPanel3.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderRightWidth = 1
+        Me.GroupPanel3.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel3.Style.BorderTopWidth = 1
+        Me.GroupPanel3.Style.CornerDiameter = 4
+        Me.GroupPanel3.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel3.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel3.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel3.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel3.TabIndex = 0
+        Me.GroupPanel3.Text = "DATOS FACTURA"
+        '
+        'QrCodeImgControl1
+        '
+        Me.QrCodeImgControl1.ErrorCorrectLevel = Gma.QrCodeNet.Encoding.ErrorCorrectionLevel.M
+        Me.QrCodeImgControl1.Image = CType(resources.GetObject("QrCodeImgControl1.Image"), System.Drawing.Image)
+        Me.QrCodeImgControl1.Location = New System.Drawing.Point(378, 4)
+        Me.QrCodeImgControl1.Margin = New System.Windows.Forms.Padding(2)
+        Me.QrCodeImgControl1.Name = "QrCodeImgControl1"
+        Me.QrCodeImgControl1.QuietZoneModule = Gma.QrCodeNet.Encoding.Windows.Render.QuietZoneModules.Two
+        Me.QrCodeImgControl1.Size = New System.Drawing.Size(95, 90)
+        Me.QrCodeImgControl1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.QrCodeImgControl1.TabIndex = 27
+        Me.QrCodeImgControl1.TabStop = False
+        Me.QrCodeImgControl1.Text = "QrCodeImgControl1"
+        '
+        'tbnit1
+        '
+        '
+        '
+        '
+        Me.tbnit1.Border.Class = "TextBoxBorder"
+        Me.tbnit1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbnit1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbnit1.Location = New System.Drawing.Point(99, 7)
+        Me.tbnit1.MaxLength = 20
+        Me.tbnit1.Name = "tbnit1"
+        Me.tbnit1.PreventEnterBeep = True
+        Me.tbnit1.Size = New System.Drawing.Size(150, 22)
+        Me.tbnit1.TabIndex = 22
+        Me.tbnit1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'TextBoxX2
+        '
+        '
+        '
+        '
+        Me.TextBoxX2.Border.Class = "TextBoxBorder"
+        Me.TextBoxX2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TextBoxX2.Location = New System.Drawing.Point(3, 66)
+        Me.TextBoxX2.MaxLength = 30
+        Me.TextBoxX2.Name = "TextBoxX2"
+        Me.TextBoxX2.PreventEnterBeep = True
+        Me.TextBoxX2.Size = New System.Drawing.Size(50, 22)
+        Me.TextBoxX2.TabIndex = 25
+        Me.TextBoxX2.Visible = False
+        '
+        'LabelX23
+        '
+        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX23.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX23.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.LabelX23.Location = New System.Drawing.Point(3, 34)
+        Me.LabelX23.Name = "LabelX23"
+        Me.LabelX23.Size = New System.Drawing.Size(90, 23)
+        Me.LabelX23.TabIndex = 26
+        Me.LabelX23.Text = "Razon Social:"
+        '
+        'nombre1
+        '
+        '
+        '
+        '
+        Me.nombre1.Border.Class = "TextBoxBorder"
+        Me.nombre1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.nombre1.Location = New System.Drawing.Point(99, 36)
+        Me.nombre1.MaxLength = 100
+        Me.nombre1.Multiline = True
+        Me.nombre1.Name = "nombre1"
+        Me.nombre1.PreventEnterBeep = True
+        Me.nombre1.Size = New System.Drawing.Size(270, 60)
+        Me.nombre1.TabIndex = 24
+        '
+        'LabelX24
+        '
+        Me.LabelX24.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX24.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX24.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX24.ForeColor = System.Drawing.SystemColors.Desktop
+        Me.LabelX24.Location = New System.Drawing.Point(3, 5)
+        Me.LabelX24.Name = "LabelX24"
+        Me.LabelX24.Size = New System.Drawing.Size(90, 23)
+        Me.LabelX24.TabIndex = 23
+        Me.LabelX24.Text = "Nit:"
         '
         'LabelX13
         '
@@ -2092,7 +2342,7 @@ Partial Class F0_Ventas
         Me.lbPDescuento.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.lbPDescuento.Font = New System.Drawing.Font("Georgia", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbPDescuento.ForeColor = System.Drawing.Color.White
-        Me.lbPDescuento.Location = New System.Drawing.Point(116, 24)
+        Me.lbPDescuento.Location = New System.Drawing.Point(116, 23)
         Me.lbPDescuento.Name = "lbPDescuento"
         Me.lbPDescuento.SingleLineColor = System.Drawing.SystemColors.Control
         Me.lbPDescuento.Size = New System.Drawing.Size(86, 18)
@@ -2268,6 +2518,7 @@ Partial Class F0_Ventas
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbEnvio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2297,6 +2548,9 @@ Partial Class F0_Ventas
         CType(Me.QrFactura, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        CType(Me.CbTipoDoc, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel3.ResumeLayout(False)
+        CType(Me.QrCodeImgControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbSubTotal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbIce, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2406,5 +2660,18 @@ Partial Class F0_Ventas
     Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnAdicionarCliente As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents cbCliente As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents QrCodeImgControl1 As Gma.QrCodeNet.Encoding.Windows.Forms.QrCodeImgControl
+    Friend WithEvents tbnit1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents TextBoxX2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX23 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents nombre1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX24 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TbEmail As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX27 As DevComponents.DotNetBar.LabelX
+    Public WithEvents CbTipoDoc As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents LabelX25 As DevComponents.DotNetBar.LabelX
     ' Stashed changes
 End Class

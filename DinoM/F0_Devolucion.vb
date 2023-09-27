@@ -770,6 +770,55 @@ Public Class F0_Devolucion
 
     End Sub
 
+    Private Sub GuardarAnticipo(Monto As Double)
+        RegistrarAnticipo(tbFechaDev.Value.ToString("dd/MM/yyyy"), 2, "Devolucion Venta Nº:" + tbIdVenta.Text, gi_userSuc, CInt(tbIdVenta.Text), Monto)
+    End Sub
+
+    Sub _prInterpretarDatosCobranza(ByRef dt As DataTable, tv0012 As Integer, tv0011 As Integer, monto As Double)
+
+
+        '       numidetalle, NroDoc, factura, numiCredito, numiCobranza, A.tctv1numi
+        ',a.tcty4clie ,cliente,detalle.tdfechaPago, PagoAc, NumeroRecibo, DescBanco, banco, detalle.tdnrocheque,
+        'img,estado,pendiente
+        Dim Bin As New MemoryStream
+        Dim img As New Bitmap(My.Resources.delete, 28, 28)
+        img.Save(Bin, Imaging.ImageFormat.Png)
+        dt.Rows.Add(0, tv0012, 0, tv0011, Now.Date, monto, "", 0, "", Now.Date, "", "", Bin.ToArray, 0)
+        ''Dim dtcobro As DataTable = CType(grfactura.DataSource, DataTable)
+        'For i As Integer = 0 To dtcobro.Rows.Count - 1 Step 1
+        '    Dim pago As Double = dtcobro.Rows(i).Item("PagoAc")
+        '    Dim estado As Double = dtcobro.Rows(i).Item("estado")
+        '    'If (estado = 0) Then
+        '    '             td.tdtv12numi ,@tenumi ,td.tdnrodoc ,@newFecha ,td.tdmonto ,td.tdnrorecibo ,td.tdty3banco,
+        '    'td.tdnrocheque, @newFecha  ,@newHora  ,@teuact
+
+        '    '     td.tdtv12numi ,@tenumi ,td.tdnrodoc ,@newFecha ,td.tdmonto ,td.tdnrorecibo ,td.tdty3banco,
+        '    'td.tdnrocheque, @newFecha  ,@newHora  ,@teuact
+        '    If (pago > 0) Then
+        '        dt.Rows.Add(0, dtcobro.Rows(i).Item("numiCredito"), 0, dtcobro.Rows(i).Item("NroDoc"),
+        '                                Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), 0, dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
+        '                                "", "", Bin.ToArray, 0)
+        '    End If
+
+        'End If
+        'If (estado = 2) Then
+        '    'tdtv12numi, tdtv13numi, tdnrodoc, tdfechaPago, tdmonto, tdnrorecibo, tdty3banco,
+        '    ' tdnrocheque, tdfact, tdhact, tduact
+        '    dt.Rows.Add(dtcobro.Rows(i).Item("numidetalle"), dtcobro.Rows(i).Item("numiCredito"), 0, dtcobro.Rows(i).Item("NroDoc"),
+        '                             Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), _fnObtenerNumiBancoLibreria(
+        '                                 dtcobro.Rows(i).Item("DescBanco")), dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
+        '                             "", "", Bin.ToArray, 2)
+        'End If
+        'If (estado = -1) Then
+        '    'tdtv12numi, tdtv13numi, tdnrodoc, tdfechaPago, tdmonto, tdnrorecibo, tdty3banco,
+        '    ' tdnrocheque, tdfact, tdhact, tduact
+        '    dt.Rows.Add(dtcobro.Rows(i).Item("numidetalle"), dtcobro.Rows(i).Item("numiCredito"), 0, dtcobro.Rows(i).Item("NroDoc"),
+        '                             Now.Date, pago, dtcobro.Rows(i).Item("NumeroRecibo"), _fnObtenerNumiBancoLibreria(
+        '                                 dtcobro.Rows(i).Item("DescBanco")), dtcobro.Rows(i).Item("tdnrocheque"), Now.Date,
+        '                             "", "", Bin.ToArray, -1)
+        'End If
+        'Next
+    End Sub
     Public Function _ValidarCampos() As Boolean
 
         If (tbtotal.Value = 0) Then
@@ -780,52 +829,90 @@ Public Class F0_Devolucion
 
         If (swTipoVenta.Value = False) Then
             Dim dt As DataTable = L_fnVerificarCreditos(tbIdVenta.Text)
-            If dt.Rows(0).Item("Debe") = 0 Then
+
+            If dt.Rows(0).Item("pagos") = 0 Then
+                GuardarAnticipo(CDbl(tbtotal.Text))
+
+            Else
                 Dim ef = New Efecto
                 ef.tipo = 2
                 ef.Context = "¿esta seguro que quiere hacer la devolución?".ToUpper
-                ef.Header = "Los pagos de este crédito están cancelados en su totalidad.".ToUpper
+                ef.Header = "Ya existe pagos realizados y además el total de devolución es mayor al monto que falta pagar.".ToUpper
                 ef.ShowDialog()
                 Dim bandera As Boolean = False
                 bandera = ef.band
                 If (bandera = True) Then
-                    Return True
+                    Dim numi = ""
+                    If dt.Rows(0).Item("pagos") < CDbl(tbtotal.Text) Then
+                        Dim montoAnti As Double = CDbl(tbtotal.Text) - dt.Rows(0).Item("pagos")
+                        GuardarAnticipo(montoAnti)
+
+                        Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
+                        _prInterpretarDatosCobranza(dtCobro, dt.Rows(0).Item("tcnumi"), CInt(tbIdVenta.Text), CDbl(dt.Rows(0).Item("pagos")))
+                        Dim res As Boolean = L_fnGrabarCobranzaNueva(numi, tbFechaVenta.Value.ToString("yyyy/MM/dd"), gi_userNumi, tbObservacion.Text, dtCobro, cbSucursal.Value)
+
+                    Else
+                        Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
+                        _prInterpretarDatosCobranza(dtCobro, dt.Rows(0).Item("tcnumi"), CInt(tbIdVenta.Text), CDbl(tbtotal.Text))
+                        Dim res As Boolean = L_fnGrabarCobranzaNueva(numi, tbFechaVenta.Value.ToString("yyyy/MM/dd"), gi_userNumi, tbObservacion.Text, dtCobro, cbSucursal.Value)
+
+                    End If
                 Else
                     Return False
                 End If
-            Else
-                If tbtotal.Value > dt.Rows(0).Item("Debe") Then
-                    Dim ef = New Efecto
-                    ef.tipo = 2
-                    ef.Context = "¿esta seguro que quiere hacer la devolución?".ToUpper
-                    ef.Header = "Ya existe pagos realizados y además el total de devolución es mayor al monto que falta pagar.".ToUpper
-                    ef.ShowDialog()
-                    Dim bandera As Boolean = False
-                    bandera = ef.band
-                    If (bandera = True) Then
-                        Return True
-                    Else
-                        Return False
-
-                    End If
-                End If
             End If
+            '    If dt.Rows(0).Item("Debe") = 0 Then
+            '        Dim ef = New Efecto
+            '        ef.tipo = 2
+            '        ef.Context = "¿esta seguro que quiere hacer la devolución?".ToUpper
+            '        ef.Header = "Los pagos de este crédito están cancelados en su totalidad.".ToUpper
+            '        ef.ShowDialog()
+            '        Dim bandera As Boolean = False
+            '        bandera = ef.band
+            '        If (bandera = True) Then
+            '            GuardarAnticipo(CDbl(tbtotal.Text))
+            '            Return True
+            '        Else
+            '            Return False
+            '        End If
+            '    Else
+            '        If tbtotal.Value > dt.Rows(0).Item("Debe") Then
+            '            Dim ef = New Efecto
+            '            ef.tipo = 2
+            '            ef.Context = "¿esta seguro que quiere hacer la devolución?".ToUpper
+            '            ef.Header = "Ya existe pagos realizados y además el total de devolución es mayor al monto que falta pagar.".ToUpper
+            '            ef.ShowDialog()
+            '            Dim bandera As Boolean = False
+            '            bandera = ef.band
+            '            If (bandera = True) Then
+            '                If dt.Rows(0).Item("Pagos") > tbtotal.Value Then
+            '                    GuardarAnticipo(tbtotal.Value)
+            '                Else
+            '                    GuardarAnticipo(CDbl(dt.Rows(0).Item("Pagos")))
+            '                End If
+            '                Return True
+            '            Else
+            '                Return False
+
+            '            End If
+            '        End If
+            '    End If
         End If
 
 
 
-        'If (grdetalle.RowCount = 1) Then
-        '    grdetalle.Row = grdetalle.RowCount - 1
-        '    If (grdetalle.GetValue("tbty5prod") = 0) Then
-        '        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
-        '        ToastNotification.Show(Me, "Por Favor Seleccione  un detalle de producto".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-        '        Return False
-        '    End If
-        'End If
+            'If (grdetalle.RowCount = 1) Then
+            '    grdetalle.Row = grdetalle.RowCount - 1
+            '    If (grdetalle.GetValue("tbty5prod") = 0) Then
+            '        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+            '        ToastNotification.Show(Me, "Por Favor Seleccione  un detalle de producto".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+            '        Return False
+            '    End If
+            'End If
 
 
 
-        Return True
+            Return True
     End Function
 
 

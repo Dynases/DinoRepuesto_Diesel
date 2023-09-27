@@ -24,8 +24,10 @@ Partial Class F0_ProformaVenta
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_ProformaVenta))
+        Dim cbCliente_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbPrecio_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cbBanco_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -36,6 +38,9 @@ Partial Class F0_ProformaVenta
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cbCliente = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
+        Me.tbAnticipo = New DevComponents.Editors.DoubleInput()
+        Me.LabelX22 = New DevComponents.DotNetBar.LabelX()
         Me.btnAdicionarCliente = New DevComponents.DotNetBar.ButtonX()
         Me.label = New DevComponents.DotNetBar.LabelX()
         Me.tbValidad = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -86,6 +91,8 @@ Partial Class F0_ProformaVenta
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.chbTarjeta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.cbBanco = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,6 +118,8 @@ Partial Class F0_ProformaVenta
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbAnticipo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbFechaVenta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -130,6 +139,7 @@ Partial Class F0_ProformaVenta
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbtotal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbPdesc, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cbBanco, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelSuperior
@@ -485,6 +495,11 @@ Partial Class F0_ProformaVenta
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbBanco)
+        Me.Panel2.Controls.Add(Me.chbTarjeta)
+        Me.Panel2.Controls.Add(Me.cbCliente)
+        Me.Panel2.Controls.Add(Me.tbAnticipo)
+        Me.Panel2.Controls.Add(Me.LabelX22)
         Me.Panel2.Controls.Add(Me.btnAdicionarCliente)
         Me.Panel2.Controls.Add(Me.label)
         Me.Panel2.Controls.Add(Me.tbValidad)
@@ -515,6 +530,52 @@ Partial Class F0_ProformaVenta
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1102, 177)
         Me.Panel2.TabIndex = 234
+        '
+        'cbCliente
+        '
+        cbCliente_DesignTimeLayout.LayoutString = resources.GetString("cbCliente_DesignTimeLayout.LayoutString")
+        Me.cbCliente.DesignTimeLayout = cbCliente_DesignTimeLayout
+        Me.cbCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbCliente.Location = New System.Drawing.Point(134, 29)
+        Me.cbCliente.Name = "cbCliente"
+        Me.cbCliente.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbCliente.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbCliente.SelectedIndex = -1
+        Me.cbCliente.SelectedItem = Nothing
+        Me.cbCliente.Size = New System.Drawing.Size(290, 22)
+        Me.cbCliente.TabIndex = 680
+        Me.cbCliente.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'tbAnticipo
+        '
+        '
+        '
+        '
+        Me.tbAnticipo.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.tbAnticipo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbAnticipo.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.tbAnticipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!)
+        Me.tbAnticipo.Increment = 1.0R
+        Me.tbAnticipo.Location = New System.Drawing.Point(135, 127)
+        Me.tbAnticipo.Name = "tbAnticipo"
+        Me.tbAnticipo.Size = New System.Drawing.Size(132, 22)
+        Me.tbAnticipo.TabIndex = 679
+        '
+        'LabelX22
+        '
+        Me.LabelX22.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX22.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX22.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX22.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX22.Location = New System.Drawing.Point(9, 124)
+        Me.LabelX22.Name = "LabelX22"
+        Me.LabelX22.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX22.Size = New System.Drawing.Size(120, 23)
+        Me.LabelX22.TabIndex = 678
+        Me.LabelX22.Text = "Anticipo:"
         '
         'btnAdicionarCliente
         '
@@ -954,6 +1015,7 @@ Partial Class F0_ProformaVenta
         Me.tbCliente.PreventEnterBeep = True
         Me.tbCliente.Size = New System.Drawing.Size(290, 22)
         Me.tbCliente.TabIndex = 1
+        Me.tbCliente.Visible = False
         '
         'LabelX2
         '
@@ -1404,6 +1466,41 @@ Partial Class F0_ProformaVenta
         'Timer1
         '
         '
+        'chbTarjeta
+        '
+        Me.chbTarjeta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.chbTarjeta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.chbTarjeta.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.chbTarjeta.Location = New System.Drawing.Point(9, 144)
+        Me.chbTarjeta.Name = "chbTarjeta"
+        Me.chbTarjeta.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.chbTarjeta.Size = New System.Drawing.Size(108, 30)
+        Me.chbTarjeta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.chbTarjeta.TabIndex = 681
+        Me.chbTarjeta.TabStop = False
+        Me.chbTarjeta.Text = "Transferencia:"
+        Me.chbTarjeta.TextColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        '
+        'cbBanco
+        '
+        Me.cbBanco.ComboStyle = Janus.Windows.GridEX.ComboStyle.DropDownList
+        cbBanco_DesignTimeLayout.LayoutString = resources.GetString("cbBanco_DesignTimeLayout.LayoutString")
+        Me.cbBanco.DesignTimeLayout = cbBanco_DesignTimeLayout
+        Me.cbBanco.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbBanco.Location = New System.Drawing.Point(134, 152)
+        Me.cbBanco.Name = "cbBanco"
+        Me.cbBanco.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbBanco.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbBanco.SelectedIndex = -1
+        Me.cbBanco.SelectedItem = Nothing
+        Me.cbBanco.Size = New System.Drawing.Size(186, 22)
+        Me.cbBanco.TabIndex = 682
+        Me.cbBanco.Visible = False
+        Me.cbBanco.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
         'F0_ProformaVenta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1445,6 +1542,8 @@ Partial Class F0_ProformaVenta
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbCliente, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbAnticipo, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbPrecio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbFechaVenta, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1465,6 +1564,7 @@ Partial Class F0_ProformaVenta
         CType(Me.tbMdesc, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbtotal, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbPdesc, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cbBanco, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1528,4 +1628,9 @@ Partial Class F0_ProformaVenta
     Friend WithEvents tbValidad As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents btnAdicionarCliente As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Timer1 As Timer
+    Public WithEvents tbAnticipo As DevComponents.Editors.DoubleInput
+    Friend WithEvents LabelX22 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents cbCliente As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents chbTarjeta As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents cbBanco As Janus.Windows.GridEX.EditControls.MultiColumnCombo
 End Class

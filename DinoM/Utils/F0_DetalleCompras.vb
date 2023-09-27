@@ -116,6 +116,22 @@ Public Class F0_DetalleCompras
             .Visible = True
 
         End With
+        With grProductoSeleccionado.RootTable.Columns("PP")
+            .Caption = "Cod.Fabrica"
+            .Width = 120
+            .WordWrap = True
+            .MaxLines = 2
+            .Visible = False
+
+        End With
+        With grProductoSeleccionado.RootTable.Columns("gasto")
+            .Caption = "Cod.Fabrica"
+            .Width = 120
+            .WordWrap = True
+            .MaxLines = 2
+            .Visible = False
+
+        End With
         With grProductoSeleccionado.RootTable.Columns("CodigoMarca")
             .Caption = "Cod.Fabrica"
             .Width = 120
@@ -280,6 +296,10 @@ Public Class F0_DetalleCompras
             .Visible = False
             .FormatString = "0.00"
         End With
+        With grProductoSeleccionado.RootTable.Columns("yftcam")
+            .Visible = False
+            .FormatString = "0.00"
+        End With
         With grProductoSeleccionado
             .GroupByBoxVisible = False
             'diseño de la grilla
@@ -317,6 +337,7 @@ Public Class F0_DetalleCompras
             ColArNro(grProductos, "venta", "Precio Venta", 90, "0.00")
             ColNoVisible(grProductos, "facturado")
             ColNoVisible(grProductos, "mecanico")
+            ColNoVisible(grProductos, "yftcam")
 
             ConfigFinalBasica(grProductos)
         Catch ex As Exception
@@ -382,8 +403,8 @@ Public Class F0_DetalleCompras
         Dim Bin As New MemoryStream
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
-        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add(0, 0, _fnSiguienteNumi() + 1, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
-                                                        0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add("", "", "", "", _fnSiguienteNumi() + 1, 0, 0, "", "", "", "", 0, 0, 0, "",
+                                                        0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0, 0)
     End Sub
     Public Function _fnSiguienteNumi()
         Dim dt As DataTable = CType(grProductoSeleccionado.DataSource, DataTable)
@@ -432,7 +453,7 @@ Public Class F0_DetalleCompras
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("cbpFacturado") = grProductos.GetValue("facturado")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("cbpPublico") = grProductos.GetValue("venta")
                     CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("cbpMecanico") = grProductos.GetValue("mecanico")
-
+                    CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yftcam") = grProductos.GetValue("yftcam")
 
                     Dim PrecioVenta As Double = IIf(IsDBNull(grProductos.GetValue("venta")), 0, grProductos.GetValue("venta"))
                     If (PrecioVenta > 0) Then
@@ -711,6 +732,7 @@ Public Class F0_DetalleCompras
                     " " + dt.Rows(i).Item("CodigoFabrica").ToString.ToUpper +
                     " " + dt.Rows(i).Item("grupo1").ToString.ToUpper +
                     " " + dt.Rows(i).Item("Medida").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("CodigoMarca").ToString.ToUpper +
                     " " + dt.Rows(i).Item("yfCodAux1").ToString.ToUpper +
                     " " + dt.Rows(i).Item("yfCodAux2").ToString.ToUpper
                 'Select Case cant
@@ -1017,10 +1039,7 @@ Public Class F0_DetalleCompras
         End If
     End Sub
     Private Sub grProductoSeleccionado_EditingCell(sender As Object, e As EditingCellEventArgs) Handles grProductoSeleccionado.EditingCell
-
-
-
-        If (e.Column.Index = grProductoSeleccionado.RootTable.Columns("cbcmin").Index Or e.Column.Index = grProductoSeleccionado.RootTable.Columns("cbpcost").Index) Then
+        If (e.Column.Index = grProductoSeleccionado.RootTable.Columns("cbcmin").Index) Then 'Or e.Column.Index = grProductoSeleccionado.RootTable.Columns("cbpcost").Index) Then
             e.Cancel = False
         Else
             e.Cancel = True
@@ -1041,5 +1060,9 @@ Public Class F0_DetalleCompras
         'Else
         e.Cancel = True
         'End If
+    End Sub
+
+    Private Sub grProductoSeleccionado_FormattingRow(sender As Object, e As RowLoadEventArgs) Handles grProductoSeleccionado.FormattingRow
+
     End Sub
 End Class

@@ -20,6 +20,8 @@ Imports Facturacion
 
 Imports Newtonsoft.Json
 Imports DinoM.DBApi
+Imports DinoM.RespTipoDoc1
+Imports DinoM.EmisorResp1
 
 
 Public Class F0_Ventas
@@ -62,6 +64,7 @@ Public Class F0_Ventas
         Me.WindowState = FormWindowState.Maximized
 
         _prValidarLote()
+        _prCargarComboCliente(cbCliente)
         _prCargarComboLibreriaSucursal(cbSucursal)
         _prCargarComboLibreria(cbCambioDolar, 7, 1)
         cbCambioDolar.Value = 1
@@ -170,6 +173,32 @@ Public Class F0_Ventas
         End If
     End Sub
 
+
+    Private Sub _prCargarComboCliente(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarClientes()
+
+
+
+
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("ydnumi").Width = 60
+            .DropDownList.Columns("ydnumi").Caption = "COD"
+            .DropDownList.Columns.Add("yddesc").Width = 500
+            .DropDownList.Columns("yddesc").Caption = "CLIENTES"
+            .ValueMember = "ydnumi"
+            .DisplayMember = "yddesc"
+            .DataSource = dt
+            .Refresh()
+        End With
+        If (dt.Rows.Count > 0) Then
+            mCombo.SelectedItem = 0
+        End If
+    End Sub
+
+
+
     Private Sub _prCargarComboPrecioLimpiar(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
         Dim dt As New DataTable
         dt = L_fnListarPrecios()
@@ -261,7 +290,7 @@ Public Class F0_Ventas
         tbMontoBs.IsInputReadOnly = True
         tbMontoDolar.IsInputReadOnly = True
         tbMontoTarej.IsInputReadOnly = True
-
+        cbCliente.ReadOnly = True
         grVentas.Enabled = True
         PanelNavegacion.Enabled = True
         grdetalle.RootTable.Columns("img").Visible = False
@@ -295,11 +324,12 @@ Public Class F0_Ventas
         ''  tbVendedor.ReadOnly = False
         tbObservacion.ReadOnly = False
         'tbFechaVenta.IsInputReadOnly = False
+        cbCliente.ReadOnly = False
         tbFechaVenc.IsInputReadOnly = False
         swMoneda.IsReadOnly = False
         swTipoVenta.IsReadOnly = False
         btnGrabar.Enabled = True
-        btnSearchCliente.Visible = True
+        btnSearchCliente.Visible = False
         TbNit.ReadOnly = False
         TbNombre1.ReadOnly = False
         TbNombre2.ReadOnly = False
@@ -362,7 +392,7 @@ Public Class F0_Ventas
         tbFechaVenc.Visible = False
         lbCredito.Visible = False
         _prCargarDetalleVenta(-1)
-
+        cbCliente.Text = ""
         MSuperTabControl.SelectedTabIndex = 0
         tbSubTotal.Value = 0
         tbPdesc.Value = 0
@@ -451,7 +481,7 @@ Public Class F0_Ventas
             _CodEmpleado = .GetValue("taven")
             tbVendedor.Text = .GetValue("vendedor")
             swTipoVenta.Value = .GetValue("tatven")
-
+            cbCliente.Value = .GetValue("taclpr")
             _CodCliente = .GetValue("taclpr")
             tbCliente.Text = .GetValue("cliente")
             swMoneda.Value = .GetValue("tamon")
@@ -598,6 +628,12 @@ Public Class F0_Ventas
 
         With grdetalle.RootTable.Columns("ItemNuevo")
             .Caption = "Item Nuevo"
+            .Width = 130
+            .Visible = True
+            .TextAlignment = 2
+        End With
+        With grdetalle.RootTable.Columns("ItemAntiguo")
+            .Caption = "Item Antiguo"
             .Width = 130
             .Visible = True
             .TextAlignment = 2
@@ -1288,7 +1324,7 @@ Public Class F0_Ventas
         Dim img02 As New Bitmap(My.Resources.add, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
         img02.Save(Bin02, Imaging.ImageFormat.Png)
-        CType(grdetalle.DataSource, DataTable).Rows.Add(0, _fnSiguienteNumi() + 1, 0, 0, 0, "", "", "", "", "", "", "", "", 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, "", 0, "20500101", CDate("2050/01/01"), 0, Now.Date, "", "", 0, Bin.GetBuffer, Bin02.GetBuffer, 0)
+        CType(grdetalle.DataSource, DataTable).Rows.Add("", "", 0, 0, _fnSiguienteNumi() + 1, 0, 0, 0, "", "", "", "", "", "", 0, 0, 0, "", 0, 0, 0, 0, 0, 0, 0, "", 0, "20500101", CDate("2050/01/01"), 0, Now.Date, "", "", 0, Bin.GetBuffer, Bin02.GetBuffer, 0)
     End Sub
 
     Public Function _fnSiguienteNumi()
@@ -1482,10 +1518,10 @@ Public Class F0_Ventas
 
     End Sub
     Public Function _ValidarCampos() As Boolean
-        If (_CodCliente <= 0) Then
+        If (cbCliente.Value <= 0) Then
             Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
             ToastNotification.Show(Me, "Por Favor Seleccione un Cliente con Ctrl+Enter".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-            tbCliente.Focus()
+            cbCliente.Focus()
             Return False
 
         End If
@@ -1530,6 +1566,13 @@ Public Class F0_Ventas
             End If
         End If
 
+        For i = 0 To grdetalle.RowCount - 1 Step 1
+            If CType(grdetalle.DataSource, DataTable).Rows(i).Item("tbcmin") <= 0 Then
+                Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
+                ToastNotification.Show(Me, "El producto: '".ToUpper + CType(grdetalle.DataSource, DataTable).Rows(i).Item("producto") + "' no tiene una cantidad valida o no cuenta con stock disponible".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+                Return False
+            End If
+        Next
         'If swTipoVenta.Value = True Then
         '    If tbMontoBs.Value = 0 And tbMontoDolar.Value = 0 And tbMontoTarej.Value = 0 Then
         '        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
@@ -1850,6 +1893,7 @@ Public Class F0_Ventas
         Dim existe As Boolean = _fnExisteProducto(dt.Rows(fila).Item("Item"))
         If ((pos >= 0) And (Not existe)) Then
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("ItemNuevo") = dt.Rows(fila).Item("ItemNuevo")
+            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("ItemAntiguo") = dt.Rows(fila).Item("ItemAntiguo")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbty5prod") = dt.Rows(fila).Item("Item")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("Item") = dt.Rows(fila).Item("Item")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("yfcbarra") = dt.Rows(fila).Item("yfcbarra")
@@ -1861,7 +1905,7 @@ Public Class F0_Ventas
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("CategoriaProducto") = dt.Rows(fila).Item("Categoria")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("producto") = dt.Rows(fila).Item("yfcdprod1")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbumin") = dt.Rows(fila).Item("yfumin")
-            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("unidad") = dt.Rows(fila).Item("UnidMin")
+            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("unidad") = dt.Rows(fila).Item("grupo4")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbpbas") = dt.Rows(fila).Item("yhprecio")
             CType(grdetalle.DataSource, DataTable).Rows(pos).Item("tbPrecioReferencia") = dt.Rows(fila).Item("PrecioReferencia")
 
@@ -2363,6 +2407,7 @@ Public Class F0_Ventas
                     grdetalle.SetValue("tbptot2", dt.Rows(i).Item("pcosto") * iccven)
                 End If
                 grdetalle.SetValue("ItemNuevo", dt.Rows(i).Item("yfCodAux1"))
+                grdetalle.SetValue("ItemAntiguo", dt.Rows(i).Item("yfCodAux2"))
                 grdetalle.SetValue("CodigoFabrica", dt.Rows(i).Item("yfcprod"))
                 grdetalle.SetValue("CodigoMarca", dt.Rows(i).Item("yfCodigoMarca"))
                 grdetalle.SetValue("tbty5prod", numiproducto)
@@ -2430,6 +2475,28 @@ Public Class F0_Ventas
 
 
 #End Region
+
+
+    'Token SIFAC
+    Public tokenObtenido
+    Public dtDetalle As DataTable
+    Public dt As DataTable
+
+    Public CodProducto As String
+    Public Cantidad As Integer
+    Public PrecioU As Double
+    Public PrecioTot As Double
+    Public NombreProd As String
+    Public NroFact As Integer
+    Public NroTarjeta As String
+
+    Public _Fecha As Date
+
+    Public QrUrl As String
+    Public FactUrl As String
+    Public SegundaLeyenda As String
+    Public TerceraLeyenda As String
+    Public Cudf As String
 
 
 #Region "Eventos Formulario"
@@ -2680,7 +2747,7 @@ Public Class F0_Ventas
         If (_fnAccesible()) Then
             If (_CodCliente <= 0) Then
                 ToastNotification.Show(Me, "           Antes de Continuar Por favor Seleccione un Cliente!!             ", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
-                tbCliente.Focus()
+                cbCliente.Focus()
 
                 Return
             End If
@@ -3602,7 +3669,8 @@ salirIf:
                     Dim Row As Janus.Windows.GridEX.GridEXRow = ef.Row
                     _CodEmpleado = Row.Cells("peven").Value
                     _CodCliente = Row.Cells("peclpr").Value
-                    tbCliente.Text = Row.Cells("cliente").Value
+                    'tbCliente.Text = Row.Cells("cliente").Value
+                    cbCliente.Value = Row.Cells("peclpr").Value
                     tbVendedor.Text = Row.Cells("vendedor").Value
                     tbProforma.Text = Row.Cells("penumi").Value
                     cbSucursal.Value = Row.Cells("pealm").Value
@@ -3965,12 +4033,24 @@ salirIf:
     End Sub
 
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
-        If tbCliente.Text = String.Empty Then
+        Dim a As Integer = _CodCliente
+        If IsNumeric(cbCliente.Value) = False Then
+
             Dim img As Bitmap = New Bitmap(My.Resources.WARNING, 50, 50)
             ToastNotification.Show(Me, "Primero debe seleccionar el cliente ".ToUpper,
-                                      img, 2000,
-                                      eToastGlowColor.Green,
-                                      eToastPosition.TopCenter)
+                                  img, 2000,
+                                  eToastGlowColor.Green,
+                                  eToastPosition.TopCenter)
+            cbCliente.Text = ""
+            cbCliente.Focus()
+        ElseIf cbCliente.Value <= 0 Then
+            Dim img As Bitmap = New Bitmap(My.Resources.WARNING, 50, 50)
+            ToastNotification.Show(Me, "Primero debe seleccionar el cliente ".ToUpper,
+                                  img, 2000,
+                                  eToastGlowColor.Green,
+                                  eToastPosition.TopCenter)
+            cbCliente.Text = ""
+            cbCliente.Focus()
         Else
             SeleccionarCategoria(True)
         End If
@@ -4066,6 +4146,7 @@ salirIf:
             ef.TotalVenta = Math.Round(tbtotal.Value, 2)
             ef.tipoVenta = IIf(swTipoVenta.Value = True, 1, 0)
             ef.Cobrado = False
+            ef.cliente = _CodCliente
             ef.CostoEnvio = tbEnvio.Text
             ef.ShowDialog()
             Dim bandera As Boolean = False
@@ -4162,7 +4243,7 @@ salirIf:
             For i As Integer = 0 To dt.Rows.Count - 1 Step 1
                 If i = dt.Rows.Count - 1 Then
                     _CodCliente = dt.Rows(i).Item("ydnumi")
-                    tbCliente.Text = dt.Rows(i).Item("ydrazonsocial")
+                    cbCliente.Value = dt.Rows(i).Item("ydnumi")
                     Timer1.Stop()
                     gi_CodCliente = 0
                     Exit For
@@ -4181,16 +4262,52 @@ salirIf:
             cbPrecio.SelectedIndex = 0
         End If
         If _fnAccesible() Then
-            If verificarCredito(_CodCliente) Then
-                swTipoVenta.Value = False
-                swTipoVenta.IsReadOnly = False
-            Else
-                swTipoVenta.Value = True
-                swTipoVenta.IsReadOnly = True
-            End If
+            'If verificarCredito(_CodCliente) Then
+            '    swTipoVenta.Value = False
+            '    swTipoVenta.IsReadOnly = False
+            'Else
+            '    swTipoVenta.Value = True
+            '    swTipoVenta.IsReadOnly = True
+            'End If
         End If
 
     End Sub
+
+    Private Sub cbPrecio_ValueChanged(sender As Object, e As EventArgs) Handles cbPrecio.ValueChanged
+
+    End Sub
+
+    Private Sub cbCliente_ValueChanged(sender As Object, e As EventArgs) Handles cbCliente.ValueChanged
+        If IsNumeric(cbCliente.Value) Then
+            If cbCliente.Value > 0 Then
+                _CodCliente = cbCliente.Value
+                Dim dt As DataTable = L_fnTraerTipoPrecio(_CodCliente)
+                If dt.Rows.Count <> 0 Then
+                    Dim cod As Integer = dt.Rows(0).Item("ydcat")
+                    cbPrecio.Value = cod
+                Else
+                    cbPrecio.SelectedIndex = 0
+                End If
+                If _fnAccesible() Then
+                    Dim dt2 As DataTable = verificarCredito(_CodCliente)
+                    If dt2.Rows.Count > 0 Then
+                        _dias = dt2.Rows(0).Item("yddias")
+                        swTipoVenta.Value = False
+                        swTipoVenta.IsReadOnly = False
+                    Else
+                        swTipoVenta.Value = True
+                        swTipoVenta.IsReadOnly = True
+                    End If
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub swMoneda_ValueChanged(sender As Object, e As EventArgs) Handles swMoneda.ValueChanged
+
+    End Sub
+
+
 
 #End Region
 
@@ -4198,32 +4315,247 @@ salirIf:
 
 #Region "Facturacion"
 
-    'Public Shared Function ObtToken()
-    '    Dim api = New DBApi()
+    Public Shared Function ObtToken()
+        Dim api = New DBApi()
 
-    '    Dim Lenvio = New LoginEnvio()
-    '    Lenvio.email = "natuderm.srl@gmail.com"
-    '    Lenvio.password = "123456Veliz*"
+        Dim Lenvio = New LoginEnvio()
+        Lenvio.email = "admin@gmail.com"
+        Lenvio.password = "12345678"
 
-    '    Dim url = "https://di.sifac.nwc.com.bo/api/v2/login"
+        Dim url = "https://devsoftbo.com/siat2/public/api/auth/login"
 
-    '    Dim headers = New List(Of Parametro) From {
-    '        New Parametro("Authorization", "bearer "),
-    '        New Parametro("Content-Type", "Accept:application/json; charset=utf-8")
-    '    }
+        Dim headers = New List(Of Parametro) From {
+            New Parametro("Authorization", "bearer "),
+            New Parametro("Content-Type", "Accept:application/json; charset=utf-8")
+        }
 
-    '    Dim parametros = New List(Of Parametro)
+        Dim parametros = New List(Of Parametro)
 
-    '    Dim response = api.Post(url, headers, parametros, Lenvio)
-    '    Dim json = JsonConvert.SerializeObject(Lenvio)
-    '    ''MsgBox(json)
+        Dim response = api.Post(url, headers, parametros, Lenvio)
+        Dim json = JsonConvert.SerializeObject(Lenvio)
+        ''MsgBox(json)
 
-    '    Dim result = JsonConvert.DeserializeObject(Of RespuestLogin)(response)
-    '    Dim Token As String
-    '    Dim json1 = JsonConvert.SerializeObject(response)
-    '    '' MsgBox(json1)
-    '    Token = result.data.access_token.ToString
-    '    Return Token
-    'End Function
+        Dim result = JsonConvert.DeserializeObject(Of LoginResp1)(response)
+        Dim Token As String
+        Dim json1 = JsonConvert.SerializeObject(response)
+        '' MsgBox(json1)
+        Token = result.access_token.ToString
+        Return Token
+    End Function
+    Public Function Emisor(tokenObtenido)
+
+        Dim api = New DBApi()
+        Dim Emenvio = New EmisorEnvio1()
+
+        'Dim TMetPago = CbMetPago.SelectedIndex + 1 'obtiene el 'Codigo Metodo de pago' 
+        Dim TDoc = CbTipoDoc.Value 'obtiene el 'Codigo Tipo de documento' 
+
+        'Dim tabla As DataTable = rearmarDetalle()
+        Dim dtDetalle As DataTable = CType(grdetalle.DataSource, DataTable)
+        dtDetalle = dtDetalle.Select("estado=0").CopyToDataTable
+
+        Dim array(dtDetalle.Rows.Count - 1) As Detalle
+        Dim val = 0
+        PrecioTot = 0
+        For Each row In dtDetalle.Rows
+            Dim EmenvioDetalle = New Detalle()
+
+            'EmenvioDetalle.codigoProductoSin = (row("ygcodsin").ToString)
+            EmenvioDetalle.codigoProducto = (row("tbty5prod").ToString)
+            EmenvioDetalle.descripcion = (row("producto").ToString)
+            'EmenvioDetalle.unidadMedida = Convert.ToInt32(row("ygcodu"))
+            EmenvioDetalle.cantidad = Format((row("tbcmin")), "#.#0")
+            EmenvioDetalle.precioUnitario = Format((row("tbpbas")), "#.#0")
+            EmenvioDetalle.montoDescuento = Format((row("tbdesc")), "#.#0")
+            'EmenvioDetalle.subTotal = Format((row("tbtotdesc")), "#.#0")
+
+            PrecioTot = PrecioTot + Format((row("tbtotdesc")), "#.#0") 'total
+
+
+            array(val) = EmenvioDetalle
+            'vector = array
+            val = val + 1
+
+        Next
+        Dim NumFactura As Integer
+        Dim email As String
+        Dim CodMetPago As Integer
+        Dim NroTarjeta As String
+
+        Dim _DsDosificacion As New DataSet
+        Dim _Autorizacion As String
+        Dim _NumFac As Integer
+
+        If TbEmail.Text = String.Empty Then
+            email = "edoradoes1@gmail.com"
+            TbEmail.Text = email
+        Else
+            email = TbEmail.Text
+        End If
+
+
+        CodMetPago = 1
+        NroTarjeta = ""
+
+
+
+        'If cbTipoVenta.Value = 1 Then
+        '    CodMetPago = 1
+        '    NroTarjeta = ""
+        'ElseIf cbTipoVenta.Value = 2 Then
+        '    CodMetPago = 2
+        '    NroTarjeta = tbNroTarjeta1.Text & tbNroTarjeta2.Text & tbNroTarjeta3.Text
+        'ElseIf cbTipoVenta.Value = 0 Then
+        '    CodMetPago = 6
+        '    NroTarjeta = ""
+        'Else
+        '    CodMetPago = 1
+        '    NroTarjeta = ""
+        'End If
+
+
+
+        Dim dtmax = L_fnObtenerMaxFact(cbSucursal.Value, Convert.ToInt32(Now.Date.Year))
+        If dtmax.Rows.Count = 0 Then
+            NumFactura = 1
+        Else
+            Dim maxNFac As Integer = dtmax.Rows(0).Item("fvanfac")
+            NumFactura = maxNFac + 1
+        End If
+
+
+
+        '  Emenvio.numeroFactura = 282 'NumFactura
+        Emenvio.razon_social_cliente = nombre1.Text.ToString()
+        Emenvio.tipo_documento = TDoc
+        Emenvio.numero_documento = TbNit.Text.ToString()
+        Emenvio.complemento = "" '---------------------------------
+        Emenvio.codigo_cliente = _CodCliente.ToString
+        Emenvio.metodo_pago = CodMetPago
+        Emenvio.cod_sucursal = 0
+        Emenvio.punto_venta = 0
+        'Emenvio.numeroTarjeta = NroTarjeta
+        'Emenvio.codigoPuntoVenta = 0 'gs_NroCaja '--------------------
+        'Emenvio.codigoDocumentoSector = 1 '-------------------
+        'Emenvio.codigoMoneda = 1 'falta
+        'Emenvio.tipoCambio = 1 'CDbl(cbCambioDolar.Text) '--------------------
+        Emenvio.descuento_adicional = Format(tbMdesc.Value, "#.#0") '-------------------
+        'Emenvio.montoTotal = Format((PrecioTot - Emenvio.descuentoAdicional), "#.#0")
+        'Emenvio.montoTotalSujetoIva = Format((PrecioTot - Emenvio.descuentoAdicional), "#.#0")
+        'Emenvio.montoTotalMoneda = Format((PrecioTot - Emenvio.descuentoAdicional), "#.#0")
+        'Emenvio.montoGiftCard = 0 '----------------
+        Emenvio.codigoExcepcion = 0 '---------------
+        Emenvio.usuario = gs_user
+        Emenvio.email = email
+        'Emenvio.actividadEconomica = 471110 '477311 'Actividad de Farmacia
+        Emenvio.detalle_productos = array
+        Dim json = JsonConvert.SerializeObject(Emenvio)
+        Dim url = "https://devsoftbo.com/siat2/public/api/siat/factura/solicitud"
+        Dim headers = New List(Of Parametro) From {
+            New Parametro("Authorization", "bearer " + tokenObtenido),
+            New Parametro("Content-Type", "Accept:application/json; charset=utf-8")
+        }
+
+        Dim parametros = New List(Of Parametro)
+
+        Dim response = api.Post(url, headers, parametros, Emenvio)
+
+        Dim result = JsonConvert.DeserializeObject(Of EmisorResp1)(response)
+        Dim resultData = JsonConvert.DeserializeObject(Of RespEmisor11)(response)
+        'Dim resultError = JsonConvert.DeserializeObject(Of Resp400)(response)
+
+        Dim codigoRecepcion = resultData.data.codigo_recepcion
+        Dim estado = result.status
+
+        Dim xml As String
+        If estado = "true" Then
+
+            'NroFact = result.Data.numeroFactura
+            'QrUrl = result.Data.qrUrl
+            'FactUrl = result.Data.facturaUrl
+            'SegundaLeyenda = result.Data.leyenda
+            'TerceraLeyenda = result.Data.terceraLeyenda
+            'Cudf = result.Data.cufd
+
+            Dim notifi = New notifi
+
+            notifi.tipo = 2
+            notifi.Context = "".ToUpper
+            notifi.Header = "Proceso Exitoso - Código: " + resultData.data.codigo_factura.ToString() & vbCrLf & " " & vbCrLf & " " & vbCrLf & "Factura enviada ".ToUpper
+
+            notifi.ShowDialog()
+            facturaElectronica.WebBrowser1.Navigate("https://devsoftbo.com/siat2/public/factura-pdf/" + resultData.data.codigo_factura.ToString())
+            'facturaElectronica.ShowDialog()
+            'ElseIf estado = "false" Then
+
+            '    Dim details = JsonConvert.SerializeObject(resultError.errors.details)
+            '    Dim siat = JsonConvert.SerializeObject(resultError.errors.siat)
+            '    Dim notifi = New notifi
+
+            '    notifi.tipo = 2
+            '    notifi.Context = "SIFAC".ToUpper
+            '    notifi.Header = "Error de solicitud - Código: " + codigo.ToString() & vbCrLf & " " & vbCrLf & details & vbCrLf & siat & vbCrLf & " " & vbCrLf & "La factura no pudo enviarse al Siat".ToUpper
+            '    notifi.ShowDialog()
+            'ElseIf codigo = 401 Or codigo = 404 Or codigo = 405 Or codigo = 422 Then
+            '    Dim details = JsonConvert.SerializeObject(resultError.errors.details)
+            '    Dim notifi = New notifi
+
+            '    notifi.tipo = 2
+            '    notifi.Context = "SIFAC".ToUpper
+            '    notifi.Header = "Error de solicitud - Código: " + codigo.ToString() & vbCrLf & " " & vbCrLf & details & vbCrLf & " " & vbCrLf & "La factura no pudo enviarse al Siat".ToUpper
+            '    notifi.ShowDialog()
+        End If
+
+
+
+
+        Return estado
+    End Function
+
+    Public Function CodTipoDocumento(tokenObtenido)
+
+        Dim api = New DBApi()
+        Dim Lenvio = New LoginEnvio()
+        Lenvio.cod_sucursal = 0
+        Lenvio.punto_venta = "0"
+        Lenvio.opcion = "7"
+        Dim url = "https://devsoftbo.com/siat2/public/api/siat/sincronizacion-lista"
+
+        Dim headers = New List(Of Parametro) From {
+            New Parametro("Authorization", "Bearer " + tokenObtenido),
+            New Parametro("Content-Type", "Accept:application/json; charset=utf-8")
+        }
+
+        Dim parametros = New List(Of Parametro)
+
+        Dim response = api.Post(url, headers, parametros, Lenvio)
+
+        Dim result = JsonConvert.DeserializeObject(Of TipoDocumento)(response)
+
+        With CbTipoDoc
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("codigoClasificador").Width = 70
+            .DropDownList.Columns("codigoClasificador").Caption = "COD"
+            .DropDownList.Columns.Add("descripcion").Width = 500
+            .DropDownList.Columns("descripcion").Caption = "DESCRIPCION"
+            .ValueMember = "codigoClasificador"
+            .DisplayMember = "descripcion"
+            .DataSource = result.data
+            .Refresh()
+        End With
+
+        'Dim Codigoconn As String
+        'Codigoconn = result.meta.code
+        'Dim json = JsonConvert.SerializeObject(result)
+        'msgBox(json)
+        Return ""
+    End Function
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ObtToken()
+    End Sub
+
+    Private Sub TextBoxX1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles tbnit1.KeyPress
+        g_prValidarTextBox(1, e)
+    End Sub
 #End Region
 End Class

@@ -53,12 +53,15 @@ Public Class F0_DetalleMovimiento
             .Caption = "Item Nuevo"
             .Visible = True
             .TextAlignment = 2
+            .MaxLines = 2
         End With
         With grProductoSeleccionado.RootTable.Columns("yfCodAux2")
             .Width = 50
             .Caption = "Item Antiguo"
             .Visible = True
             .TextAlignment = 2
+            .MaxLines = 2
+
         End With
         With grProductoSeleccionado.RootTable.Columns("CodigoFabrica")
             .Width = 100
@@ -67,6 +70,8 @@ Public Class F0_DetalleMovimiento
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
+            .MaxLines = 2
+
         End With
         With grProductoSeleccionado.RootTable.Columns("Medida")
             .Width = 90
@@ -74,7 +79,8 @@ Public Class F0_DetalleMovimiento
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = gb_CodigoBarra
+            .Visible = False
+            '.Visible = gb_CodigoBarra
         End With
         With grProductoSeleccionado.RootTable.Columns("Marca")
             .Width = 90
@@ -83,6 +89,8 @@ Public Class F0_DetalleMovimiento
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
+            .MaxLines = 2
+
         End With
         With grProductoSeleccionado.RootTable.Columns("Categoria")
             .Width = 100
@@ -90,12 +98,14 @@ Public Class F0_DetalleMovimiento
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = True
+            .Visible = False
         End With
         With grProductoSeleccionado.RootTable.Columns("yfcdprod1")
             .Width = 350
             .Caption = "PRODUCTOS".ToUpper
             .Visible = True
+            .MaxLines = 2
+
 
         End With
 
@@ -105,20 +115,24 @@ Public Class F0_DetalleMovimiento
                 .Width = 120
                 .Caption = dtname.Rows(0).Item("Grupo 1").ToString.ToUpper
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = True
+                .Visible = False
+                .MaxLines = 2
+
             End With
             With grProductoSeleccionado.RootTable.Columns("grupo2")
                 .Width = 120
                 .Caption = dtname.Rows(0).Item("Grupo 2").ToString.ToUpper
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = True
+                .Visible = False
+                .MaxLines = 2
+
             End With
         Else
             With grProductoSeleccionado.RootTable.Columns("grupo1")
                 .Width = 120
                 .Caption = "Grupo 1".ToUpper
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
-                .Visible = True
+                .Visible = False
             End With
             With grProductoSeleccionado.RootTable.Columns("grupo2")
                 .Width = 120
@@ -130,15 +144,19 @@ Public Class F0_DetalleMovimiento
 
         With grProductoSeleccionado.RootTable.Columns("stock")
             .Width = 150
-            .Visible = False
+            .Visible = True
             .FormatString = "0.00"
             .Caption = "STOCK".ToUpper
+            .MaxLines = 2
+
         End With
         With grProductoSeleccionado.RootTable.Columns("Cantidad")
             .Width = 150
-            .Visible = False
-            .FormatString = "0.00"
+            .Visible = True
+            .FormatString = "0"
             .Caption = "Cantidad".ToUpper
+            .MaxLines = 2
+
         End With
         With grProductoSeleccionado.RootTable.Columns("ListaAlmacen")
             .Width = 200
@@ -149,6 +167,7 @@ Public Class F0_DetalleMovimiento
             .Visible = False
         End With
         With grProductoSeleccionado
+            .ColumnAutoResize = True
             .DefaultFilterRowComparison = FilterConditionOperator.Contains
             .FilterMode = FilterMode.Automatic
             .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
@@ -166,12 +185,13 @@ Public Class F0_DetalleMovimiento
         Try
             ConfigInicialVinculado(grProductos, dtProductoAll, "Movimiento")
             ColNoVisible(grProductos, "item")
-            ColAL(grProductos, "yfCodAux1", "Item Nuevo", 50)
-            ColAL(grProductos, "yfCodAux2", "Item Antiguo", 50)
-            ColAL(grProductos, "categoria", "Categoria", 90)
             ColAL(grProductos, "CodigoFabrica", "Cod. Fabrica", 90)
             ColAL(grProductos, "marca", "Cod. Marca", 90)
-            ColAL(grProductos, "Medida", "Medida", 80)
+            ColAL(grProductos, "yfCodAux1", "Item Nuevo", 90)
+            ColAL(grProductos, "yfCodAux2", "Item Antiguo", 90)
+            ColNoVisible(grProductos, "categoria")
+
+            ColNoVisible(grProductos, "Medida")
             ColAL(grProductos, "yfcdprod1", "Producto", 350)
             ColAL(grProductos, "grupo1", dtname.Rows(0).Item("grupo 1").ToString, 80)
             ColAL(grProductos, "grupo2", dtname.Rows(0).Item("grupo 2").ToString, 80)
@@ -307,20 +327,20 @@ Public Class F0_DetalleMovimiento
     End Sub
 
     Private Sub tbProducto_TextChanged(sender As Object, e As EventArgs) Handles tbProducto.TextChanged
-        Dim charSequence As String
-        charSequence = tbProducto.Text.ToUpper
-        If (charSequence.Trim = String.Empty) Then
+        'Dim charSequence As String
+        'charSequence = tbProducto.Text.ToUpper
+        'If (charSequence.Trim = String.Empty) Then
 
 
-            grProductos.DataSource = dtProductoAll.Copy
-        Else
-            Dim Len As Integer = tbProducto.Text.Length
-            Dim Ch As String = tbProducto.Text(Len - 1)
-            If (Ch.Trim = String.Empty) Then
-                FiltrarProducto()
-            End If
+        '    grProductos.DataSource = dtProductoAll.Copy
+        'Else
+        '    Dim Len As Integer = tbProducto.Text.Length
+        '    Dim Ch As String = tbProducto.Text(Len - 1)
+        '    If (Ch.Trim = String.Empty) Then
+        '        FiltrarProducto()
+        '    End If
 
-        End If
+        'End If
 
     End Sub
 
@@ -522,6 +542,7 @@ Public Class F0_DetalleMovimiento
                 Dim nombre As String = dt.Rows(i).Item("yfcdprod1").ToString.ToUpper +
                     " " + dt.Rows(i).Item("CodigoFabrica").ToString.ToUpper +
                     " " + dt.Rows(i).Item("grupo1").ToString.ToUpper +
+                    " " + dt.Rows(i).Item("marca").ToString.ToUpper +
                     " " + dt.Rows(i).Item("Medida").ToString.ToUpper +
                     " " + dt.Rows(i).Item("yfCodAux1").ToString.ToUpper +
                     " " + dt.Rows(i).Item("yfCodaux2").ToString.ToUpper

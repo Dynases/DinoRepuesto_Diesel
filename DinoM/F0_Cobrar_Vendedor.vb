@@ -29,6 +29,7 @@ Public Class F0_Cobrar_Vendedor
     Public TotalTarjeta As Double = 0
     Public TipoCambio As Double = 0
     Public TipoVenta As Integer = 1
+    Public SaldoF As Double = 0
     Public FechaVenc As Date
     Public Banco As Integer = 0
     Public Glosa As String
@@ -39,6 +40,8 @@ Public Class F0_Cobrar_Vendedor
 
     Dim Saldo As Double = 0
     Dim Total As Double = 0
+
+    Dim bandera As Boolean = False
 
 #End Region
 #Region "METODOS PRIVADOS"
@@ -67,7 +70,7 @@ Public Class F0_Cobrar_Vendedor
         ButtonX3.Enabled = False
         ButtonX1.Enabled = True
         'tbCodigo.ReadOnly = False
-        tbFechaVenta.Enabled = True
+        tbFechaVenta.Enabled = False
         'tbMonto.ReadOnly = True
         'tbNombre.ReadOnly = False
         tbGlosa.ReadOnly = False
@@ -390,9 +393,8 @@ Public Class F0_Cobrar_Vendedor
         _prCargarTablaPagos2(-1)
         '_prAddDetalle()
         tbCodigo.Focus()
-
-
-
+        tbMonto.Clear()
+        tbGlosa.Clear()
     End Sub
     Private Sub _prAsignarPermisos()
 
@@ -611,6 +613,7 @@ Public Class F0_Cobrar_Vendedor
             tbCodigo.Text = .GetValue("ydcod")
             tbNombre.Text = .GetValue("yddesc")
             tbMonto.Text = .GetValue("pcmon")
+            tbFechaVenta.Value = .GetValue("pcfec")
             tbGlosa.Text = .GetValue("pcglo")
             tbTotalCobrado.Text = .GetValue("pccdo")
             tbTotalCobrar.Text = .GetValue("pccob")
@@ -697,8 +700,6 @@ Public Class F0_Cobrar_Vendedor
 
     End Sub
     Public Sub _prCalcularTotal()
-
-
         tbSaldo.Text = gr_detalle.GetTotal(gr_detalle.RootTable.Columns("pendiente"), AggregateFunction.Sum)
         tbTotalCobrar.Text = gr_detalle.GetTotal(gr_detalle.RootTable.Columns("PagoAc"), AggregateFunction.Sum) + gr_detalle.GetTotal(gr_detalle.RootTable.Columns("pendiente"), AggregateFunction.Sum)
     End Sub
@@ -778,6 +779,7 @@ Public Class F0_Cobrar_Vendedor
                 '              a.tcnumi, NroDoc,as factura, a.tctv1numi, a.tcty4clie, cliente, a.tcty4vend, vendedor, a.tcfdoc
                 ',a.tcfvencre,totalfactura, pendiente, PagoAc, Pagar
                 If (pago > 0) Then
+                    'Dim dt1 As DataTable = TraerTv0012()
                     dt.Rows.Add(0, dtcobro.Rows(i).Item("tcnumi"), 0, dtcobro.Rows(i).Item("NroDoc"),
                                             Now.Date, pago, 0, 1, 0, Now.Date,
                                             "", "", Bin.ToArray, 0)
@@ -796,12 +798,14 @@ Public Class F0_Cobrar_Vendedor
         If (tbCodigo.Text = String.Empty) Then
             ToastNotification.Show(Me, "No existen datos validos".ToUpper, img2, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
             Return
-
         End If
         If (CType(gr_detalle.DataSource, DataTable).Rows.Count <= 0) Then
             ToastNotification.Show(Me, "No existen datos validos".ToUpper, img2, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
             Return
-
+        End If
+        If (tbTotalCobrado.Value > CDbl(tbMonto.Text)) Then
+            ToastNotification.Show(Me, "El total cobrado no equivale al monto ".ToUpper, img2, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
+            Return
         End If
         Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
         Dim bandera As Boolean = False
@@ -937,6 +941,7 @@ Public Class F0_Cobrar_Vendedor
         Next
         Dim id As DataTable = _GuadarCobroCliente(_CodCliente, tbGlosa.Text, CDbl(tbMonto.Text), tbFechaVenta.Value.ToString("dd/MM/yyyy"), CDbl(tbTotalCobrar.Text), CDbl(tbTotalCobrado.Text), CDbl(tbSaldo.Text), CType(gr_detalle.DataSource, DataTable))
         Dim numi As Integer = id.Rows(0).Item("numi")
+        cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrado.Text)
         _prAgregarCobro(numi, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
 
         If TotalTarjeta > 0 Then
@@ -958,7 +963,7 @@ Public Class F0_Cobrar_Vendedor
 
         ef.TotalVenta = Math.Round(tbTotalCobrar.Value, 2)
         ef.tipoVenta = 0
-
+        ef.cliente = _CodCliente
         ef.ShowDialog()
         Dim bandera As Boolean = False
         bandera = ef.Bandera
@@ -974,14 +979,14 @@ Public Class F0_Cobrar_Vendedor
             Banco = ef.cbBanco.Value
             Glosa = ef.tbGlosa.Text
             CostoEnvio = ef.tbCostoEnvio.Value
+            SaldoF = ef.SFavor.Value
 
+            tbMonto.Text = CStr(CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio)))
+            Saldo = CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
+            Total = CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
 
-            tbMonto.Text = CStr(CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio)))
-            Saldo = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
-            Total = CDbl(TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
+            'btnAutoChekear.PerformClick()
 
-            btnAutoChekear.PerformClick()
-            cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrado.Text)
 
         Else
             ToastNotification.Show(Me, "No se realizó ninguna operación ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
@@ -1098,6 +1103,14 @@ Public Class F0_Cobrar_Vendedor
 
     Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
         GenerarReporte()
+    End Sub
+
+    Private Sub tbCodigo_TextChanged(sender As Object, e As EventArgs) Handles tbCodigo.TextChanged
+
+    End Sub
+
+    Private Sub tbNombre_TextChanged(sender As Object, e As EventArgs) Handles tbNombre.TextChanged
+
     End Sub
 
 

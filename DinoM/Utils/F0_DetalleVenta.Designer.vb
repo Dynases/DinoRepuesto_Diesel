@@ -119,7 +119,7 @@ Partial Class F0_DetalleVenta
         Me.grProductos.ColumnAutoResize = True
         Me.grProductos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.grProductos.FocusStyle = Janus.Windows.GridEX.FocusStyle.Solid
-        Me.grProductos.Font = New System.Drawing.Font("Calibri", 10.2!)
+        Me.grProductos.Font = New System.Drawing.Font("Calibri", 9.2!)
         Me.grProductos.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.HeaderFormatStyle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(49, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.grProductos.HideSelection = Janus.Windows.GridEX.HideSelection.Highlight

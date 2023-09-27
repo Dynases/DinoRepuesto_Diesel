@@ -196,7 +196,7 @@ Partial Class F0_DetalleCompras
         Me.Panel3.Controls.Add(Me.tbProducto)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel3.Location = New System.Drawing.Point(0, 0)
-        Me.Panel3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(964, 41)
         Me.Panel3.TabIndex = 1
@@ -226,7 +226,7 @@ Partial Class F0_DetalleCompras
         Me.ButtonX1.Image = Global.DinoM.My.Resources.Resources.refresh_1
         Me.ButtonX1.ImageFixedSize = New System.Drawing.Size(30, 30)
         Me.ButtonX1.Location = New System.Drawing.Point(543, 3)
-        Me.ButtonX1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.ButtonX1.Margin = New System.Windows.Forms.Padding(2)
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(150, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeMobile2014
@@ -241,7 +241,7 @@ Partial Class F0_DetalleCompras
         Me.btnAgregar.Image = Global.DinoM.My.Resources.Resources.atras1
         Me.btnAgregar.ImageFixedSize = New System.Drawing.Size(30, 30)
         Me.btnAgregar.Location = New System.Drawing.Point(388, 2)
-        Me.btnAgregar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.btnAgregar.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAgregar.Name = "btnAgregar"
         Me.btnAgregar.Size = New System.Drawing.Size(152, 32)
         Me.btnAgregar.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeMobile2014
@@ -287,7 +287,7 @@ Partial Class F0_DetalleCompras
         Me.ClientSize = New System.Drawing.Size(970, 599)
         Me.Controls.Add(Me.GPanelProductos)
         Me.Controls.Add(Me.GroupPanel1)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "F0_DetalleCompras"
         Me.Text = "F0_DetalleCompras"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized

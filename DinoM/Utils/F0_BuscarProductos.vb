@@ -47,17 +47,19 @@ Public Class F0_BuscarProductos
 
         End With
         With grProductos.RootTable.Columns("yfCodAux1")
-            .Width = 50
+            .Width = 90
             .CellStyle.LineAlignment = TextAlignment.Near
             .Caption = "Item Nuevo"
             .Visible = True
+            .MaxLines = 2
 
         End With
         With grProductos.RootTable.Columns("yfCodAux2")
-            .Width = 50
+            .Width = 90
             .CellStyle.LineAlignment = TextAlignment.Near
             .Caption = "Item Antiguo"
             .Visible = True
+            .MaxLines = 2
 
         End With
         With grProductos.RootTable.Columns("Categoria")
@@ -66,7 +68,7 @@ Public Class F0_BuscarProductos
             .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = True
+            .Visible = False
         End With
         With grProductos.RootTable.Columns("Marca")
             .Width = 90
@@ -75,6 +77,7 @@ Public Class F0_BuscarProductos
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
+            .MaxLines = 2
         End With
         With grProductos.RootTable.Columns("CodigoFabrica")
             .Width = 100
@@ -83,6 +86,7 @@ Public Class F0_BuscarProductos
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Visible = True
+            .MaxLines = 2
         End With
         With grProductos.RootTable.Columns("Medida")
             .Width = 90
@@ -90,7 +94,8 @@ Public Class F0_BuscarProductos
             .MaxLines = 90
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .Visible = gb_CodigoBarra
+            .Visible = True
+            .MaxLines = 2
         End With
 
 
@@ -102,6 +107,7 @@ Public Class F0_BuscarProductos
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
             .Caption = "Descripcion"
+            .MaxLines = 2
         End With
 
 
@@ -117,6 +123,7 @@ Public Class F0_BuscarProductos
                 .Caption = dtname.Rows(0).Item("Grupo 1").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
                 .Visible = True
+                .MaxLines = 2
                 .CellStyle.LineAlignment = TextAlignment.Near
             End With
             With grProductos.RootTable.Columns("grupo2")
@@ -124,6 +131,7 @@ Public Class F0_BuscarProductos
                 .Caption = dtname.Rows(0).Item("Grupo 2").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
                 .Visible = True
+                .MaxLines = 2
                 .CellStyle.LineAlignment = TextAlignment.Near
             End With
 
@@ -145,6 +153,7 @@ Public Class F0_BuscarProductos
                 .Caption = "Grupo 1"
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
                 .Visible = True
+                .MaxLines = 2
             End With
             With grProductos.RootTable.Columns("grupo2")
                 .Width = 90
@@ -203,9 +212,9 @@ Public Class F0_BuscarProductos
             .FormatString = "0.00"
             .Visible = True
             .Caption = "Stock"
-            .MaxLines = 100
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
+            .MaxLines = 2
         End With
         'With grProductos.RootTable.Columns("Almacen")
         '    .Width = 90
@@ -217,26 +226,29 @@ Public Class F0_BuscarProductos
             .Width = 80
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
-            .Caption = "Facturado"
+            .Caption = "P. Publico"
             .FormatString = "0.00"
+            .MaxLines = 2
         End With
         With grProductos.RootTable.Columns("PrecioPublico")
             .Width = 80
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
-            .Caption = "Publico"
+            .Caption = "P. Taller"
             .FormatString = "0.00"
+            .MaxLines = 2
         End With
         With grProductos.RootTable.Columns("PrecioMecanico")
             .Width = 80
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
             .Visible = True
-            .Caption = "Mecanico"
+            .Caption = "P. GDB"
             .FormatString = "0.00"
+            .MaxLines = 2
         End With
 
         With grProductos
-            .DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
             .FilterMode = FilterMode.Automatic
             .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
             .GroupByBoxVisible = False

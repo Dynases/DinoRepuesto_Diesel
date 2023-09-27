@@ -130,7 +130,8 @@ Public Class F0_Movimiento
         'cbConcepto.ReadOnly = False
         tbObservacion.ReadOnly = False
         tbFecha.IsInputReadOnly = False
-        cbAlmacenOrigen.ReadOnly = False
+        'cbAlmacenOrigen.ReadOnly = False
+        cbAlmacenOrigen.Value = gi_userSuc
         grmovimiento.Enabled = False
         ''  tbCliente.ReadOnly = False  por que solo podra seleccionar Cliente
         ''  tbVendedor.ReadOnly = False
@@ -138,8 +139,9 @@ Public Class F0_Movimiento
             cbAlmacenOrigen.ReadOnly = True
             cbConcepto.ReadOnly = True
         Else
-            cbAlmacenOrigen.ReadOnly = False
+            'cbAlmacenOrigen.ReadOnly = False
             cbConcepto.ReadOnly = False
+            cbAlmacenOrigen.Value = gi_userSuc
 
         End If
         btnGrabar.Enabled = True
@@ -1872,6 +1874,77 @@ salirIf:
 
     Private Sub grdetalle_FormattingRow(sender As Object, e As RowLoadEventArgs) Handles grdetalle.FormattingRow
 
+    End Sub
+
+    Private Sub P_GenerarReporte()
+        Dim usuario As String = ""
+        If (gi_NumiVenedor > 0) Then
+
+            Dim dt As DataTable
+            dt = L_fnListarEmpleado()
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+                If (dt.Rows(i).Item("ydnumi") = gi_NumiVenedor) Then
+                    usuario = dt.Rows(i).Item("yddesc")
+                End If
+
+            Next
+
+        End If
+
+        If cbConcepto.Value <> 6 Then
+
+            Dim dt As DataTable = l_ReporteMovimiento(tbCodigo.Text)
+
+
+            If Not IsNothing(P_Global.Visualizador) Then
+                P_Global.Visualizador.Close()
+            End If
+
+            P_Global.Visualizador = New Visualizador
+
+            Dim objrep As New R_ReporteMovimientoIngreso
+            objrep.SetDataSource(dt)
+            objrep.SetParameterValue("usuario", IIf(usuario = "", L_Usuario, usuario))
+            objrep.SetParameterValue("sucursal", cbAlmacenOrigen.Text)
+            objrep.SetParameterValue("tipo", IIf(cbConcepto.Value = 1, "BOLETA DE INGRESO", "BOLETA DE SALIDA"))
+            objrep.SetParameterValue("concepto", cbConcepto.Text)
+            objrep.SetParameterValue("glosa", tbObservacion.Text)
+            objrep.SetParameterValue("fecha", tbFecha.Value.ToString("dd/MM/yyyy"))
+            objrep.SetParameterValue("doc", tbCodigo.Text)
+
+            P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+            P_Global.Visualizador.ShowDialog() 'Comentar
+            P_Global.Visualizador.BringToFront()
+
+        Else
+
+            Dim dt As DataTable = l_ReporteMovimiento(tbCodigo.Text)
+
+
+            If Not IsNothing(P_Global.Visualizador) Then
+                P_Global.Visualizador.Close()
+            End If
+
+            P_Global.Visualizador = New Visualizador
+
+            Dim objrep As New R_ReporteMovimientoTraspaso
+            objrep.SetDataSource(dt)
+            objrep.SetParameterValue("usuario", IIf(usuario = "", L_Usuario, usuario))
+            objrep.SetParameterValue("sucursal", cbAlmacenOrigen.Text)
+            objrep.SetParameterValue("tipo", IIf(cbConcepto.Value = 1, "BOLETA DE INGRESO", "BOLETA DE SALIDA"))
+            objrep.SetParameterValue("concepto", cbConcepto.Text)
+            objrep.SetParameterValue("glosa", tbObservacion.Text)
+            objrep.SetParameterValue("fecha", tbFecha.Value.ToString("dd/MM/yyyy"))
+            objrep.SetParameterValue("doc", tbCodigo.Text)
+            objrep.SetParameterValue("destino", cbDepositoDestino.Text)
+
+            P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+            P_Global.Visualizador.ShowDialog() 'Comentar
+            P_Global.Visualizador.BringToFront()
+        End If
+    End Sub
+    Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
+        P_GenerarReporte()
     End Sub
 
 #End Region

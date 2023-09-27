@@ -14,6 +14,8 @@ Public Class F0_DetalleVenta
     Public CategoriaPrecio As Integer
 
     Public Bandera As Boolean = False
+
+    Public Tipo As Boolean = True  'True = Venta       False= Proforma
     Public Sub IniciarTodod()
         CargarProductos()
         CargarProductosVentas()
@@ -407,7 +409,7 @@ Public Class F0_DetalleVenta
                 .AllowSort = False
             End With
             With grProductos.RootTable.Columns("grupo4")
-                .Width = 120
+                .Width = 60
                 .Caption = dtname.Rows(0).Item("Grupo 4").ToString
                 .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
                 .Visible = True
@@ -504,7 +506,7 @@ Public Class F0_DetalleVenta
             .WordWrap = True
         End With
         With grProductos
-            .DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
             .FilterMode = FilterMode.Automatic
             .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
             .GroupByBoxVisible = False
@@ -587,7 +589,9 @@ Public Class F0_DetalleVenta
                     ef.CategoriaPrecio = CategoriaPrecio
                     ef.IdProducto = grProductos.GetValue("Item")
                     ef.NameProducto = grProductos.GetValue("yfcdprod1")
-
+                    If Tipo = False Then
+                        ef.tipo1 = 1
+                    End If
                     ef.ShowDialog()
                     Dim bandera As Boolean = False
                     bandera = ef.band

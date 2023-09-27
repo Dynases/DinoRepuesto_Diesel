@@ -21,18 +21,23 @@ Public Class F1_MontoPagar
     Public Nit As String = ""
     Public RazonSocial As String = ""
     Public TipoCambio As Double = 0
-    Public tipoVenta As Integer = 1
+    Public tipoVenta As Integer = 0   'CREDITO    CONTADO
     Public Cobrado As Boolean
     Public Banc As Integer
     Public CostoEnvio As Double
     Public cambio As Double
-    Public tipo As Integer = 0
-
+    Public tipo As Integer = 0    'COMPRA=1    VENTA=0
+    Public cliente As Integer = 0
+    Public saldoF As Double
 
 
     Private Sub F1_MontoPagar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         _prCargarComboLibreria(cbCambioDolar, 7, 1)
         _prCargarComboBanco(cbBanco)
+
+        If cliente <> 0 Then
+            saldoF = L_prTraerSaldoAFavor(cliente)
+        End If
         cbCambioDolar.SelectedIndex = CType(cbCambioDolar.DataSource, DataTable).Rows.Count - 1
         If tipo = 1 Then
             txtCambio1.Visible = False
@@ -48,7 +53,7 @@ Public Class F1_MontoPagar
             tbMontoTarej.Enabled = False
             tbGlosa.Text = ""
             tbFechaVenc.Value = Now.Date
-
+            saldoT.Text = CDbl(saldoF).ToString
             lbBanco.Visible = False
             cbBanco.Visible = False
             lbGlosa.Visible = False
@@ -273,12 +278,13 @@ Public Class F1_MontoPagar
 
 
         If swTipoVenta.Value = True Then
-            If (tbMontoTarej.Value + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value >= (TotalVenta + tbCostoEnvio.Value)) Then
+            If (tbMontoTarej.Value + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value + SFavor.Value >= (TotalVenta + tbCostoEnvio.Value)) Then
                 Bandera = True
                 TotalBs = tbMontoBs.Value
                 TotalSus = tbMontoDolar.Value
                 TotalTarjeta = tbMontoTarej.Value
                 TipoCambio = cbCambioDolar.Text
+                saldoF = SFavor.Value
                 tipoVenta = 1
 
                 Me.Close()
@@ -288,12 +294,7 @@ Public Class F1_MontoPagar
                 tbMontoBs.Focus()
             End If
         Else
-            Bandera = True
-            TotalBs = tbMontoBs.Value
-            TotalSus = tbMontoDolar.Value
-            TotalTarjeta = tbMontoTarej.Value
-            TipoCambio = cbCambioDolar.Text
-            tipoVenta = 0
+
             If tipo = 1 Then
                 Dim dt As DataTable = revisarMontos(cbBanco.Value)
                 Dim cam As Double = Convert.ToDouble(cbCambioDolar.Text)
@@ -307,12 +308,25 @@ Public Class F1_MontoPagar
                             ToastNotification.Show(Me, "Ingrese un monto menor o igual al total ", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
 
                         Else
+                            Bandera = True
+                            TotalBs = tbMontoBs.Value
+                            TotalSus = tbMontoDolar.Value
+                            TotalTarjeta = tbMontoTarej.Value
+                            TipoCambio = cbCambioDolar.Text
+                            tipoVenta = 0
                             Me.Close()
                         End If
                     End If
                 End If
 
             Else
+                Bandera = True
+                TotalBs = tbMontoBs.Value
+                TotalSus = tbMontoDolar.Value
+                TotalTarjeta = tbMontoTarej.Value
+                TipoCambio = cbCambioDolar.Text
+                tipoVenta = 0
+                saldoF = SFavor.Value
                 Me.Close()
             End If
 
@@ -430,5 +444,9 @@ Public Class F1_MontoPagar
 
     Private Sub tbCostoEnvio_ValueChanged(sender As Object, e As EventArgs) Handles tbCostoEnvio.ValueChanged
         txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
+    End Sub
+
+    Private Sub saldoT_Click(sender As Object, e As EventArgs) Handles saldoT.Click
+
     End Sub
 End Class

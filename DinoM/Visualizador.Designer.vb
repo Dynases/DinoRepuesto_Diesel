@@ -23,19 +23,17 @@ Partial Class Visualizador
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.CrGeneral = New CrystalDecisions.Windows.Forms.CrystalReportViewer()
-        Me.R_NotaPagoCredito1 = New DinoM.R_NotaPagoCredito()
         Me.SuspendLayout()
         '
         'CrGeneral
         '
-        Me.CrGeneral.ActiveViewIndex = 0
+        Me.CrGeneral.ActiveViewIndex = -1
         Me.CrGeneral.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.CrGeneral.Cursor = System.Windows.Forms.Cursors.Default
         Me.CrGeneral.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CrGeneral.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CrGeneral.Location = New System.Drawing.Point(0, 0)
         Me.CrGeneral.Name = "CrGeneral"
-        Me.CrGeneral.ReportSource = Me.R_NotaPagoCredito1
         Me.CrGeneral.Size = New System.Drawing.Size(584, 461)
         Me.CrGeneral.TabIndex = 0
         Me.CrGeneral.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
@@ -56,5 +54,4 @@ Partial Class Visualizador
     Friend WithEvents StBtn_Volver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents StBtn_Max As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents CrGeneral As CrystalDecisions.Windows.Forms.CrystalReportViewer
-    Friend WithEvents R_NotaPagoCredito1 As R_NotaPagoCredito
 End Class

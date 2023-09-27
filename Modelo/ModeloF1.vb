@@ -59,7 +59,7 @@ Public Class ModeloF1
                     Else
                         .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
                         .CellStyle.LineAlignment = TextAlignment.Near
-                        .MaxLines = 100
+                        .MaxLines = 2
                         .WordWrap = True
                     End If
 

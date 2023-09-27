@@ -1,5 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class F0_MCompras
+
     Inherits Modelo.ModeloF0
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -23,7 +24,8 @@ Partial Class F0_MCompras
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_MCompras))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_Transito))
+        Dim cbMoneda_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.PanelDetalle = New System.Windows.Forms.Panel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -45,6 +47,7 @@ Partial Class F0_MCompras
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cbMoneda = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.btnBuscarProforma = New DevComponents.DotNetBar.ButtonX()
         Me.SwProforma = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
@@ -133,6 +136,7 @@ Partial Class F0_MCompras
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbMoneda, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbTipoCambio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanelFactura2.SuspendLayout()
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -231,6 +235,7 @@ Partial Class F0_MCompras
         'btnModificar
         '
         Me.btnModificar.TabIndex = 3
+        Me.btnModificar.Visible = False
         '
         'btnNuevo
         '
@@ -259,6 +264,10 @@ Partial Class F0_MCompras
         '
         'btnPrimero
         '
+        '
+        'MPanelUserAct
+        '
+        Me.MPanelUserAct.Location = New System.Drawing.Point(-200, 0)
         '
         'MRlAccion
         '
@@ -681,6 +690,7 @@ Partial Class F0_MCompras
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbMoneda)
         Me.Panel2.Controls.Add(Me.btnBuscarProforma)
         Me.Panel2.Controls.Add(Me.SwProforma)
         Me.Panel2.Controls.Add(Me.LabelX18)
@@ -720,6 +730,21 @@ Partial Class F0_MCompras
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1311, 207)
         Me.Panel2.TabIndex = 234
+        '
+        'cbMoneda
+        '
+        cbMoneda_DesignTimeLayout.LayoutString = resources.GetString("cbMoneda_DesignTimeLayout.LayoutString")
+        Me.cbMoneda.DesignTimeLayout = cbMoneda_DesignTimeLayout
+        Me.cbMoneda.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbMoneda.Location = New System.Drawing.Point(592, 58)
+        Me.cbMoneda.Name = "cbMoneda"
+        Me.cbMoneda.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbMoneda.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbMoneda.SelectedIndex = -1
+        Me.cbMoneda.SelectedItem = Nothing
+        Me.cbMoneda.Size = New System.Drawing.Size(120, 22)
+        Me.cbMoneda.TabIndex = 682
+        Me.cbMoneda.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'btnBuscarProforma
         '
@@ -865,6 +890,7 @@ Partial Class F0_MCompras
         Me.swMoneda.TabIndex = 672
         Me.swMoneda.Value = True
         Me.swMoneda.ValueObject = "Y"
+        Me.swMoneda.Visible = False
         '
         'swRetencion
         '
@@ -873,7 +899,7 @@ Partial Class F0_MCompras
         '
         Me.swRetencion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.swRetencion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.swRetencion.Location = New System.Drawing.Point(592, 166)
+        Me.swRetencion.Location = New System.Drawing.Point(592, 162)
         Me.swRetencion.Name = "swRetencion"
         Me.swRetencion.OffBackColor = System.Drawing.Color.RoyalBlue
         Me.swRetencion.OffText = "NO"
@@ -892,7 +918,7 @@ Partial Class F0_MCompras
         Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX13.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX13.Location = New System.Drawing.Point(415, 166)
+        Me.LabelX13.Location = New System.Drawing.Point(415, 162)
         Me.LabelX13.Name = "LabelX13"
         Me.LabelX13.Size = New System.Drawing.Size(70, 23)
         Me.LabelX13.TabIndex = 372
@@ -906,7 +932,7 @@ Partial Class F0_MCompras
         '
         Me.swConsigna.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.swConsigna.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.swConsigna.Location = New System.Drawing.Point(592, 139)
+        Me.swConsigna.Location = New System.Drawing.Point(592, 135)
         Me.swConsigna.Name = "swConsigna"
         Me.swConsigna.OffBackColor = System.Drawing.Color.Teal
         Me.swConsigna.OffText = "NO"
@@ -925,7 +951,7 @@ Partial Class F0_MCompras
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX12.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX12.Location = New System.Drawing.Point(415, 137)
+        Me.LabelX12.Location = New System.Drawing.Point(415, 133)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(90, 23)
         Me.LabelX12.TabIndex = 370
@@ -1674,6 +1700,7 @@ Partial Class F0_MCompras
         Me.btnTraspaso.TabIndex = 14
         Me.btnTraspaso.Text = "TRASPASO"
         Me.btnTraspaso.TextColor = System.Drawing.Color.White
+        Me.btnTraspaso.Visible = False
         '
         'btnVerPagos
         '
@@ -1728,14 +1755,14 @@ Partial Class F0_MCompras
         Me.btnImportar.TextColor = System.Drawing.Color.White
         Me.btnImportar.Visible = False
         '
-        'F0_MCompras
+        'F0_Transito
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1350, 681)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "F0_MCompras"
+        Me.Name = "F0_Transito"
         Me.Text = "F0_MCompras"
         Me.Controls.SetChildIndex(Me.PanelPrincipal, 0)
         Me.PanelSuperior.ResumeLayout(False)
@@ -1773,6 +1800,7 @@ Partial Class F0_MCompras
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbMoneda, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbTipoCambio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanelFactura2.ResumeLayout(False)
         CType(Me.cbSucursal, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1863,4 +1891,5 @@ Partial Class F0_MCompras
     Protected WithEvents btnVerPagos As DevComponents.DotNetBar.ButtonX
     Protected WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnImportar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents cbMoneda As Janus.Windows.GridEX.EditControls.MultiColumnCombo
 End Class

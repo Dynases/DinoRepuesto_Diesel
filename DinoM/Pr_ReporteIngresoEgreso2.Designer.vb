@@ -34,7 +34,6 @@ Partial Class Pr_ReporteIngresoEgreso2
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.swCambios = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.CLIENTESS1 = New DinoM.CLIENTESS()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -147,8 +146,6 @@ Partial Class Pr_ReporteIngresoEgreso2
         '
         'MReportViewer
         '
-        Me.MReportViewer.ActiveViewIndex = 0
-        Me.MReportViewer.ReportSource = Me.CLIENTESS1
         Me.MReportViewer.Size = New System.Drawing.Size(889, 625)
         Me.MReportViewer.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         Me.MReportViewer.ToolPanelWidth = 200
@@ -429,5 +426,4 @@ Partial Class Pr_ReporteIngresoEgreso2
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents swCambios As DevComponents.DotNetBar.Controls.SwitchButton
-    Friend WithEvents CLIENTESS1 As CLIENTESS
 End Class

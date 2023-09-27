@@ -145,6 +145,7 @@ Public Class Pr_KardexCredito
     End Sub
 
     Private Sub Pr_VentasAtendidas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         _prIniciarTodo()
 
     End Sub

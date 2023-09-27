@@ -27,7 +27,7 @@ Public Class JanusExtension
             .CellStyle.TextAlignment = TextAlignment.Near
             .CellStyle.LineAlignment = TextAlignment.Near
             .WordWrap = True
-            .MaxLines = 20
+            .MaxLines = 2
             .Visible = True
             .AllowSort = False
             ColPropiedadesComun(grid, key, nombre, ancho)

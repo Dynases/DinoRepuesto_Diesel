@@ -4152,27 +4152,50 @@ salirIf:
     End Sub
 
     Private Sub tbCliente_TextChanged(sender As Object, e As EventArgs) Handles tbCliente.TextChanged
-        Dim dt As DataTable = L_fnTraerTipoPrecio(_CodCliente)
-        If dt.Rows.Count <> 0 Then
-            Dim cod As Integer = dt.Rows(0).Item("ydcat")
-            cbPrecio.Value = cod
-        Else
-            cbPrecio.SelectedIndex = 0
-        End If
-        If _fnAccesible() Then
-            If verificarCredito(_CodCliente) Then
-                swTipoVenta.Value = False
-            Else
-                swTipoVenta.Value = True
-                swTipoVenta.IsReadOnly = True
-            End If
-        End If
+        'Dim dt As DataTable = L_fnTraerTipoPrecio(_CodCliente)
+        'If dt.Rows.Count <> 0 Then
+        '    Dim cod As Integer = dt.Rows(0).Item("ydcat")
+        '    cbPrecio.Value = cod
+        'Else
+        '    cbPrecio.SelectedIndex = 0
+        'End If
+        'If _fnAccesible() Then
+        '    'If verificarCredito(_CodCliente) Then
+        '    '    swTipoVenta.Value = False
+        '    'Else
+        '    '    swTipoVenta.Value = True
+        '    '    swTipoVenta.IsReadOnly = True
+        '    'End If
+        'End If
 
     End Sub
 
     Private Sub Panel4_Paint(sender As Object, e As PaintEventArgs) Handles Panel4.Paint
-
+        If IsNumeric(cbCliente.Value) Then
+            If cbCliente.Value > 0 Then
+                _CodCliente = cbCliente.Value
+                Dim dt As DataTable = L_fnTraerTipoPrecio(_CodCliente)
+                If dt.Rows.Count <> 0 Then
+                    Dim cod As Integer = dt.Rows(0).Item("ydcat")
+                    cbPrecio.Value = cod
+                Else
+                    cbPrecio.SelectedIndex = 0
+                End If
+                If _fnAccesible() Then
+                    Dim dt2 As DataTable = verificarCredito(_CodCliente)
+                    If dt2.Rows.Count > 0 Then
+                        _dias = dt2.Rows(0).Item("yddias")
+                        swTipoVenta.Value = False
+                        swTipoVenta.IsReadOnly = False
+                    Else
+                        swTipoVenta.Value = True
+                        swTipoVenta.IsReadOnly = True
+                    End If
+                End If
+            End If
+        End If
     End Sub
+
 
 
 

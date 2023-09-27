@@ -32,13 +32,18 @@ Public Class MetodoDatos
     Public Shared Function EjecutarComandoSelect(Comando As SqlCommand) As DataTable
         Dim _tabla As New DataTable()
         Try
-            'Comando.Connection.Open()
+
             Dim _adaptador As New SqlDataAdapter 'SqlDataAdapter()
             _adaptador.SelectCommand = Comando
 
             _adaptador.Fill(_tabla)
         Catch ex As Exception
-            MsgBox(ex.Message)
+            If Comando.Connection.State = False Then
+                Comando.Connection.Open()
+                EjecutarComandoSelect(Comando)
+            Else
+                MsgBox(ex.Message)
+            End If
             'Finally
             '    Comando.Connection.Close()
         End Try
@@ -50,11 +55,18 @@ Public Class MetodoDatos
         Dim _Err As Boolean = False
 
         Try
+
             'Comando.Connection.Open()
             Comando.ExecuteNonQuery()
         Catch ex As Exception
-            MsgBox(ex.Message)
-            _Err = True
+            If Comando.Connection.State = False Then
+                Comando.Connection.Open()
+                EjecutarInsert(Comando)
+            Else
+                MsgBox(ex.Message)
+                _Err = True
+            End If
+
             'Finally
             '    Comando.Connection.Close()
         End Try
@@ -63,19 +75,27 @@ Public Class MetodoDatos
 
     Public Shared Function EjecutarProcedimiento(Comando As SqlCommand) As DataTable
         Dim _tabla As New DataTable()
-        'Try
-        'Comando.Connection.Open()
-        Dim _adaptador As New SqlDataAdapter 'SqlDataAdapter()
+
+        Try
+            'Comando.Connection.Open()
+            Dim _adaptador As New SqlDataAdapter 'SqlDataAdapter()
             _adaptador.SelectCommand = Comando
+            _adaptador.SelectCommand.CommandTimeout = 120
+            _adaptador.Fill(_tabla)
+            '_adaptador.Dispose()
 
-        _adaptador.Fill(_tabla)
-        '_adaptador.Dispose()
+        Catch ex As Exception
+            If Comando.Connection.State = False Then
+                Comando.Connection.Open()
+                EjecutarProcedimiento(Comando)
+            Else
+                MsgBox(ex.Message)
 
-        'Catch ex As Exception
-        '    MsgBox(ex.Message)
-        '    'Finally
-        '    '    Comando.Connection.Close()
-        'End Try
+            End If
+            '    MsgBox(ex.Message)
+            '    'Finally
+            '    '    Comando.Connection.Close()
+        End Try
         Return _tabla
     End Function
 

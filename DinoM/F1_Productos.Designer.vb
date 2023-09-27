@@ -71,6 +71,10 @@ Partial Class F1_Productos
         Me.tbCodigo = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.tbSiatAna = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.tbSiatR = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.label = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX30 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX28 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX27 = New DevComponents.DotNetBar.LabelX()
         Me.tbCodAux1 = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -109,6 +113,11 @@ Partial Class F1_Productos
         Me.pbImgProdu = New System.Windows.Forms.PictureBox()
         Me.PanelListImagenes = New System.Windows.Forms.Panel()
         Me.SuperTabItem_Imagenes = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.PanelHistPrecios = New System.Windows.Forms.Panel()
+        Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.JG_HistPrecios = New Janus.Windows.GridEX.GridEX()
+        Me.HistPrecios = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.lbPorcentajeVentaMecanico = New DevComponents.DotNetBar.LabelX()
@@ -136,11 +145,6 @@ Partial Class F1_Productos
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.dgjDetalleProducto = New Janus.Windows.GridEX.GridEX()
         Me.SuperTabItem_DetalleProducto = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.PanelHistPrecios = New System.Windows.Forms.Panel()
-        Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.JG_HistPrecios = New Janus.Windows.GridEX.GridEX()
-        Me.HistPrecios = New DevComponents.DotNetBar.SuperTabItem()
         Me.btExcel = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -202,6 +206,10 @@ Partial Class F1_Productos
         Me.PanelImagenes.SuspendLayout()
         Me.PanelVerImagen.SuspendLayout()
         CType(Me.pbImgProdu, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        Me.PanelHistPrecios.SuspendLayout()
+        Me.GroupPanel5.SuspendLayout()
+        CType(Me.JG_HistPrecios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.Panel7.SuspendLayout()
         CType(Me.tbPrecioFacturado, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -217,10 +225,6 @@ Partial Class F1_Productos
         CType(Me.tbDesde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.dgjDetalleProducto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        Me.PanelHistPrecios.SuspendLayout()
-        Me.GroupPanel5.SuspendLayout()
-        CType(Me.JG_HistPrecios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.MenuStripDescuento.SuspendLayout()
         Me.Panel8.SuspendLayout()
@@ -392,7 +396,7 @@ Partial Class F1_Productos
         Me.JGrM_Buscador.FocusCellFormatStyle.BackColor = System.Drawing.Color.Transparent
         Me.JGrM_Buscador.FocusCellFormatStyle.ForeColor = System.Drawing.Color.Black
         Me.JGrM_Buscador.FocusStyle = Janus.Windows.GridEX.FocusStyle.Solid
-        Me.JGrM_Buscador.Font = New System.Drawing.Font("Calibri", 10.2!)
+        Me.JGrM_Buscador.Font = New System.Drawing.Font("Calibri", 9.2!)
         Me.JGrM_Buscador.GridLineColor = System.Drawing.SystemColors.MenuHighlight
         Me.JGrM_Buscador.HeaderFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.JGrM_Buscador.HeaderFormatStyle.BackColorGradient = System.Drawing.Color.DodgerBlue
@@ -902,7 +906,7 @@ Partial Class F1_Productos
         '
         Me.swEstado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.swEstado.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.swEstado.Location = New System.Drawing.Point(168, 313)
+        Me.swEstado.Location = New System.Drawing.Point(169, 374)
         Me.swEstado.Name = "swEstado"
         Me.swEstado.OffBackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.swEstado.OffText = "PASIVO"
@@ -925,7 +929,7 @@ Partial Class F1_Productos
         Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX9.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX9.Location = New System.Drawing.Point(10, 311)
+        Me.LabelX9.Location = New System.Drawing.Point(11, 372)
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.SingleLineColor = System.Drawing.SystemColors.Control
         Me.LabelX9.Size = New System.Drawing.Size(79, 19)
@@ -1060,6 +1064,10 @@ Partial Class F1_Productos
         'Panel3
         '
         Me.Panel3.AutoScroll = True
+        Me.Panel3.Controls.Add(Me.tbSiatAna)
+        Me.Panel3.Controls.Add(Me.tbSiatR)
+        Me.Panel3.Controls.Add(Me.label)
+        Me.Panel3.Controls.Add(Me.LabelX30)
         Me.Panel3.Controls.Add(Me.LabelX28)
         Me.Panel3.Controls.Add(Me.LabelX27)
         Me.Panel3.Controls.Add(Me.tbCodAux1)
@@ -1089,6 +1097,66 @@ Partial Class F1_Productos
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(428, 329)
         Me.Panel3.TabIndex = 227
+        '
+        'tbSiatAna
+        '
+        '
+        '
+        '
+        Me.tbSiatAna.Border.Class = "TextBoxBorder"
+        Me.tbSiatAna.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbSiatAna.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
+        Me.tbSiatAna.Location = New System.Drawing.Point(169, 346)
+        Me.tbSiatAna.Name = "tbSiatAna"
+        Me.tbSiatAna.PreventEnterBeep = True
+        Me.tbSiatAna.Size = New System.Drawing.Size(126, 21)
+        Me.tbSiatAna.TabIndex = 245
+        '
+        'tbSiatR
+        '
+        '
+        '
+        '
+        Me.tbSiatR.Border.Class = "TextBoxBorder"
+        Me.tbSiatR.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbSiatR.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
+        Me.tbSiatR.Location = New System.Drawing.Point(169, 319)
+        Me.tbSiatR.Name = "tbSiatR"
+        Me.tbSiatR.PreventEnterBeep = True
+        Me.tbSiatR.Size = New System.Drawing.Size(126, 21)
+        Me.tbSiatR.TabIndex = 244
+        '
+        'label
+        '
+        Me.label.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.label.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.label.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.label.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.label.Location = New System.Drawing.Point(11, 340)
+        Me.label.Name = "label"
+        Me.label.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.label.Size = New System.Drawing.Size(125, 23)
+        Me.label.TabIndex = 243
+        Me.label.Text = "SIAT Ana:"
+        '
+        'LabelX30
+        '
+        Me.LabelX30.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX30.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX30.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX30.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX30.Location = New System.Drawing.Point(11, 317)
+        Me.LabelX30.Name = "LabelX30"
+        Me.LabelX30.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX30.Size = New System.Drawing.Size(125, 23)
+        Me.LabelX30.TabIndex = 242
+        Me.LabelX30.Text = "SIAT Ramiro:"
         '
         'LabelX28
         '
@@ -1631,10 +1699,10 @@ Partial Class F1_Productos
         Me.SuperTabControl_Imagenes_DetalleProducto.ControlBox.Name = ""
         Me.SuperTabControl_Imagenes_DetalleProducto.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl_Imagenes_DetalleProducto.ControlBox.MenuBox, Me.SuperTabControl_Imagenes_DetalleProducto.ControlBox.CloseBox})
         Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTabControl_Imagenes_DetalleProducto.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl_Imagenes_DetalleProducto.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControl_Imagenes_DetalleProducto.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControl_Imagenes_DetalleProducto.Name = "SuperTabControl_Imagenes_DetalleProducto"
@@ -1752,6 +1820,90 @@ Partial Class F1_Productos
         Me.SuperTabItem_Imagenes.GlobalItem = False
         Me.SuperTabItem_Imagenes.Name = "SuperTabItem_Imagenes"
         Me.SuperTabItem_Imagenes.Text = "IMAGENES"
+        '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.PanelHistPrecios)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(430, 319)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.HistPrecios
+        '
+        'PanelHistPrecios
+        '
+        Me.PanelHistPrecios.Controls.Add(Me.GroupPanel5)
+        Me.PanelHistPrecios.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PanelHistPrecios.Location = New System.Drawing.Point(0, 0)
+        Me.PanelHistPrecios.Margin = New System.Windows.Forms.Padding(2)
+        Me.PanelHistPrecios.Name = "PanelHistPrecios"
+        Me.PanelHistPrecios.Size = New System.Drawing.Size(430, 319)
+        Me.PanelHistPrecios.TabIndex = 2
+        '
+        'GroupPanel5
+        '
+        Me.GroupPanel5.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel5.Controls.Add(Me.JG_HistPrecios)
+        Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupPanel5.Font = New System.Drawing.Font("Georgia", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel5.Margin = New System.Windows.Forms.Padding(2)
+        Me.GroupPanel5.Name = "GroupPanel5"
+        Me.GroupPanel5.Size = New System.Drawing.Size(430, 319)
+        '
+        '
+        '
+        Me.GroupPanel5.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel5.Style.BackColorGradientAngle = 90
+        Me.GroupPanel5.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel5.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderBottomWidth = 1
+        Me.GroupPanel5.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel5.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderLeftWidth = 1
+        Me.GroupPanel5.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderRightWidth = 1
+        Me.GroupPanel5.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderTopWidth = 1
+        Me.GroupPanel5.Style.CornerDiameter = 4
+        Me.GroupPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel5.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel5.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel5.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel5.TabIndex = 0
+        Me.GroupPanel5.Text = "HISTÓRICO DE PRECIOS"
+        '
+        'JG_HistPrecios
+        '
+        Me.JG_HistPrecios.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.JG_HistPrecios.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.JG_HistPrecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.JG_HistPrecios.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.JG_HistPrecios.Location = New System.Drawing.Point(0, 0)
+        Me.JG_HistPrecios.Name = "JG_HistPrecios"
+        Me.JG_HistPrecios.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.JG_HistPrecios.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.JG_HistPrecios.Size = New System.Drawing.Size(424, 299)
+        Me.JG_HistPrecios.TabIndex = 1
+        Me.JG_HistPrecios.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
+        'HistPrecios
+        '
+        Me.HistPrecios.AttachedControl = Me.SuperTabControlPanel5
+        Me.HistPrecios.GlobalItem = False
+        Me.HistPrecios.Name = "HistPrecios"
+        Me.HistPrecios.Text = "H. PRECIOS"
         '
         'SuperTabControlPanel4
         '
@@ -2234,90 +2386,6 @@ Partial Class F1_Productos
         Me.SuperTabItem_DetalleProducto.Name = "SuperTabItem_DetalleProducto"
         Me.SuperTabItem_DetalleProducto.Text = "DETALLE PRODUCTO"
         '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.PanelHistPrecios)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(437, 319)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.HistPrecios
-        '
-        'PanelHistPrecios
-        '
-        Me.PanelHistPrecios.Controls.Add(Me.GroupPanel5)
-        Me.PanelHistPrecios.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PanelHistPrecios.Location = New System.Drawing.Point(0, 0)
-        Me.PanelHistPrecios.Margin = New System.Windows.Forms.Padding(2)
-        Me.PanelHistPrecios.Name = "PanelHistPrecios"
-        Me.PanelHistPrecios.Size = New System.Drawing.Size(437, 319)
-        Me.PanelHistPrecios.TabIndex = 2
-        '
-        'GroupPanel5
-        '
-        Me.GroupPanel5.CanvasColor = System.Drawing.SystemColors.Control
-        Me.GroupPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel5.Controls.Add(Me.JG_HistPrecios)
-        Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupPanel5.Font = New System.Drawing.Font("Georgia", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel5.Location = New System.Drawing.Point(0, 0)
-        Me.GroupPanel5.Margin = New System.Windows.Forms.Padding(2)
-        Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(437, 319)
-        '
-        '
-        '
-        Me.GroupPanel5.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel5.Style.BackColorGradientAngle = 90
-        Me.GroupPanel5.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel5.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderBottomWidth = 1
-        Me.GroupPanel5.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel5.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderLeftWidth = 1
-        Me.GroupPanel5.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderRightWidth = 1
-        Me.GroupPanel5.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderTopWidth = 1
-        Me.GroupPanel5.Style.CornerDiameter = 4
-        Me.GroupPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel5.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel5.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel5.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel5.TabIndex = 0
-        Me.GroupPanel5.Text = "HISTÓRICO DE PRECIOS"
-        '
-        'JG_HistPrecios
-        '
-        Me.JG_HistPrecios.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.JG_HistPrecios.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.JG_HistPrecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.JG_HistPrecios.HeaderFormatStyle.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.JG_HistPrecios.Location = New System.Drawing.Point(0, 0)
-        Me.JG_HistPrecios.Name = "JG_HistPrecios"
-        Me.JG_HistPrecios.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
-        Me.JG_HistPrecios.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.JG_HistPrecios.Size = New System.Drawing.Size(431, 299)
-        Me.JG_HistPrecios.TabIndex = 1
-        Me.JG_HistPrecios.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
-        '
-        'HistPrecios
-        '
-        Me.HistPrecios.AttachedControl = Me.SuperTabControlPanel5
-        Me.HistPrecios.GlobalItem = False
-        Me.HistPrecios.Name = "HistPrecios"
-        Me.HistPrecios.Text = "H. PRECIOS"
-        '
         'btExcel
         '
         Me.btExcel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
@@ -2599,6 +2667,10 @@ Partial Class F1_Productos
         Me.PanelImagenes.ResumeLayout(False)
         Me.PanelVerImagen.ResumeLayout(False)
         CType(Me.pbImgProdu, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        Me.PanelHistPrecios.ResumeLayout(False)
+        Me.GroupPanel5.ResumeLayout(False)
+        CType(Me.JG_HistPrecios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.Panel7.ResumeLayout(False)
         Me.Panel7.PerformLayout()
@@ -2616,10 +2688,6 @@ Partial Class F1_Productos
         CType(Me.tbDesde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.dgjDetalleProducto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        Me.PanelHistPrecios.ResumeLayout(False)
-        Me.GroupPanel5.ResumeLayout(False)
-        CType(Me.JG_HistPrecios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.MenuStripDescuento.ResumeLayout(False)
         Me.Panel8.ResumeLayout(False)
@@ -2752,4 +2820,8 @@ Partial Class F1_Productos
     Friend WithEvents LabelX26 As DevComponents.DotNetBar.LabelX
     Friend WithEvents tbCodAux2 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX28 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents label As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX30 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents tbSiatAna As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents tbSiatR As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

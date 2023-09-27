@@ -834,7 +834,7 @@ Public Class P_Principal
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         Dim frm As New F0_PagosCreditoCompraUlt
-        frm._nameButton = btInvMovimiento.Name
+        frm._nameButton = btComPagosCredito.Name
         frm._modulo = FP_COMPRAS
         'Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
         'frm._tab = tab3
@@ -1272,6 +1272,27 @@ Public Class P_Principal
         frm._nameButton = btVentasMaestra.Name
         frm._modulo = FP_VENTAS
 
+        frm.Show()
+    End Sub
+
+    Private Sub btTransito_Click(sender As Object, e As EventArgs) Handles btTransito.Click
+        Dim frm As New F0_Transito
+        frm._nameButton = btTransito.Name
+        frm._modulo = FP_COMPRAS
+
+        frm.Show()
+    End Sub
+
+    Private Sub FP_VENTAS_Click(sender As Object, e As EventArgs) Handles FP_VENTAS.Click
+
+    End Sub
+
+    Private Sub MetroTilePanelVentas_ItemClick(sender As Object, e As EventArgs) Handles MetroTilePanelVentas.ItemClick
+
+    End Sub
+
+    Private Sub btInformeCuentasCobrar_Click(sender As Object, e As EventArgs) Handles btInformeCuentasCobrar.Click
+        Dim frm As New Pr_InformeCuentasPorPoCobrar
         frm.Show()
     End Sub
 
