@@ -511,7 +511,7 @@ Partial Class Pr_InformeCuentasPorPoCobrar
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Pr_InformeCuentasPorPoCobrar"
-        Me.Text = "INFORME DE MORISIDAD"
+        Me.Text = "INFORME CUENTAS POR COBRAR"
         Me.Controls.SetChildIndex(Me.SuperTabPrincipal, 0)
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabPrincipal.ResumeLayout(False)

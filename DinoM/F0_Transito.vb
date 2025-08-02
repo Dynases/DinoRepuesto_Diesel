@@ -38,6 +38,7 @@ Public Class F0_Transito
         _prCargarComboLibreriaSucursal(cbSucursal)
         _prObtenerPorcentajeUtilidad()
         'Me.WindowState = FormWindowState.Maximized
+        _prCargarComboProveedor(cbProveedor)
         _prCargarComboMoneda(cbMoneda)
         _prCargarComboConcepto(cbConcepto)
 
@@ -49,12 +50,29 @@ Public Class F0_Transito
 
         grCompra.Focus()
         _prAsignarPermisos()
-        Me.Text = "COMPRAS"
+        Me.Text = "TRANSITO"
         PanelDetalle.Height = 250
         MSuperTabControl.SelectedTabIndex = 0
         btnImportar.Visible = False
     End Sub
 
+    Private Sub _prCargarComboProveedor(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarProveedores()
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("ydnumi").Width = 60
+            .DropDownList.Columns("ydnumi").Caption = "COD"
+            .DropDownList.Columns.Add("yddesc").Width = 500
+            .DropDownList.Columns("yddesc").Caption = "MONEDA"
+            .ValueMember = "ydnumi"
+            .DisplayMember = "yddesc"
+            .DataSource = dt
+            .Refresh()
+        End With
+
+        'cbProveedor.SelectedIndex = 0
+    End Sub
     Private Sub _prCargarGastos(cod As Integer)
         Dim dt As New DataTable
         dt = L_fnGeneralGastos(cod)
@@ -197,7 +215,8 @@ Public Class F0_Transito
     End Sub
     Private Sub _prInhabiliitar()
         tbCodigo.ReadOnly = True
-        tbProveedor.ReadOnly = True
+        cbProveedor.ReadOnly = True
+        'tbProveedor.ReadOnly = True
         tbCodProv.ReadOnly = True
         tbObservacion.ReadOnly = True
         tbFechaVenta.IsInputReadOnly = True
@@ -278,7 +297,7 @@ Public Class F0_Transito
         swMoneda.IsReadOnly = False
         tbTipoCambio.IsInputReadOnly = False
 
-
+        cbProveedor.ReadOnly = False
 
         btnAgregar.Visible = True
 
@@ -297,7 +316,8 @@ Public Class F0_Transito
     End Sub
     Private Sub _Limpiar()
         tbCodigo.Clear()
-        tbProveedor.Clear()
+        'tbProveedor.Clear()
+        cbProveedor.Text = ""
         tbNitProv.Clear()
         tbObservacion.Clear()
         If (CType(cbSucursal.DataSource, DataTable).Rows.Count > 0) Then
@@ -324,7 +344,7 @@ Public Class F0_Transito
         'tbNDui.Clear()
         'tbSACF.Clear()
 
-        _prCargarDetalleVenta(-1)
+        _prCargarDetalleVenta((-1).ToString)
         _prCargarGastos(-1)
         CType(grdetalle.DataSource, DataTable).Rows.Clear()
         MSuperTabControl.SelectedTabIndex = 0
@@ -351,7 +371,132 @@ Public Class F0_Transito
             PanelTotal.Visible = True
             PanelInferior.Visible = True
         End If
-        tbProveedor.Focus()
+        cbProveedor.Focus()
+        Table_Producto = Nothing
+
+
+
+        'Validar si es recibo o factura
+        If swEmision.Value = False Then
+            lbNFactura.Text = "Nro. Documento:"
+            'GroupPanelFactura2.Text = "DOCUMENTO"
+            'lbNAutoriz.Visible = False
+            'tbNAutorizacion.Visible = False
+            'lbCodCtrl.Visible = False
+            'tbCodControl.Visible = False
+            'lbNDui.Visible = False
+            'tbNDui.Visible = False
+            'lbSACF.Visible = False
+            'tbSACF.Visible = False
+        Else
+            lbNFactura.Text = "Nro. Factura:"
+            'GroupPanelFactura2.Text = "DATOS FACTURACIÓN"
+            'lbNAutoriz.Visible = True
+            'tbNAutorizacion.Visible = True
+            'lbCodCtrl.Visible = True
+            'tbCodControl.Visible = True
+            'lbNDui.Visible = True
+            'tbNDui.Visible = True
+            'lbSACF.Visible = True
+            'tbSACF.Visible = True
+        End If
+
+        If swMoneda.Value = True Then
+            lbTipoCambio.Visible = False
+            tbTipoCambio.Visible = False
+            tbTipoCambio.Value = 1
+        Else
+            lbTipoCambio.Visible = True
+            tbTipoCambio.Visible = True
+        End If
+
+        If cbMoneda.Value = 1 Then
+            lbTipoCambio.Visible = False
+            tbTipoCambio.Visible = False
+            tbTipoCambio.Value = 1
+        ElseIf cbMoneda.Value = 0 Then
+            lbTipoCambio.Visible = True
+            tbTipoCambio.Visible = True
+        End If
+
+
+        If (gi_userSuc > 0) Then
+            Dim dt As DataTable = CType(cbSucursal.DataSource, DataTable)
+            For i As Integer = 0 To dt.Rows.Count - 1 Step 1
+
+                If (dt.Rows(i).Item("aanumi") = gi_userSuc) Then
+                    cbSucursal.SelectedIndex = i
+                End If
+            Next
+        End If
+        SwProforma.Value = False
+        btnBuscarProforma.Enabled = False
+        tbProforma.Clear()
+        'If (SwProforma.Value = True) Then
+        '    btnBuscarProforma.Enabled = True
+        'Else
+        '    btnBuscarProforma.Enabled = False
+        'End If
+    End Sub
+
+    Private Sub _Limpiar2()
+        tbCodigo.Clear()
+        'tbProveedor.Clear()
+        cbProveedor.SelectedIndex = 0
+        tbNitProv.Clear()
+        tbObservacion.Clear()
+        If (CType(cbSucursal.DataSource, DataTable).Rows.Count > 0) Then
+            cbSucursal.SelectedIndex = 0
+        Else
+            cbSucursal.SelectedIndex = -1
+        End If
+        swTipoVenta.Value = False
+        _CodProveedor = 0
+        tbFechaVenta.Value = Now.Date
+        tbFechaVenc.Value = Now.Date
+        tbFechaVenc.Visible = True
+        lbCredito.Visible = True
+        tbCodProv.Clear()
+        swEmision.Value = False
+        swConsigna.Value = False
+        swRetencion.Value = False
+        swMoneda.Value = True
+        tbTipoCambio.Value = 0
+        cbMoneda.Value = 2
+        tbNFactura.Clear()
+        'tbNAutorizacion.Clear()
+        'tbCodControl.Clear()
+        'tbNDui.Clear()
+        'tbSACF.Clear()
+
+        '_prCargarDetalleVenta((-1).ToString)
+        _prCargarGastos(-1)
+        CType(grdetalle.DataSource, DataTable).Rows.Clear()
+        MSuperTabControl.SelectedTabIndex = 0
+
+        tbPdesc.Value = 0
+        tbMdesc.Value = 0
+        tbtotal.Value = 0
+        tbSubtotalC.Value = 0
+        With grdetalle.RootTable.Columns("img")
+            .Width = 80
+            .Caption = "Eliminar"
+            .CellStyle.ImageHorizontalAlignment = ImageHorizontalAlignment.Center
+            .Visible = True
+        End With
+        With grGastos.RootTable.Columns("img")
+            .Width = 80
+            .Caption = "Eliminar"
+            .CellStyle.ImageHorizontalAlignment = ImageHorizontalAlignment.Center
+            .Visible = True
+        End With
+        _prAddDetalleVenta()
+        If (GPanelProductos.Visible = True) Then
+            GPanelProductos.Visible = False
+            PanelTotal.Visible = True
+            PanelInferior.Visible = True
+        End If
+        cbProveedor.Focus()
         Table_Producto = Nothing
 
 
@@ -429,7 +574,8 @@ Public Class F0_Transito
             tbFechaVenta.Value = .GetValue("tafdoc")
             _CodProveedor = .GetValue("taty4prov")
             swTipoVenta.Value = .GetValue("tatven")
-            tbProveedor.Text = .GetValue("proveedor")
+            'tbProveedor.Text = .GetValue("proveedor")
+            cbProveedor.Value = .GetValue("taty4prov")
             cbSucursal.Value = .GetValue("taalm")
             tbObservacion.Text = .GetValue("taobs")
             tbCodProv.Text = .GetValue("taty4prov").ToString + "-" + .GetValue("ydcod").ToString
@@ -449,21 +595,21 @@ Public Class F0_Transito
                 'btnTraspaso.Enabled = False
             End If
 
-            If .GetValue("taMovimiento") = 0 And SwProforma.Value = True Then
-                btnTraspaso.Enabled = True
-                btnModificar.Enabled = False
-                btnEliminar.Enabled = True
+            'If .GetValue("taMovimiento") = 0 And SwProforma.Value = True Then
+            '    btnTraspaso.Enabled = True
+            '    btnModificar.Enabled = False
+            '    btnEliminar.Enabled = True
 
-            ElseIf .GetValue("taMovimiento") > 0 And SwProforma.Value = True Then
-                btnTraspaso.Enabled = False
-                btnModificar.Enabled = False
-                btnEliminar.Enabled = False
+            'ElseIf .GetValue("taMovimiento") > 0 And SwProforma.Value = True Then
+            '    btnTraspaso.Enabled = False
+            '    btnModificar.Enabled = True
+            '    btnEliminar.Enabled = False
 
-            ElseIf .GetValue("taMovimiento") = 0 And SwProforma.Value = False Then
-                'btnTraspaso.Enabled = False
-                'btnModificar.Enabled = True
-                'btnEliminar.Enabled = True
-            End If
+            'ElseIf .GetValue("taMovimiento") = 0 And SwProforma.Value = False Then
+            '    btnTraspaso.Enabled = False
+            '    btnModificar.Enabled = True
+            '    btnEliminar.Enabled = True
+            'End If
 
             'If (swTipoVenta.Value = False) Then
 
@@ -538,7 +684,7 @@ Public Class F0_Transito
     End Sub
 
     Private Sub _prCargarDetalleVenta(_numi As String)
-        Dim dt As New DataTable
+        Dim dt As DataTable
 
         dt = L_fnDetalleTransito2(_numi)
 
@@ -742,7 +888,7 @@ Public Class F0_Transito
             .Width = 120
             .TextAlignment = 2
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0.000"
             .Caption = "Sub Total"
         End With
         With grdetalle.RootTable.Columns("cbobs")
@@ -1033,7 +1179,7 @@ Public Class F0_Transito
             .Width = 120
             .TextAlignment = 2
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0.000"
             .Caption = "Sub Total"
         End With
         With grdetalle.RootTable.Columns("cbobs")
@@ -1420,7 +1566,7 @@ Public Class F0_Transito
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
         CType(grdetalle.DataSource, DataTable).Rows.Add("", "", "", "", _fnSiguienteNumi() + 1, 0, 0, "", "", "", "", 0, 0, 0, "",
-                                                        0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+                                                        0, 0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
 
     Public Function _fnSiguienteNumi()
@@ -1489,14 +1635,18 @@ Public Class F0_Transito
             _fnObtenerFilaDetalle(pos, lin)
             Dim cant As Double = grdetalle.GetValue("cbcmin")
             Dim uni As Double = grdetalle.GetValue("cbpcost")
+            Dim gast As Double = grdetalle.GetValue("gasto")
             'Dim pFacturado As Double
 
             If (pos >= 0) Then
-                Dim TotalUnitario As Double = cant * uni
+                'Dim TotalUnitario As Double = cant * uni
+                Dim costo1 As Double = ((uni * cant) + gast) / cant
+                Dim TotalUnitario As Double = costo1 * cant
+
                 'grDetalle.SetValue("lcmdes", montodesc)
 
-                CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbptot") = TotalUnitario
-                grdetalle.SetValue("cbptot", TotalUnitario)
+                CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbptot") = cant * uni
+                grdetalle.SetValue("cbptot", cant * uni)
                 Dim estado As Integer = CType(grdetalle.DataSource, DataTable).Rows(pos).Item("estado")
                 If (estado = 1) Then
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("estado") = 2
@@ -1506,16 +1656,21 @@ Public Class F0_Transito
                 CType(grdetalle.DataSource, DataTable).Rows(pos).Item("venta") = (uni + (uni * (grdetalle.GetValue("cbutven") / 100))) * tbTipoCambio.Value
                 grdetalle.SetValue("cbprven", (uni + (uni * (grdetalle.GetValue("cbutven") / 100))) * tbTipoCambio.Value)
                 If btnGrabar.Enabled = True Then
-                    'Dim dt As DataTable
-                    'dt = _lftraerPrecioCostoStock(CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbty5prod").ToString, gi_userSuc)
-                    'For j = 0 To dt.Rows.Count - 1 Step 1
-                    '    Dim act As Double = dt.Rows(j).Item("iccven") * dt.Rows(j).Item("yfPrecioCosto")
-                    '    Dim can As Double = dt.Rows(j).Item("iccven") + cant
-                    '    Dim sum As Double = TotalUnitario + act
-                    '    Dim total As Double = sum / can
-                    '    CType(grdetalle.DataSource, DataTable).Rows(pos).Item("PP") = total.ToString("0.00")
-                    CalcularPonderado(cant, uni)
-                    ' Next
+                    Dim dt As DataTable
+                    dt = _lftraerPrecioCostoStock(grdetalle.GetValue("cbty5prod").ToString, gi_userSuc)
+                    For j = 0 To dt.Rows.Count - 1 Step 1
+                        Dim act As Double = dt.Rows(j).Item("iccven") * IIf(cbMoneda.Value = 1, dt.Rows(j).Item("yfPrecioCosto"), dt.Rows(j).Item("yfPrecioCosto") / tbTipoCambio.Value)
+                        Dim can As Double = dt.Rows(j).Item("iccven") + cant
+                        Dim sum As Double = TotalUnitario + act
+                        Dim total As Double = sum / can
+                        If cbMoneda.Value = 0 Then
+                            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("PP") = total.ToString("0.00")
+                        Else
+                            CType(grdetalle.DataSource, DataTable).Rows(pos).Item("PP") = total.ToString("0.00")
+                        End If
+
+                        'CalcularPonderado(cant, uni)
+                    Next
 
                 End If
             End If
@@ -1589,7 +1744,7 @@ Public Class F0_Transito
         If (_CodProveedor <= 0) Then
             Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
             ToastNotification.Show(Me, "Por Favor Seleccione un Proveedor con Ctrl+Enter".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-            tbProveedor.Focus()
+            cbProveedor.Focus()
             Return False
 
         End If
@@ -1606,7 +1761,7 @@ Public Class F0_Transito
         If (cbSucursal.SelectedIndex < 0) Then
             Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
             ToastNotification.Show(Me, "Por Favor Seleccione una Sucursal".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
-            tbProveedor.Focus()
+            cbProveedor.Focus()
             Return False
         End If
         If (SwProforma.Value = True) Then
@@ -1648,7 +1803,7 @@ Public Class F0_Transito
 
             Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
             ToastNotification.Show(Me, "La Fecha de Venc. del Crédito no puede ser menor a la Fecha de la Compra".ToUpper, img, 2500, eToastGlowColor.Red, eToastPosition.BottomCenter)
-            tbProveedor.Focus()
+            cbProveedor.Focus()
             Return False
         End If
         If cbMoneda.Value = 0 Then
@@ -1712,7 +1867,7 @@ Public Class F0_Transito
                                           )
                 Dim totalCosto As Double = grGastos.GetTotal(grGastos.RootTable.Columns("monto"), AggregateFunction.Sum)
                 _GuadarCostos(res, _CodProveedor, totalCosto, CType(grGastos.DataSource, DataTable))
-                _Limpiar()
+                _Limpiar2()
                 _prInhabiliitar()
                 _prCargarCompra()
 
@@ -1807,12 +1962,12 @@ Public Class F0_Transito
 
     Private Sub _prGuardarModificado()
         ''RecuperarDatosTFC001()
-        Dim res As Boolean = L_fnModificarCompra(tbCodigo.Text, cbSucursal.Value, tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodProveedor,
+        Dim res As Boolean = L_fnModificarTransito(tbCodigo.Text, cbSucursal.Value, tbFechaVenta.Value.ToString("yyyy/MM/dd"), _CodProveedor,
                                                  IIf(swTipoVenta.Value = True, 1, 0), IIf(swTipoVenta.Value = True, Now.Date.ToString("yyyy/MM/dd"),
                                                  tbFechaVenc.Value.ToString("yyyy/MM/dd")), cbMoneda.Value, tbObservacion.Text, tbMdesc.Value,
                                                  tbtotal.Value, CType(grdetalle.DataSource, DataTable), _detalleCompras, IIf(swEmision.Value = True, 1, 0),
                                                  tbNFactura.Text, IIf(swConsigna.Value = True, 1, 0), IIf(swRetencion.Value = True, 1, 0),
-                                                 IIf(cbMoneda.Value = 1, 1, tbTipoCambio.Value), 0)
+                                                 IIf(cbMoneda.Value = 1, 1, tbTipoCambio.Value), 0, IIf(SwProforma.Value = True, tbProforma.Text, 0), IIf(BanderaImport = False, 0, 1))
         If res Then
 
             Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
@@ -1821,6 +1976,8 @@ Public Class F0_Transito
                                       eToastGlowColor.Green,
                                       eToastPosition.TopCenter
                                       )
+            Dim totalCosto As Double = grGastos.GetTotal(grGastos.RootTable.Columns("monto"), AggregateFunction.Sum)
+            _ModificarCostos(CInt(tbCodigo.Text), _CodProveedor, totalCosto, CType(grGastos.DataSource, DataTable))
             _prCargarCompra()
 
             _prSalir()
@@ -1904,6 +2061,7 @@ Public Class F0_Transito
         Dim objrep As New R_NotaTransito
         objrep.SetDataSource(dt)
 
+        objrep.SetParameterValue("sucursal", cbSucursal.Text)
         objrep.SetParameterValue("Literal", _Literal)
         objrep.SetParameterValue("logo", gb_UbiLogo)
         objrep.SetParameterValue("documento", tbNFactura.Text)
@@ -1920,6 +2078,37 @@ Public Class F0_Transito
         'P_Global.Visualizador.BringToFront()
     End Sub
 
+
+    Private Sub P_GenerarReporteCostos()
+        Dim dt As DataTable = L_fnNotaTransitoCostos(tbCodigo.Text)
+        'Dim dt2 = L_DatosEmpresa("1")
+
+
+
+        If Not IsNothing(P_Global.Visualizador) Then
+            P_Global.Visualizador.Close()
+        End If
+
+        P_Global.Visualizador = New Visualizador
+
+        Dim objrep As New R_NotaTransitoCostos
+        objrep.SetDataSource(dt)
+
+        objrep.SetParameterValue("sucursal", cbSucursal.Text)
+        objrep.SetParameterValue("logo", gb_UbiLogo)
+        objrep.SetParameterValue("documento", tbNFactura.Text)
+        objrep.SetParameterValue("usuario", gs_user)
+
+
+
+        P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+        P_Global.Visualizador.ShowDialog() 'Comentar
+        P_Global.Visualizador.BringToFront()
+
+        'P_Global.Visualizador.CRV1.ReportSource = objrep
+        'P_Global.Visualizador.Show()
+        'P_Global.Visualizador.BringToFront()
+    End Sub
     Private Sub CargarDatosExcel(dt As DataTable)
         Dim dt2 As DataTable = cargarDatos(dt, gi_userSuc)
 
@@ -2425,13 +2614,13 @@ Public Class F0_Transito
         If (_fnAccesible()) Then
             If (_CodProveedor <= 0) Then
                 ToastNotification.Show(Me, "           Antes de Continuar Por favor Seleccione un Proveedor!!             ", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
-                tbProveedor.Focus()
+                cbProveedor.Focus()
                 Return
             End If
 
             If (tbTipoCambio.Value <= 0) Then
                 ToastNotification.Show(Me, "           Antes de continuar por favor introduzca Tipo de Cambio mayor a 0!!             ", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
-                tbProveedor.Focus()
+                cbProveedor.Focus()
                 Return
             End If
             'grdetalle.Select()
@@ -2546,6 +2735,7 @@ salirIf:
         End If
     End Sub
     Private Sub grdetalle_CellValueChanged(sender As Object, e As ColumnActionEventArgs) Handles grdetalle.CellValueChanged
+        CalcularGastos()
         If tbTipoCambio.Value > 0 Then
             Dim lin As Integer = grdetalle.GetValue("cbnumi")
             Dim pos As Integer = -1
@@ -2829,6 +3019,7 @@ salirIf:
             If (grdetalle.RowCount >= 1) Then
                 If (grdetalle.CurrentColumn.Index = grdetalle.RootTable.Columns("img").Index) Then
                     _prEliminarFila()
+                    _CalcularPrecioPonderado()
                 End If
             End If
         Catch ex As Exception
@@ -3101,10 +3292,10 @@ salirIf:
             If VerificarGrilla() Then
                 For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
 
-                    Dim tcam As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
-                    If BanderaImport = False Then
-                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * tbTipoCambio.Value
-                    End If
+                    'Dim tcam As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
+                    'If BanderaImport = False Then
+                    '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * tbTipoCambio.Value
+                    'End If
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") * tbTipoCambio.Value
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") * tbTipoCambio.Value
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") * tbTipoCambio.Value
@@ -3124,15 +3315,15 @@ salirIf:
             If VerificarGrilla() Then
                 For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
                     If btnNuevo.Enabled = True Then
-                        If BanderaImport = False Then
-                            CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
-                        End If
+                        'If BanderaImport = False Then
+                        '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
+                        'End If
                         CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbptot") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost")
                         CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
                     Else
-                        If BanderaImport = False Then
-                            CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
-                        End If
+                        'If BanderaImport = False Then
+                        '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
+                        'End If
                         'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") / tbTipoCambio.Value
                         'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") / tbTipoCambio.Value
                         'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") / tbTipoCambio.Value
@@ -3196,42 +3387,51 @@ salirIf:
         Dim dt As DataTable
         'Dim cant As Double = grdetalle.GetValue("cbcmin")
         Dim TotalUnitario As Double = uni * cant
-        dt = _lftraerPrecioCostoStock(grdetalle.GetValue("cbty5prod").ToString, gi_userSuc)
+        Dim total As Double = TotalUnitario ' + grdetalle.GetValue("gasto")
+        Dim CostoXU As Double = total / cant
+        'dt = _lftraerPrecioCostoStock(grdetalle.GetValue("cbty5prod").ToString, gi_userSuc)
 
-        Dim act As Double
-            If cbMoneda.Value = 0 Then
-            act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto") / grdetalle.GetValue("yftcam")
-        Else
-            act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto")
+        'Dim act As Double
+        '    If cbMoneda.Value = 0 Then
+        '    act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto") / grdetalle.GetValue("yftcam")
+        'Else
+        '    act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto")
 
-        End If
-        Dim can As Double = dt.Rows(0).Item("iccven") + cant
-        Dim sum As Double = TotalUnitario + act
-            Dim total As Double = sum / can
-            grdetalle.SetValue("PP", total.ToString("0.00"))
+        'End If
+        'Dim can As Double = dt.Rows(0).Item("iccven") + cant
+        'Dim sum As Double = TotalUnitario + act
+        '    Dim total As Double = sum / can
+        grdetalle.SetValue("PP", total.ToString("0.00"))
+        grdetalle.SetValue("PPA", CostoXU.ToString("0.00"))
 
     End Sub
     Private Sub _CalcularPrecioPonderado()
         If CType(grdetalle.DataSource, DataTable).Rows.Count > 0 Then
             If CType(grdetalle.DataSource, DataTable).Rows(0).Item("yfCodAux1") <> "" Then
                 For i As Integer = 0 To grdetalle.RowCount - 1 Step 1
+
                     Dim dt As DataTable
                     Dim cant As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
-                    Dim TotalUnitario As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+                    Dim costo1 As Double = ((CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * cant) + CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto")) / cant
+                    Dim TotalUnitario As Double = costo1 * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+                    Dim total As Double = TotalUnitario '+ CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto")
+                    Dim CostoXU As Double = total / cant
                     dt = _lftraerPrecioCostoStock(CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbty5prod").ToString, gi_userSuc)
-                    For j = 0 To dt.Rows.Count - 1 Step 1
-                        Dim act As Double
+                    'For j = 0 To dt.Rows.Count - 1 Step 1
+                    Dim act As Double
                         If cbMoneda.Value = 0 Then
-                            act = dt.Rows(j).Item("iccven") * dt.Rows(j).Item("yfPrecioCosto") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
-                        Else
-                            act = dt.Rows(j).Item("iccven") * dt.Rows(j).Item("yfPrecioCosto")
+                        act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
+                    Else
+                        act = dt.Rows(0).Item("iccven") * dt.Rows(0).Item("yfPrecioCosto")
 
-                        End If
-                        Dim can As Double = dt.Rows(j).Item("iccven") + cant
-                        Dim sum As Double = TotalUnitario + act
-                        Dim total As Double = sum / can
-                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = total.ToString("0.00")
-                    Next
+                    End If
+                    Dim can As Double = dt.Rows(0).Item("iccven") + cant
+                    Dim sum As Double = TotalUnitario + act
+                        Dim total2 As Double = sum / can
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = total2.ToString("0.00")
+                    'Next
+                    'CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = total.ToString("0.00")
+                    'CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = CostoXU.ToString("0.00")
                 Next
             End If
         End If
@@ -3305,7 +3505,8 @@ salirIf:
                 tbProforma.Text = Row.Cells("pcnumi").Value
                 _CodProveedor = Row.Cells("pcty4prov").Value
                 tbCodProv.Text = Row.Cells("pcty4prov").Text + "-" + Row.Cells("ydcod").Text
-                tbProveedor.Text = Row.Cells("proveedor").Value
+                'tbProveedor.Text = Row.Cells("proveedor").Value
+                cbProveedor.Value = Row.Cells("pcty4prov").Value
                 tbNitProv.Text = Row.Cells("yddctnum").Value
                 tbObservacion.Text = Row.Cells("pcobs").Value
 
@@ -3402,41 +3603,65 @@ salirIf:
     End Sub
 
     Private Sub btnTraspaso_Click(sender As Object, e As EventArgs) Handles btnTraspaso.Click
-        Dim frm As New F1_Traspaso
+        If btnNuevo.Enabled = False Then
+            Dim filaseliminadas As Integer = 0
+            For Each dr As DataRow In CType(grGastos.DataSource, DataTable).Rows
+                If dr.RowState = DataRowState.Deleted Then
+                    'no procesa el registro eliminado
+                    filaseliminadas = filaseliminadas + 1
+                End If
+            Next
+            If grGastos.RowCount > 0 Then
 
-        With frm.cbSucOrigen
-            .DropDownList.Columns.Clear()
-            .DropDownList.Columns.Add("aanumi").Width = 60
-            .DropDownList.Columns("aanumi").Caption = "COD"
-            .DropDownList.Columns.Add("aabdes").Width = 500
-            .DropDownList.Columns("aabdes").Caption = "SUCURSAL"
-            .ValueMember = "aanumi"
-            .DisplayMember = "aabdes"
-            .DataSource = cbSucursal.DataSource
-            .Refresh()
-        End With
-        frm.cbSucOrigen.Value = cbSucursal.Value
-        frm.dt = CType(grdetalle.DataSource, DataTable).Copy
-        frm.IdCompra = tbCodigo.Text
-        frm.ShowDialog()
+                CalcularGastos()
+                _CalcularPrecioPonderado()
 
-        Dim bandera As Boolean = False
-        bandera = frm.banderaTraspaso
-        If (bandera = True) Then
-
-            ToastNotification.Show(Me, "Traspaso realizado con éxito.".ToUpper, My.Resources.GRABACION_EXITOSA, 4000, eToastGlowColor.Green, eToastPosition.TopCenter)
-        Else
-            ToastNotification.Show(Me, "El Traspaso no se pudo realizar", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
-
+            Else
+                For i = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1
+                    CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto") = 0
+                Next
+                _CalcularPrecioPonderado()
+            End If
         End If
+        'Dim frm As New F1_Traspaso
+
+        'With frm.cbSucOrigen
+        '    .DropDownList.Columns.Clear()
+        '    .DropDownList.Columns.Add("aanumi").Width = 60
+        '    .DropDownList.Columns("aanumi").Caption = "COD"
+        '    .DropDownList.Columns.Add("aabdes").Width = 500
+        '    .DropDownList.Columns("aabdes").Caption = "SUCURSAL"
+        '    .ValueMember = "aanumi"
+        '    .DisplayMember = "aabdes"
+        '    .DataSource = cbSucursal.DataSource
+        '    .Refresh()
+        'End With
+        'frm.cbSucOrigen.Value = cbSucursal.Value
+        'frm.dt = CType(grdetalle.DataSource, DataTable).Copy
+        'frm.IdCompra = tbCodigo.Text
+        'frm.ShowDialog()
+
+        'Dim bandera As Boolean = False
+        'bandera = frm.banderaTraspaso
+        'If (bandera = True) Then
+
+        '    ToastNotification.Show(Me, "Traspaso realizado con éxito.".ToUpper, My.Resources.GRABACION_EXITOSA, 4000, eToastGlowColor.Green, eToastPosition.TopCenter)
+        'Else
+        '    ToastNotification.Show(Me, "El Traspaso no se pudo realizar", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+
+        'End If
 
     End Sub
 
     Private Sub btnVerPagos_Click(sender As Object, e As EventArgs) Handles btnVerPagos.Click
-        Dim frm As New F0_PagosCreditoCompraUlt
-        frm._nameButton = DinoM.P_Principal.btInvMovimiento.Name
-        'frm._modulo = FP_COMPRAS
-        frm.Show()
+        If tbCodigo.Text <> String.Empty Then
+            P_GenerarReporteCostos()
+        End If
+
+        'Dim frm As New F0_PagosCreditoCompraUlt
+        'frm._nameButton = DinoM.P_Principal.btInvMovimiento.Name
+        ''frm._modulo = FP_COMPRAS
+        'frm.Show()
     End Sub
 
     Private Sub P_GenerarReporteCompra2()
@@ -3574,14 +3799,18 @@ salirIf:
     End Function
 
     Private Sub ButtonX3_Click(sender As Object, e As EventArgs) Handles ButtonX3.Click
-        Dim Bin As New MemoryStream
-        Dim img As New Bitmap(My.Resources.delete, 28, 28)
-        img.Save(Bin, Imaging.ImageFormat.Png)
-        If ValidarCostos() Then
-            CType(grGastos.DataSource, DataTable).Rows.Add(grGastos.RowCount + 1, cbConcepto.Value, cbConcepto.Text, tbMonto.Value, tbGlosaObs.Text, Bin.GetBuffer)
-            cbConcepto.Text = ""
-            tbMonto.Text = "0.00"
-            tbGlosaObs.Text = ""
+        If CType(grdetalle.DataSource, DataTable).Rows.Count > 0 And CType(grdetalle.DataSource, DataTable).Rows(0).Item("cbty5prod") <> 0 Then
+            Dim Bin As New MemoryStream
+            Dim img As New Bitmap(My.Resources.delete, 28, 28)
+            img.Save(Bin, Imaging.ImageFormat.Png)
+            If ValidarCostos() Then
+                CType(grGastos.DataSource, DataTable).Rows.Add(grGastos.RowCount + 1, cbConcepto.Value, cbConcepto.Text, tbMonto.Value, tbGlosaObs.Text, Bin.GetBuffer)
+                cbConcepto.Text = ""
+                tbMonto.Text = "0.00"
+                tbGlosaObs.Text = ""
+            End If
+        Else
+            ToastNotification.Show(Me, "No existen productos en el detalle", My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
         End If
     End Sub
 
@@ -3591,35 +3820,81 @@ salirIf:
                 Dim totalCompra As Double = CType(grdetalle.DataSource, DataTable).Compute("sum(cbptot)", "estado <> -2")
                 'grdetalle.GetTotal(grdetalle.RootTable.Columns("cbptot"), AggregateFunction.Sum)
                 If CType(grdetalle.DataSource, DataTable).Rows(0).Item("yfCodAux1") <> "" Then
-                    Dim totalGastos As Double = grGastos.GetTotal(grGastos.RootTable.Columns("monto"), AggregateFunction.Sum)
-                    If CType(grdetalle.DataSource, DataTable).Rows.Count > 1 Then
+
+                    Dim totalGastos As Double = 0 'grGastos.GetTotal(grGastos.RootTable.Columns("monto"), AggregateFunction.Sum)
+                    grGastos.Refresh()
+                    If CType(grGastos.DataSource, DataTable).Rows.Count > 0 Then
+                        For i = 0 To CType(grGastos.DataSource, DataTable).Rows.Count - 1
+                            totalGastos = totalGastos + CType(grGastos.DataSource, DataTable).Rows(i).Item("monto")
+                        Next
+                    End If
+                    If CType(grdetalle.DataSource, DataTable).Rows.Count > 0 Then
+                        'Dim grdetallerow As Integer = grdetalle.Row
+                        'grdetalle.Row = 0
                         For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
+
                             If CType(grdetalle.DataSource, DataTable).Rows(i).Item("estado") <> -2 Then
                                 Dim porcentaje As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbptot") * 100 / totalCompra
                                 Dim gastoUni As Double = totalGastos * porcentaje / 100
 
                                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto") = gastoUni.ToString("0.00")
-                                CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") + CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto")
+                                'grdetalle.SetValue("gasto", gastoUni)
+                                'CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP") = (CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost")) + CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto")
+                                'CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = (CType(grdetalle.DataSource, DataTable).Rows(i).Item("PP")) / CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+
                             End If
+                            'If CType(grdetalle.DataSource, DataTable).Rows.Count - 1 > grdetalle.Row Then
+                            '    grdetalle.Row = grdetalle.Row + 1
+                            'Else
+                            '    grdetalle.Row = grdetallerow
+                            'End If
                         Next
                     End If
                 End If
             End If
-            End If
+        End If
     End Sub
 
     Private Sub grGastos_RowCountChanged(sender As Object, e As EventArgs) Handles grGastos.RowCountChanged
         If btnNuevo.Enabled = False Then
-            CalcularGastos()
+            Dim filaseliminadas As Integer = 0
+            For Each dr As DataRow In CType(grGastos.DataSource, DataTable).Rows
+                If dr.RowState = DataRowState.Deleted Then
+                    'no procesa el registro eliminado
+                    filaseliminadas = filaseliminadas + 1
+                End If
+            Next
+            If grGastos.RowCount > 0 Then
+
+                CalcularGastos()
+                _CalcularPrecioPonderado()
+
+            Else
+                For i = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1
+                    CType(grdetalle.DataSource, DataTable).Rows(i).Item("gasto") = 0
+                Next
+                _CalcularPrecioPonderado()
+            End If
         End If
     End Sub
 
     Private Sub grdetalle_RowCountChanged(sender As Object, e As EventArgs) Handles grdetalle.RowCountChanged
         If btnNuevo.Enabled = False Then
-            CalcularGastos()
+            If validar Then
+                CalcularGastos()
+                _CalcularPrecioPonderado()
+            End If
         End If
     End Sub
 
+    Private Function validar() As Boolean
+        For Each fila As GridEXRow In grdetalle.GetDataRows
+            If fila.Cells("cbty5prod").Value = 0 Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
     Private Sub cbConcepto_ValueChanged(sender As Object, e As EventArgs) Handles cbConcepto.ValueChanged
         If cbConcepto.SelectedIndex < 0 And cbConcepto.Text <> String.Empty Then
             btConcepto.Visible = True
@@ -3644,7 +3919,7 @@ salirIf:
         Dim cod As Integer = 1
         Dim num As Integer = CInt(grGastos.GetValue("codigo")) - 1
         CType(grGastos.DataSource, DataTable).Rows(num).Delete()
-        'CType(grGastos.DataSource, DataTable).AcceptChanges()
+        CType(grGastos.DataSource, DataTable).AcceptChanges()
 
         For Each dr As DataRow In CType(grGastos.DataSource, DataTable).Rows
             If dr.RowState = DataRowState.Deleted Then
@@ -3658,13 +3933,23 @@ salirIf:
     Private Sub grGastos_MouseClick(sender As Object, e As MouseEventArgs) Handles grGastos.MouseClick
         If btnNuevo.Enabled = False Then
             If (grGastos.RowCount >= 1) Then
-                If (grGastos.CurrentColumn.Index = grGastos.RootTable.Columns("img").Index) Then
-                    _prEliminarCosto()
-                    grGastos.Refetch()
-                    grGastos.Refresh()
-                    CType(grGastos.DataSource, DataTable).AcceptChanges()
+                If (Not IsNothing(grGastos.CurrentColumn)) Then
+                    If (grGastos.CurrentColumn.Index = grGastos.RootTable.Columns("img").Index) Then
+                        _prEliminarCosto()
+                        grGastos.Refresh()
+                        CType(grGastos.DataSource, DataTable).AcceptChanges()
+                    End If
                 End If
             End If
+        End If
+    End Sub
+
+    Private Sub cbProveedor_ValueChanged(sender As Object, e As EventArgs) Handles cbProveedor.ValueChanged
+        If cbProveedor.SelectedIndex >= 0 And cbProveedor.Text <> String.Empty Then
+            tbCodProv.Text = cbProveedor.Value
+            _CodProveedor = cbProveedor.Value
+        Else
+
         End If
     End Sub
 #End Region

@@ -42,6 +42,10 @@ Partial Class Pr_ReposrteVentasFiltrado
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.CheckUnoProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.CheckTodosProducto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.tbProducto = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -160,6 +164,10 @@ Partial Class Pr_ReposrteVentasFiltrado
         '
         'MGPFiltros
         '
+        Me.MGPFiltros.Controls.Add(Me.LabelX6)
+        Me.MGPFiltros.Controls.Add(Me.CheckUnoProducto)
+        Me.MGPFiltros.Controls.Add(Me.CheckTodosProducto)
+        Me.MGPFiltros.Controls.Add(Me.tbProducto)
         Me.MGPFiltros.Controls.Add(Me.LabelX5)
         Me.MGPFiltros.Controls.Add(Me.LabelX4)
         Me.MGPFiltros.Controls.Add(Me.LabelX3)
@@ -222,7 +230,7 @@ Partial Class Pr_ReposrteVentasFiltrado
         Me.tbFechaI.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.tbFechaI.ButtonDropDown.Visible = True
         Me.tbFechaI.IsPopupCalendarOpen = False
-        Me.tbFechaI.Location = New System.Drawing.Point(138, 197)
+        Me.tbFechaI.Location = New System.Drawing.Point(150, 250)
         '
         '
         '
@@ -267,7 +275,7 @@ Partial Class Pr_ReposrteVentasFiltrado
         Me.tbFechaF.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
         Me.tbFechaF.ButtonDropDown.Visible = True
         Me.tbFechaF.IsPopupCalendarOpen = False
-        Me.tbFechaF.Location = New System.Drawing.Point(138, 237)
+        Me.tbFechaF.Location = New System.Drawing.Point(150, 290)
         '
         '
         '
@@ -449,7 +457,7 @@ Partial Class Pr_ReposrteVentasFiltrado
         '
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.LabelX1.Location = New System.Drawing.Point(26, 197)
+        Me.LabelX1.Location = New System.Drawing.Point(38, 250)
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(100, 23)
         Me.LabelX1.TabIndex = 41
@@ -463,7 +471,7 @@ Partial Class Pr_ReposrteVentasFiltrado
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.LabelX2.Location = New System.Drawing.Point(26, 237)
+        Me.LabelX2.Location = New System.Drawing.Point(38, 290)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(100, 23)
         Me.LabelX2.TabIndex = 42
@@ -481,7 +489,7 @@ Partial Class Pr_ReposrteVentasFiltrado
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(100, 23)
         Me.LabelX3.TabIndex = 43
-        Me.LabelX3.Text = "Proveedor:"
+        Me.LabelX3.Text = "Categoria:"
         '
         'LabelX4
         '
@@ -510,6 +518,63 @@ Partial Class Pr_ReposrteVentasFiltrado
         Me.LabelX5.Size = New System.Drawing.Size(100, 23)
         Me.LabelX5.TabIndex = 45
         Me.LabelX5.Text = "Almacen:"
+        '
+        'CheckUnoProducto
+        '
+        Me.CheckUnoProducto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CheckUnoProducto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CheckUnoProducto.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.CheckUnoProducto.Location = New System.Drawing.Point(235, 203)
+        Me.CheckUnoProducto.Name = "CheckUnoProducto"
+        Me.CheckUnoProducto.Size = New System.Drawing.Size(55, 23)
+        Me.CheckUnoProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CheckUnoProducto.TabIndex = 48
+        Me.CheckUnoProducto.Text = "Uno"
+        '
+        'CheckTodosProducto
+        '
+        Me.CheckTodosProducto.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.CheckTodosProducto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CheckTodosProducto.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.CheckTodosProducto.Location = New System.Drawing.Point(292, 203)
+        Me.CheckTodosProducto.Name = "CheckTodosProducto"
+        Me.CheckTodosProducto.Size = New System.Drawing.Size(100, 23)
+        Me.CheckTodosProducto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CheckTodosProducto.TabIndex = 47
+        Me.CheckTodosProducto.Text = "Todos"
+        '
+        'tbProducto
+        '
+        '
+        '
+        '
+        Me.tbProducto.Border.Class = "TextBoxBorder"
+        Me.tbProducto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbProducto.Location = New System.Drawing.Point(9, 204)
+        Me.tbProducto.Name = "tbProducto"
+        Me.tbProducto.PreventEnterBeep = True
+        Me.tbProducto.Size = New System.Drawing.Size(220, 22)
+        Me.tbProducto.TabIndex = 46
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.LabelX6.Location = New System.Drawing.Point(9, 178)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(100, 23)
+        Me.LabelX6.TabIndex = 49
+        Me.LabelX6.Text = "Producto:"
         '
         'Pr_ReposrteVentasFiltrado
         '
@@ -562,4 +627,8 @@ Partial Class Pr_ReposrteVentasFiltrado
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents CheckUnoProducto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents CheckTodosProducto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents tbProducto As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

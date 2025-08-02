@@ -24,6 +24,7 @@ Partial Class F0_Transito
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_Transito))
+        Dim cbProveedor_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbConcepto_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbMoneda_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
@@ -47,6 +48,7 @@ Partial Class F0_Transito
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cbProveedor = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.tbGlosaObs = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cbConcepto = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
@@ -137,6 +139,7 @@ Partial Class F0_Transito
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbConcepto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbMonto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
@@ -693,6 +696,7 @@ Partial Class F0_Transito
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbProveedor)
         Me.Panel2.Controls.Add(Me.tbGlosaObs)
         Me.Panel2.Controls.Add(Me.Label1)
         Me.Panel2.Controls.Add(Me.cbConcepto)
@@ -743,6 +747,21 @@ Partial Class F0_Transito
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1311, 207)
         Me.Panel2.TabIndex = 234
+        '
+        'cbProveedor
+        '
+        cbProveedor_DesignTimeLayout.LayoutString = resources.GetString("cbProveedor_DesignTimeLayout.LayoutString")
+        Me.cbProveedor.DesignTimeLayout = cbProveedor_DesignTimeLayout
+        Me.cbProveedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProveedor.Location = New System.Drawing.Point(196, 54)
+        Me.cbProveedor.Name = "cbProveedor"
+        Me.cbProveedor.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbProveedor.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbProveedor.SelectedIndex = -1
+        Me.cbProveedor.SelectedItem = Nothing
+        Me.cbProveedor.Size = New System.Drawing.Size(200, 22)
+        Me.cbProveedor.TabIndex = 699
+        Me.cbProveedor.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'tbGlosaObs
         '
@@ -834,7 +853,7 @@ Partial Class F0_Transito
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.grGastos)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(730, 53)
+        Me.GroupPanel3.Location = New System.Drawing.Point(730, 45)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(855, 145)
         '
@@ -1244,6 +1263,7 @@ Partial Class F0_Transito
         Me.lbCtrlEnter.Size = New System.Drawing.Size(58, 10)
         Me.lbCtrlEnter.TabIndex = 352
         Me.lbCtrlEnter.Text = "Ctrl+Enter"
+        Me.lbCtrlEnter.Visible = False
         '
         'tbCodProv
         '
@@ -1517,6 +1537,7 @@ Partial Class F0_Transito
         Me.tbProveedor.PreventEnterBeep = True
         Me.tbProveedor.Size = New System.Drawing.Size(200, 22)
         Me.tbProveedor.TabIndex = 1
+        Me.tbProveedor.Visible = False
         '
         'LabelX2
         '
@@ -1681,7 +1702,7 @@ Partial Class F0_Transito
         Me.btnTraspaso.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
         Me.btnTraspaso.Dock = System.Windows.Forms.DockStyle.Right
         Me.btnTraspaso.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnTraspaso.Image = Global.DinoM.My.Resources.Resources.FormatFactoryunnamed
+        Me.btnTraspaso.Image = Global.DinoM.My.Resources.Resources.reload_5
         Me.btnTraspaso.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.btnTraspaso.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.btnTraspaso.Location = New System.Drawing.Point(1190, 0)
@@ -1689,9 +1710,8 @@ Partial Class F0_Transito
         Me.btnTraspaso.Size = New System.Drawing.Size(80, 72)
         Me.btnTraspaso.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.btnTraspaso.TabIndex = 14
-        Me.btnTraspaso.Text = "TRASPASO"
+        Me.btnTraspaso.Text = "ACTUALIZAR"
         Me.btnTraspaso.TextColor = System.Drawing.Color.White
-        Me.btnTraspaso.Visible = False
         '
         'btnVerPagos
         '
@@ -1699,7 +1719,7 @@ Partial Class F0_Transito
         Me.btnVerPagos.ColorTable = DevComponents.DotNetBar.eButtonColor.Orange
         Me.btnVerPagos.Dock = System.Windows.Forms.DockStyle.Right
         Me.btnVerPagos.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnVerPagos.Image = Global.DinoM.My.Resources.Resources.cobro
+        Me.btnVerPagos.Image = Global.DinoM.My.Resources.Resources.printee
         Me.btnVerPagos.ImageFixedSize = New System.Drawing.Size(48, 48)
         Me.btnVerPagos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.btnVerPagos.Location = New System.Drawing.Point(1110, 0)
@@ -1707,9 +1727,8 @@ Partial Class F0_Transito
         Me.btnVerPagos.Size = New System.Drawing.Size(80, 72)
         Me.btnVerPagos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.btnVerPagos.TabIndex = 15
-        Me.btnVerPagos.Text = "PAGOS"
+        Me.btnVerPagos.Text = "COSTOS"
         Me.btnVerPagos.TextColor = System.Drawing.Color.White
-        Me.btnVerPagos.Visible = False
         '
         'ButtonX1
         '
@@ -1792,6 +1811,7 @@ Partial Class F0_Transito
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbConcepto, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbMonto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
@@ -1888,4 +1908,5 @@ Partial Class F0_Transito
     Friend WithEvents grGastos As Janus.Windows.GridEX.GridEX
     Friend WithEvents LabelX17 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX15 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents cbProveedor As Janus.Windows.GridEX.EditControls.MultiColumnCombo
 End Class

@@ -26,6 +26,7 @@ Partial Class F0_DetalleVentaCopia
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.grProductos = New Janus.Windows.GridEX.GridEX()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.btnBuscar = New DevComponents.DotNetBar.ButtonX()
         Me.btnActualizar = New DevComponents.DotNetBar.ButtonX()
         Me.btnAgregar = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
@@ -34,6 +35,7 @@ Partial Class F0_DetalleVentaCopia
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.grProductoSeleccionado = New Janus.Windows.GridEX.GridEX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.lblCategoria = New DevComponents.DotNetBar.LabelX()
         Me.GPanelProductos.SuspendLayout()
         Me.Panel7.SuspendLayout()
         CType(Me.grProductos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,7 +56,7 @@ Partial Class F0_DetalleVentaCopia
         Me.GPanelProductos.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GPanelProductos.Location = New System.Drawing.Point(3, 3)
         Me.GPanelProductos.Name = "GPanelProductos"
-        Me.GPanelProductos.Size = New System.Drawing.Size(856, 246)
+        Me.GPanelProductos.Size = New System.Drawing.Size(1288, 246)
         '
         '
         '
@@ -94,7 +96,7 @@ Partial Class F0_DetalleVentaCopia
         Me.Panel7.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel7.Location = New System.Drawing.Point(0, 0)
         Me.Panel7.Name = "Panel7"
-        Me.Panel7.Size = New System.Drawing.Size(850, 223)
+        Me.Panel7.Size = New System.Drawing.Size(1282, 223)
         Me.Panel7.TabIndex = 0
         '
         'grProductos
@@ -116,12 +118,14 @@ Partial Class F0_DetalleVentaCopia
         Me.grProductos.SelectedFormatStyle.BackColor = System.Drawing.Color.DodgerBlue
         Me.grProductos.SelectedFormatStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grProductos.SelectedFormatStyle.ForeColor = System.Drawing.Color.White
-        Me.grProductos.Size = New System.Drawing.Size(850, 182)
+        Me.grProductos.Size = New System.Drawing.Size(1282, 182)
         Me.grProductos.TabIndex = 0
         Me.grProductos.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.lblCategoria)
+        Me.Panel3.Controls.Add(Me.btnBuscar)
         Me.Panel3.Controls.Add(Me.btnActualizar)
         Me.Panel3.Controls.Add(Me.btnAgregar)
         Me.Panel3.Controls.Add(Me.LabelX9)
@@ -130,8 +134,24 @@ Partial Class F0_DetalleVentaCopia
         Me.Panel3.Location = New System.Drawing.Point(0, 0)
         Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(850, 41)
+        Me.Panel3.Size = New System.Drawing.Size(1282, 41)
         Me.Panel3.TabIndex = 1
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.btnBuscar.ColorTable = DevComponents.DotNetBar.eButtonColor.BlueOrb
+        Me.btnBuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnBuscar.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnBuscar.Image = Global.DinoM.My.Resources.Resources.search
+        Me.btnBuscar.ImageFixedSize = New System.Drawing.Size(30, 30)
+        Me.btnBuscar.Location = New System.Drawing.Point(1134, 0)
+        Me.btnBuscar.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(148, 41)
+        Me.btnBuscar.Style = DevComponents.DotNetBar.eDotNetBarStyle.OfficeMobile2014
+        Me.btnBuscar.TabIndex = 376
+        Me.btnBuscar.Text = "Buscar Productos"
         '
         'btnActualizar
         '
@@ -205,7 +225,7 @@ Partial Class F0_DetalleVentaCopia
         Me.GroupPanel1.Font = New System.Drawing.Font("Georgia", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupPanel1.Location = New System.Drawing.Point(3, 255)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(856, 247)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1288, 247)
         '
         '
         '
@@ -244,7 +264,7 @@ Partial Class F0_DetalleVentaCopia
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(850, 224)
+        Me.Panel1.Size = New System.Drawing.Size(1282, 224)
         Me.Panel1.TabIndex = 0
         '
         'grProductoSeleccionado
@@ -259,7 +279,7 @@ Partial Class F0_DetalleVentaCopia
         Me.grProductoSeleccionado.Name = "grProductoSeleccionado"
         Me.grProductoSeleccionado.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.grProductoSeleccionado.Office2007CustomColor = System.Drawing.Color.DodgerBlue
-        Me.grProductoSeleccionado.Size = New System.Drawing.Size(850, 224)
+        Me.grProductoSeleccionado.Size = New System.Drawing.Size(1282, 224)
         Me.grProductoSeleccionado.TabIndex = 0
         Me.grProductoSeleccionado.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
@@ -276,14 +296,30 @@ Partial Class F0_DetalleVentaCopia
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(862, 505)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1294, 505)
         Me.TableLayoutPanel1.TabIndex = 1
+        '
+        'lblCategoria
+        '
+        Me.lblCategoria.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.lblCategoria.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.lblCategoria.Font = New System.Drawing.Font("Georgia", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCategoria.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.lblCategoria.Location = New System.Drawing.Point(699, 9)
+        Me.lblCategoria.Name = "lblCategoria"
+        Me.lblCategoria.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.lblCategoria.Size = New System.Drawing.Size(425, 23)
+        Me.lblCategoria.TabIndex = 379
+        Me.lblCategoria.Text = "Categoria"
         '
         'F0_DetalleVentaCopia
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(862, 505)
+        Me.ClientSize = New System.Drawing.Size(1294, 505)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(2)
@@ -315,4 +351,6 @@ Partial Class F0_DetalleVentaCopia
     Friend WithEvents btnAgregar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents btnActualizar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents btnBuscar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents lblCategoria As DevComponents.DotNetBar.LabelX
 End Class

@@ -121,6 +121,7 @@ Module P_Global
     Public gs_VentaNormal As Integer = 0
     Public gs_VentaMecanico As Integer = 0
     Public gs_VentaMayorista As Integer = 0
+    Public gb_userTodasSuc As Integer = 0
     Public gi_userNumi As Integer = 0
     Public gi_userRol As Integer = 0
     Public gi_userSuc As Integer = 0

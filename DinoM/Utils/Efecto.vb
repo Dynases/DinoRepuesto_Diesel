@@ -36,6 +36,8 @@ Public Class Efecto
                 _prLogin()
             Case 7
                 _prMostrarAyudaVentaCantidad()
+            Case 8
+                _prMostrarAyudaCompraCantidad()
                 'Case 8
                 '    _ConfirmacionVenta()
         End Select
@@ -54,6 +56,39 @@ Public Class Efecto
         frmAyuda.TipoMovimiento = TipoMovimiento
         If tipo1 = 1 Then
             frmAyuda.tipo = 1
+        ElseIf tipo1 = 2 Then
+            frmAyuda.TipoMovimiento = 1
+        End If
+        frmAyuda.ShowDialog()
+
+        If frmAyuda.bandera = True Then
+
+            Cantidad = frmAyuda.Cantidad
+            Precio = frmAyuda.Precio
+            band = True
+            Me.Close()
+        Else
+            band = False
+            Me.Close()
+        End If
+
+    End Sub
+
+    Sub _prMostrarAyudaCompraCantidad()
+
+        Dim frmAyuda As F1_CantidadCompra
+        frmAyuda = New F1_CantidadCompra
+
+        frmAyuda.Stock = Stock
+        frmAyuda.Cantidad = Cantidad
+        frmAyuda.Producto = NameProducto
+        frmAyuda.CategoriaPrecio = CategoriaPrecio
+        frmAyuda.idProducto = IdProducto
+        frmAyuda.TipoMovimiento = TipoMovimiento
+        If tipo1 = 1 Then
+            frmAyuda.tipo = 1
+        ElseIf tipo1 = 2 Then
+            frmAyuda.TipoMovimiento = 1
         End If
         frmAyuda.ShowDialog()
 

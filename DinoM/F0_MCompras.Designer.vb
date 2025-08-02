@@ -24,7 +24,8 @@ Partial Class F0_MCompras
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_Transito))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_MCompras))
+        Dim cbProveedor_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbMoneda_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Dim cbSucursal_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.PanelDetalle = New System.Windows.Forms.Panel()
@@ -47,6 +48,7 @@ Partial Class F0_MCompras
         Me.PanelContentSup = New System.Windows.Forms.Panel()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cbProveedor = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.cbMoneda = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.btnBuscarProforma = New DevComponents.DotNetBar.ButtonX()
         Me.SwProforma = New DevComponents.DotNetBar.Controls.SwitchButton()
@@ -136,6 +138,7 @@ Partial Class F0_MCompras
         Me.PanelContentSup.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.cbMoneda, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbTipoCambio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanelFactura2.SuspendLayout()
@@ -231,6 +234,7 @@ Partial Class F0_MCompras
         'btnEliminar
         '
         Me.btnEliminar.TabIndex = 4
+        Me.btnEliminar.Visible = False
         '
         'btnModificar
         '
@@ -690,6 +694,7 @@ Partial Class F0_MCompras
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbProveedor)
         Me.Panel2.Controls.Add(Me.cbMoneda)
         Me.Panel2.Controls.Add(Me.btnBuscarProforma)
         Me.Panel2.Controls.Add(Me.SwProforma)
@@ -730,6 +735,21 @@ Partial Class F0_MCompras
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1311, 207)
         Me.Panel2.TabIndex = 234
+        '
+        'cbProveedor
+        '
+        cbProveedor_DesignTimeLayout.LayoutString = resources.GetString("cbProveedor_DesignTimeLayout.LayoutString")
+        Me.cbProveedor.DesignTimeLayout = cbProveedor_DesignTimeLayout
+        Me.cbProveedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProveedor.Location = New System.Drawing.Point(196, 54)
+        Me.cbProveedor.Name = "cbProveedor"
+        Me.cbProveedor.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbProveedor.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbProveedor.SelectedIndex = -1
+        Me.cbProveedor.SelectedItem = Nothing
+        Me.cbProveedor.Size = New System.Drawing.Size(197, 22)
+        Me.cbProveedor.TabIndex = 683
+        Me.cbProveedor.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
         '
         'cbMoneda
         '
@@ -1526,6 +1546,7 @@ Partial Class F0_MCompras
         Me.tbProveedor.PreventEnterBeep = True
         Me.tbProveedor.Size = New System.Drawing.Size(200, 22)
         Me.tbProveedor.TabIndex = 1
+        Me.tbProveedor.Visible = False
         '
         'LabelX2
         '
@@ -1736,6 +1757,7 @@ Partial Class F0_MCompras
         Me.ButtonX1.TabIndex = 16
         Me.ButtonX1.Text = "REVISION DE LLEGADA"
         Me.ButtonX1.TextColor = System.Drawing.Color.White
+        Me.ButtonX1.Visible = False
         '
         'btnImportar
         '
@@ -1755,14 +1777,14 @@ Partial Class F0_MCompras
         Me.btnImportar.TextColor = System.Drawing.Color.White
         Me.btnImportar.Visible = False
         '
-        'F0_Transito
+        'F0_MCompras
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1350, 681)
         Me.Location = New System.Drawing.Point(0, 0)
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "F0_Transito"
+        Me.Name = "F0_MCompras"
         Me.Text = "F0_MCompras"
         Me.Controls.SetChildIndex(Me.PanelPrincipal, 0)
         Me.PanelSuperior.ResumeLayout(False)
@@ -1800,6 +1822,7 @@ Partial Class F0_MCompras
         Me.GroupPanel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.cbMoneda, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbTipoCambio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanelFactura2.ResumeLayout(False)
@@ -1892,4 +1915,5 @@ Partial Class F0_MCompras
     Protected WithEvents ButtonX1 As DevComponents.DotNetBar.ButtonX
     Protected WithEvents btnImportar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents cbMoneda As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents cbProveedor As Janus.Windows.GridEX.EditControls.MultiColumnCombo
 End Class

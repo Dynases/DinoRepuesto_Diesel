@@ -33,6 +33,7 @@ Partial Class F0_Usuarios
         Me.Tb_Nombre = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Tb_Id = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Tb_DiasPedidos = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
         Me.swPrecio = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.swVentaMayorista = New DevComponents.DotNetBar.Controls.SwitchButton()
@@ -64,7 +65,6 @@ Partial Class F0_Usuarios
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.JGr_Buscador = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Tb_DiasPedidos = New DevComponents.DotNetBar.Controls.SwitchButton()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -102,7 +102,7 @@ Partial Class F0_Usuarios
         Me.SuperTabPrincipal.ControlBox.MenuBox.Name = ""
         Me.SuperTabPrincipal.ControlBox.Name = ""
         Me.SuperTabPrincipal.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabPrincipal.ControlBox.MenuBox, Me.SuperTabPrincipal.ControlBox.CloseBox})
-        Me.SuperTabPrincipal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SuperTabPrincipal.Margin = New System.Windows.Forms.Padding(4)
         Me.SuperTabPrincipal.SelectedTabIndex = 1
         Me.SuperTabPrincipal.Size = New System.Drawing.Size(1362, 609)
         Me.SuperTabPrincipal.Controls.SetChildIndex(Me.SuperTabControlPanelRegistro, 0)
@@ -111,7 +111,7 @@ Partial Class F0_Usuarios
         'SuperTabControlPanelBuscador
         '
         Me.SuperTabControlPanelBuscador.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanelBuscador.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SuperTabControlPanelBuscador.Margin = New System.Windows.Forms.Padding(4)
         Me.SuperTabControlPanelBuscador.Size = New System.Drawing.Size(852, 561)
         '
         'SupTabItemBusqueda
@@ -120,7 +120,7 @@ Partial Class F0_Usuarios
         '
         'SuperTabControlPanelRegistro
         '
-        Me.SuperTabControlPanelRegistro.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.SuperTabControlPanelRegistro.Margin = New System.Windows.Forms.Padding(4)
         Me.SuperTabControlPanelRegistro.Size = New System.Drawing.Size(1330, 609)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelSuperior, 0)
         Me.SuperTabControlPanelRegistro.Controls.SetChildIndex(Me.PanelInferior, 0)
@@ -128,7 +128,7 @@ Partial Class F0_Usuarios
         '
         'PanelSuperior
         '
-        Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PanelSuperior.Margin = New System.Windows.Forms.Padding(4)
         Me.PanelSuperior.Size = New System.Drawing.Size(1330, 72)
         Me.PanelSuperior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelSuperior.Style.BackColor1.Color = System.Drawing.Color.Yellow
@@ -147,7 +147,7 @@ Partial Class F0_Usuarios
         'PanelInferior
         '
         Me.PanelInferior.Location = New System.Drawing.Point(0, 570)
-        Me.PanelInferior.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PanelInferior.Margin = New System.Windows.Forms.Padding(4)
         Me.PanelInferior.Size = New System.Drawing.Size(1330, 39)
         Me.PanelInferior.Style.Alignment = System.Drawing.StringAlignment.Center
         Me.PanelInferior.Style.BackColor1.Color = System.Drawing.Color.Gold
@@ -183,7 +183,7 @@ Partial Class F0_Usuarios
         '
         'TxtNombreUsu
         '
-        Me.TxtNombreUsu.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TxtNombreUsu.Margin = New System.Windows.Forms.Padding(4)
         Me.TxtNombreUsu.Size = New System.Drawing.Size(135, 32)
         '
         'btnSalir
@@ -207,13 +207,13 @@ Partial Class F0_Usuarios
         'PanelToolBar2
         '
         Me.PanelToolBar2.Location = New System.Drawing.Point(1250, 0)
-        Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4)
         '
         'PanelPrincipal
         '
         Me.PanelPrincipal.Controls.Add(Me.GroupPanel1)
         Me.PanelPrincipal.Controls.Add(Me.Panel1)
-        Me.PanelPrincipal.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PanelPrincipal.Margin = New System.Windows.Forms.Padding(4)
         Me.PanelPrincipal.Size = New System.Drawing.Size(1330, 498)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.PanelUsuario, 0)
         Me.PanelPrincipal.Controls.SetChildIndex(Me.Panel1, 0)
@@ -240,7 +240,7 @@ Partial Class F0_Usuarios
         'MPanelUserAct
         '
         Me.MPanelUserAct.Location = New System.Drawing.Point(1130, 0)
-        Me.MPanelUserAct.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MPanelUserAct.Margin = New System.Windows.Forms.Padding(4)
         '
         'MRlAccion
         '
@@ -248,7 +248,7 @@ Partial Class F0_Usuarios
         '
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4)
         Me.MRlAccion.Size = New System.Drawing.Size(874, 72)
         '
         'Tb_fuenteTam
@@ -390,6 +390,26 @@ Partial Class F0_Usuarios
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1330, 175)
         Me.Panel1.TabIndex = 44
+        '
+        'Tb_DiasPedidos
+        '
+        '
+        '
+        '
+        Me.Tb_DiasPedidos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Tb_DiasPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tb_DiasPedidos.Location = New System.Drawing.Point(554, 18)
+        Me.Tb_DiasPedidos.Name = "Tb_DiasPedidos"
+        Me.Tb_DiasPedidos.OffBackColor = System.Drawing.Color.Gray
+        Me.Tb_DiasPedidos.OffText = "NO"
+        Me.Tb_DiasPedidos.OffTextColor = System.Drawing.Color.White
+        Me.Tb_DiasPedidos.OnBackColor = System.Drawing.Color.Gold
+        Me.Tb_DiasPedidos.OnText = "SI"
+        Me.Tb_DiasPedidos.Size = New System.Drawing.Size(100, 22)
+        Me.Tb_DiasPedidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Tb_DiasPedidos.TabIndex = 254
+        Me.Tb_DiasPedidos.ValueFalse = "0"
+        Me.Tb_DiasPedidos.ValueTrue = "1"
         '
         'LabelX17
         '
@@ -591,7 +611,7 @@ Partial Class F0_Usuarios
         Me.tbDescuento.Font = New System.Drawing.Font("Calibri", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tbDescuento.Increment = 1.0R
         Me.tbDescuento.Location = New System.Drawing.Point(974, 18)
-        Me.tbDescuento.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.tbDescuento.Margin = New System.Windows.Forms.Padding(2)
         Me.tbDescuento.Name = "tbDescuento"
         Me.tbDescuento.Size = New System.Drawing.Size(105, 24)
         Me.tbDescuento.TabIndex = 243
@@ -623,13 +643,12 @@ Partial Class F0_Usuarios
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX11.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.LabelX11.Location = New System.Drawing.Point(1125, 120)
+        Me.LabelX11.Location = New System.Drawing.Point(1097, 68)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LabelX11.Size = New System.Drawing.Size(90, 16)
+        Me.LabelX11.Size = New System.Drawing.Size(95, 16)
         Me.LabelX11.TabIndex = 241
-        Me.LabelX11.Text = "SUCURSALES"
-        Me.LabelX11.Visible = False
+        Me.LabelX11.Text = "Ver Sucursales"
         '
         'swDescuento
         '
@@ -849,7 +868,7 @@ Partial Class F0_Usuarios
         '
         Me.tbTodasSucursales.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.tbTodasSucursales.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbTodasSucursales.Location = New System.Drawing.Point(1229, 120)
+        Me.tbTodasSucursales.Location = New System.Drawing.Point(1201, 68)
         Me.tbTodasSucursales.Name = "tbTodasSucursales"
         Me.tbTodasSucursales.OffBackColor = System.Drawing.Color.Black
         Me.tbTodasSucursales.OffText = "NO"
@@ -861,7 +880,6 @@ Partial Class F0_Usuarios
         Me.tbTodasSucursales.TabIndex = 8
         Me.tbTodasSucursales.ValueFalse = "0"
         Me.tbTodasSucursales.ValueTrue = "1"
-        Me.tbTodasSucursales.Visible = False
         '
         'tbSuc
         '
@@ -948,33 +966,13 @@ Partial Class F0_Usuarios
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
-        'Tb_DiasPedidos
-        '
-        '
-        '
-        '
-        Me.Tb_DiasPedidos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Tb_DiasPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tb_DiasPedidos.Location = New System.Drawing.Point(554, 18)
-        Me.Tb_DiasPedidos.Name = "Tb_DiasPedidos"
-        Me.Tb_DiasPedidos.OffBackColor = System.Drawing.Color.Gray
-        Me.Tb_DiasPedidos.OffText = "NO"
-        Me.Tb_DiasPedidos.OffTextColor = System.Drawing.Color.White
-        Me.Tb_DiasPedidos.OnBackColor = System.Drawing.Color.Gold
-        Me.Tb_DiasPedidos.OnText = "SI"
-        Me.Tb_DiasPedidos.Size = New System.Drawing.Size(100, 22)
-        Me.Tb_DiasPedidos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Tb_DiasPedidos.TabIndex = 254
-        Me.Tb_DiasPedidos.ValueFalse = "0"
-        Me.Tb_DiasPedidos.ValueTrue = "1"
-        '
         'F0_Usuarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1362, 609)
         Me.Location = New System.Drawing.Point(0, 0)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "F0_Usuarios"
         Me.Opacity = 0.05R
         Me.Text = "F0_Usuarios"

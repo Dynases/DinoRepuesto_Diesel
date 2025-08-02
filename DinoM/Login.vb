@@ -98,7 +98,7 @@ Public Class Login
             gs_VentaNormal = IIf(IsDBNull(dtUsuario.Rows(0).Item("PrecioVentaNormal")), 0, dtUsuario.Rows(0).Item("PrecioVentaNormal"))
             gs_VentaMecanico = IIf(IsDBNull(dtUsuario.Rows(0).Item("PrecioMecanico")), 0, dtUsuario.Rows(0).Item("PrecioMecanico"))
             gs_VentaMayorista = IIf(IsDBNull(dtUsuario.Rows(0).Item("PrecioMayorista")), 0, dtUsuario.Rows(0).Item("PrecioMayorista"))
-            'gb_userTodasSuc = IIf(dtUsuario.Rows(0).Item("ydall") = 1, True, False)yd_numiVend
+            gb_userTodasSuc = dtUsuario.Rows(0).Item("VerSucursales") 'yd_numiVend
 
 
             _prDesvenecerPantalla()

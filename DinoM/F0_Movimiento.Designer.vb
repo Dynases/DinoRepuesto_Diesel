@@ -54,6 +54,9 @@ Partial Class F0_Movimiento
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.grmovimiento = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.SwProforma = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
+        Me.tbProforma = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -460,6 +463,9 @@ Partial Class F0_Movimiento
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.SwProforma)
+        Me.Panel2.Controls.Add(Me.LabelX18)
+        Me.Panel2.Controls.Add(Me.tbProforma)
         Me.Panel2.Controls.Add(Me.cbDepositoDestino)
         Me.Panel2.Controls.Add(Me.lbDepositoDestino)
         Me.Panel2.Controls.Add(Me.cbAlmacenOrigen)
@@ -483,7 +489,7 @@ Partial Class F0_Movimiento
         cbDepositoDestino_DesignTimeLayout.LayoutString = resources.GetString("cbDepositoDestino_DesignTimeLayout.LayoutString")
         Me.cbDepositoDestino.DesignTimeLayout = cbDepositoDestino_DesignTimeLayout
         Me.cbDepositoDestino.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbDepositoDestino.Location = New System.Drawing.Point(344, 81)
+        Me.cbDepositoDestino.Location = New System.Drawing.Point(386, 109)
         Me.cbDepositoDestino.Name = "cbDepositoDestino"
         Me.cbDepositoDestino.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.cbDepositoDestino.Office2007CustomColor = System.Drawing.Color.DodgerBlue
@@ -504,7 +510,7 @@ Partial Class F0_Movimiento
         Me.lbDepositoDestino.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.lbDepositoDestino.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbDepositoDestino.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.lbDepositoDestino.Location = New System.Drawing.Point(344, 62)
+        Me.lbDepositoDestino.Location = New System.Drawing.Point(386, 90)
         Me.lbDepositoDestino.Name = "lbDepositoDestino"
         Me.lbDepositoDestino.SingleLineColor = System.Drawing.SystemColors.Control
         Me.lbDepositoDestino.Size = New System.Drawing.Size(104, 16)
@@ -517,7 +523,7 @@ Partial Class F0_Movimiento
         cbAlmacenOrigen_DesignTimeLayout.LayoutString = resources.GetString("cbAlmacenOrigen_DesignTimeLayout.LayoutString")
         Me.cbAlmacenOrigen.DesignTimeLayout = cbAlmacenOrigen_DesignTimeLayout
         Me.cbAlmacenOrigen.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbAlmacenOrigen.Location = New System.Drawing.Point(344, 34)
+        Me.cbAlmacenOrigen.Location = New System.Drawing.Point(386, 62)
         Me.cbAlmacenOrigen.Name = "cbAlmacenOrigen"
         Me.cbAlmacenOrigen.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
         Me.cbAlmacenOrigen.Office2007CustomColor = System.Drawing.Color.DodgerBlue
@@ -537,7 +543,7 @@ Partial Class F0_Movimiento
         Me.lbDepositoOrigen.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.lbDepositoOrigen.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbDepositoOrigen.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
-        Me.lbDepositoOrigen.Location = New System.Drawing.Point(344, 15)
+        Me.lbDepositoOrigen.Location = New System.Drawing.Point(386, 43)
         Me.lbDepositoOrigen.Name = "lbDepositoOrigen"
         Me.lbDepositoOrigen.SingleLineColor = System.Drawing.SystemColors.Control
         Me.lbDepositoOrigen.Size = New System.Drawing.Size(62, 16)
@@ -798,6 +804,59 @@ Partial Class F0_Movimiento
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
+        'SwProforma
+        '
+        '
+        '
+        '
+        Me.SwProforma.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.SwProforma.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SwProforma.Location = New System.Drawing.Point(274, 12)
+        Me.SwProforma.Name = "SwProforma"
+        Me.SwProforma.OffBackColor = System.Drawing.Color.LawnGreen
+        Me.SwProforma.OffText = "NO"
+        Me.SwProforma.OnBackColor = System.Drawing.Color.Gold
+        Me.SwProforma.OnText = "SI"
+        Me.SwProforma.Size = New System.Drawing.Size(68, 22)
+        Me.SwProforma.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.SwProforma.TabIndex = 244
+        Me.SwProforma.Value = True
+        Me.SwProforma.ValueObject = "Y"
+        '
+        'LabelX18
+        '
+        Me.LabelX18.AutoSize = True
+        Me.LabelX18.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX18.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX18.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX18.Location = New System.Drawing.Point(213, 15)
+        Me.LabelX18.Name = "LabelX18"
+        Me.LabelX18.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX18.Size = New System.Drawing.Size(58, 16)
+        Me.LabelX18.TabIndex = 243
+        Me.LabelX18.Text = "Solicitud"
+        '
+        'tbProforma
+        '
+        Me.tbProforma.BackColor = System.Drawing.Color.LightGray
+        '
+        '
+        '
+        Me.tbProforma.Border.Class = "TextBoxBorder"
+        Me.tbProforma.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.tbProforma.Enabled = False
+        Me.tbProforma.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tbProforma.ForeColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.tbProforma.Location = New System.Drawing.Point(363, 12)
+        Me.tbProforma.Name = "tbProforma"
+        Me.tbProforma.PreventEnterBeep = True
+        Me.tbProforma.Size = New System.Drawing.Size(112, 22)
+        Me.tbProforma.TabIndex = 242
+        '
         'F0_Movimiento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -872,4 +931,7 @@ Partial Class F0_Movimiento
     Friend WithEvents lbDepositoDestino As DevComponents.DotNetBar.LabelX
     Friend WithEvents cbAlmacenOrigen As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents lbDepositoOrigen As DevComponents.DotNetBar.LabelX
+    Friend WithEvents SwProforma As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents LabelX18 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents tbProforma As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

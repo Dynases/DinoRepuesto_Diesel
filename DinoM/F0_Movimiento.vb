@@ -71,6 +71,10 @@ Public Class F0_Movimiento
     Private Sub _prCargarComboLibreriaConcepto(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
         Dim dt As New DataTable
         dt = L_prMovimientoConcepto()
+        If gi_userRol <> 1 Then
+            dt.Rows.RemoveAt(0)
+            dt.Rows.RemoveAt(0)
+        End If
         With mCombo
             .DropDownList.Columns.Clear()
             .DropDownList.Columns.Add("cpnumi").Width = 60
@@ -117,6 +121,7 @@ Public Class F0_Movimiento
         grmovimiento.Enabled = True
 
         grdetalle.RootTable.Columns("img").Visible = False
+        SwProforma.IsReadOnly = True
 
 
         If (GPanelProductos.Visible = True) Then
@@ -133,6 +138,7 @@ Public Class F0_Movimiento
         'cbAlmacenOrigen.ReadOnly = False
         cbAlmacenOrigen.Value = gi_userSuc
         grmovimiento.Enabled = False
+        SwProforma.IsReadOnly = False
         ''  tbCliente.ReadOnly = False  por que solo podra seleccionar Cliente
         ''  tbVendedor.ReadOnly = False
         If (tbCodigo.Text.Length > 0) Then
@@ -163,7 +169,8 @@ Public Class F0_Movimiento
         tbObservacion.Clear()
         tbFecha.Value = Now.Date
         _prCargarDetalleVenta(-1)
-
+        SwProforma.Value = False
+        tbProforma.Clear()
 
         With grdetalle.RootTable.Columns("img")
             .Width = 80
@@ -183,7 +190,7 @@ Public Class F0_Movimiento
             PanelInferior.Visible = True
         End If
         If (CType(cbAlmacenOrigen.DataSource, DataTable).Rows.Count > 0) Then
-            cbAlmacenOrigen.SelectedIndex = 0
+            cbAlmacenOrigen.Value = gi_userSuc
 
         End If
         If (CType(cbConcepto.DataSource, DataTable).Rows.Count > 0) Then
@@ -198,7 +205,7 @@ Public Class F0_Movimiento
         '      a.ibid ,a.ibfdoc ,a.ibconcep ,b.cpdesc as concepto,a.ibobs ,a.ibest ,a.ibalm ,a.ibiddc 
         ',a.ibfact ,a.ibhact ,a.ibuact,ibdepdest
         With grmovimiento
-            tbCodigo.Text = .GetValue("ibid")
+            tbCodigo.Text = .GetValue("ibind")
             tbFecha.Value = .GetValue("ibfdoc")
             cbConcepto.Value = .GetValue("ibconcep")
             tbObservacion.Text = .GetValue("ibobs")
@@ -207,9 +214,11 @@ Public Class F0_Movimiento
             lbUsuario.Text = .GetValue("ibuact").ToString
             cbAlmacenOrigen.Value = .GetValue("ibalm")
             cbDepositoDestino.Value = IIf(IsDBNull(.GetValue("ibdepdest")), 0, .GetValue("ibdepdest"))
+            SwProforma.Value = IIf(IIf(IsDBNull(.GetValue("ibprof")), 0, .GetValue("ibprof")), True, False)
+            tbProforma.Text = IIf(IIf(IsDBNull(.GetValue("ibprof")), 0, .GetValue("ibprof")), .GetValue("ibcodprof"), "0")
         End With
 
-        _prCargarDetalleVenta(tbCodigo.Text)
+        _prCargarDetalleVenta(grmovimiento.GetValue("ibid"))
         LblPaginacion.Text = Str(grmovimiento.Row + 1) + "/" + grmovimiento.RowCount.ToString
 
     End Sub
@@ -368,20 +377,26 @@ Public Class F0_Movimiento
 
     Private Sub _prCargarVenta()
         Dim dt As New DataTable
-        dt = L_fnGeneralMovimiento()
+
+        If gb_userTodasSuc = 1 Then
+            dt = L_fnGeneralMovimiento(100)
+        Else
+            dt = L_fnGeneralMovimiento(gi_userSuc)
+        End If
+
         'grmovimiento.DataSource = dt
         'grmovimiento.RetrieveStructure()
         'grmovimiento.AlternatingColors = True
 
         ConfigInicialVinculado(grmovimiento, dt, "Movimiento")
-        ColAL(grmovimiento, "ibid", "ITEM", 80)
+        ColNoVisible(grmovimiento, "ibid")
 
-        'With grmovimiento.RootTable.Columns("ibid")
-        '    .Width = 100
-        '    .Caption = "CODIGO"
-        '    .Visible = True
+        With grmovimiento.RootTable.Columns("ibind")
+            .Width = 100
+            .Caption = "CODIGO"
+            .Visible = True
 
-        'End With
+        End With
 
         With grmovimiento.RootTable.Columns("ibfdoc")
             .Width = 90
@@ -442,6 +457,16 @@ Public Class F0_Movimiento
         End With
 
         With grmovimiento.RootTable.Columns("ibdepdest")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grmovimiento.RootTable.Columns("ibprof")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grmovimiento.RootTable.Columns("ibcodprof")
             .Width = 50
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
             .Visible = False
@@ -848,11 +873,17 @@ Public Class F0_Movimiento
 
     Sub _prGuardarTraspaso()
         Dim numi As String = ""
-        Dim res As Boolean = L_prMovimientoChoferGrabar(numi, tbFecha.Value.ToString("yyyy/MM/dd"), cbConcepto.Value, tbObservacion.Text, cbAlmacenOrigen.Value, cbDepositoDestino.Value, 0, CType(grdetalle.DataSource, DataTable))
+        Dim prof As Integer
+        If SwProforma.Value = True Then
+            prof = CInt(tbProforma.Text)
+        Else
+            prof = 0
+        End If
+        Dim res As Boolean = L_prMovimientoChoferGrabar(numi, tbFecha.Value.ToString("yyyy/MM/dd"), cbConcepto.Value, tbObservacion.Text, cbAlmacenOrigen.Value, cbDepositoDestino.Value, 0, CType(grdetalle.DataSource, DataTable), IIf(SwProforma.Value = True, 1, 0), prof)
         If res Then
 
             Dim numDestino As String = ""
-            Dim resDestino As Boolean = L_prMovimientoChoferGrabar(numDestino, tbFecha.Value.ToString("yyyy/MM/dd"), 5, tbObservacion.Text, cbDepositoDestino.Value, cbAlmacenOrigen.Value, numi, CType(grdetalle.DataSource, DataTable))
+            Dim resDestino As Boolean = L_prMovimientoChoferGrabar(numDestino, tbFecha.Value.ToString("yyyy/MM/dd"), 5, tbObservacion.Text, cbDepositoDestino.Value, cbAlmacenOrigen.Value, numi, CType(grdetalle.DataSource, DataTable), IIf(SwProforma.Value = True, 1, 0), prof)
             If resDestino Then
 
                 _prCargarVenta()
@@ -880,7 +911,7 @@ Public Class F0_Movimiento
 
         End If
         Dim numi As String = ""
-        Dim res As Boolean = L_prMovimientoChoferGrabar(numi, tbFecha.Value.ToString("yyyy/MM/dd"), cbConcepto.Value, tbObservacion.Text, cbAlmacenOrigen.Value, 0, 0, CType(grdetalle.DataSource, DataTable))
+        Dim res As Boolean = L_prMovimientoChoferGrabar(numi, tbFecha.Value.ToString("yyyy/MM/dd"), cbConcepto.Value, tbObservacion.Text, cbAlmacenOrigen.Value, 0, 0, CType(grdetalle.DataSource, DataTable), IIf(SwProforma.Value = True, 1, 0), IIf(SwProforma.Value = True, CInt(IIf(tbProforma.Text = "", "0", tbProforma.Text)), 0))
         If res Then
 
             _prCargarVenta()
@@ -1893,7 +1924,7 @@ salirIf:
 
         If cbConcepto.Value <> 6 Then
 
-            Dim dt As DataTable = l_ReporteMovimiento(tbCodigo.Text)
+            Dim dt As DataTable = l_ReporteMovimiento(grmovimiento.GetValue("ibid"))
 
 
             If Not IsNothing(P_Global.Visualizador) Then
@@ -1918,7 +1949,7 @@ salirIf:
 
         Else
 
-            Dim dt As DataTable = l_ReporteMovimiento(tbCodigo.Text)
+            Dim dt As DataTable = l_ReporteMovimiento(grmovimiento.GetValue("ibid"))
 
 
             If Not IsNothing(P_Global.Visualizador) Then
@@ -1945,6 +1976,170 @@ salirIf:
     End Sub
     Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
         P_GenerarReporte()
+    End Sub
+
+    Private Sub SwProforma_ValueChanged(sender As Object, e As EventArgs) Handles SwProforma.ValueChanged
+        If (_fnAccesible()) Then
+            If (SwProforma.Value = True) Then
+                tbProforma.BackColor = Color.White
+                tbProforma.ReadOnly = True
+                tbProforma.Enabled = True
+                tbProforma.Focus()
+
+            Else
+                tbProforma.BackColor = Color.LightGray
+                tbProforma.ReadOnly = True
+                tbProforma.Enabled = False
+            End If
+        End If
+    End Sub
+
+    Private Sub tbProforma_KeyDown(sender As Object, e As KeyEventArgs) Handles tbProforma.KeyDown
+
+        If (_fnAccesible()) Then
+            If e.KeyData = Keys.Control + Keys.Enter Then
+
+                Dim dt As DataTable
+
+                dt = L_fnListarSolicitud(gi_userSuc)
+                '              a.panumi ,a.pafdoc ,a.paven ,vendedor .yddesc as vendedor,a.paclpr,
+                'cliente.yddesc as cliente,a.patotal as total
+
+                Dim listEstCeldas As New List(Of Modelo.Celda)
+                listEstCeldas.Add(New Modelo.Celda("ibid,", True, "NRO SOLICITUD", 120))
+                listEstCeldas.Add(New Modelo.Celda("ibfdoc", True, "FECHA", 120, "dd/MM/yyyy"))
+                listEstCeldas.Add(New Modelo.Celda("ibobs", True, "OBSERVACION".ToUpper, 150))
+                listEstCeldas.Add(New Modelo.Celda("aabdes", True, "SUCURSAL", 220))
+                listEstCeldas.Add(New Modelo.Celda("origen", False))
+                listEstCeldas.Add(New Modelo.Celda("destino", False))
+                listEstCeldas.Add(New Modelo.Celda("ibconcep", False))
+
+                Dim ef = New Efecto
+                ef.tipo = 3
+                ef.dt = dt
+                ef.SeleclCol = 2
+                ef.listEstCeldas = listEstCeldas
+                ef.alto = 50
+                ef.ancho = 350
+                ef.Context = "Seleccione SOLICITUD".ToUpper
+                ef.ShowDialog()
+                Dim bandera As Boolean = False
+                bandera = ef.band
+                If (bandera = True) Then
+                    Dim Row As Janus.Windows.GridEX.GridEXRow = ef.Row
+
+                    '    '_CodEmpleado = Row.Cells("peven").Value
+                    '    _CodCliente = Row.Cells("peclpr").Value
+                    '    'tbCliente.Text = Row.Cells("cliente").Value
+                    '    cbCliente.Value = Row.Cells("peclpr").Value
+                    '    'tbVendedor.Text = Row.Cells("vendedor").Value
+                    cbConcepto.Value = Row.Cells("ibconcep").Value
+                    cbAlmacenOrigen.Value = Row.Cells("origen").Value
+                    cbDepositoDestino.Value = Row.Cells("destino").Value
+                    tbProforma.Text = Row.Cells("ibid").Value
+                    '    'cbSucursal.Value = Row.Cells("pealm").Value
+                    _prCargarProductoDeLaSolicitud(Row.Cells("ibid").Value, Row.Cells("origen").Value)
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub _prCargarProductoDeLaSolicitud(codigo As Integer, almacen As Integer)
+        Dim dt As DataTable = L_fnListarProductoSolicitud(codigo)
+        If (dt.Rows.Count > 0) Then
+            CType(grdetalle.DataSource, DataTable).Rows.Clear()
+            For i As Integer = 0 To dt.Rows.Count - 1
+                Dim ItemNuevo As String = dt.Rows(i).Item("yfCodAux1")
+                Dim numiproducto As Integer = dt.Rows(i).Item("iccprod")
+                Dim CodFab As String = dt.Rows(i).Item("CodigoFabrica")
+                Dim CodMar As String = dt.Rows(i).Item("CodigoMarca")
+                Dim nameproducto As String = dt.Rows(i).Item("producto")
+                Dim lote As String = ""
+                Dim FechaVenc As Date = Now.Date
+                Dim cant As Double = dt.Rows(i).Item("iccant")
+                Dim iccven As Double = 0
+                '_prPedirLotesProducto(lote, FechaVenc, iccven, numiproducto, nameproducto, cant)
+
+
+                'If (lote <> String.Empty) Then
+                Dim dt1 As DataTable = TraerStockAlmacen(numiproducto, almacen)
+                iccven = dt1.Rows(0).Item("iccven")
+                If (cant <= iccven) Then
+                    _prAddDetalleVenta()
+                    grdetalle.Row = grdetalle.RowCount - 1
+
+                    grdetalle.SetValue("iccprod", numiproducto)
+                    grdetalle.SetValue("yfCodAux1", ItemNuevo)
+                    grdetalle.SetValue("yfCodAux2", dt.Rows(i).Item("yfCodAux1"))
+                    grdetalle.SetValue("CodigoFabrica", CodFab)
+                    grdetalle.SetValue("CodigoMarca", CodMar)
+                    grdetalle.SetValue("Medida", dt.Rows(i).Item("Medida"))
+                    grdetalle.SetValue("CategoriaProducto", dt.Rows(i).Item("CategoriaProducto"))
+                    grdetalle.SetValue("producto", nameproducto)
+                    grdetalle.SetValue("iccant", cant)
+                    grdetalle.SetValue("stock", iccven)
+
+
+
+                Else
+                    Dim ef = New Efecto
+                    ef.tipo = 7
+                    ef.Stock = iccven
+                    ef.Cantidad = iccven
+                    'ef.CategoriaPrecio = CategoriaPrecio
+                    ef.IdProducto = numiproducto
+                    ef.NameProducto = nameproducto
+                    'ef.TipoMovimiento = TipoMovimiento
+                    ef.ShowDialog()
+                    Dim bandera As Boolean = False
+                    bandera = ef.band
+                    If (bandera = True) Then
+
+                        cant = ef.Cantidad
+                        If (cant > 0) Then
+                            _prAddDetalleVenta()
+                            grdetalle.Row = grdetalle.RowCount - 1
+
+                            grdetalle.SetValue("iccprod", numiproducto)
+                            grdetalle.SetValue("yfCodAux1", ItemNuevo)
+                            grdetalle.SetValue("yfCodAux2", dt.Rows(i).Item("yfCodAux1"))
+                            grdetalle.SetValue("CodigoFabrica", CodFab)
+                            grdetalle.SetValue("CodigoMarca", CodMar)
+                            grdetalle.SetValue("Medida", dt.Rows(i).Item("Medida"))
+                            grdetalle.SetValue("CategoriaProducto", dt.Rows(i).Item("CategoriaProducto"))
+                            grdetalle.SetValue("producto", nameproducto)
+                            grdetalle.SetValue("iccant", cant)
+                            grdetalle.SetValue("stock", iccven)
+
+                        End If
+
+                    Else
+
+
+
+
+                    End If
+                End If
+
+
+
+
+
+                'End If
+
+                'grdetalle.Refetch()
+                'grdetalle.Refresh()
+
+
+            Next
+
+            grdetalle.Select()
+
+        End If
     End Sub
 
 #End Region

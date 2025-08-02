@@ -8,12 +8,12 @@ Public Class F0_BuscarProductos
     Public dtDetalle As DataTable
     Public dtname As DataTable
 
-
+    Dim CategoriaSeleccionada As Integer
     Public Sub IniciarTodod()
 
         L_prAbrirConexion(gs_Ip, gs_UsuarioSql, gs_ClaveSql, gs_NombreBD)
-        CargarProductos()
-
+        CargarProductos(-1)
+        lblCategoria.Text = "TODOS"
 
         tbProducto.Focus()
     End Sub
@@ -28,15 +28,15 @@ Public Class F0_BuscarProductos
 
     End Sub
 
-    Public Sub CargarProductos()
+    Public Sub CargarProductos(cat As Integer)
 
 
-        Dim dtname As DataTable = L_fnNameLabel()
-        dtProductoAll = L_fnListarProductosall()
+
+        dtProductoAll = L_fnListarProductosall(cat)
         grProductos.DataSource = dtProductoAll
         grProductos.RetrieveStructure()
         grProductos.AlternatingColors = True
-
+        Dim dtname As DataTable = L_fnNameLabel()
         'Item  CodigoFabrica	Marca	Medida	Categoria	yfcdprod1	yfgr1	grupo1	yfgr2	grupo2	yfgr3	grupo3	yfgr4	grupo4	yfumin	UnidMin	stock	PrecioFacturado	PrecioPublico	PrecioMecanico	Almacen
 
         With grProductos.RootTable.Columns("Item")
@@ -200,6 +200,12 @@ Public Class F0_BuscarProductos
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
             .Visible = False
         End With
+
+        With grProductos.RootTable.Columns("estado")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
         With grProductos.RootTable.Columns("UnidMin")
             .Width = 120
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
@@ -269,6 +275,11 @@ Public Class F0_BuscarProductos
         fr = New GridEXFormatCondition(grProductos.RootTable.Columns("stock"), ConditionOperator.Equal, -9999)
         fr.FormatStyle.ForeColor = Color.BlueViolet
         grProductos.RootTable.FormatConditions.Add(fr)
+
+        Dim fe As GridEXFormatCondition
+        fe = New GridEXFormatCondition(grProductos.RootTable.Columns("estado"), ConditionOperator.GreaterThan, 0)
+        fe.FormatStyle.BackColor = Color.Yellow
+        grProductos.RootTable.FormatConditions.Add(fe)
     End Sub
     Private Sub F0_BuscarProductos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         IniciarTodod()
@@ -635,5 +646,47 @@ Public Class F0_BuscarProductos
         Else
             grProductos.DataSource = dtProductoAll.Copy
         End If
+    End Sub
+
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        SeleccionarCategoria()
+    End Sub
+
+    Public Sub SeleccionarCategoria()
+        Dim dt As DataTable
+        Dim idCategoria As Integer = 0
+        Dim nombreCategoria As String
+        dt = L_fnListarCategoriaVentas()
+        dt.Rows.Add(-1, "Todos")
+
+
+        Dim listEstCeldas As New List(Of Modelo.Celda)
+        listEstCeldas.Add(New Modelo.Celda("yccod3,", True, "Codigo", 100))
+        listEstCeldas.Add(New Modelo.Celda("ycdes3", True, "Nombre Categoria", 500))
+
+        Dim ef = New Efecto
+        ef.tipo = 3
+        ef.dt = dt
+        ef.SeleclCol = 2
+        ef.listEstCeldas = listEstCeldas
+        ef.alto = 50
+        ef.ancho = 800
+        ef.Context = "Seleccione Categoria".ToUpper
+        ef.ShowDialog()
+        Dim bandera As Boolean = False
+        bandera = ef.band
+        If (bandera = True) Then
+            Dim Row As Janus.Windows.GridEX.GridEXRow = ef.Row
+            ''yccod3,ycdes3 
+            'idCategoria = Row.Cells("yccod3").Value
+            'nombreCategoria = Row.Cells("ycdes3").Value
+
+
+
+            CategoriaSeleccionada = Row.Cells("yccod3").Value
+            CargarProductos(CategoriaSeleccionada)
+            lblCategoria.Text = Row.Cells("ycdes3").Value
+        End If
+
     End Sub
 End Class

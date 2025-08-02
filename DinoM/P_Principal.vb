@@ -86,8 +86,8 @@ Public Class P_Principal
         L_Usuario = gs_user
         Modelo.MGlobal.gs_usuario = gs_user
 
-        lbUsuario.Text = gs_user
-        lbUsuario.Font = New Font("Tahoma", 12, FontStyle.Bold)
+        'lbUsuario.Text = gs_user
+        'lbUsuario.Font = New Font("Tahoma", 12, FontStyle.Bold)
 
         If gs_user = "DEFAULT" Then
             SideNav1.Enabled = False
@@ -136,6 +136,8 @@ Public Class P_Principal
         listaTabs.Add(MetroTilePanel7)
         listaTabs.Add(MetroTilePanelVentas)
         listaTabs.Add(MenuCreditos)
+        listaTabs.Add(MetroTilePanel8)
+
 
 
         Dim idRolUsu As String = gi_userRol
@@ -779,8 +781,8 @@ Public Class P_Principal
         'tab3.Icon = frm.Icon
     End Sub
 
-   
-    Private Sub btnCredEstCuenta_Click(sender As Object, e As EventArgs) Handles btnCredEstCuenta.Click
+
+    Private Sub btnCredEstCuenta_Click(sender As Object, e As EventArgs) Handles btnCredEstCuenta1.Click
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         Dim frm As New Pr_KardexCredito
@@ -813,7 +815,7 @@ Public Class P_Principal
         'tab3.Icon = ico
     End Sub
 
-    Private Sub MetroTileItem13_Click(sender As Object, e As EventArgs) Handles btnCredInfMorosidad.Click
+    Private Sub MetroTileItem13_Click(sender As Object, e As EventArgs) Handles btnCredInfMorosidad1.Click
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         Dim frm As New Pr_ReporteMorosidadGeneral
@@ -830,11 +832,11 @@ Public Class P_Principal
         'tab3.Icon = ico
     End Sub
 
-    Private Sub btComPagosCredito_Click(sender As Object, e As EventArgs) Handles btComPagosCredito.Click
+    Private Sub btComPagosCredito_Click(sender As Object, e As EventArgs) Handles btComPagosCredito1.Click
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         Dim frm As New F0_PagosCreditoCompraUlt
-        frm._nameButton = btComPagosCredito.Name
+        frm._nameButton = btComPagosCredito1.Name
         frm._modulo = FP_COMPRAS
         'Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
         'frm._tab = tab3
@@ -1004,7 +1006,7 @@ Public Class P_Principal
         tab3.Icon = ico
     End Sub
 
-    Private Sub btnCredPagoCliente_Click(sender As Object, e As EventArgs) Handles btnCredPagoCliente.Click
+    Private Sub btnCredPagoCliente_Click(sender As Object, e As EventArgs) Handles btnCredPagoCliente1.Click
         SideNav1.IsMenuExpanded = False
         Ventana.Select()
         Dim frm As New F0_Cobrar_Cliente
@@ -1020,7 +1022,7 @@ Public Class P_Principal
         tab3.Icon = frm.Icon
     End Sub
 
-    Private Sub btnCredPagoClienteVendedor_Click(sender As Object, e As EventArgs) Handles btnCredPagoClienteVendedor.Click
+    Private Sub btnCredPagoClienteVendedor_Click(sender As Object, e As EventArgs) Handles btnCredPagoClienteVendedor1.Click
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         'Dim frm As New F0_Cobrar_Vendedor
@@ -1068,7 +1070,7 @@ Public Class P_Principal
 
     End Sub
 
-    Private Sub btComEstadoCuentas_Click(sender As Object, e As EventArgs) Handles btComEstadoCuentas.Click
+    Private Sub btComEstadoCuentas_Click(sender As Object, e As EventArgs) Handles btComEstadoCuentas1.Click
         'SideNav1.IsMenuExpanded = False
         'Ventana.Select()
         Dim frm As New R_KardexCreditoPagos
@@ -1085,9 +1087,9 @@ Public Class P_Principal
         'tab3.Icon = ico
     End Sub
 
-    Private Sub btCierreCaja_Click(sender As Object, e As EventArgs) Handles btCierreCaja.Click
+    Private Sub btCierreCaja_Click(sender As Object, e As EventArgs) Handles btCierreCaja1.Click
         Dim frm As New F0_CierreCaja
-        frm._nameButton = btCierreCaja.Name
+        frm._nameButton = btCierreCaja1.Name
         frm.Show()
     End Sub
 
@@ -1098,16 +1100,16 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
-    Private Sub btEstadoCuentasProveedores_Click(sender As Object, e As EventArgs) Handles btEstadoCuentasProveedores.Click
+    Private Sub btEstadoCuentasProveedores_Click(sender As Object, e As EventArgs) Handles btEstadoCuentasProveedores1.Click
         Dim frm As New Pr_EstadoCuentasProveedores
-        frm._nameButton = btEstadoCuentasProveedores.Name
+        frm._nameButton = btEstadoCuentasProveedores1.Name
         'frm._modulo = FP_COMPRAS
         frm.Show()
     End Sub
 
-    Private Sub btEstadoCuentasClientes_Click(sender As Object, e As EventArgs) Handles btEstadoCuentasClientes.Click
+    Private Sub btEstadoCuentasClientes_Click(sender As Object, e As EventArgs) Handles btEstadoCuentasClientes1.Click
         Dim frm As New Pr_EstadoCuentasClientes
-        frm._nameButton = btEstadoCuentasClientes.Name
+        frm._nameButton = btEstadoCuentasClientes1.Name
         'frm._modulo = FP_COMPRAS
         frm.Show()
     End Sub
@@ -1171,9 +1173,9 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
-    Private Sub btIngresoEgreso_Click(sender As Object, e As EventArgs) Handles btIngresoEgreso.Click
+    Private Sub btIngresoEgreso_Click(sender As Object, e As EventArgs) Handles btIngresoEgreso1.Click
         Dim frm As New F1_IngresosEgresos
-        frm._nameButton = btIngresoEgreso.Name
+        frm._nameButton = btIngresoEgreso1.Name
         frm.Show()
     End Sub
 
@@ -1208,9 +1210,9 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
-    Private Sub btMovBancos_Click(sender As Object, e As EventArgs) Handles btMovBancos.Click
+    Private Sub btMovBancos_Click(sender As Object, e As EventArgs) Handles btMovBancos1.Click
         Dim frm As New F1_MovimientoBancos
-        frm._nameButton = btMovBancos.Name
+        frm._nameButton = btMovBancos1.Name
         frm.Show()
     End Sub
 
@@ -1219,7 +1221,7 @@ Public Class P_Principal
         frm.Show()
     End Sub
 
-    Private Sub btMovimientoBancos_Click(sender As Object, e As EventArgs) Handles btRptMovBancos.Click
+    Private Sub btMovimientoBancos_Click(sender As Object, e As EventArgs) Handles btRptMovBancos1.Click
         Dim frm As New Pr_ReporteMovimientoBanco
         frm.Show()
     End Sub
@@ -1293,6 +1295,156 @@ Public Class P_Principal
 
     Private Sub btInformeCuentasCobrar_Click(sender As Object, e As EventArgs) Handles btInformeCuentasCobrar.Click
         Dim frm As New Pr_InformeCuentasPorPoCobrar
+        frm.Show()
+    End Sub
+
+    Private Sub btSolicitudTraspaso_Click(sender As Object, e As EventArgs) Handles btSolicitudTraspaso.Click
+        Dim frm As New F0_SolicitudMovimiento
+        frm._nameButton = btSolicitudTraspaso.Name
+        frm._modulo = FP_INVENTARIO
+        frm.Show()
+    End Sub
+
+    Private Sub FP_COMPRAS_Click(sender As Object, e As EventArgs) Handles FP_COMPRAS.Click
+
+    End Sub
+
+    Private Sub lbUsuario_TextChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub MetroTileItem32_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub btIngresoEgreso_Click_1(sender As Object, e As EventArgs) Handles btIngresoEgreso.Click
+        Dim frm As New F1_IngresosEgresos
+        frm._nameButton = btIngresoEgreso.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btCierreCaja_Click_1(sender As Object, e As EventArgs) Handles btCierreCaja.Click
+        Dim frm As New F0_CierreCaja
+        frm._nameButton = btCierreCaja.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btMovBancos_Click_1(sender As Object, e As EventArgs) Handles btMovBancos.Click
+        Dim frm As New F1_MovimientoBancos
+        frm._nameButton = btMovBancos.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btRptMovBancos_Click(sender As Object, e As EventArgs) Handles btRptMovBancos.Click
+        Dim frm As New Pr_ReporteMovimientoBanco
+        frm.Show()
+    End Sub
+
+    Private Sub btComPagosCredito_Click_1(sender As Object, e As EventArgs) Handles btComPagosCredito.Click
+        Dim frm As New F0_PagosCreditoCompraUlt
+        frm._nameButton = btComPagosCredito.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btComEstadoCuentas_Click_1(sender As Object, e As EventArgs) Handles btComEstadoCuentas.Click
+
+        Dim frm As New R_KardexCreditoPagos
+        frm._nameButton = btComEstadoCuentas.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btEstadoCuentasProveedores_Click_1(sender As Object, e As EventArgs) Handles btEstadoCuentasProveedores.Click
+        Dim frm As New Pr_EstadoCuentasProveedores
+        frm._nameButton = btEstadoCuentasProveedores.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btnCredPagoCliente_Click_1(sender As Object, e As EventArgs) Handles btnCredPagoClienteVendedor.Click
+        'SideNav1.IsMenuExpanded = False
+        'Ventana.Select()
+        Dim frm As New F0_Cobrar_Vendedor
+        frm._nameButton = btnCredPagoClienteVendedor.Name
+        frm._modulo = FP_CAJA
+        'Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
+        'frm._tab = tab3
+        'Dim panel As Panel = P_Global._fnCrearPanelVentanas(frm)
+        'superTabControl3.SelectedTabIndex = superTabControl3.Tabs.Count - 1
+        'tab3.AttachedControl.Controls.Add(panel)
+        frm.Show()
+        'tab3.Text = frm.Text
+        'tab3.Icon = frm.Icon
+    End Sub
+
+    Private Sub btnCredEstCuenta_Click_1(sender As Object, e As EventArgs) Handles btnCredEstCuenta.Click
+        Dim frm As New Pr_KardexCredito
+        Dim tab3 As SuperTabItem = superTabControl3.CreateTab(frm.Text)
+        frm._tab = tab3
+        frm._modulo = FP_CAJA
+        frm.Show()
+
+    End Sub
+
+    Private Sub btnCredInfMorosidad_Click(sender As Object, e As EventArgs) Handles btnCredInfMorosidad.Click
+        Dim frm As New Pr_ReporteMorosidadGeneral
+        frm.Show()
+
+    End Sub
+
+    Private Sub btEstadoCuentasClientes_Click_1(sender As Object, e As EventArgs) Handles btEstadoCuentasClientes.Click
+        Dim frm As New Pr_EstadoCuentasClientes
+        frm._nameButton = btEstadoCuentasClientes1.Name
+        'frm._modulo = FP_COMPRAS
+        frm.Show()
+    End Sub
+
+    Private Sub FP_CAJA_Click(sender As Object, e As EventArgs) Handles FP_CAJA.Click
+
+    End Sub
+
+    Private Sub btComEstadoCuentas5_Click(sender As Object, e As EventArgs) Handles btComEstadoCuentas5.Click
+        Dim frm As New R_KardexCreditoPagos2
+        frm._nameButton = btComEstadoCuentas5.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btEstadoCuentasProveedores5_Click(sender As Object, e As EventArgs) Handles btEstadoCuentasProveedores5.Click
+        Dim frm As New Pr_EstadoCuentasProveedores2
+        frm._nameButton = btEstadoCuentasProveedores5.Name
+        frm._modulo = FP_CAJA
+        frm.Show()
+    End Sub
+
+    Private Sub btImportarPrecio_Click(sender As Object, e As EventArgs) Handles btImportarPrecio.Click
+        Dim frm As New F0_ImportarPrecios
+        frm._nameButton = btImportarPrecio.Name
+        frm._modulo = FP_Configuracion
+        frm.Show()
+    End Sub
+
+    Private Sub btInformeCuentasxPagar_Click(sender As Object, e As EventArgs) Handles btInformeCuentasxPagar.Click
+        Dim frm As New Pr_InformeCuentasPorPorPagar
+        frm.Show()
+    End Sub
+
+    Private Sub btComprasDetalle_Click(sender As Object, e As EventArgs) Handles btComprasDetalle.Click
+        Dim frm As New Pr_ComprasDetalle
+        frm.Show()
+    End Sub
+
+    Private Sub btReporteSaldoFavor_Click(sender As Object, e As EventArgs) Handles btReporteSaldoFavor.Click
+        Dim frm As New Pr_InformeSaldoaFavor
+        frm.Show()
+    End Sub
+
+    Private Sub btReporteStockFiltrado_Click(sender As Object, e As EventArgs) Handles btReporteStockFiltrado.Click
+        Dim frm As New Pr_ReporteStockFiltrado
         frm.Show()
     End Sub
 

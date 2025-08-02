@@ -546,5 +546,9 @@ Public Class F1_Bancos
             Timer1.Enabled = False
         End If
     End Sub
+
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+
+    End Sub
 #End Region
 End Class

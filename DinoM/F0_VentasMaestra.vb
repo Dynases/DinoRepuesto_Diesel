@@ -49,6 +49,9 @@ Public Class F0_VentasMaestra
     Public Glosa As String
     Public CostoEnvio As Double = 0
     Public cambio As Double = 0
+
+
+    Public detalleBanco As DataTable
 #End Region
 
 #Region "Metodos Privados"
@@ -1718,10 +1721,10 @@ Public Class F0_VentasMaestra
     Private Sub _prGuardarCobro()
         Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         _prModificarMontos(tabla)
-        _prAgregarCobro(tbCodigo.Text, 1, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+        _prAgregarCobro(tbCodigo.Text, 0, 1, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio, 0, detalleBanco)
 
         If TotalTarjeta > 0 Then
-            L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "VENTA", TotalTarjeta, Glosa)
+            L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "VENTA", TotalTarjeta, Glosa, 1, 0)
         End If
         Dim res As Boolean = L_fnModificarCobro(tbCodigo.Text, TipoVenta, FechaVenc.ToString("yyyy/MM/dd"), tabla, Banco, Glosa, tbEnvio.Text)
         If res Then

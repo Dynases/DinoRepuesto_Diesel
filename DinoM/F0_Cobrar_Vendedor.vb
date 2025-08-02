@@ -43,6 +43,8 @@ Public Class F0_Cobrar_Vendedor
 
     Dim bandera As Boolean = False
 
+    Dim detalleTransferencia As DataTable
+
 #End Region
 #Region "METODOS PRIVADOS"
 
@@ -794,6 +796,7 @@ Public Class F0_Cobrar_Vendedor
 
     Private Sub ButtonX1_Click_1(sender As Object, e As EventArgs) Handles ButtonX1.Click
         Dim numi As String = ""
+        SaldoF = SaldoF
         Dim img2 As Bitmap = New Bitmap(My.Resources.cancel, 50, 50)
         If (tbCodigo.Text = String.Empty) Then
             ToastNotification.Show(Me, "No existen datos validos".ToUpper, img2, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
@@ -942,10 +945,23 @@ Public Class F0_Cobrar_Vendedor
         Dim id As DataTable = _GuadarCobroCliente(_CodCliente, tbGlosa.Text, CDbl(tbMonto.Text), tbFechaVenta.Value.ToString("dd/MM/yyyy"), CDbl(tbTotalCobrar.Text), CDbl(tbTotalCobrado.Text), CDbl(tbSaldo.Text), CType(gr_detalle.DataSource, DataTable))
         Dim numi As Integer = id.Rows(0).Item("numi")
         cambio = Convert.ToDouble(tbMonto.Text - tbTotalCobrado.Text)
-        _prAgregarCobro(numi, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+        For i = 0 To detalleTransferencia.Rows.Count - 1 Step 1
+            Dim bancoS As Integer = detalleTransferencia.Rows(i).Item("canumi")
+            Dim monto As Double = detalleTransferencia.Rows(i).Item("monto")
+            If detalleTransferencia.Rows.Count = 1 Or i = 0 Then
+                _prAgregarCobro(numi, _CodCliente, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, monto, cambio, bancoS, Glosa, gi_userSuc, TipoCambio, SaldoF, detalleTransferencia)
+            Else
+                _prAgregarCobro(numi, _CodCliente, 2, "VENTA CREDITO Nº " + Notas, 0, 0, monto, 0, bancoS, Glosa, gi_userSuc, TipoCambio, 0, detalleTransferencia)
+            End If
+
+
+        Next
+        '_prAgregarCobro(numi, _CodCliente, 2, "VENTA CREDITO Nº " + Notas, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio, SaldoF, detalleTransferencia)
 
         If TotalTarjeta > 0 Then
-            L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "CUENTA POR COBRAR", TotalTarjeta, Glosa)
+            For i = 0 To detalleTransferencia.Rows.Count - 1 Step 1
+                L_prMovimientoGrabar("", tbFechaVenta.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, detalleTransferencia.Rows(i).Item("canumi"), "", "PAGO CREDITO VENTA Nº" + Notas, detalleTransferencia.Rows(i).Item("monto"), Glosa, 1, 0)
+            Next
         End If
 
     End Sub
@@ -980,7 +996,7 @@ Public Class F0_Cobrar_Vendedor
             Glosa = ef.tbGlosa.Text
             CostoEnvio = ef.tbCostoEnvio.Value
             SaldoF = ef.SFavor.Value
-
+            detalleTransferencia = ef.detalleBanco
             tbMonto.Text = CStr(CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio)))
             Saldo = CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio))
             Total = CDbl(SaldoF + TotalBs + TotalTarjeta + (TotalSus * TipoCambio))

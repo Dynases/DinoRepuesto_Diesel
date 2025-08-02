@@ -169,8 +169,9 @@ Partial Class F0_Precios
         '
         'PanelToolBar2
         '
-        Me.PanelToolBar2.Location = New System.Drawing.Point(1282, 0)
+        Me.PanelToolBar2.Location = New System.Drawing.Point(1187, 0)
         Me.PanelToolBar2.Margin = New System.Windows.Forms.Padding(4)
+        Me.PanelToolBar2.Size = New System.Drawing.Size(175, 72)
         '
         'PanelPrincipal
         '
@@ -183,6 +184,7 @@ Partial Class F0_Precios
         '
         'btnImprimir
         '
+        Me.btnImprimir.Size = New System.Drawing.Size(175, 72)
         '
         'btnUltimo
         '
@@ -204,7 +206,7 @@ Partial Class F0_Precios
         '
         Me.MRlAccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.MRlAccion.Margin = New System.Windows.Forms.Padding(4)
-        Me.MRlAccion.Size = New System.Drawing.Size(906, 72)
+        Me.MRlAccion.Size = New System.Drawing.Size(811, 72)
         '
         'PanelContent
         '
@@ -245,7 +247,7 @@ Partial Class F0_Precios
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(1089, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(994, 0)
         Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         '
         'PanelCategoria

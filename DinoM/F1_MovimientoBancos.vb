@@ -24,7 +24,7 @@ Public Class F1_MovimientoBancos
     Private Sub _prIniciarTodo()
 
         Me.Text = "MOVIMIENTO BANCO"
-        '_prCargarComboLibreria(cbConcepto, 9, 1)
+        _prCargarComboLibreria(cbConcepto, 9, 2)
         _prCargarComboLibreriaSucursal(cbSucursal)
         _prCargarComboBanco(cbBanco)
         _PMIniciarTodo()
@@ -43,6 +43,25 @@ Public Class F1_MovimientoBancos
         btnEliminar.Enabled = True
     End Sub
 
+    Private Sub _prCargarComboLibreria(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo, cod1 As String, cod2 As String)
+        Dim dt As New DataTable
+        dt = L_prLibreriaClienteLGeneral(cod1, cod2)
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("yccod3").Width = 70
+            .DropDownList.Columns("yccod3").Caption = "COD"
+            .DropDownList.Columns.Add("ycdes3").Width = 200
+            .DropDownList.Columns("ycdes3").Caption = "DESCRIPCION"
+            .ValueMember = "yccod3"
+            .DisplayMember = "ycdes3"
+            .DataSource = dt
+            .Refresh()
+        End With
+        If dt.Rows.Count > 0 Then
+            mCombo.SelectedIndex = 0
+        End If
+
+    End Sub
     Public Sub _prCargarLengthTextBox()
         tbDescripcion.MaxLength = 200
         cbSucursal.MaxLength = 200
@@ -127,7 +146,7 @@ Public Class F1_MovimientoBancos
         tbBoleta.ReadOnly = False
         tbMonto.IsInputReadOnly = False
         tbObservacion.ReadOnly = False
-
+        cbConcepto.ReadOnly = False
 
     End Sub
     Public Overrides Sub _PMOInhabilitar()
@@ -140,7 +159,7 @@ Public Class F1_MovimientoBancos
         tbBoleta.ReadOnly = True
         tbMonto.IsInputReadOnly = True
         tbObservacion.ReadOnly = True
-
+        cbConcepto.ReadOnly = True
 
     End Sub
     Public Overrides Sub _PMOHabilitarFocus()
@@ -169,7 +188,7 @@ Public Class F1_MovimientoBancos
         tbObservacion.Text = ""
         tbBoleta.Text = ""
         'tbDescripcion.Focus()
-
+        cbConcepto.SelectedIndex = 0
     End Sub
     Public Overrides Sub _PMOLimpiarErrores()
         MEP.Clear()
@@ -235,6 +254,8 @@ Public Class F1_MovimientoBancos
         listEstCeldas.Add(New Modelo.Celda("mafact", False))
         listEstCeldas.Add(New Modelo.Celda("mahact", False))
         listEstCeldas.Add(New Modelo.Celda("mauact", False))
+        listEstCeldas.Add(New Modelo.Celda("maconcep", False))
+
 
         Return listEstCeldas
 
@@ -259,7 +280,7 @@ Public Class F1_MovimientoBancos
             tbDescripcion.Text = .GetValue("maDetalle").ToString
             tbMonto.Value = .GetValue("maMonto")
             tbObservacion.Text = .GetValue("maObs").ToString
-
+            cbConcepto.Value = .GetValue("maconcep")
             lbFecha.Text = CType(.GetValue("mafact"), Date).ToString("dd/MM/yyyy")
             lbHora.Text = .GetValue("mahact").ToString
             lbUsuario.Text = .GetValue("mauact").ToString
@@ -280,7 +301,7 @@ Public Class F1_MovimientoBancos
 
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
         Dim res As Boolean = L_prMovimientoGrabar(tbcodigo.Text, dpFecha.Value, tipo, cbSucursal.Value, cbBanco.Value, tbBoleta.Text, tbDescripcion.Text,
-                                                     tbMonto.Value, tbObservacion.Text)
+                                                     tbMonto.Value, tbObservacion.Text, cbConcepto.Value, CInt(tbIdDevolucion.Text))
 
         If res Then
             Modificado = False
@@ -297,11 +318,11 @@ Public Class F1_MovimientoBancos
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
         If (Modificado = False) Then
             res = L_prMovimientoBancoModificar(tbcodigo.Text, dpFecha.Value, tipo, cbSucursal.Value, cbBanco.Value, tbBoleta.Text, tbDescripcion.Text,
-                                                     tbMonto.Value, tbObservacion.Text)
+                                                     tbMonto.Value, tbObservacion.Text, cbConcepto.Value)
 
         Else
             res = L_prMovimientoBancoModificar(tbcodigo.Text, dpFecha.Value, tipo, cbSucursal.Value, cbBanco.Value, tbBoleta.Text, tbDescripcion.Text,
-                                                     tbMonto.Value, tbObservacion.Text)
+                                                     tbMonto.Value, tbObservacion.Text, cbConcepto.Value)
         End If
         If res Then
             Modificado = False
@@ -407,6 +428,9 @@ Public Class F1_MovimientoBancos
         objrep.SetParameterValue("boleta", tbBoleta.Text)
         objrep.SetParameterValue("detalle", tbDescripcion.Text)
         objrep.SetParameterValue("monto", tbMonto.Text)
+        objrep.SetParameterValue("hora", lbHora.Text)
+
+
         objrep.SetParameterValue("literal", _Literal)
         P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
         P_Global.Visualizador.ShowDialog() 'Comentar
@@ -414,6 +438,233 @@ Public Class F1_MovimientoBancos
     End Sub
     Private Sub btnImprimir_Click(sender As Object, e As EventArgs) Handles btnImprimir.Click
         P_GenerarReporte(tbcodigo.Text)
+    End Sub
+
+    Private Sub cbConcepto_ValueChanged(sender As Object, e As EventArgs) Handles cbConcepto.ValueChanged
+        If cbConcepto.SelectedIndex < 0 And cbConcepto.Text <> String.Empty Then
+            btConcepto.Visible = True
+        Else
+            btConcepto.Visible = False
+        End If
+        If IsNumeric(cbConcepto.Value) Then
+            If cbConcepto.Value = 5 Or cbConcepto.Value = 6 Then 'Devolución
+                If cbConcepto.Value = 5 Then
+                    lbDevolucion.Visible = True
+                    lbDevolucion.Text = "ID Devolución: "
+                    tbIdDevolucion.Visible = True
+                    btnBuscarDevolución.Visible = True
+                ElseIf cbConcepto.Value = 6 Then 'Devolución
+                    lbDevolucion.Visible = True
+                    lbDevolucion.Text = "ID Transito: "
+                    tbIdDevolucion.Visible = True
+                    btnBuscarDevolución.Visible = True
+                End If
+            Else
+                lbDevolucion.Visible = False
+                tbIdDevolucion.Visible = False
+                btnBuscarDevolución.Visible = False
+            End If
+
+        Else
+            lbDevolucion.Visible = False
+            tbIdDevolucion.Visible = False
+            btnBuscarDevolución.Visible = False
+        End If
+
+    End Sub
+
+    Private Sub btConcepto_Click(sender As Object, e As EventArgs) Handles btConcepto.Click
+        Dim numi As String = ""
+
+        If L_prLibreriaGrabar(numi, "9", "2", cbConcepto.Text, "") Then
+            _prCargarComboLibreria(cbConcepto, "9", "2")
+            cbConcepto.SelectedIndex = CType(cbConcepto.DataSource, DataTable).Rows.Count - 1
+        End If
+    End Sub
+
+    Private Sub lbDevolucion_Click(sender As Object, e As EventArgs) Handles lbDevolucion.Click
+
+    End Sub
+
+    Private Sub btnBuscarDevolución_Click(sender As Object, e As EventArgs) Handles btnBuscarDevolución.Click
+        SupTabItemBusqueda.Visible = True
+        SuperTabPrincipal.SelectedTabIndex = 1
+        If cbConcepto.Value = 5 Then
+            _prCargarDevolucion()
+        Else
+            _prCargarCostosImportacion()
+        End If
+    End Sub
+
+    Private Sub tbIdDevolucion_TextChanged(sender As Object, e As EventArgs) Handles tbIdDevolucion.TextChanged
+
+    End Sub
+    Private Sub _prCargarCostosImportacion()
+        Dim dt As New DataTable
+        dt = L_fnGeneraCostoImportacion()
+        grDevolucion.DataSource = dt
+        grDevolucion.RetrieveStructure()
+        grDevolucion.AlternatingColors = True
+
+        With grDevolucion.RootTable.Columns("tanumi")
+            .Width = 100
+            .Caption = "ID TRANSITO"
+            .Visible = True
+        End With
+
+        With grDevolucion.RootTable.Columns("tafdoc")
+            .Width = 90
+            .Visible = True
+            .Caption = "FECHA"
+        End With
+        With grDevolucion.RootTable.Columns("yddesc")
+            .Width = 200
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = True
+            .Caption = "PROVEEDOR"
+        End With
+        With grDevolucion.RootTable.Columns("saldo")
+            .Width = 150
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = True
+            .Caption = "TOTAL"
+            .FormatString = "0.00"
+        End With
+
+
+        With grDevolucion
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
+            .FilterMode = FilterMode.Automatic
+            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+        End With
+
+        'If (dt.Rows.Count <= 0) Then
+        '    _prCargarDetalleVenta(-1)
+        'End If
+    End Sub
+
+    Private Sub _prCargarDevolucion()
+        Dim dt As New DataTable
+        dt = L_fnGeneraDevolucionEgreso(gi_userSuc)
+        grDevolucion.DataSource = dt
+        grDevolucion.RetrieveStructure()
+        grDevolucion.AlternatingColors = True
+
+        With grDevolucion.RootTable.Columns("dbnumi")
+            .Width = 100
+            .Caption = "ID DEVOLUCIÓN"
+            .Visible = True
+        End With
+        With grDevolucion.RootTable.Columns("dbtanumi")
+            .Width = 90
+            .Visible = True
+            .Caption = "ID VENTA"
+        End With
+        With grDevolucion.RootTable.Columns("dbfdev")
+            .Width = 90
+            .Visible = True
+            .Caption = "FECHA"
+        End With
+        With grDevolucion.RootTable.Columns("dbobs")
+            .Width = 200
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = True
+            .Caption = "OBSERVACION"
+        End With
+        With grDevolucion.RootTable.Columns("dbtotal")
+            .Width = 150
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = True
+            .Caption = "TOTAL"
+            .FormatString = "0.00"
+        End With
+        With grDevolucion.RootTable.Columns("taalm")
+            .Width = 90
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("tafdoc")
+            .Width = 160
+            .Visible = False
+        End With
+
+        With grDevolucion.RootTable.Columns("vendedor")
+            .Width = 250
+            .Visible = False
+            .Caption = "VENDEDOR".ToUpper
+        End With
+        With grDevolucion.RootTable.Columns("tatven")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("tafvcr")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("taclpr")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("cliente")
+            .Width = 250
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = True
+            .Caption = "CLIENTE"
+        End With
+        With grDevolucion.RootTable.Columns("taCatPrecio")
+            .Width = 90
+            .Visible = False
+        End With
+
+        With grDevolucion.RootTable.Columns("dbfact")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("dbhact")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+        With grDevolucion.RootTable.Columns("dbuact")
+            .Width = 50
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = False
+        End With
+
+        With grDevolucion
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
+            .FilterMode = FilterMode.Automatic
+            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+        End With
+
+        'If (dt.Rows.Count <= 0) Then
+        '    _prCargarDetalleVenta(-1)
+        'End If
+    End Sub
+
+    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
+
+    End Sub
+
+    Private Sub grDevolucion_KeyDown(sender As Object, e As KeyEventArgs) Handles grDevolucion.KeyDown
+        If e.KeyData = Keys.Enter Then
+            If cbConcepto.Value = 5 Then
+                tbIdDevolucion.Text = grDevolucion.GetValue("dbnumi")
+                tbMonto.Value = grDevolucion.GetValue("dbtotal")
+            Else
+                tbIdDevolucion.Text = grDevolucion.GetValue("tanumi")
+                tbMonto.Value = grDevolucion.GetValue("saldo")
+            End If
+            SuperTabPrincipal.SelectedTabIndex = 0
+
+        End If
     End Sub
 
 #End Region

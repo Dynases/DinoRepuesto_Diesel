@@ -499,7 +499,7 @@ Public Class F0_ProformaVenta
         With grdetalle.RootTable.Columns("Item")
             .Caption = "Item"
             .Width = 90
-            .Visible = True
+            .Visible = False
         End With
         With grdetalle.RootTable.Columns("ItemNuevo")
             .Caption = "Item Nuevo"
@@ -998,11 +998,12 @@ Public Class F0_ProformaVenta
 
 
         Next
-        Dim frm As F0_DetalleVenta
-        frm = New F0_DetalleVenta(dtProductoGoblal, dtVenta, dtname, cbPrecio.Value)
+
+        Dim frm As F0_DetalleVentaCopia
+        frm = New F0_DetalleVentaCopia(dtProductoGoblal, dtVenta, dtname, cbPrecio.Value)
         frm.almacenId = cbSucursal.Value
         frm.precio = cbPrecio.Value
-        frm.Tipo = False
+
         frm.ShowDialog()
         Dim dtProd As DataTable = frm.dtDetalle
         dtProductoGoblal = frm.dtProductoAll
@@ -1894,7 +1895,7 @@ Public Class F0_ProformaVenta
             ponerDescripcionProducto(dt)
         End If
         Dim total As Decimal = dt.Compute("SUM(Total)", "")
-        Dim totald As Double = (total / 6.96)
+        Dim totald As Double = Math.Round(total / 6.96, 2)
         Dim fechaven As String = dt.Rows(0).Item("fechaventa")
         If Not IsNothing(P_Global.Visualizador) Then
             P_Global.Visualizador.Close()
@@ -1914,7 +1915,9 @@ Public Class F0_ProformaVenta
         ParteDecimal = Math.Round(totald - ParteEntera, 2)
         pDecimal = Split(ParteDecimal.ToString, ".")
 
-        Dim lid As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera)) + " con " +
+        Dim lid As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera))
+
+        lid = lid + " con " +
         IIf(pDecimal(1).ToString.Equals("0"), "00", pDecimal(1).ToString) + "/100 Dolares"
 
         Dim dt2 As DataTable = L_fnNameReporte()

@@ -24,6 +24,7 @@ Partial Class F0_ProformaCompra
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(F0_ProformaCompra))
+        Dim cbProveedor_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.PanelDetalle = New System.Windows.Forms.Panel()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Panel5 = New System.Windows.Forms.Panel()
@@ -62,6 +63,7 @@ Partial Class F0_ProformaCompra
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.grProforma = New Janus.Windows.GridEX.GridEX()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.cbProveedor = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.PanelSuperior.SuspendLayout()
         Me.PanelInferior.SuspendLayout()
         CType(Me.BubbleBarUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,6 +100,7 @@ Partial Class F0_ProformaCompra
         Me.GroupPanel2.SuspendLayout()
         Me.Panel6.SuspendLayout()
         CType(Me.grProforma, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelSuperior
@@ -202,6 +205,10 @@ Partial Class F0_ProformaCompra
         '
         'btnPrimero
         '
+        '
+        'MPanelUserAct
+        '
+        Me.MPanelUserAct.Location = New System.Drawing.Point(-200, 0)
         '
         'MRlAccion
         '
@@ -549,6 +556,7 @@ Partial Class F0_ProformaCompra
         '
         Me.Panel2.AutoScroll = True
         Me.Panel2.BackColor = System.Drawing.Color.White
+        Me.Panel2.Controls.Add(Me.cbProveedor)
         Me.Panel2.Controls.Add(Me.btnAgregar)
         Me.Panel2.Controls.Add(Me.tbNitProv)
         Me.Panel2.Controls.Add(Me.LabelX6)
@@ -775,6 +783,7 @@ Partial Class F0_ProformaCompra
         Me.tbProveedor.PreventEnterBeep = True
         Me.tbProveedor.Size = New System.Drawing.Size(200, 22)
         Me.tbProveedor.TabIndex = 1
+        Me.tbProveedor.Visible = False
         '
         'LabelX2
         '
@@ -933,6 +942,21 @@ Partial Class F0_ProformaCompra
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
+        'cbProveedor
+        '
+        cbProveedor_DesignTimeLayout.LayoutString = resources.GetString("cbProveedor_DesignTimeLayout.LayoutString")
+        Me.cbProveedor.DesignTimeLayout = cbProveedor_DesignTimeLayout
+        Me.cbProveedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProveedor.Location = New System.Drawing.Point(196, 37)
+        Me.cbProveedor.Name = "cbProveedor"
+        Me.cbProveedor.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbProveedor.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbProveedor.SelectedIndex = -1
+        Me.cbProveedor.SelectedItem = Nothing
+        Me.cbProveedor.Size = New System.Drawing.Size(197, 22)
+        Me.cbProveedor.TabIndex = 684
+        Me.cbProveedor.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
         'F0_ProformaCompra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -982,6 +1006,7 @@ Partial Class F0_ProformaCompra
         Me.GroupPanel2.ResumeLayout(False)
         Me.Panel6.ResumeLayout(False)
         CType(Me.grProforma, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cbProveedor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1023,4 +1048,5 @@ Partial Class F0_ProformaCompra
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Timer1 As Timer
     Friend WithEvents btnAgregar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents cbProveedor As Janus.Windows.GridEX.EditControls.MultiColumnCombo
 End Class

@@ -256,6 +256,22 @@ Public Class F0_DetalleProforma
             .Visible = False
             .FormatString = "0.00"
         End With
+        With grProductoSeleccionado.RootTable.Columns("gasto")
+            .Visible = False
+            .FormatString = "0.00"
+        End With
+        With grProductoSeleccionado.RootTable.Columns("PP")
+            .Visible = False
+            .FormatString = "0.00"
+        End With
+        With grProductoSeleccionado.RootTable.Columns("PPA")
+            .Visible = False
+            .FormatString = "0.00"
+        End With
+        With grProductoSeleccionado.RootTable.Columns("yftcam")
+            .Visible = False
+            .FormatString = "0.00"
+        End With
         With grProductoSeleccionado
             .GroupByBoxVisible = False
             'diseño de la grilla
@@ -351,8 +367,8 @@ Public Class F0_DetalleProforma
         Dim Bin As New MemoryStream
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
-        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
-                                                        0, "20500101", CDate("2050/01/01"), 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add("", "", "", "", _fnSiguienteNumi() + 1, 0, 0, 0, 0, "", "", 0, 0, 0, "",
+                                                        0, 0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
     Public Function _fnSiguienteNumi()
         Dim dt As DataTable = CType(grProductoSeleccionado.DataSource, DataTable)

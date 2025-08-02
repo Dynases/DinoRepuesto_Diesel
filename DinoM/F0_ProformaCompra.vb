@@ -31,6 +31,7 @@ Public Class F0_ProformaCompra
         _prValidarLote()
         _prObtenerPorcentajeUtilidad()
         'Me.WindowState = FormWindowState.Maximized
+        _prCargarComboProveedor(cbProveedor)
         _prCargarProformaCompra()
         _prInhabiliitar()
         grProforma.Focus()
@@ -104,6 +105,7 @@ Public Class F0_ProformaCompra
         grdetalle.RootTable.Columns("img").Visible = False
 
         btnAgregar.Visible = False
+        cbProveedor.ReadOnly = True
     End Sub
     Private Sub _prhabilitar()
         grProforma.Enabled = False
@@ -118,7 +120,7 @@ Public Class F0_ProformaCompra
 
         tbMdesc.IsInputReadOnly = False
         btnAgregar.Visible = True
-
+        cbProveedor.ReadOnly = False
     End Sub
     Public Sub _prFiltrar()
         'cargo el buscador
@@ -142,7 +144,7 @@ Public Class F0_ProformaCompra
         tbFecha.Value = Now.Date
         tbCodProv.Clear()
         tbProveedor.Focus()
-
+        cbProveedor.SelectedIndex = 0
         _prCargarDetalle(-1)
         CType(grdetalle.DataSource, DataTable).Rows.Clear()
         MSuperTabControl.SelectedTabIndex = 0
@@ -176,7 +178,7 @@ Public Class F0_ProformaCompra
             lbFecha.Text = CType(.GetValue("pcfact"), Date).ToString("dd/MM/yyyy")
             lbHora.Text = .GetValue("pchact").ToString
             lbUsuario.Text = .GetValue("pcuact").ToString
-
+            cbProveedor.Value = .GetValue("pcty4prov")
 
         End With
 
@@ -412,21 +414,49 @@ Public Class F0_ProformaCompra
         With grdetalle.RootTable.Columns("pdpFacturado")
             .Width = 140
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "P.Publico"
         End With
         With grdetalle.RootTable.Columns("pdpPublico")
             .Width = 140
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "P.Taller."
         End With
         With grdetalle.RootTable.Columns("pdpMecanico")
             .Width = 140
             .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
-            .Visible = True
+            .Visible = False
+            .FormatString = "0.00"
+            .Caption = "P.GDB."
+        End With
+        With grdetalle.RootTable.Columns("gasto")
+            .Width = 140
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = False
+            .FormatString = "0.00"
+            .Caption = "P.GDB."
+        End With
+        With grdetalle.RootTable.Columns("PP")
+            .Width = 140
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = False
+            .FormatString = "0.00"
+            .Caption = "P.GDB."
+        End With
+        With grdetalle.RootTable.Columns("PPA")
+            .Width = 140
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = False
+            .FormatString = "0.00"
+            .Caption = "P.GDB."
+        End With
+        With grdetalle.RootTable.Columns("yftcam")
+            .Width = 140
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = False
             .FormatString = "0.00"
             .Caption = "P.GDB."
         End With
@@ -442,7 +472,23 @@ Public Class F0_ProformaCompra
         End With
     End Sub
 
+    Private Sub _prCargarComboProveedor(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarProveedores()
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("ydnumi").Width = 60
+            .DropDownList.Columns("ydnumi").Caption = "COD"
+            .DropDownList.Columns.Add("yddesc").Width = 500
+            .DropDownList.Columns("yddesc").Caption = "MONEDA"
+            .ValueMember = "ydnumi"
+            .DisplayMember = "yddesc"
+            .DataSource = dt
+            .Refresh()
+        End With
 
+        cbProveedor.SelectedIndex = 0
+    End Sub
     Private Sub _prCargarProformaCompra()
         Dim dt As New DataTable
         dt = L_fnGeneralProformaCompra()
@@ -556,8 +602,8 @@ Public Class F0_ProformaCompra
         Dim Bin As New MemoryStream
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
-        CType(grdetalle.DataSource, DataTable).Rows.Add(_fnSiguienteNumi() + 1, 0, 0, 0, 0, "", "", "", "", "", "", 0, 0, 0, "",
-                                                        0, "20500101", CDate("2050/01/01"), 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+        CType(grdetalle.DataSource, DataTable).Rows.Add("", "", "", "", _fnSiguienteNumi() + 1, 0, 0, 0, 0, "", "", 0, 0, 0, "",
+                                                        0, 0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
 
     Public Function _fnSiguienteNumi()
@@ -1411,6 +1457,11 @@ salirIf:
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
         _HabilitarProductos()
         _prCalcularPrecioTotal()
+    End Sub
+
+    Private Sub cbProveedor_ValueChanged(sender As Object, e As EventArgs) Handles cbProveedor.ValueChanged
+        tbCodProv.Text = cbProveedor.Value
+        _CodProveedor = cbProveedor.Value
     End Sub
 
 

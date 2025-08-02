@@ -17,6 +17,9 @@ Public Class F1_IngresosEgresos
     Dim nameImg As String = "Default.jpg"
     Dim Socio As Boolean = False
     Dim NumiCuentaContable As Integer = 0
+
+    Dim tablaBancos As DataTable
+
 #End Region
 #Region "METODOS PRIVADOS"
 
@@ -228,12 +231,20 @@ Public Class F1_IngresosEgresos
         listEstCeldas.Add(New Modelo.Celda("NroCaja", False, "Nro. Caja", 100))
         listEstCeldas.Add(New Modelo.Celda("ieSucursal", False, "Sucursal", 100))
         listEstCeldas.Add(New Modelo.Celda("ieIdDevolucion", False))
+        listEstCeldas.Add(New Modelo.Celda("iehact", False))
 
         Return listEstCeldas
 
     End Function
     Public Overrides Function _PMOGetTablaBuscador() As DataTable
-        Dim dtBuscador As DataTable = L_prIngresoEgresoGeneral()
+
+        Dim dtBuscador As DataTable
+        If gb_userTodasSuc = 1 Then
+            dtBuscador = L_prIngresoEgresoGeneral(100)
+        Else
+            dtBuscador = L_prIngresoEgresoGeneral(gi_userSuc)
+        End If
+
         Return dtBuscador
     End Function
 
@@ -277,7 +288,7 @@ Public Class F1_IngresosEgresos
         Dim tipo As Integer = IIf(swTipo.Value = True, 1, 0)
         Dim res As Boolean = L_prIngresoEgresoGrabar(tbcodigo.Text, dpFecha.Value, tipo, tbDescripcion.Text, cbConcepto.Value, tbMonto.Value, tbObservacion.Text, tbRecibe.Text,
                                                      gs_NroCaja, cbSucursal.Value, tbIdDevolucion.Text)
-        _prAgregarCobro(tbcodigo.Text, IIf(swTipo.Value = True, 5, 6), cbConcepto.Text, tbMonto.Text, 0, 0, 0, 0, "", gi_userSuc, 1)
+        _prAgregarCobro(tbcodigo.Text, 0, IIf(swTipo.Value = True, 5, 6), tbDescripcion.Text, tbMonto.Text, 0, 0, 0, 0, "", gi_userSuc, 1, 0, tablaBancos)
         If res Then
             Modificado = False
             _PMOLimpiar()
@@ -387,15 +398,28 @@ Public Class F1_IngresosEgresos
             btConcepto.Visible = False
         End If
         If IsNumeric(cbConcepto.Value) Then
-            If cbConcepto.Value = 2 Then 'Devolución
-                lbDevolucion.Visible = True
-                tbIdDevolucion.Visible = True
-                btnBuscarDevolución.Visible = True
+            If cbConcepto.Value = 2 Or cbConcepto.Value = 3003 Then 'Devolución
+                If cbConcepto.Value = 2 Then
+                    lbDevolucion.Visible = True
+                    lbDevolucion.Text = "ID Devolución: "
+                    tbIdDevolucion.Visible = True
+                    btnBuscarDevolución.Visible = True
+                ElseIf cbConcepto.Value = 3003 Then 'Devolución
+                    lbDevolucion.Visible = True
+                    lbDevolucion.Text = "ID Transito: "
+                    tbIdDevolucion.Visible = True
+                    btnBuscarDevolución.Visible = True
+                End If
             Else
                 lbDevolucion.Visible = False
                 tbIdDevolucion.Visible = False
                 btnBuscarDevolución.Visible = False
             End If
+
+        Else
+            lbDevolucion.Visible = False
+            tbIdDevolucion.Visible = False
+            btnBuscarDevolución.Visible = False
         End If
     End Sub
 
@@ -416,9 +440,59 @@ Public Class F1_IngresosEgresos
     Private Sub btnBuscarDevolución_Click(sender As Object, e As EventArgs) Handles btnBuscarDevolución.Click
         SupTabItemBusqueda.Visible = True
         SuperTabPrincipal.SelectedTabIndex = 1
-        _prCargarDevolucion()
+        If cbConcepto.Value = 2 Then
+            _prCargarDevolucion()
+        Else
+            _prCargarCostosImportacion()
+        End If
+
     End Sub
 
+    Private Sub _prCargarCostosImportacion()
+        Dim dt As New DataTable
+        dt = L_fnGeneraCostoImportacion()
+        grDevolucion.DataSource = dt
+        grDevolucion.RetrieveStructure()
+        grDevolucion.AlternatingColors = True
+
+        With grDevolucion.RootTable.Columns("tanumi")
+            .Width = 100
+            .Caption = "ID TRANSITO"
+            .Visible = True
+        End With
+
+        With grDevolucion.RootTable.Columns("tafdoc")
+            .Width = 90
+            .Visible = True
+            .Caption = "FECHA"
+        End With
+        With grDevolucion.RootTable.Columns("yddesc")
+            .Width = 200
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+            .Visible = True
+            .Caption = "PROVEEDOR"
+        End With
+        With grDevolucion.RootTable.Columns("saldo")
+            .Width = 150
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+            .Visible = True
+            .Caption = "TOTAL"
+            .FormatString = "0.00"
+        End With
+
+
+        With grDevolucion
+            .DefaultFilterRowComparison = FilterConditionOperator.Contains
+            .FilterMode = FilterMode.Automatic
+            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            .GroupByBoxVisible = False
+            'diseño de la grilla
+        End With
+
+        'If (dt.Rows.Count <= 0) Then
+        '    _prCargarDetalleVenta(-1)
+        'End If
+    End Sub
 
     Private Sub _prCargarDevolucion()
         Dim dt As New DataTable
@@ -526,8 +600,15 @@ Public Class F1_IngresosEgresos
 
     Private Sub grDevolucion_KeyDown(sender As Object, e As KeyEventArgs) Handles grDevolucion.KeyDown
         If e.KeyData = Keys.Enter Then
+            If cbConcepto.Value = 2 Then
+                tbIdDevolucion.Text = grDevolucion.GetValue("dbnumi")
+                tbMonto.Value = grDevolucion.GetValue("dbtotal")
+            Else
+                tbIdDevolucion.Text = grDevolucion.GetValue("tanumi")
+                tbMonto.Value = grDevolucion.GetValue("saldo")
+            End If
             SuperTabPrincipal.SelectedTabIndex = 0
-            tbIdDevolucion.Text = grDevolucion.GetValue("dbnumi")
+
         End If
     End Sub
 
@@ -569,6 +650,7 @@ Public Class F1_IngresosEgresos
             'objrep.SetParameterValue("usuario", gs_user)
             objrep.SetParameterValue("recibo", tbcodigo.Text)
             objrep.SetParameterValue("recibe", tbRecibe.Text)
+            objrep.SetParameterValue("hora", JGrM_Buscador.GetValue("iehact"))
             objrep.SetParameterValue("literal", _Literal)
             'objrep.SetParameterValue("logo", gb_UbiLogo)
             objrep.SetParameterValue("usuario", IIf(Vendedor = String.Empty, gs_user, Vendedor))
@@ -589,6 +671,7 @@ Public Class F1_IngresosEgresos
             'objrep.SetParameterValue("usuario", gs_user)
             objrep.SetParameterValue("recibo", tbcodigo.Text)
             objrep.SetParameterValue("recibe", tbRecibe.Text)
+            objrep.SetParameterValue("hora", JGrM_Buscador.GetValue("iehact"))
             objrep.SetParameterValue("literal", _Literal)
             'objrep.SetParameterValue("logo", gb_UbiLogo)
             objrep.SetParameterValue("usuario", IIf(Vendedor = String.Empty, gs_user, Vendedor))
@@ -598,6 +681,10 @@ Public Class F1_IngresosEgresos
             P_Global.Visualizador.ShowDialog() 'Comentar
             P_Global.Visualizador.BringToFront()
         End If
+
+    End Sub
+
+    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
 
     End Sub
 

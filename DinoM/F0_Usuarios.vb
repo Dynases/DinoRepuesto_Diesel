@@ -172,7 +172,7 @@ Public Class F0_Usuarios
             swVentaMecanico.Value = IIf(IsDBNull(.GetValue("PrecioMecanico")), False, .GetValue("PrecioMecanico"))
             swVentaMayorista.Value = IIf(IsDBNull(.GetValue("PrecioMayorista")), False, .GetValue("PrecioMayorista"))
             swPrecio.Value = IIf(IsDBNull(.GetValue("PuedeModificarPrecio")), False, .GetValue("PuedeModificarPrecio"))
-
+            tbTodasSucursales.Value = IIf(.GetValue("VerSucursales") = 0, False, True)
             Dim _tabla As DataTable = L_fnListarEmpleado()
             If _tabla.Rows.Count > 0 Then
                 Dim fila As DataRow() = _tabla.Select("ydnumi= " + NumiVendedor.ToString, "")
@@ -357,6 +357,18 @@ Public Class F0_Usuarios
             .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
 
         End With
+        With JGr_Buscador.RootTable.Columns("aabdes")
+            .Caption = "Sucursal".ToUpper
+            .Width = 250
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+
+        End With
+        With JGr_Buscador.RootTable.Columns("VerSucursales")
+            .Caption = "Sucursal".ToUpper
+            .Width = 250
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+            .Visible = False
+        End With
         'Habilitar Filtradores
         With JGr_Buscador
             .DefaultFilterRowComparison = FilterConditionOperator.Contains
@@ -522,7 +534,7 @@ Public Class F0_Usuarios
             End If
 
             If _Nuevo Then
-                L_Usuario_Grabar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
+                L_Usuario_Grabar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"), IIf(tbTodasSucursales.Value = True, "1", "0"))
 
                 Tb_Nombre.Focus()
                 ToastNotification.Show(Me, "Codigo Usuario ".ToUpper + Tb_Id.Text + " Grabado con Exito.".ToUpper, My.Resources.GRABACION_EXITOSA, 5000, eToastGlowColor.Green, eToastPosition.TopCenter)
@@ -531,7 +543,7 @@ Public Class F0_Usuarios
                 _PCargarBuscador()
                 _PLimpiar()
             Else
-                L_Usuario_Modificar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"))
+                L_Usuario_Modificar(Tb_Id.Text, Tb_Nombre.Text, TextBoxX1.Text, JMC_Categoria.Value, Tb_Estado.Value, IIf(Tb_DiasPedidos.Value = True, 1, 0), Tb_fuenteTam.Value, tbSuc.Value, IIf(tbTodasSucursales.Value = True, "1", "0"), NumiVendedor, IIf(swDescuento.Value = True, "1", "0"), tbDescuento.Value, IIf(swVentaFacturado.Value = True, "1", "0"), IIf(swVentaNormal.Value = True, "1", "0"), IIf(swVentaMecanico.Value = True, "1", "0"), IIf(swVentaMayorista.Value = True, "1", "0"), IIf(swPrecio.Value = True, "1", "0"), IIf(tbTodasSucursales.Value = True, "1", "0"))
 
                 ToastNotification.Show(Me, "Codigo Usuario ".ToUpper + Tb_Id.Text + " Modificado con Exito.".ToUpper, My.Resources.GRABACION_EXITOSA, 5000, eToastGlowColor.Green, eToastPosition.TopCenter)
 

@@ -497,6 +497,7 @@ Public Class F1_Productos
         cbgrupo5.ReadOnly = False  'a solicitud de rosely se bloquea el campo
         cbUMed.ReadOnly = False
         swEstado.IsReadOnly = False
+        swEstadoP.IsReadOnly = False
         swTipo.IsReadOnly = False
         cbUniVenta.ReadOnly = False
         cbUnidMaxima.ReadOnly = False
@@ -568,6 +569,7 @@ Public Class F1_Productos
         cbgrupo5.ReadOnly = True
         cbUMed.ReadOnly = True
         swEstado.IsReadOnly = True
+        swEstadoP.IsReadOnly = True
         swTipo.IsReadOnly = True
         cbUniVenta.ReadOnly = True
         cbUnidMaxima.ReadOnly = True
@@ -623,6 +625,7 @@ Public Class F1_Productos
                 _prSeleccionarCombo(cbUnidMaxima)
                 _prSeleccionarCombo(cbUniVenta)
                 swEstado.Value = True
+                swEstadoP.Value = True
                 tbConversion.Value = 1
 
                 tbStockMinimo.Value = 0
@@ -727,7 +730,7 @@ Public Class F1_Productos
                                                 tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text,
                                                 CType(JGr_Descuentos.DataSource, DataTable), TablaImagenes,
                                                 IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text),
-                                                IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatR.Text, tbSiatAna.Text)
+                                                IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatR.Text, tbSiatAna.Text, IIf(swEstadoP.Value = True, 0, 2))
 
 
         If res Then
@@ -774,7 +777,7 @@ Public Class F1_Productos
                                         quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
                                         tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
                                         tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
-                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatAna.Text, tbSiatR.Text)
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatAna.Text, tbSiatR.Text, IIf(swEstadoP.Value = True, 0, 2))
         Else
             res = L_fnModificarProducto(tbCodigo.Text, tbCodProd.Text, tbCodBarra.Text, tbDescPro.Text, tbMedida.Text, cbgrupo1.Value,
                                         cbgrupo2.Value, cbgrupo3.Value, cbgrupo4.Value, cbUMed.Value, cbUniVenta.Value, cbUnidMaxima.Value,
@@ -782,7 +785,7 @@ Public Class F1_Productos
                                         quitarUltimaFilaVacia(CType(dgjDetalleProducto.DataSource, DataTable).DefaultView.ToTable(False, "yfanumi", "yfayfnumi", "yfasim", "yfadesc", "estado")),
                                         tbDescDet.Text, cbgrupo5.Value, tbPrecioVentaNormal.Value, tbPrecioFacturado.Value,
                                         tbPrecioMecanico.Value, tbPrecioCosto.Value, tbCodigoMarca.Text, CType(JGr_Descuentos.DataSource, DataTable),
-                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatAna.Text, tbSiatR.Text)
+                                        TablaImagenes, IIf(tbStockMaximo.Text = String.Empty, 0, tbStockMaximo.Text), IIf(swTipo.Value = True, 1, 0), tbCodAux1.Text, tbCodAux2.Text, tbSiatAna.Text, tbSiatR.Text, IIf(swEstadoP.Value = True, 0, 2))
         End If
         If res Then
 
@@ -1009,6 +1012,7 @@ Public Class F1_Productos
         listEstCeldas.Add(New Modelo.Celda("Umax", False, "UniCaja".ToUpper, 150))
         listEstCeldas.Add(New Modelo.Celda("yfsmax", False))
         listEstCeldas.Add(New Modelo.Celda("yfTipo", False))
+        listEstCeldas.Add(New Modelo.Celda("estado", False))
 
         listEstCeldas.Add(New Modelo.Celda("listaAlmacen", True, "Stock".ToUpper, 250))
         Return listEstCeldas
@@ -1074,6 +1078,8 @@ Public Class F1_Productos
             lbUsuario.Text = .GetValue("yfuact").ToString
             tbSiatAna.Text = .GetValue("yfSiatA").ToString
             tbSiatR.Text = .GetValue("yfSiatR").ToString
+
+            swEstadoP.Value = IIf(.GetValue("estado") > 0, False, True)
             _PCargarGridCategoriasPrecios(.GetValue("yfnumi"))
             _PCargarGridhistoricoPrecios(.GetValue("yfnumi"))
         End With
@@ -2494,4 +2500,7 @@ Public Class F1_Productos
         End If
     End Sub
 
+    Private Sub btnGrabar_Click(sender As Object, e As EventArgs) Handles btnGrabar.Click
+
+    End Sub
 End Class

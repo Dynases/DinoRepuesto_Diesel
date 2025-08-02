@@ -35,6 +35,8 @@ Public Class F0_PagosCreditoNuevo
     Public Glosa As String
     Public CostoEnvio As Double = 0
     Public cambio As Double = 0
+
+    Public detalleBanco As DataTable
 #End Region
 #Region "METODOS PRIVADOS"
 
@@ -1495,10 +1497,10 @@ Public Class F0_PagosCreditoNuevo
     End Sub
 
     Private Sub _prGuardarCobro()
-        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 2, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 0, 2, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio, 0, detalleBanco)
 
         If TotalTarjeta > 0 Then
-            L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "CUENTA POR COBRAR", TotalTarjeta, Glosa)
+            L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 1, gi_userSuc, Banco, "", "CUENTA POR COBRAR", TotalTarjeta, Glosa, 1, 0)
         End If
         'Dim tabla As DataTable = L_fnMostrarMontosTV0014(0)
         '_prModificarMontos(tabla)

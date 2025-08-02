@@ -255,6 +255,16 @@ Public Class F0_Devolucion
         With grdetalle.RootTable.Columns("Item")
             .Caption = "Item"
             .Width = 90
+            .Visible = False
+        End With
+        With grdetalle.RootTable.Columns("ItemNuevo")
+            .Caption = "I. Nuevo"
+            .Width = 90
+            .Visible = True
+        End With
+        With grdetalle.RootTable.Columns("ItemAntiguo")
+            .Caption = "I. Antiguo"
+            .Width = 90
             .Visible = True
         End With
         With grdetalle.RootTable.Columns("yfcbarra")
@@ -714,7 +724,7 @@ Public Class F0_Devolucion
         End With
 
         'If (dt.Rows.Count <= 0) Then
-        '    _prCargarDetalleVenta(-1)
+        '_prCargarDetalleVenta(-1)
         'End If
     End Sub
 
@@ -744,13 +754,13 @@ Public Class F0_Devolucion
             Dim pos As Integer = -1
             _fnObtenerFilaDetalle(pos, lin)
             Dim cant As Double = grdetalle.GetValue("Devolucion")
-            Dim uni As Double = grdetalle.GetValue("tbpbas")
+            Dim uni As Double = grdetalle.GetValue("tbtotdesc") / grdetalle.GetValue("tbcmin") 'grdetalle.GetValue("tbpbas")
             Dim cos As Double = grdetalle.GetValue("tbpcos")
-            Dim MontoDesc As Double = grdetalle.GetValue("tbdesc") / grdetalle.GetValue("tbcmin")
+            'Dim MontoDesc As Double = cant * (grdetalle.GetValue("tbdesc") / grdetalle.GetValue("tbcmin"))
             Dim dt As DataTable = CType(grdetalle.DataSource, DataTable)
             If (pos >= 0) Then
                 Dim TotalUnitario As Double = cant * uni
-                Dim TotalDev As Double = TotalUnitario - MontoDesc
+                Dim TotalDev As Double = TotalUnitario '- MontoDesc
                 CType(grdetalle.DataSource, DataTable).Rows(pos).Item("TotalDev") = TotalDev
                 grdetalle.SetValue("TotalDev", TotalDev)
 
@@ -830,7 +840,7 @@ Public Class F0_Devolucion
         If (swTipoVenta.Value = False) Then
             Dim dt As DataTable = L_fnVerificarCreditos(tbIdVenta.Text)
 
-            If dt.Rows(0).Item("pagos") = 0 Then
+            If dt.Rows(0).Item("Debe") = 0 Then
                 GuardarAnticipo(CDbl(tbtotal.Text))
 
             Else
@@ -843,12 +853,12 @@ Public Class F0_Devolucion
                 bandera = ef.band
                 If (bandera = True) Then
                     Dim numi = ""
-                    If dt.Rows(0).Item("pagos") < CDbl(tbtotal.Text) Then
-                        Dim montoAnti As Double = CDbl(tbtotal.Text) - dt.Rows(0).Item("pagos")
+                    If dt.Rows(0).Item("Debe") < CDbl(tbtotal.Text) Then
+                        Dim montoAnti As Double = CDbl(tbtotal.Text) - dt.Rows(0).Item("Debe")
                         GuardarAnticipo(montoAnti)
 
                         Dim dtCobro As DataTable = L_fnCobranzasObtenerLosPagos(-1)
-                        _prInterpretarDatosCobranza(dtCobro, dt.Rows(0).Item("tcnumi"), CInt(tbIdVenta.Text), CDbl(dt.Rows(0).Item("pagos")))
+                        _prInterpretarDatosCobranza(dtCobro, dt.Rows(0).Item("tcnumi"), CInt(tbIdVenta.Text), CDbl(dt.Rows(0).Item("Debe")))
                         Dim res As Boolean = L_fnGrabarCobranzaNueva(numi, tbFechaVenta.Value.ToString("yyyy/MM/dd"), gi_userNumi, tbObservacion.Text, dtCobro, cbSucursal.Value)
 
                     Else
@@ -897,6 +907,8 @@ Public Class F0_Devolucion
             '            End If
             '        End If
             '    End If
+        Else
+            GuardarAnticipo(CDbl(tbtotal.Text))
         End If
 
 
@@ -1224,62 +1236,25 @@ Public Class F0_Devolucion
 
 
     Private Sub P_GenerarReporte(numi As String)
-        'Dim dt As DataTable = L_fnVentaNotaDeVenta(numi)
-        'If (gb_DetalleProducto) Then
-        '    ponerDescripcionProducto(dt)
-        'End If
-        'Dim total As Decimal = dt.Compute("SUM(Total)", "")
-        'Dim totald As Double = (total / 6.96)
-        'Dim fechaven As String = dt.Rows(0).Item("fechaventa")
-        'If Not IsNothing(P_Global.Visualizador) Then
-        '    P_Global.Visualizador.Close()
-        'End If
-        'Dim ParteEntera As Long
-        'Dim ParteDecimal As Decimal
-        'Dim pDecimal() As String
-        'ParteEntera = Int(total)
-        'ParteDecimal = Math.Round(total - ParteEntera, 2)
-        'pDecimal = Split(ParteDecimal.ToString, ".")
+        Dim dt As DataTable = L_fnVentaNotaDeVentaDev(numi)
 
 
-        'Dim li As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera)) + " con " +
-        'IIf(pDecimal(1).ToString.Equals("0"), "00", pDecimal(1).ToString) + "/100 Bolivianos"
 
-        'ParteEntera = Int(totald)
-        'ParteDecimal = Math.Round(totald - ParteEntera, 2)
-        'pDecimal = Split(ParteDecimal.ToString, ".")
 
-        'Dim lid As String = Facturacion.ConvertirLiteral.A_fnConvertirLiteral(CDbl(ParteEntera)) + " con " +
-        'IIf(pDecimal(1).ToString.Equals("0"), "00", pDecimal(1).ToString) + "/100 Dolares"
+        P_Global.Visualizador = New Visualizador
 
-        'Dim dt2 As DataTable = L_fnNameReporte()
 
-        'P_Global.Visualizador = New Visualizador
-        'Dim _FechaAct As String
-        'Dim _FechaPar As String
-        'Dim _Fecha() As String
-        'Dim _Meses() As String = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}
-        '_FechaAct = fechaven
-        '_Fecha = Split(_FechaAct, "-")
-        '_FechaPar = "Cochabamba, " + _Fecha(0).Trim + " De " + _Meses(_Fecha(1) - 1).Trim + " Del " + _Fecha(2).Trim
+        Dim objrep As New R_NotaVentaDevolucion
+        '' GenerarNro(_dt)
+        ''objrep.SetDataSource(Dt1Kardex)
 
-        'Dim objrep As New R_NotaVenta_7_5X100
-        '    '' GenerarNro(_dt)
-        '    ''objrep.SetDataSource(Dt1Kardex)
-
-        '    objrep.SetDataSource(dt)
-        '    objrep.SetParameterValue("Literal1", li)
-        '    If swTipoVenta.Value = True Then
-        '        objrep.SetParameterValue("ENombre", "Nota de Entrega Nro. " + numi)
-        '    Else
-        '        objrep.SetParameterValue("ENombre", "Nota de Crédito Nro. " + numi)
-        '    End If
-        '    objrep.SetParameterValue("ECiudadPais", _FechaPar)
-        '    objrep.SetParameterValue("Sucursal", cbSucursal.Text)
-        '    objrep.SetParameterValue("Observacion", tbObservacion.Text)
-        '    P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
-        '    P_Global.Visualizador.ShowDialog() 'Comentar
-        '    P_Global.Visualizador.BringToFront() 'Comentar
+        objrep.SetDataSource(dt)
+        objrep.SetParameterValue("logo", gb_UbiLogo)
+        objrep.SetParameterValue("Sucursal", cbSucursal.Text)
+        objrep.SetParameterValue("Observacion", tbObservacion.Text)
+        P_Global.Visualizador.CrGeneral.ReportSource = objrep 'Comentar
+        P_Global.Visualizador.ShowDialog() 'Comentar
+        P_Global.Visualizador.BringToFront() 'Comentar
 
 
 

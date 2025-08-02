@@ -29,6 +29,7 @@ Public Class F1_MontoPagar
     Public tipo As Integer = 0    'COMPRA=1    VENTA=0
     Public cliente As Integer = 0
     Public saldoF As Double
+    Public detalleBanco As DataTable
 
 
     Private Sub F1_MontoPagar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -37,6 +38,7 @@ Public Class F1_MontoPagar
 
         If cliente <> 0 Then
             saldoF = L_prTraerSaldoAFavor(cliente)
+            saldoT.Text = saldoF
         End If
         cbCambioDolar.SelectedIndex = CType(cbCambioDolar.DataSource, DataTable).Rows.Count - 1
         If tipo = 1 Then
@@ -74,6 +76,58 @@ Public Class F1_MontoPagar
 
         End If
         swTipoVenta.Value = IIf(tipoVenta = 1, True, False)
+
+        cargarDetalleTransferencia()
+    End Sub
+
+    Private Sub cargarDetalleTransferencia()
+        Dim dt As DataTable = L_prDtealleTransferencia()
+
+        grTransferencia.BoundMode = Janus.Data.BoundMode.Bound
+        grTransferencia.DataSource = dt
+        grTransferencia.RetrieveStructure()
+
+        With grTransferencia.RootTable.Columns("canumi")
+            .Caption = "Cliente"
+            .Width = 300
+            .Visible = False
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+            .CellStyle.FontSize = 8
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+        End With
+        With grTransferencia.RootTable.Columns("canombre")
+            .Caption = "BANCO"
+            .Width = 220
+            .Visible = True
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+            .CellStyle.FontSize = 8
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Near
+        End With
+        With grTransferencia.RootTable.Columns("monto")
+            .Caption = "MONTO"
+            .Width = 100
+            .Visible = True
+            .FormatString = "0.00"
+            .HeaderAlignment = Janus.Windows.GridEX.TextAlignment.Center
+            .CellStyle.FontSize = 8
+            .CellStyle.TextAlignment = Janus.Windows.GridEX.TextAlignment.Far
+        End With
+        'Habilitar Filtradores
+        With grTransferencia
+            .GroupByBoxVisible = False
+            '.FilterRowFormatStyle.BackColor = Color.Blue
+            '.DefaultFilterRowComparison = FilterConditionOperator.Contains
+            '.FilterMode = FilterMode.Automatic
+            .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
+            'Diseño de la tabla
+            .ColumnAutoResize = True
+            .VisualStyle = VisualStyle.Office2007
+            .AlternatingColors = True
+            '.RecordNavigator = True
+            '.RecordNavigatorText = "Movimiento"
+            .RowHeaders = InheritableBoolean.True
+        End With
+
     End Sub
     Private Sub _prCargarComboLibreria(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo, cod1 As String, cod2 As String)
         Dim dt As New DataTable
@@ -145,15 +199,15 @@ Public Class F1_MontoPagar
         'tbMontoDolar.Value = 0
         'tbMontoBs.Value = 0
 
-        Dim diferencia As Double = tbMontoTarej.Value - Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
-        If (diferencia >= 0) Then
-            'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
-            txtCambio1.Text = diferencia.ToString
+        '''Dim diferencia As Double = tbMontoTarej.Value - Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text))
+        '''If (diferencia >= 0) Then
+        '''    'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
+        '''    txtCambio1.Text = diferencia.ToString
 
-        Else
-            'txtMontoPagado1.Text = "0.00"
-            txtCambio1.Text = "0.00"
-        End If
+        '''Else
+        '''    'txtMontoPagado1.Text = "0.00"
+        '''    txtCambio1.Text = "0.00"
+        '''End If
     End Sub
 
     Private Sub tbMontoBs_KeyDown(sender As Object, e As KeyEventArgs) Handles tbMontoBs.KeyDown
@@ -268,25 +322,34 @@ Public Class F1_MontoPagar
 
 
     Private Sub btnContinuar_Click(sender As Object, e As EventArgs) Handles btnContinuar.Click
+
+
+
         If chbTarjeta.Checked Then
-            If cbBanco.SelectedIndex < 0 Then
+            If CType(grTransferencia.DataSource, DataTable).Rows.Count = 0 Then 'If cbBanco.SelectedIndex < 0 Then
                 ToastNotification.Show(Me, "Debe seleccionar un Banco ".ToUpper, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
                 tbMontoBs.Focus()
                 Exit Sub
             End If
         End If
 
+        Dim MontoTajeta As Double = 0
+
+        For i = 0 To CType(grTransferencia.DataSource, DataTable).Rows.Count - 1 Step 1
+            MontoTajeta = MontoTajeta + CType(grTransferencia.DataSource, DataTable).Rows(i).Item("monto")
+        Next
+
 
         If swTipoVenta.Value = True Then
-            If (tbMontoTarej.Value + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value + SFavor.Value >= (TotalVenta + tbCostoEnvio.Value)) Then
+            If (MontoTajeta + (tbMontoDolar.Value * cbCambioDolar.Text) + tbMontoBs.Value + SFavor.Value >= (TotalVenta + tbCostoEnvio.Value)) Then
                 Bandera = True
                 TotalBs = tbMontoBs.Value
                 TotalSus = tbMontoDolar.Value
-                TotalTarjeta = tbMontoTarej.Value
+                TotalTarjeta = MontoTajeta 'tbMontoTarej.Value
                 TipoCambio = cbCambioDolar.Text
                 saldoF = SFavor.Value
                 tipoVenta = 1
-
+                detalleBanco = CType(grTransferencia.DataSource, DataTable)
                 Me.Close()
 
             Else
@@ -298,8 +361,8 @@ Public Class F1_MontoPagar
             If tipo = 1 Then
                 Dim dt As DataTable = revisarMontos(cbBanco.Value)
                 Dim cam As Double = Convert.ToDouble(cbCambioDolar.Text)
-                If (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Bs") * cam)) < (TotalBs + (TotalSus * cam)) Then
-                    ToastNotification.Show(Me, "No hay suficiente dinero en caja: " + (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Bs") * cbCambioDolar.Value)).ToString, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
+                If (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Sus") * cam)) < (tbMontoBs.Value + (tbMontoDolar.Value * cam)) Then
+                    ToastNotification.Show(Me, "No hay suficiente dinero en caja: " + (dt.Rows(0).Item("Bs") + (dt.Rows(0).Item("Sus") * CDbl(cbCambioDolar.Text))).ToString, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
                 Else
                     If dt.Rows(0).Item("Banco") < TotalTarjeta Then
                         ToastNotification.Show(Me, "No hay suficiente dinero en la cuenta: " + dt.Rows(0).Item("Banco").ToString, My.Resources.WARNING, 4000, eToastGlowColor.Red, eToastPosition.TopCenter)
@@ -314,6 +377,7 @@ Public Class F1_MontoPagar
                             TotalTarjeta = tbMontoTarej.Value
                             TipoCambio = cbCambioDolar.Text
                             tipoVenta = 0
+                            detalleBanco = CType(grTransferencia.DataSource, DataTable)
                             Me.Close()
                         End If
                     End If
@@ -323,10 +387,11 @@ Public Class F1_MontoPagar
                 Bandera = True
                 TotalBs = tbMontoBs.Value
                 TotalSus = tbMontoDolar.Value
-                TotalTarjeta = tbMontoTarej.Value
+                TotalTarjeta = MontoTajeta 'tbMontoTarej.Value
                 TipoCambio = cbCambioDolar.Text
                 tipoVenta = 0
                 saldoF = SFavor.Value
+                detalleBanco = CType(grTransferencia.DataSource, DataTable)
                 Me.Close()
             End If
 
@@ -359,7 +424,7 @@ Public Class F1_MontoPagar
             cbBanco.Visible = True
             lbGlosa.Visible = True
             tbGlosa.Visible = True
-
+            btAddTrans.Visible = True
 
             tbMontoTarej.Focus()
         Else
@@ -372,7 +437,8 @@ Public Class F1_MontoPagar
             cbBanco.Visible = False
             lbGlosa.Visible = False
             tbGlosa.Visible = False
-
+            btAddTrans.Visible = False
+            cargarDetalleTransferencia()
         End If
     End Sub
 
@@ -448,5 +514,34 @@ Public Class F1_MontoPagar
 
     Private Sub saldoT_Click(sender As Object, e As EventArgs) Handles saldoT.Click
 
+    End Sub
+
+    Private Sub btAddTrans_Click(sender As Object, e As EventArgs) Handles btAddTrans.Click
+        If cbBanco.SelectedIndex < 0 Then
+            MostrarMensajeError("Debe seleccionar un banco valido")
+            Exit Sub
+        End If
+        If tbMontoTarej.Value = 0 Then
+            MostrarMensajeError("Ingrese un monto valido")
+            Exit Sub
+        End If
+        CType(grTransferencia.DataSource, DataTable).Rows.Add(cbBanco.Value, cbBanco.Text, tbMontoTarej.Value) ',Bin.GetBuffer)
+
+        tbMontoTarej.Value = 0
+        cbBanco.SelectedIndex = -1
+
+        tbMontoTarej.Focus()
+
+
+        Dim transferencia As Double = CType(grTransferencia.DataSource, DataTable).Compute("SUM(monto)", "monto > 0")
+        Dim diferencia As Double = (Convert.ToDecimal((TotalVenta + tbCostoEnvio.Value) - tbMontoBs.Value - (tbMontoDolar.Value * cbCambioDolar.Text) - transferencia) * -1)
+        If (diferencia >= 0) Then
+            'txtMontoPagado1.Text = (TotalVenta + tbCostoEnvio.Value).ToString
+            txtCambio1.Text = diferencia.ToString
+
+        Else
+            'txtMontoPagado1.Text = "0.00"
+            txtCambio1.Text = "0.00"
+        End If
     End Sub
 End Class

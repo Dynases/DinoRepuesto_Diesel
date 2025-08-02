@@ -39,6 +39,7 @@ Public Class F0_MCompras
         _prObtenerPorcentajeUtilidad()
         'Me.WindowState = FormWindowState.Maximized
         _prCargarComboMoneda(cbMoneda)
+        _prCargarComboProveedor(cbProveedor)
         _prCargarCompra()
         _prInhabiliitar()
         grCompra.Focus()
@@ -121,6 +122,23 @@ Public Class F0_MCompras
 
         cbMoneda.SelectedIndex = 2
     End Sub
+    Private Sub _prCargarComboProveedor(mCombo As Janus.Windows.GridEX.EditControls.MultiColumnCombo)
+        Dim dt As New DataTable
+        dt = L_fnListarProveedores()
+        With mCombo
+            .DropDownList.Columns.Clear()
+            .DropDownList.Columns.Add("ydnumi").Width = 60
+            .DropDownList.Columns("ydnumi").Caption = "COD"
+            .DropDownList.Columns.Add("yddesc").Width = 500
+            .DropDownList.Columns("yddesc").Caption = "MONEDA"
+            .ValueMember = "ydnumi"
+            .DisplayMember = "yddesc"
+            .DataSource = dt
+            .Refresh()
+        End With
+
+        cbProveedor.SelectedIndex = 0
+    End Sub
     Private Sub _prInhabiliitar()
         tbCodigo.ReadOnly = True
         tbProveedor.ReadOnly = True
@@ -167,6 +185,7 @@ Public Class F0_MCompras
         End If
         btnAgregar.Visible = False
         btnImportar.Visible = False
+        cbProveedor.ReadOnly = True
     End Sub
     Private Sub _prhabilitar()
         grCompra.Enabled = False
@@ -207,7 +226,7 @@ Public Class F0_MCompras
 
 
         btnAgregar.Visible = True
-
+        cbProveedor.ReadOnly = False
     End Sub
     Public Sub _prFiltrar()
         'cargo el buscador
@@ -244,6 +263,7 @@ Public Class F0_MCompras
         'swMoneda.Value = True
         tbTipoCambio.Value = 0
         cbMoneda.Value = 2
+        cbProveedor.SelectedIndex = 0
         tbNFactura.Clear()
         tbNAutorizacion.Clear()
         tbCodControl.Clear()
@@ -394,7 +414,7 @@ Public Class F0_MCompras
             lbFecha.Text = CType(.GetValue("cafact"), Date).ToString("dd/MM/yyyy")
             lbHora.Text = .GetValue("cahact").ToString
             lbUsuario.Text = .GetValue("cauact").ToString
-
+            cbProveedor.Value = .GetValue("caty4prov")
 
         End With
 
@@ -945,7 +965,7 @@ Public Class F0_MCompras
             .Width = 120
             .TextAlignment = 2
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0.000"
             .Caption = "Sub Total"
         End With
         With grdetalle.RootTable.Columns("cbobs")
@@ -1330,7 +1350,7 @@ Public Class F0_MCompras
         Dim img As New Bitmap(My.Resources.delete, 28, 28)
         img.Save(Bin, Imaging.ImageFormat.Png)
         CType(grdetalle.DataSource, DataTable).Rows.Add("", "", "", "", _fnSiguienteNumi() + 1, 0, 0, "", "", "", "", 0, 0, 0, "",
-                                                        0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
+                                                        0, 0, 0, "20500101", CDate("2050/01/01"), 0, 0, 0, 0, "", Now.Date, "", "", 0, 0, 0, 0, Bin.GetBuffer, 0, 0)
     End Sub
 
     Public Function _fnSiguienteNumi()
@@ -1612,7 +1632,7 @@ Public Class F0_MCompras
                                                   cbMoneda.Value, tbObservacion.Text, tbMdesc.Value, tbtotal.Value,
                                                   CType(grdetalle.DataSource, DataTable), _detalleCompras, IIf(swEmision.Value = True, 1, 0), tbNFactura.Text,
                                                   IIf(swConsigna.Value = True, 1, 0), IIf(swRetencion.Value = True, 1, 0),
-                                                  IIf(cbMoneda.Value = 1, 1, tbTipoCambio.Value), 0, IIf(SwProforma.Value = True, tbProforma.Text, 0), BanderaImport)
+                                                  IIf(cbMoneda.Value = 1, 1, tbTipoCambio.Value), 0, IIf(SwProforma.Value = True, tbProforma.Text, 0), IIf(BanderaImport = True, 1, 0))
             If res Then
 
                 Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
@@ -1804,7 +1824,7 @@ Public Class F0_MCompras
 
         Dim objrep As New R_NotaCompra
         objrep.SetDataSource(dt)
-
+        objrep.SetParameterValue("sucursal", cbSucursal.Text)
         objrep.SetParameterValue("Literal", _Literal)
         objrep.SetParameterValue("logo", gb_UbiLogo)
         objrep.SetParameterValue("documento", tbNFactura.Text)
@@ -2402,7 +2422,7 @@ salirIf:
                 If (pos >= 0) Then ''And (Not existe))
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbty5prod") = grProductos.GetValue("yfnumi")
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("producto") = grProductos.GetValue("yfcdprod1")
-                    CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbumin") = grProductos.GetValue("yfumin")
+                    'CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbumin") = grProductos.GetValue("yfumin")
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("unidad") = grProductos.GetValue("UnidMin")
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbpcost") = grProductos.GetValue("yhprecio")
                     CType(grdetalle.DataSource, DataTable).Rows(pos).Item("cbptot") = grProductos.GetValue("yhprecio")
@@ -3000,11 +3020,11 @@ salirIf:
             If VerificarGrilla() Then
                 For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
 
-                    Dim tcam As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
-                    If BanderaImport = True And cbMoneda.Value = 0 Then
+                    'Dim tcam As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
+                    'If BanderaImport = True And cbMoneda.Value = 0 Then
 
-                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * tbTipoCambio.Value
-                    End If
+                    '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * tbTipoCambio.Value
+                    'End If
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") * tbTipoCambio.Value
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") * tbTipoCambio.Value
                     'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") * tbTipoCambio.Value
@@ -3019,18 +3039,18 @@ salirIf:
             _prCalcularPrecioTotal()
         End If
     End Sub
-    Private Sub ConvertirSus()
+    Private Sub ConvertirSus2()
         If CType(grdetalle.DataSource, DataTable).Rows.Count > 0 Then
             If VerificarGrilla() Then
                 For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
                     If btnNuevo.Enabled = True Then
-                        'If BanderaImport = False Then
+                        'If cbMoneda.Value = 0 Then
                         '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
                         'End If
                         CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbptot") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost")
-                            CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
-                        Else
-                        If BanderaImport = False Then
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
+                    Else
+                        If cbMoneda.Value = 0 Then
                             CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
                         End If
                         'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") / tbTipoCambio.Value
@@ -3040,6 +3060,35 @@ salirIf:
                             CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = (CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA")) / (CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam"))
 
                         End If
+                Next
+            End If
+            'tbSubtotalC.Value = tbSubtotalC.Value / tbTipoCambio.Value
+            'tbMdesc.Value = 0
+            'tbtotal.Value = tbSubtotalC.Value
+            _prCalcularPrecioTotal()
+        End If
+    End Sub
+    Private Sub ConvertirSus()
+        If CType(grdetalle.DataSource, DataTable).Rows.Count > 0 Then
+            If VerificarGrilla() Then
+                For i As Integer = 0 To CType(grdetalle.DataSource, DataTable).Rows.Count - 1 Step 1
+                    If btnNuevo.Enabled = True Then
+                        'If cbMoneda.Value = 0 Then
+                        '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
+                        'End If
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbptot") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost")
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") / CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam")
+                    Else
+                        'If BanderaImport = False Then
+                        '    CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") / tbTipoCambio.Value
+                        'End If
+                        'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpFacturado") / tbTipoCambio.Value
+                        'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpPublico") / tbTipoCambio.Value
+                        'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpMecanico") / tbTipoCambio.Value
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbptot") = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost")
+                        CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA") = (CType(grdetalle.DataSource, DataTable).Rows(i).Item("PPA")) / (CType(grdetalle.DataSource, DataTable).Rows(i).Item("yftcam"))
+
+                    End If
                 Next
             End If
             'tbSubtotalC.Value = tbSubtotalC.Value / tbTipoCambio.Value
@@ -3116,7 +3165,12 @@ salirIf:
                 For i As Integer = 0 To grdetalle.RowCount - 1 Step 1
                     Dim dt As DataTable
                     Dim cant As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
-                    Dim TotalUnitario As Double = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+                    Dim TotalUnitario As Double
+                    If cbMoneda.Value = 0 Then
+                        TotalUnitario = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+                    Else
+                        TotalUnitario = CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") * CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin")
+                    End If
                     dt = _lftraerPrecioCostoStock(CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbty5prod").ToString, gi_userSuc)
                     For j = 0 To dt.Rows.Count - 1 Step 1
                         Dim act As Double
@@ -3225,7 +3279,7 @@ salirIf:
                 tbNFactura.Text = Row.Cells("tanumemis").Value
 
                 _prCargarProductoDeTransito(Row.Cells("tanumi").Value)
-
+                _CalcularPrecioPonderado()
 
                 If cbMoneda.Value = 1 Then
                     lbTipoCambio.Visible = False
@@ -3243,7 +3297,7 @@ salirIf:
     Private Sub _prCargarProductoDeTransito(_numi As String)
         Dim dt As New DataTable
 
-        dt = L_fnDetalleTransito2(_numi)
+        dt = L_fnDetalleProformaCompra2(_numi)
 
 
         grdetalle.DataSource = dt
@@ -3445,7 +3499,7 @@ salirIf:
             .Width = 120
             .TextAlignment = 2
             .Visible = True
-            .FormatString = "0.00"
+            .FormatString = "0.000"
             .Caption = "Sub Total"
         End With
         With grdetalle.RootTable.Columns("cbobs")
@@ -3566,8 +3620,8 @@ salirIf:
                 grdetalle.SetValue("producto", nameproducto)
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbcmin") = cant
                 grdetalle.SetValue("cbcmin", cant)
-                CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbumin") = dt.Rows(i).Item("pdumin")
-                grdetalle.SetValue("cbumin", dt.Rows(i).Item("pdumin"))
+                'CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbumin") = dt.Rows(i).Item("pdumin")
+                'grdetalle.SetValue("cbumin", dt.Rows(i).Item("pdumin"))
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("unidad") = dt.Rows(i).Item("unidad")
                 grdetalle.SetValue("unidad", dt.Rows(i).Item("unidad"))
                 CType(grdetalle.DataSource, DataTable).Rows(i).Item("cbpcost") = dt.Rows(i).Item("pdpcost")
@@ -3737,6 +3791,16 @@ salirIf:
 
             End If
         End If
+    End Sub
+
+    Private Sub cbProveedor_ValueChanged(sender As Object, e As EventArgs) Handles cbProveedor.ValueChanged
+        If cbProveedor.SelectedIndex >= 0 And cbProveedor.Text <> String.Empty Then
+            tbCodProv.Text = cbProveedor.Value
+            _CodProveedor = cbProveedor.Value
+        Else
+
+        End If
+
     End Sub
 
 

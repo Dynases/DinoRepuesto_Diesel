@@ -3,6 +3,7 @@ Imports Logica.AccesoLogica
 Imports Janus.Windows.GridEX
 Imports DevComponents.DotNetBar
 Imports DinoM.JanusExtension
+Imports System.IO
 Public Class F0_DetalleVenta
 
     Public dtProductoAll As DataTable
@@ -15,9 +16,12 @@ Public Class F0_DetalleVenta
 
     Public Bandera As Boolean = False
 
+    Dim CategoriaSeleccionada As Integer
+
     Public Tipo As Boolean = True  'True = Venta       False= Proforma
     Public Sub IniciarTodod()
-        CargarProductos()
+        CargarProductos(-1)
+        lblCategoria.Text = "TODOS"
         CargarProductosVentas()
 
         tbProducto.Focus()
@@ -271,6 +275,13 @@ Public Class F0_DetalleVenta
             .FormatString = "0"
             .AllowSort = False
         End With
+        With grProductoSeleccionado.RootTable.Columns("estado")
+            .Width = 120
+            .Caption = "Estado"
+            .Visible = False
+            .FormatString = "0"
+            .AllowSort = False
+        End With
         With grProductoSeleccionado
             .ColumnAutoResize = True
             '.DefaultFilterRowComparison = FilterConditionOperator.BeginsWith
@@ -288,8 +299,14 @@ Public Class F0_DetalleVenta
 
         End If
     End Sub
-    Public Sub CargarProductos()
-        grProductos.DataSource = dtProductoAll.Copy
+    Public Sub CargarProductos(cat As Integer)
+        If cat <> -1 Then
+            Dim dt As DataTable = (L_fnListarProductosCategoria(almacenId, precio, cat))
+            grProductos.DataSource = dt
+        Else
+            grProductos.DataSource = dtProductoAll.Copy
+        End If
+
         grProductos.RetrieveStructure()
         grProductos.AlternatingColors = True
 
@@ -496,6 +513,13 @@ Public Class F0_DetalleVenta
             .AllowSort = False
             .Caption = "Stock"
         End With
+        With grProductos.RootTable.Columns("estado")
+            .Width = 120
+            .FormatString = "0.00"
+            .Visible = False
+            .AllowSort = False
+            .Caption = "Stock"
+        End With
         With grProductos.RootTable.Columns("StockTodos")
             .Width = 150
             .FormatString = "0.00"
@@ -506,6 +530,7 @@ Public Class F0_DetalleVenta
             .WordWrap = True
         End With
         With grProductos
+
             .DefaultFilterRowComparison = FilterConditionOperator.Contains
             .FilterMode = FilterMode.Automatic
             .FilterRowUpdateMode = FilterRowUpdateMode.WhenValueChanges
@@ -527,6 +552,11 @@ Public Class F0_DetalleVenta
         fr = New GridEXFormatCondition(grProductos.RootTable.Columns("stock"), ConditionOperator.Equal, -9999)
         fr.FormatStyle.ForeColor = Color.BlueViolet
         grProductos.RootTable.FormatConditions.Add(fr)
+
+        Dim fe As GridEXFormatCondition
+        fe = New GridEXFormatCondition(grProductos.RootTable.Columns("estado"), ConditionOperator.GreaterThan, 0)
+        fe.FormatStyle.BackColor = Color.Yellow
+        grProductos.RootTable.FormatConditions.Add(fe)
     End Sub
     Private Sub F0_DetalleVenta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -550,6 +580,39 @@ Public Class F0_DetalleVenta
         Return False
     End Function
 
+    Private Sub _prAddDetalleVenta()
+        '     a.cbnumi ,a.cbtv1numi ,a.cbty5prod ,b.yfcdprod1 as producto,a.cbest ,a.cbcmin 
+        ',a.cbumin ,Umin .ycdes3 as unidad,a.cbpcost,a.cblote ,a.cbfechavenc ,a.cbptot 
+        ',a.cbutven ,a.cbprven   ,a.cbobs ,
+        'a.cbfact ,a.cbhact ,a.cbuact,1 as estado,Cast(null as Image) as img,a.cbpcost as costo,a.cbprven as venta
+        Dim Bin As New MemoryStream
+        Dim img As New Bitmap(My.Resources.delete, 28, 28)
+        img.Save(Bin, Imaging.ImageFormat.Png)
+
+
+        CType(grProductoSeleccionado.DataSource, DataTable).Rows.Add("", "", "", "", 0, "", "", "", 0, "", 0, "", 0, "", 0, "",
+                                                        "", 0, 0, 0, 0, 0, 0, 0, 0)
+    End Sub
+
+    Public Function _fnSiguienteNumi()
+        Dim dt As DataTable = CType(grProductoSeleccionado.DataSource, DataTable)
+        Dim rows() As DataRow = dt.Select("cbnumi=MAX(cbnumi)")
+        If (rows.Count > 0) Then
+            Return rows(rows.Count - 1).Item("cbnumi")
+        End If
+        Return 1
+    End Function
+
+    Public Sub _fnObtenerFilaDetalle(ByRef pos As Integer, numi As Integer)
+        For i As Integer = 0 To CType(grProductoSeleccionado.DataSource, DataTable).Rows.Count - 1 Step 1
+            Dim _numi As Integer = CType(grProductoSeleccionado.DataSource, DataTable).Rows(i).Item("Item")
+            If (_numi = numi) Then
+                pos = i
+                Return
+            End If
+        Next
+
+    End Sub
     Private Sub grProductos_KeyDown(sender As Object, e As KeyEventArgs) Handles grProductos.KeyDown
 
         If (e.KeyData = Keys.Enter) Then
@@ -599,15 +662,61 @@ Public Class F0_DetalleVenta
 
                         cantidad = ef.Cantidad
                         If (cantidad > 0) Then
-                            Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
+                            Dim pos As Integer = -1
+                            'grProductoSeleccionado.Row = grProductoSeleccionado.RowCount - 1
+                            If grProductoSeleccionado.RowCount = 0 Then
+                                _prAddDetalleVenta()
+                            End If
+                            If (grProductoSeleccionado.GetValue("Item") > 0) Then
+                                _prAddDetalleVenta()
+                            End If
+                            grProductoSeleccionado.Row = grProductoSeleccionado.RowCount - 1
 
-                            row.Item("Cantidad") = cantidad
-                            If (CategoriaPrecio = 50) Then
-                                row.Item("yhprecio") = ef.Precio
+                            _fnObtenerFilaDetalle(pos, grProductoSeleccionado.GetValue("Item"))
+                            If (pos >= 0) Then ''And (Not existe))
+
+
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("CodigoFabrica") = grProductos.GetValue("CodigoFabrica")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Marca") = grProductos.GetValue("Marca")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Medida") = grProductos.GetValue("Medida")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("grupo1") = grProductos.GetValue("grupo1")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("grupo2") = grProductos.GetValue("grupo2")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yhprecio") = grProductos.GetValue("yhprecio")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("ItemNuevo") = grProductos.GetValue("ItemNuevo")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("ItemAntiguo") = grProductos.GetValue("ItemAntiguo")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Item") = grProductos.GetValue("Item")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfcbarra") = grProductos.GetValue("yfcbarra")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Categoria") = grProductos.GetValue("Categoria")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfcdprod1") = grProductos.GetValue("yfcdprod1")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfgr1") = grProductos.GetValue("yfgr1")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfgr2") = grProductos.GetValue("yfgr2")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfgr3") = grProductos.GetValue("yfgr3")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfgr4") = grProductos.GetValue("yfgr4")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("grupo3") = grProductos.GetValue("grupo3")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("grupo4") = grProductos.GetValue("grupo4")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("yfumin") = grProductos.GetValue("yfumin")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("UnidMin") = grProductos.GetValue("UnidMin")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("pcos") = grProductos.GetValue("pcos")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("stock") = grProductos.GetValue("stock")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("PrecioReferencia") = grProductos.GetValue("PrecioReferencia")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("StockTodos") = grProductos.GetValue("StockTodos")
+                                CType(grProductoSeleccionado.DataSource, DataTable).Rows(pos).Item("Cantidad") = cantidad
+
+
+
+
+
                             End If
 
-                            CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
-                            tbProducto.Focus()
+                            'Dim row As DataRow = CType(grProductos.DataSource, DataTable).Rows(f)
+
+                            'row.Item("Cantidad") = cantidad
+                            'If (CategoriaPrecio = 50) Then
+                            '    row.Item("yhprecio") = ef.Precio
+                            'End If
+
+                            'CType(grProductoSeleccionado.DataSource, DataTable).ImportRow(row)
+                            'tbProducto.Focus()
 
                         End If
 
@@ -1054,7 +1163,8 @@ Public Class F0_DetalleVenta
 
     Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnActualizar.Click
         dtProductoAll = L_fnListarProductosSinLote(almacenId, precio, 0)
-        CargarProductos()
+        CargarProductos(-1)
+        lblCategoria.Text = "TODOS"
     End Sub
 
     Private Sub grProductos_EditingCell(sender As Object, e As EditingCellEventArgs) Handles grProductos.EditingCell
@@ -1239,6 +1349,49 @@ Public Class F0_DetalleVenta
     End Sub
 
     Private Sub GPanelProductos_Click(sender As Object, e As EventArgs) Handles GPanelProductos.Click
+
+    End Sub
+
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        SeleccionarCategoria()
+
+    End Sub
+
+    Public Sub SeleccionarCategoria()
+        Dim dt As DataTable
+        Dim idCategoria As Integer = 0
+        Dim nombreCategoria As String
+        dt = L_fnListarCategoriaVentas()
+        dt.Rows.Add(-1, "Todos")
+
+
+        Dim listEstCeldas As New List(Of Modelo.Celda)
+        listEstCeldas.Add(New Modelo.Celda("yccod3,", True, "Codigo", 100))
+        listEstCeldas.Add(New Modelo.Celda("ycdes3", True, "Nombre Categoria", 500))
+
+        Dim ef = New Efecto
+        ef.tipo = 3
+        ef.dt = dt
+        ef.SeleclCol = 2
+        ef.listEstCeldas = listEstCeldas
+        ef.alto = 50
+        ef.ancho = 800
+        ef.Context = "Seleccione Categoria".ToUpper
+        ef.ShowDialog()
+        Dim bandera As Boolean = False
+        bandera = ef.band
+        If (bandera = True) Then
+            Dim Row As Janus.Windows.GridEX.GridEXRow = ef.Row
+            ''yccod3,ycdes3 
+            'idCategoria = Row.Cells("yccod3").Value
+            'nombreCategoria = Row.Cells("ycdes3").Value
+
+
+
+            CategoriaSeleccionada = Row.Cells("yccod3").Value
+            CargarProductos(CategoriaSeleccionada)
+            lblCategoria.Text = Row.Cells("ycdes3").Value
+        End If
 
     End Sub
 End Class

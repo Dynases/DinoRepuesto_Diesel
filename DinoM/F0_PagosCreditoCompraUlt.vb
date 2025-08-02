@@ -35,6 +35,8 @@ Public Class F0_PagosCreditoCompraUlt
     Public Glosa As String
     Public CostoEnvio As Double = 0
     Public cambio As Double = 0
+
+    Public detalleBanco As DataTable
 #End Region
 #Region "METODOS PRIVADOS"
 
@@ -524,10 +526,32 @@ Public Class F0_PagosCreditoCompraUlt
             .Visible = False
         End With
         With grPendiente.RootTable.Columns("NumeroRecibo")
-            .Caption = "Nro Recibo"
+            .Caption = "Nro Documento"
             .Width = 150
             .MaxLength = 20
-            .Visible = False
+            .Visible = True
+        End With
+        With grPendiente.RootTable.Columns("moneda")
+            .Caption = "Moneda"
+            .Width = 150
+            .MaxLength = 20
+            .Visible = True
+        End With
+        With grPendiente.RootTable.Columns("tatipocambio")
+            .Caption = "Tipo Cambio"
+            .Width = 150
+            .FormatString = "0.00"
+            .TextAlignment = TextAlignment.Far
+            .MaxLength = 20
+            .Visible = True
+        End With
+        With grPendiente.RootTable.Columns("Sus")
+            .Caption = "$us"
+            .FormatString = "0.00"
+            .TextAlignment = TextAlignment.Far
+            .Width = 150
+            .MaxLength = 20
+            .Visible = True
         End With
         With grPendiente
             .GroupByBoxVisible = False
@@ -1184,7 +1208,7 @@ Public Class F0_PagosCreditoCompraUlt
                     '_DesHabilitarProductos()
                 Else
                     If (existe) Then
-                        Dim img As Bitmap = New Bitmap(My.Resources.Mensaje, 50, 50)
+                        Dim img As Bitmap = New Bitmap(My.Resources.mensaje, 50, 50)
                         ToastNotification.Show(Me, "El PAGO DE ESTE COBRANZA ya existe en el detalle".ToUpper, img, 2000, eToastGlowColor.Red, eToastPosition.BottomCenter)
                     End If
                 End If
@@ -1310,9 +1334,9 @@ Public Class F0_PagosCreditoCompraUlt
 
     Private Sub _prGuardarCobro()
 
-        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 4, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio)
+        _prAgregarCobro(CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc"), 0, 4, tbObservacion.Text, TotalBs, TotalSus, TotalTarjeta, cambio, Banco, Glosa, gi_userSuc, TipoCambio, 0, detalleBanco)
         If TotalTarjeta > 0 Then
-            L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 0, gi_userSuc, Banco, "", "CUENTA POR PAGAR", TotalTarjeta, Glosa)
+            L_prMovimientoGrabar("", tbfecha.Value.ToString("dd/MM/yyyy"), 0, gi_userSuc, Banco, "", "PAGO CREDITO COMPRA Nº" + CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc").ToString, TotalTarjeta, Glosa, 2, 0)
         End If
         'Dim img As Bitmap = New Bitmap(My.Resources.checked, 50, 50)
         'ToastNotification.Show(Me, "El Cobro de la compra: ".ToUpper + CType(grfactura.DataSource, DataTable).Rows(0).Item("NroDoc").ToString + " fue grabado con éxito.".ToUpper,

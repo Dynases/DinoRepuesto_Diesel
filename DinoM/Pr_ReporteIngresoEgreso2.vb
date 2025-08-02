@@ -30,7 +30,7 @@ Public Class Pr_ReporteIngresoEgreso2
         If swCambios.Value = False Then
             _dt = L_prIngresoEgresoSaldo21(tbFechaI.Value.ToString("dd/MM/yyyy"), tbFechaF.Value.ToString("dd/MM/yyyy"), cbSucursal.Value)
         Else
-            _dt = L_prIngresoEgresoEntreFecha(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), 1, cbSucursal.Value)
+            _dt = L_prIngresoEgresoSaldo2(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
 
         End If
 
@@ -40,11 +40,11 @@ Public Class Pr_ReporteIngresoEgreso2
     End Sub
     Private Sub _prCargarReporte()
         Dim saldoBs, SaldoSus As Decimal
-        'Dim _dt As New DataTable
-        '_prInterpretarDatos(_dt)
+        Dim _dt As New DataTable
+        _prInterpretarDatos(_dt)
 
-        Dim dt2 As DataTable = L_prIngresoEgresoSaldo2(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
-        If dt2.Rows.Count > 0 Then
+        'Dim dt2 As DataTable = L_prIngresoEgresoSaldo2(tbFechaI.Value.ToString("yyyy/MM/dd"), tbFechaF.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
+        If _dt.Rows.Count > 0 Then
 
 
             'Dim dt As DataTable = L_prIngresoEgresoSaldo(tbFechaI.Value.ToString("yyyy/MM/dd"), cbSucursal.Value)
@@ -57,7 +57,7 @@ Public Class Pr_ReporteIngresoEgreso2
 
             End If
             Dim objrep As New R_ReporteIngresosEgresos2
-            objrep.SetDataSource(dt2)
+            objrep.SetDataSource(_dt)
 
             Dim fechaI As String = tbFechaI.Value.ToString("dd/MM/yyyy")
             Dim fechaF As String = tbFechaF.Value.ToString("dd/MM/yyyy")

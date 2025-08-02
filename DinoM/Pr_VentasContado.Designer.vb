@@ -25,6 +25,7 @@ Partial Class Pr_VentasContado
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Pr_VentasContado))
         Dim tbAlmacen_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
+        Dim cbTipVenta_DesignTimeLayout As Janus.Windows.GridEX.GridEXLayout = New Janus.Windows.GridEX.GridEXLayout()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.tbAlmacen = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         Me.CheckTodosAlmacen = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -36,6 +37,8 @@ Partial Class Pr_VentasContado
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.tbFechaI = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.cbTipVenta = New Janus.Windows.GridEX.EditControls.MultiColumnCombo()
         CType(Me.SuperTabPrincipal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabPrincipal.SuspendLayout()
         Me.SuperTabControlPanelRegistro.SuspendLayout()
@@ -54,6 +57,7 @@ Partial Class Pr_VentasContado
         CType(Me.tbAlmacen, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbFechaF, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tbFechaI, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cbTipVenta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SuperTabPrincipal
@@ -194,6 +198,8 @@ Partial Class Pr_VentasContado
         'GroupBox2
         '
         Me.GroupBox2.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox2.Controls.Add(Me.cbTipVenta)
+        Me.GroupBox2.Controls.Add(Me.LabelX2)
         Me.GroupBox2.Controls.Add(Me.tbAlmacen)
         Me.GroupBox2.Controls.Add(Me.CheckTodosAlmacen)
         Me.GroupBox2.Controls.Add(Me.CheckUnaALmacen)
@@ -416,6 +422,38 @@ Partial Class Pr_VentasContado
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 500
         '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.Font = New System.Drawing.Font("Georgia", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(85, Byte), Integer), CType(CType(139, Byte), Integer))
+        Me.LabelX2.Location = New System.Drawing.Point(9, 163)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.SingleLineColor = System.Drawing.SystemColors.Control
+        Me.LabelX2.Size = New System.Drawing.Size(150, 23)
+        Me.LabelX2.TabIndex = 248
+        Me.LabelX2.Text = "Tipo de Venta:"
+        '
+        'cbTipVenta
+        '
+        Me.cbTipVenta.BackColor = System.Drawing.Color.Gainsboro
+        cbTipVenta_DesignTimeLayout.LayoutString = resources.GetString("cbTipVenta_DesignTimeLayout.LayoutString")
+        Me.cbTipVenta.DesignTimeLayout = cbTipVenta_DesignTimeLayout
+        Me.cbTipVenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbTipVenta.Location = New System.Drawing.Point(66, 205)
+        Me.cbTipVenta.Name = "cbTipVenta"
+        Me.cbTipVenta.Office2007ColorScheme = Janus.Windows.GridEX.Office2007ColorScheme.Custom
+        Me.cbTipVenta.Office2007CustomColor = System.Drawing.Color.DodgerBlue
+        Me.cbTipVenta.SelectedIndex = -1
+        Me.cbTipVenta.SelectedItem = Nothing
+        Me.cbTipVenta.Size = New System.Drawing.Size(164, 22)
+        Me.cbTipVenta.TabIndex = 249
+        Me.cbTipVenta.VisualStyle = Janus.Windows.GridEX.VisualStyle.Office2007
+        '
         'Pr_VentasContado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -445,6 +483,7 @@ Partial Class Pr_VentasContado
         CType(Me.tbAlmacen, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbFechaF, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tbFechaI, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cbTipVenta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -459,4 +498,6 @@ Partial Class Pr_VentasContado
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents tbAlmacen As Janus.Windows.GridEX.EditControls.MultiColumnCombo
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents cbTipVenta As Janus.Windows.GridEX.EditControls.MultiColumnCombo
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
 End Class

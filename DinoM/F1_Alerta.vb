@@ -104,6 +104,8 @@ Public Class F1_Alerta
 
         listEstCeldas.Add(New Modelo.Celda("Tipo", True, "Tipo".ToUpper, 200))
         listEstCeldas.Add(New Modelo.Celda("codigo", True, "Codigo".ToUpper, 80))
+        listEstCeldas.Add(New Modelo.Celda("ItemNuevo", True, "Item Nuevo".ToUpper, 100))
+        listEstCeldas.Add(New Modelo.Celda("ItemAntiguo", True, "Item Antiguo".ToUpper, 100))
         listEstCeldas.Add(New Modelo.Celda("Detalle", True, "Detalle".ToUpper, 200))
         listEstCeldas.Add(New Modelo.Celda("saldo", True, "Saldo".ToUpper, 150, "0.00"))
         listEstCeldas.Add(New Modelo.Celda("S_Minimo", True, "S. Minimo".ToUpper, 150, "0.00"))
